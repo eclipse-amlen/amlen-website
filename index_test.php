@@ -22,9 +22,9 @@
   require_once('_projectCommon.php');
 
   # Begin: page-specific settings.  Change these.
-  $pageTitle = "Starterkit Template";
-  $pageKeywords = "Add maximal 20 keywords and seperate them from each other by a comma en a space.";
-  $pageAuthor = "Christopher Guindon";
+  $pageTitle = "Amlen Broker";
+  $pageKeywords = "iot, embedded, async, messaging, mqtt, amlen, broker";
+  $pageAuthor = "Amlen Contributors";
 
   # Initialize custom solstice $variables.
   $variables = array();

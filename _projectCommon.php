@@ -17,7 +17,12 @@
 
   # Define your project-wide Nav bars here.
   # Format is Link text, link URL (can be http://www.someothersite.com/), target (_self, _blank).
-  $Nav->addNavSeparator("Solstice",   "/eclipse.org-common/themes/solstice/docs/");
-  $Nav->addCustomNav("Documentation", "/eclipse.org-common/themes/solstice/docs/", "_self", NULL);
-  $Nav->addCustomNav("Source code", "http://git.eclipse.org/c/www.eclipse.org/eclipse.org-common.git/tree/themes/solstice/", "_self", NULL);
-  $Nav->addCustomNav("Using Phoenix", "http://wiki.eclipse.org/Using_Phoenix", "_self", NULL);
+  $Nav->addNavSeparator("Amlen",   "https://www.eclipse.org/amlen/");
+  $Nav->addCustomNav("Forum", "https://www.eclipse.org/forums/index.php/f/572/", "_self", NULL);
+  $Nav->addCustomNav("Slack (channel #amlen)", "https://join.slack.com/t/eclipse-iot-wg/shared_invite/zt-qo78fwls-Hre7lBgDLP_h9YB~noz4qg","_self", NULL);
+  
+  #Original Examples
+  #$Nav->addNavSeparator("Solstice",   "/eclipse.org-common/themes/solstice/docs/");
+  #$Nav->addCustomNav("Documentation", "/eclipse.org-common/themes/solstice/docs/", "_self", NULL);
+  #$Nav->addCustomNav("Source code", "http://git.eclipse.org/c/www.eclipse.org/eclipse.org-common.git/tree/themes/solstice/", "_self", NULL);
+  #$Nav->addCustomNav("Using Phoenix", "http://wiki.eclipse.org/Using_Phoenix", "_self", NULL);
