@@ -22,7 +22,7 @@
   require_once('_projectCommon.php');
 
   # Begin: page-specific settings.  Change these.
-  $pageTitle = "Amlen";
+  $pageTitle = "Amlen Broker";
   $pageKeywords = "iot, embedded, async, messaging, mqtt, amlen, broker";
   $pageAuthor = "Amlen Contributors";
 
