@@ -14,7 +14,17 @@
 <!-- Main content area -->
 <div id="midcolumn">
   <h1><?php print $pageTitle;?></h1>
+  <p>Amlen is a scalable, secure, easy to use message broker that can be used 
+  for IoT, web and mobile use-cases. It primarily supports the MQTT protocol (v5 and v3.x)
+  but supports JMS and custom protocols as well.
+
+  It is based on an initial contribution of the IBM WIoTP Message Gateway broker that
+  is currently undergoing review at Eclipse so builds are not yet available but it
+  is a mature, production-ready codebase used by a wide variety of companies and 
+  organisations.
+  <!--
   <p><a href="solstice-starterkit.zip" class="btn btn-warning">Download Starterkit</a></p>
+  -->
 </div>
 <!-- ./end  #midcolumn -->
 
@@ -23,7 +33,13 @@
   <div class="sideitem">
     <h2>Related Links</h2>
     <ul>
-      <li><a target="_self" href="/eclipse.org-common/themes/solstice/docs/">Documentation</a></li>
+      <li> <a target="_self" href="https://www.youtube.com/watch?v=O-Cts-wP7rE">Intro to Amlen talk</a></li>
+      <li> <a target="_self" href="https://www.ibm.com/docs/en/wip-mg/5.0.0.1?topic=watson-iot-platform-message-gateway"> Message Gateway Docs</a></li>
+      <li> <a target="_self" href="https://ibm.biz/messagegatewayfixes"> Message Gateway Downloads</a></li>
+      <li> <a target="_self" href="https://mqtt.org/">MQTT</a></li>
+      <li> <a target="_self" href="https://eclipse.org/paho">Paho MQTT Clients</a></li>
+      <li> <a target="_self" href="https://eclipse.org/mosquitto">Mosquitto Lightweight MQTT Broker</a></li>
+      <!-- <li><a target="_self" href="/eclipse.org-common/themes/solstice/docs/">Documentation</a></li> -->
     </ul>
   </div>
 </div>
