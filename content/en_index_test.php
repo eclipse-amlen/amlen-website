@@ -16,12 +16,12 @@
   <h1><?php print $pageTitle;?></h1>
   <p>Amlen is a scalable, secure, easy to use message broker that can be used 
   for IoT, web and mobile use-cases. It primarily supports the MQTT protocol (v5 and v3.x)
-  but supports JMS and custom protocols as well.
+  but supports JMS and custom protocols as well.</p>
 
-  It is based on an initial contribution of the IBM WIoTP Message Gateway broker that
+  <p>It is based on an initial contribution of the IBM WIoTP Message Gateway broker that
   is currently undergoing review at Eclipse so builds are not yet available but it
   is a mature, production-ready codebase used by a wide variety of companies and 
-  organisations.
+  organisations.</p>
   <!--
   <p><a href="solstice-starterkit.zip" class="btn btn-warning">Download Starterkit</a></p>
   -->
