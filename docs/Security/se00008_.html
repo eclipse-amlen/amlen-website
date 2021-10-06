@@ -1,0 +1,106 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="OAuth is a protocol that enables a resource owner, such as a user, to allow a third party access to a protected resource without sharing a user name or password. Instead, an access token is used to grant access to the protected resource. For Eclipse Amlen, it enables a client application to connect to the Eclipse Amlen server without sharing the user name or password with Eclipse Amlen. Eclipse Amlen supports OAuth 2.0."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>OAuth</title></head><body id="se00008_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a><ul><li><a href="../Security/se00010.html">Authentication</a><ul><li><a href="../Security/se00002_.html">Messaging users and groups</a></li><li><a href="../Security/se00013_.html">Lightweight Third Party Authentication (LTPA)</a></li><li class="active"><a href="../Security/se00008_.html">OAuth</a></li></ul></li><li><a href="../Security/se00011.html">Authorization</a></li><li><a href="../Security/se00005_.html">Transport Layer Security</a></li></ul></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">OAuth</h1>
+
+<div class="body conbody"><p class="shortdesc">OAuth is a protocol that enables a resource owner, such
+as a user, to allow a third party     access to a protected resource
+without sharing a user name or password. Instead, an access token
+    is used to grant access to the protected resource. For <span class="ph">Eclipse Amlen</span>, it enables a
+client application to connect     to the <span class="ph">Eclipse Amlen</span> server without
+sharing the user name     or password with <span class="ph">Eclipse Amlen</span>. <span class="ph">Eclipse Amlen</span> supports OAuth
+2.0.</p>
+<p class="p">With the OAuth protocol, a client application can be granted access
+to a resource server       without entering a user name and password
+to access that server. Instead, the client       application is authenticated
+by a trusted server that is known as an authorization server. The
+      authorization server returns an access token to the client application
+so that the client       application can connect to the resource server
+without entering a user name or password.</p>
+<p class="p">For example, a client application, such as a photo-printing service,
+can be granted access to       photos that are stored on a protected
+server, without the user name and password for that       server.
+The photo-printing service requests that user authenticate with an
+authorization       server. The authorization server issues an access
+token, which is used by the photo-printing       service to request
+access to the photos. When the access token is accepted by the protected
+      server, the photo-printing service can access the photos to
+print them.</p>
+<div class="p">The following diagram shows the flow to authenticate a client to connect to <span class="ph">Eclipse Amlen</span> by using OAuth:<figure class="fig fignone"><figcaption><span class="fig--title-label">Figure 1. </span>OAuth flow to authenticate a client to connect to <span class="ph">Eclipse Amlen</span></figcaption>
+                
+                <img class="image" src="se00008a_v2.gif" alt="A diagram that shows the OAuth flow to authenticate a client to connect to Eclipse Amlen">
+            </figure><ol class="ol">
+                <li class="li">The <span class="ph">Eclipse Amlen</span> client logs on to the
+                    client application server to request authorization to connect to <span class="ph">Eclipse Amlen</span>.</li>
+                <li class="li">The client application server requests authorization from the authorization
+                    server.</li>
+                <li class="li">The authorization server connects to the LDAP server to authenticate the
+                    user.</li>
+                <li class="li"> The authorization server creates an authorization token and returns it to the
+                        <span class="ph">Eclipse Amlen</span> client. The
+                    authorization token is in JSON format and includes the following
+                    data:<pre class="pre codeblock"><code> {"expires_in":86400, "refresh_token":"18927670-R-2v8e8ycA419RaaVWY9Xz4APp", 
+"access_token":"18926970-A-nMnSHDqg8Fsunm6Qx1cF1APp"}</code></pre></li>
+                <li class="li">The <span class="ph">Eclipse Amlen</span> client connects to <span class="ph">Eclipse Amlen</span> with the user name
+                        <code class="ph codeph">IMA_OAUTH_ACCESS_TOKEN</code> and the authorization token as a
+                    password. The <span class="ph">Eclipse Amlen</span> client must
+                    send the complete authorization token, in JSON format, including the
+                        <code class="ph codeph">"expires_in"</code>, <code class="ph codeph">"refresh_token"</code>, and
+                        <code class="ph codeph">"access_token"</code> data fields, as a password.</li>
+                <li class="li"><span class="ph">Eclipse Amlen</span> connects to the
+                    authorization server to validate the access token. The name of the access token
+                    and the value specified by the <span class="keyword parmname">AuthKey</span> parameter in the
+                    OAuth profile must match. If the token is validated, the client can connect to
+                        <span class="ph">Eclipse Amlen</span>. <p class="p">The URL to use to
+                        connect to the authorization server to validate the access token is
+                        specified by the <span class="keyword parmname">ResourceURL</span> parameter in an OAuth
+                        profile.</p></li>
+                <li class="li"> If any connection or messaging policies on <span class="ph">Eclipse Amlen</span> require authorization that
+                    is based on group ID, <span class="ph">Eclipse Amlen</span> must
+                    first retrieve the user name that is associated with the access token. The user
+                    name must be retrieved from the authorization server. You can configure the
+                    authorization server to return a comma-separated list of groups to which the
+                    user belongs, as well as the user name. Alternatively, you can use the user name
+                    that is returned from the authorization server to retrieve group ID information
+                    from an LDAP server. <p class="p">The URL to use to connect to the authorization server to
+                        retrieve the user information is specified by the
+                            <span class="keyword parmname">UserInfoURL</span> parameter in an OAuth profile. The user
+                        ID is returned as a JSON object. The authorization server can also return
+                        the group ID in the JSON object. The names of the user ID and group ID are
+                        specified by the <span class="keyword parmname">UserInfoKey</span> and
+                            <span class="keyword parmname">GroupInfoKey</span> parameters respectively in the OAuth
+                        profile. </p><p class="p">If the authorization server is configured to return the user
+                        ID and group ID in the response to the authorization request, the values
+                        specified in the <span class="keyword parmname">ResourceURL</span> and
+                            <span class="keyword parmname">UserInfoURL</span> parameters in the OAuth profile must be
+                        the same.</p><p class="p">For more information about configuring OAuth, see <a class="xref" href="../Administering/ad00760_.html" title="You can configure OAuth by using OAuth profiles. The OAuth profile defines the URLs and keys that are required to use OAuth single sign-on with Eclipse Amlen. The OAuth profile must be associated with a security profile, and the security profile must be associated with an endpoint.">Configuring OAuth</a>.</p></li>
+                <li class="li">If <span class="ph">Eclipse Amlen</span> is not configured to
+                    retrieve the group name from the authorization server, then the user ID that is
+                    returned from the authorization server can be used by <span class="ph">Eclipse Amlen</span> to connect to an external
+                    LDAP server to retrieve the name of the group to which the user belongs.</li>
+            </ol></div>
+<div class="p">To configure <span class="ph">Eclipse Amlen</span> to
+use OAuth, you must    complete the following steps:<ol class="ol">
+<li class="li">Configure the client application to use user name and password
+authentication where the user name is <code class="ph codeph">IMA_OAUTH_ACCESS_TOKEN</code>,
+and the password is the authorization token.</li>
+<li class="li">Register the client application with the authorization server.<div class="p">The registered application is
+assigned a client ID and a client secret. In <span class="ph">WebSphere® Application
+Server</span>,
+this information is stored in
+<code class="ph codeph">&lt;AppServer_cell_directory&gt;/oauth20/base_clients.xml</code>:
+<pre class="pre codeblock"><code>&lt;client id="MessageGatewayExampleClient" component="MessageGatewayProvider" secret="Secret"  displayname="Message Gateway Client" redirect="https://192.0.2.1:16102" enabled="true"&gt;
+&lt;/client&gt;</code></pre></div></li>
+<li class="li">Configure <span class="ph">Eclipse Amlen</span> for
+OAuth:<ol class="ol" type="a">
+<li class="li">Create an OAuth profile that defines the access token name, and
+the authorization server URL to validate the token. Optionally, the
+OAuth profile can define the authorization server URL to retrieve
+user information.</li>
+<li class="li">Associate the OAuth profile with a security profile.</li>
+</ol>For more information about how to configure OAuth for <span class="ph">Eclipse Amlen</span>, see <a class="xref" href="../Administering/ad00760_.html" title="You can configure OAuth by using OAuth profiles. The OAuth profile defines the URLs and keys that are required to use OAuth single sign-on with Eclipse Amlen. The OAuth profile must be associated with a security profile, and the security profile must be associated with an endpoint.">Configuring OAuth</a>.</li>
+</ol></div>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Security/se00010.html" title="When a messaging client connects to Eclipse Amlen, you can choose whether you want to authenticate the messaging user ID and password of that client.">Authentication</a></div></div><div class="linklist relinfo"><strong>Related information</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="http://tools.ietf.org/html/rfc6749" target="_blank" rel="external noopener">The OAuth 2.0 Authorization Framework</a></li></ul></div></nav>
+
+</article></main></body></html>

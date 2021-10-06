@@ -1,0 +1,117 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="There are several common reasons why messages might not arrive."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Messages do not arrive</title></head><body id="tr00004_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a><ul><li><a href="../Troubleshooting/tr00000_.html">Log files</a></li><li><a href="../Troubleshooting/tr00006_.html">Maintenance mode</a></li><li><a href="../Troubleshooting/tr00001_.html">Common problems</a><ul><li><a href="../Troubleshooting/tr00002_.html">The application fails to connect</a></li><li><a href="../Troubleshooting/tr00008_.html">The application disconnects</a></li><li><a href="../Troubleshooting/tr00010_.html">The application fails to publish</a></li><li><a href="../Troubleshooting/tr00009_.html">The application fails to subscribe</a></li><li><a href="../Troubleshooting/tr00003_.html">Messages are not sent</a></li><li class="active"><a href="../Troubleshooting/tr00004_.html">Messages do not arrive</a></li><li><a href="../Troubleshooting/tr00005_.html">  MQ Connectivity problems</a></li><li><a href="../Troubleshooting/raisnotworking.html">Eclipse Amlen resource adapter is not working</a></li><li><a href="../Troubleshooting/tr00020_.html">LTPA validation fails</a></li><li><a href="../Troubleshooting/tr00012_.html">The Amlen WebUI is not working</a></li><li><a href="../Troubleshooting/tr00015_.html">High availability problems</a></li><li><a href="../Troubleshooting/tr00026_.html">Cluster problems</a></li><li><a href="../Troubleshooting/tr00021_.html">Dynamic policy update problems</a></li><li><a href="../Troubleshooting/tr00023_.html">SNMP problems</a></li><li><a href="../Troubleshooting/tr00024_.html">LDAP is not working</a></li><li><a href="../Troubleshooting/tr00031_.html">Problems during upgrade from IBM MessageSight version 1.2</a></li></ul></li><li><a href="../Troubleshooting/tr00030.html">Platform must-gather</a></li><li><a href="../Troubleshooting/admin_messagecatalog.html">Message catalog</a></li></ul></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Messages do not arrive</h1>
+
+<div class="body conbody"><p class="shortdesc">There are several common reasons why messages might not
+arrive.</p>
+<section class="section"><h2 class="title sectiontitle">Are the messages sent?</h2><p class="p">If messages are not
+arriving, the cause might be that the messages are not sent. For more
+information about diagnosing why messages are not sent, see <a class="xref" href="tr00003_.html" title="There are several common reasons why messages might not be sent.">Messages are not sent</a>.</p></section>
+<section class="section"><h2 class="title sectiontitle">Is the message reliability level too low?</h2><p class="p">If
+the message is published with a message reliability level of <code class="ph codeph">at
+most once</code>, the message might not arrive. To ensure that messages
+arrive, you must use the <code class="ph codeph">at least once</code>, or the <code class="ph codeph">exactly
+once</code> reliability level. For more information about message
+delivery, and message reliability, see <a class="xref" href="../Planning/ov00102_.html" title="Eclipse Amlen natively supports MQTT and JMS protocols.">Message delivery</a>.</p></section>
+<section class="section"><h2 class="title sectiontitle">Is the topic subscription string correct?</h2><p class="p">If
+an application subscribes to a topic that does not exactly match the
+topic that the message was published to, the message does not arrive.</p><p class="p">Check
+that the publication and subscription topic strings match. Make any
+necessary changes, and try publishing the message again.</p></section>
+<section class="section"><h2 class="title sectiontitle">Is the topic string valid?</h2><div class="p">If an invalid
+topic string is specified, an application cannot subscribe to the
+topic. There are a number of ways in which the topic string can be
+invalid. For more information about valid topic strings, see <a class="xref" href="../Overview/ov00032.html#ov00032__exStrings" title="Topic string validity for MQTT and JMS publish/subscribe.">Table 1</a>.</div></section>
+<section class="section"><h2 class="title sectiontitle">Does the messaging policy allow subscription?</h2><p class="p">When
+you create a messaging policy, you can restrict whether an application
+can publish or subscribe to a topic string. The restriction can be
+based on one or more of the following values: IP address, client ID,
+messaging user ID, messaging group, or the client certificate used.
+If messages are not arriving, the cause might be that the messaging
+policy does not allow the application to subscribe.</p><p class="p">Check the
+logs for messages that indicate the messaging policy does not allow
+the subscription. To resolve the problem, connect the application
+to an endpoint with messaging policies that allow the subscription.
+Alternatively, change the messaging policy to allow the application
+to subscribe. For more information about configuring messaging policies,
+see <a class="xref" href="../Administering/ad00360_.html" title="You can configure messaging hubs either by using the Amlen WebUI or by using REST Administration APIs.">Configuring message hubs</a>.</p></section>
+<section class="section"><h2 class="title sectiontitle">Does the messaging policy allow the message to be
+received?</h2><p class="p">When you create a messaging policy, you can restrict
+whether an application can send, receive, or browse a queue. The restriction
+can be based on one or more of the following values: IP address, client
+ID, messaging user ID, messaging group, or the client certificate
+used. If messages are not arriving, the cause might be that the messaging
+policy does not allow the application to receive the message.</p><p class="p">Check the logs for messages that indicate the messaging policy does not allow the application to
+receive the message. To resolve the problem, connect the application to an endpoint with messaging
+policies that allow the application to receive the message. Alternatively, change the messaging
+policy to allow the application to receive the message. For more information about configuring
+messaging policies, see <a class="xref" href="../Administering/ad00360_.html" title="You can configure messaging hubs either by using the Amlen WebUI or by using REST Administration APIs.">Configuring message hubs</a>.</p></section>
+<section class="section"><h2 class="title sectiontitle">Has the maximum topic depth been exceeded?</h2><p class="p"><span class="ph">Eclipse Amlen</span> has a maximum
+topic depth of 32 levels. If you publish a message to a topic string
+that exceeds this depth, the message is not published. Depending on
+the protocol that is used, the publish can seem to succeed, but the
+message does not arrive.</p><p class="p">To resolve the problem, you must reduce
+the depth of the topic string.</p></section>
+<section class="section"><h2 class="title sectiontitle">Did the message timeout during transmission?</h2><p class="p">If
+a message is not fully transmitted to an MQTT client within 60 seconds,
+the message times out. After the timeout, the timeout value is doubled
+and the message is retransmitted with a DUP flag. If an ACK is received
+by <span class="ph">Eclipse Amlen</span>, the retransmission
+is canceled. This timeout value cannot be configured by the user,
+and applies only to subscriptions of QoS=1 or QoS=2.</p><p class="p">Therefore,
+in situations where large messages are being transmitted, or when
+client applications are experiencing severe latency, it is possible
+that messages do not arrive. In rare instances, the client might receive
+duplicate messages.</p><p class="p">To resolve the problem, wait for the message
+transmission to complete, and if possible, reduce the latency of the
+client application.</p></section>
+<section class="section"><h2 class="title sectiontitle">Do the messages match the selector criteria?</h2><p class="p">With
+JMS, you can specify a message selector when you create a subscription.
+If the messages do not match the message selector, messages do not
+arrive. If a message selector is used, ensure that it is specified
+correctly.</p></section>
+<section class="section"><h2 class="title sectiontitle">Are many clients sharing the same subscription on
+a single connection?</h2><p class="p">If large numbers of consumers are created
+on a single connection, the system performance can be impacted. This
+performance impact can result in a delay in receiving messages. </p></section>
+<section class="section"><h2 class="title sectiontitle">Is <code class="ph codeph">Max Messages Behavior</code> set to <code class="ph codeph">Discard
+Old Messages</code>?</h2><p class="p">If <code class="ph codeph">Max Messages Behavior</code> is
+set to <code class="ph codeph">Discard Old Messages</code>, some messages might
+not arrive.</p><p class="p"><code class="ph codeph">Max Messages Behavior</code> is an option
+in a messaging policy that determines what happens when the buffer
+for a subscription is full. That is, when the buffer for a subscription
+reaches the <code class="ph codeph">Max Messages</code> value. If <code class="ph codeph">Max Messages
+Behavior</code> is set to <code class="ph codeph">Discard Old Messages</code>,
+and the buffer for a subscription is full, a percentage of old, undelivered
+messages are discarded. The quality of service, persistence, or priority
+of the message does not prevent a message from being discarded.</p><p class="p">To
+resolve the problem, and ensure that all messages are received by
+an application, set <code class="ph codeph">Max Messages Behavior</code> to <code class="ph codeph">Reject
+New Messages</code>.</p></section>
+<section class="section"><h2 class="title sectiontitle">Is the value of <span class="keyword parmname">MaxMessageMaxTimeToLive</span> set
+too low?</h2><p class="p">If the value of the <span class="keyword parmname">MaxMessageMaxTimeToLive</span> parameter
+on the messaging policy is set too low, some messages might not arrive.</p><p class="p"><span class="keyword parmname">MaxMessageMaxTimeToLive</span> is
+a parameter in a messaging policy that specifies the maximum time
+that a published or sent message can exist for in <span class="ph">Eclipse Amlen</span>. The publishing
+application can also set a value for message expiry time. The time
+that is set for message expiry is the lower of the value set in <code class="ph codeph">MaxMessageTimeToLive</code> and
+the value set by the application.</p><p class="p">You might
+need to adjust the value of the <span class="keyword parmname">MaxMessageMaxTimeToLive</span> parameter
+or the value set in the application so that messages can exist for
+longer in <span class="ph">Eclipse Amlen</span>. </p></section>
+<section class="section"><h2 class="title sectiontitle">Are expired messages arriving?</h2><p class="p">Ensure that
+client and server times are synchronized in order to minimize the
+possibility of expired messages being received. You might also need
+to adjust the value of the <span class="keyword parmname">MaxMessageMaxTimeToLive</span> parameter
+or the value set in the application. </p></section>
+<section class="section"><h2 class="title sectiontitle">Is your topic filter correct and does it match your
+messaging policies?</h2>  <p class="p">If you are subscribing to a topic with
+an MQTT global-shared subscription, and messages do not arrive, the
+problem might be the topic filter. See <a class="xref" href="../Security/se00019_.html">Topic
+filters for MQTT global-shared durable subscriptions</a> for more
+information about configuring topic messaging policies for use with
+MQTT global-shared subscriptions.</p> </section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Troubleshooting/tr00001_.html" title="There are a number of common problems that you might encounter. Your application might fail to connect. Your application might disconnect unexpectedly. Your messages might not be published, or your messages might not arrive. MQ Connectivity might not work.">Common problems</a></div></div><div class="linklist relconcepts"><strong>Related concepts</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="tr10000_.html" title="Look for a troubleshooting task to help you solve a problem when using Eclipse Amlen.">Troubleshooting</a></li><li class="linklist"><a class="link" href="tr00001_.html" title="There are a number of common problems that you might encounter. Your application might fail to connect. Your application might disconnect unexpectedly. Your messages might not be published, or your messages might not arrive. MQ Connectivity might not work.">Common problems</a></li><li class="linklist"><a class="link" href="tr00008_.html" title="There are several common reasons why an application might disconnect unexpectedly.">The application disconnects</a></li><li class="linklist"><a class="link" href="tr00003_.html" title="There are several common reasons why messages might not be sent.">Messages are not sent</a></li><li class="linklist"><a class="link" href="tr00009_.html" title="There are several common reasons why an application might fail to subscribe to a topic.">The application fails to subscribe</a></li><li class="linklist"><a class="link" href="tr00010_.html" title="There are several common reasons why an application might fail to publish to a topic.">The application fails to publish</a></li><li class="linklist"><a class="link" href="tr00002_.html" title="There are several common reasons why an application might fail to connect.">The application fails to connect</a></li><li class="linklist"><a class="link" href="tr00005_.html" title="There are several reasons why you might experience problems when you use MQ Connectivity.">MQ Connectivity problems</a></li></ul></div><div class="linklist relref"><strong>Related reference</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="admin_messagecatalog.html" title="You can use the messages in this catalog to help you solve problems with Eclipse Amlen.">Message catalog</a></li></ul></div></nav>
+</article></main></body></html>

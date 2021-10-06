@@ -1,0 +1,166 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="External monitoring applications can access endpoint data that is published by Eclipse Amlen by subscribing to the Eclipse Amlen topic $SYS/ResourceStatistics/Endpoint."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Viewing endpoint level statistics by using an external application</title></head><body id="publishingstatisticsonmonitoringtopics"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a><ul><li><a href="../Monitoring/admin00080.html">Cluster monitoring</a></li><li><a href="../Monitoring/admin00009.html">Connection Monitoring</a></li><li><a href="../Monitoring/admin00010.html">Endpoint Monitoring</a><ul><li><a href="../Monitoring/admin00015.html">Viewing endpoint level statistics by using the Amlen WebUI</a></li><li><a href="../Monitoring/admin00013.html">Viewing endpoint level statistics by using REST Monitoring APIs</a></li><li class="active"><a href="../Monitoring/admin00040.html">Viewing endpoint level statistics by using an external application</a></li></ul></li><li><a href="../Monitoring/admin00016.html">Topic Monitoring</a></li><li><a href="../Monitoring/admin00019.html">Queue Monitoring</a></li><li><a href="../Monitoring/admin00022.html">Subscription Monitoring</a></li><li><a href="../Monitoring/admin00025.html">MQTT Client Monitoring</a></li><li><a href="../Monitoring/admin00031.html">MQ Connectivity monitoring</a></li><li><a href="../Monitoring/admin00070.html">Viewing protocol plug-in monitoring statistics by using an external application</a></li><li><a href="../Monitoring/admin00028.html">Server Monitoring</a></li><li><a href="../Monitoring/admin00060.html">XA Transaction monitoring</a></li></ul></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Viewing endpoint level statistics by using an external application</h1>
+
+<div class="body taskbody"><p class="shortdesc"> External monitoring applications can access endpoint data
+that is published by <span class="ph">Eclipse Amlen</span> by subscribing
+to the <span class="ph">Eclipse Amlen</span> topic <span class="ph filepath">$SYS/ResourceStatistics/Endpoint</span>.</p>
+<section class="section prereq"><p class="p" id="publishingstatisticsonmonitoringtopics__ToPublishMonitoringDataOnATopicTheS">To publish monitoring
+data on a topic, the <span class="ph">Eclipse Amlen</span> server
+must be running.</p><p class="p" id="publishingstatisticsonmonitoringtopics__ThePublishedDataIsInJSONFormat.TheP">The published data is in JSON format. The published data
+				always includes <span class="keyword parmname">Version</span>, <span class="keyword parmname">NodeName</span>,
+					<span class="keyword parmname">Timestamp</span>, and <span class="keyword parmname">ObjectType</span>.
+					<span class="keyword parmname">NodeName</span> is the name of the server and
+					<span class="keyword parmname">ObjectType</span> is the name of the object that you are
+				monitoring.</p><p class="p" id="publishingstatisticsonmonitoringtopics__ForMoreInformationAboutMonitoringBy">For more information about
+monitoring by using an external application, see <a class="xref" href="admin00008_.html" title="Monitoring provides a picture of the health of Eclipse Amlen. You can monitor Eclipse Amlen to understand how it is being used, and watch for potential problems.">Monitoring and
+reporting</a>.</p></section>
+<section class="section context"><p class="p">Monitoring data is automatically published every 2 seconds
+to the topic string <span class="ph filepath">$SYS/ResourceStatistics/Endpoint</span>.
+The name of the monitored endpoint is included in the message. If
+there are multiple instances of an endpoint, then the statistics of
+each instance are published in a separate message. </p><p class="p" id="publishingstatisticsonmonitoringtopics__InMQTTYouCannotSubscribeToASYSTopic">In MQTT, you cannot subscribe
+to a <span class="ph filepath">$SYS</span> topic if you specify <span class="keyword parmname">cleanSession</span>=<kbd class="ph userinput">0</kbd>.
+In JMS, you cannot subscribe to a <span class="ph filepath">$SYS</span> topic
+if you use a durable subscription.</p></section>
+<section><ol class="ol steps"><li class="li step stepexpand"><span class="ph cmd" id="publishingstatisticsonmonitoringtopics__CreateAnEndpoint.YouCanUseThisEndpo">Create an endpoint.
+You can use this endpoint to connect your external monitoring application
+to <span class="ph">Eclipse Amlen</span> and create
+a monitoring subscription. For more information about configuring
+an endpoint, see <a class="xref" href="../Administering/ad00360_.html">Configuring
+message hubs</a>.</span></li><li class="li step stepexpand"><span class="ph cmd" id="publishingstatisticsonmonitoringtopics__StrengthenYourSecurityByConfiguring">Strengthen
+your security by configuring this endpoint specifically for monitoring,
+with connection and messaging policies to restrict access to monitoring
+data that is published on the topic root <span class="ph filepath">$SYS</span>.</span>
+<div class="itemgroup info" id="publishingstatisticsonmonitoringtopics__ForMoreInformationAboutConfiguringC">For more information
+about configuring connection and messaging policies, see <a class="xref" href="../Administering/ad00360_.html">Configuring message hubs</a>.</div></li><li class="li step stepexpand"><span class="ph cmd">Connect your external application to the endpoint that
+you created in step 1, and subscribe to the topic string <span class="ph filepath">$SYS/ResourceStatistics/Endpoint</span>. </span>
+</li></ol></section>
+<section class="section result"><p class="p" id="publishingstatisticsonmonitoringtopics__TheFollowingInformationIsMadeAvaila">The following
+information is made available to the monitoring application:</p><ul class="ul">
+<li class="li"><dl class="dl" id="publishingstatisticsonmonitoringtopics__VersionStringSpecifiesTheVersionOfA">
+<dt class="dt dlterm">Version</dt>
+<dd class="dd">String</dd>
+<dd class="dd ddexpand">Specifies the version of server.</dd>
+</dl></li>
+<li class="li"><dl class="dl" id="publishingstatisticsonmonitoringtopics__NodeNameStringSpecifiesTheNameOfThe">
+<dt class="dt dlterm">NodeName</dt>
+<dd class="dd">String</dd>
+<dd class="dd ddexpand">Specifies the name of the server.</dd>
+</dl></li>
+<li class="li"><dl class="dl" id="publishingstatisticsonmonitoringtopics__TimestampDateTimeSpecifiesTheDateAn">
+<dt class="dt dlterm">Timestamp</dt>
+<dd class="dd">Date/Time</dd>
+<dd class="dd ddexpand">Specifies the date and time in ISO8601 format.</dd>
+</dl></li>
+<li class="li"><dl class="dl" id="publishingstatisticsonmonitoringtopics__ObjectTypeStringSpecifiesTheTypeOfO">
+<dt class="dt dlterm">Object type</dt>
+<dd class="dd">String</dd>
+<dd class="dd ddexpand">Specifies the type of object that you are monitoring.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Name</dt>
+<dd class="dd">String</dd>
+<dd class="dd ddexpand">Specifies the name of the endpoint that you are monitoring.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Interface</dt>
+<dd class="dd">String</dd>
+<dd class="dd ddexpand">Specifies the name of the ethernet interface that is associated
+with the endpoint.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Enabled</dt>
+<dd class="dd">Boolean</dd>
+<dd class="dd ddexpand">Specifies whether the endpoint is enabled. If the endpoint is
+enabled and the LastErrorCode is 0, this indicates that the endpoint
+is accepting connections. </dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">TotalConnections</dt>
+<dd class="dd">Numeric</dd>
+<dd class="dd ddexpand">Specifies the total number of connections.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">ActiveConnections</dt>
+<dd class="dd">Numeric</dd>
+<dd class="dd ddexpand">Specifies the number of currently active connections.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">BadConnections</dt>
+<dd class="dd">Numeric</dd>
+<dd class="dd ddexpand">Specifies the number of connections that failed to connect since
+reset.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">MsgRead</dt>
+<dd class="dd">Numeric</dd>
+<dd class="dd ddexpand">Specifies the number of messages that are read since reset.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">MsgWrite</dt>
+<dd class="dd">Numeric</dd>
+<dd class="dd ddexpand">Specifies the number of messages that are written since reset.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">BytesRead</dt>
+<dd class="dd">Numeric</dd>
+<dd class="dd ddexpand">Specifies the number of bytes read since reset.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">BytesWrite</dt>
+<dd class="dd">Numeric</dd>
+<dd class="dd ddexpand">Specifies the number of bytes written since reset.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">LostMessageCount</dt>
+<dd class="dd">Numeric</dd>
+<dd class="dd ddexpand">Count of messages since reset that, when published, resulted in
+an error. This error can be caused by a number of events. It is usually
+caused when a message is published that cannot be accepted by one
+or more subscriptions and, because of the quality of service (QoS)
+of the message and subscriptions, the publish request fails. The publishing
+application receives an error.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">ResetTime </dt>
+<dd class="dd">Date/Time</dd>
+<dd class="dd ddexpand">Specifies the time at which the statistics for the endpoint were
+reset. </dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">WarnMsgs </dt>
+<dd class="dd">Numeric</dd>
+<dd class="dd ddexpand">Count of messages since reset that, when published, resulted in
+a warning. This count is increased when a message is published that
+cannot be accepted by one or more subscriptions but, because of the
+QoS of the message and subscriptions, the publish request does not
+fail. Even though the publish request does not fail, this count indicates
+that one or more subscriptions are not able to process the messages
+that are being published.</dd>
+</dl></li>
+</ul></section>
+<section class="example"><p class="p" id="publishingstatisticsonmonitoringtopics__TheFollowingExampleShowsAMonitoring">The following
+example shows a monitoring message that contains monitoring data about
+an endpoint. </p><pre class="pre codeblock"><code>{ 
+	"Version":"1.2",
+	"NodeName":"mar#678",
+	"TimeStamp":"2014-07-26T12:52:41.226Z",
+	"ObjectType":"Endpoint",  
+	"Name":"DemoEndpoint", 
+	"Interface":192.0.2.0, 
+	"Enabled":1, 
+	"Total":100, 
+	"Active":73, 
+	"BadConnections":0, 
+	"MsgRead":5000, 
+	"MsgWrite":5000, 
+	"BytesRead":10000, 
+	"BytesWrite":10000,
+	"LostMessageCount":0,
+	"ResetTime ":"2014-07-13T12:11:42Z",
+	"WarnMsgs":0 
+}</code></pre></section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Monitoring/admin00010.html" title="Monitor the performance of individual endpoints, in terms of connection activity and throughput across a specified time frame.">Endpoint Monitoring</a></div></div></nav></article></main></body></html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="To send messages between IBM MQ and Eclipse Amlen, you must configure a server connection channel. Follow these steps to configure a server connection channel on z/OS."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Configuring the IBM MQ server connection channel on z/OS</title></head><body id="task_fqg_jbs_yn"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a><ul><li><a href="../Administering/ad00102_.html">MQ Connectivity</a><ul><li><a href="../Administering/ad00092_.html">MQ Connectivity throughput and message order</a></li><li><a href="../Administering/ad00101_.html">MQ Connectivity message persistence</a></li><li><a href="../Administering/ad00132_.html">MQ Connectivity retained messages</a></li><li><a href="../Administering/ad00103_.html">MQ Connectivity and high availability</a></li><li><a href="../Administering/ad00104_.html">MQ Connectivity security</a></li><li><a href="../Administering/ad00091_.html">Configuring the IBM MQ server connection channel</a><ul><li class="active"><a href="../Administering/ad00093_.html">Configuring the IBM MQ server connection channel on z/OS</a></li><li><a href="../Administering/ad00108_.html">Configuring MQ Connectivity security by using self-signed certificates</a></li><li><a href="../Administering/ad00109_.html">Configuring MQ Connectivity security by using CA certificates</a></li></ul></li><li><a href="../Administering/ad00105_.html">Configuring the MQ Connectivity SSL key repository</a></li><li><a href="../Administering/ad00113_.html">Configuring queue manager connections</a></li><li><a href="../Administering/ad00110_.html">Configuring destination mapping rules</a></li><li><a href="../Administering/ad00129_.html">Starting, restarting, stopping, and viewing the status of MQ Connectivity</a></li><li><a href="../Administering/ad00111_.html">MQ Connectivity scenarios</a></li></ul></li><li><a href="../Administering/workingwithjmsra.html">Eclipse Amlen resource adapter</a></li><li><a href="../Administering/vm00001_.html">Using VMware vSphere to handle Eclipse Amlen failover</a></li></ul></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Configuring the <span class="ph">IBM MQ</span> server
+connection channel on z/OS</h1>
+
+<div class="body taskbody"><p class="shortdesc">To send messages between <span class="ph">IBM® MQ</span> and <span class="ph">Eclipse Amlen</span>, you must configure
+a server connection channel. Follow these steps to configure a server
+connection channel on z/OS®.</p>
+<section class="section context"> <p class="p">This task details the steps that are required to configure
+the <span class="ph">IBM MQ</span> server
+connection channel on z/OS.
+For more information about how to configure the server connection
+channel on distributed platforms, see <a class="xref" href="ad00091_.html" title="To send messages between IBM MQ and Eclipse Amlen, you must configure a server connection channel.">Configuring the IBM MQ server connection channel</a>.</p> <div class="p">You
+can use an existing server connection channel, but a new channel provides
+the following benefits:<ul class="ul">
+<li class="li">Active <span class="ph">Eclipse Amlen</span> channels
+can be easily identified on the <span class="ph">IBM MQ</span> queue manager.</li>
+<li class="li">The connection between <span class="ph">Eclipse Amlen</span> and <span class="ph">IBM MQ</span> can be explicitly
+secured.</li>
+<li class="li">CHLAUTH records can be created to map the user ID of the <span class="ph">Eclipse Amlen</span> requests to an
+appropriate user ID on the <span class="ph">IBM MQ</span> system.</li>
+</ul></div> <p class="p">These steps take place on the <span class="ph">IBM MQ</span> system.</p> </section>
+<section><ol class="ol steps"><li class="li step stepexpand"><span class="ph cmd">Create a server-connection channel for the queue manager,
+by using the <span class="keyword cmdname">DEFINE CHANNEL</span> MQSC command.</span><div class="itemgroup info"><p class="p"><span class="ph">Eclipse Amlen</span> uses the server-connection
+channel to connect to <span class="ph">IBM MQ</span>.</p>For
+more information about the <span class="keyword cmdname">DEFINE CHANNEL</span> command
+and the options available, see <a class="xref" href="http://www-01.ibm.com/support/knowledgecenter/SSFKSJ_7.5.0/com.ibm.mq.ref.adm.doc/q085520_.htm" target="_blank" rel="external noopener">DEFINE CHANNEL</a> in the <span class="ph">IBM MQ</span> documentation.</div>
+</li><li class="li step stepexpand"><span class="ph cmd">Make a note of the server-connection channel name, and
+which queue manager the channel is associated with. If applicable,
+make a note of the <span class="keyword parmname">SSLCIPH</span> value used. Make a
+note of the port number of the listener.</span><div class="itemgroup info"> <p class="p">The name of the server-connection channel is used when you create a queue manager connection by
+      using either the <span class="ph">Amlen WebUI</span>, or the <span class="ph">Eclipse Amlen</span>
+      <span class="ph">REST Administration APIs</span>. The name is also used when you
+      authorize <span class="ph">Eclipse Amlen</span> to connect to <span class="ph">IBM MQ</span>.</p> </div></li><li class="li step stepexpand"><span class="ph cmd">Configure security on the queue manager:</span><div class="itemgroup info"> <div class="p"> <ul class="ul">
+<li class="li">If command security is enabled, then the following access is required:<ul class="ul">
+<li class="li">ALTER access is required to the <code class="ph codeph">hlq.DEFINE.QUEUE</code> profile
+in the MQCMDS class</li>
+<li class="li">ALTER access is required to the <code class="ph codeph">hlq.DELETE.QUEUE</code> profile
+in the MQCMDS class</li>
+<li class="li">READ access is required to the <code class="ph codeph">hlq.DISPLAY.TPSTATUS</code> profile
+in the MQCMDS class</li>
+</ul></li>
+<li class="li">If command resource security is enabled, then the following access
+is required:<ul class="ul">
+<li class="li">ALTER access is required to the <code class="ph codeph">hlq.QUEUE.SYSTEM.IMA.**</code> profile
+in the MQADMIN class</li>
+</ul></li>
+<li class="li">If queue security is enabled, then the following access is required:<ul class="ul">
+<li class="li">UPDATE access is required to the <code class="ph codeph">hlq.SYSTEM.DEFAULT.MODEL.QUEUE</code> profile
+in the MQQUEUE class</li>
+<li class="li">UPDATE access is required to the <code class="ph codeph">hlq.SYSTEM.ADMIN.COMMAND.QUEUE</code> profile
+in the MQQUEUE class</li>
+<li class="li">ALTER access is required to the <code class="ph codeph">hlq.SYSTEM.IMA.**</code> profile
+in the MQQUEUE class</li>
+</ul></li>
+<li class="li">If topic security is enabled, then the following access is required:<ul class="ul">
+<li class="li">UPDATE access is required to the <code class="ph codeph">hlq.PUBLISH.<var class="keyword varname">topic</var></code> profile
+in the MXTOPIC class</li>
+<li class="li">ALTER access is required to the <code class="ph codeph">hlq.SUBSCRIBE.<var class="keyword varname">topic</var></code> profile
+in the MXTOPIC class</li>
+</ul>Where <var class="keyword varname">topic</var> is the name of the topic that
+you want to publish or subscribe to.</li>
+<li class="li"> If channel authentication is enabled, appropriate rules are required
+to permit client access:<ul class="ul">
+<li class="li">The MCAUSER can be set on either the channel or by using a channel
+authentication rule.</li>
+</ul></li>
+</ul> <div class="note note note_note"><span class="note__title">Note:</span> <var class="keyword varname">hlq</var> can be either <span class="keyword parmname">qmgr-name</span> (queue
+manager name) or <span class="keyword parmname">qsg-name</span> (queue-sharing group
+name).</div> </div> </div></li></ol></section>
+</div>
+
+</article></main></body></html>

@@ -1,0 +1,392 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="The Amlen Bridge is configured by using a small set of objects that are stored in a JSON dynamic configuration file. The objects can be created and modified as files or specified by using the Bridge REST APIs. When the configuration objects are modified, the dynamic configuration file is updated with the current state."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Configuring the Bridge</title></head><body id="br00010.dita"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li class="active"><a href="../Bridge/br00010.html">Configuring the Bridge</a><ul><li><a href="../Bridge/br00026.html">Installing  Amlen Bridge  </a></li><li><a href="../Bridge/br00012.html">Post installation user actions</a></li><li><a href="../Bridge/br00020.html">File paths</a></li><li><a href="../Bridge/br00021.html">Updating the Bridge configuration</a></li><li><a href="../Bridge/br00022.html">Monitoring</a></li><li><a href="../Bridge/br00023.html">Administrative REST interfaces</a></li></ul></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Configuring the Bridge</h1>
+
+<div class="body conbody"><p class="shortdesc">The <span class="ph"> Amlen Bridge</span> is configured
+by using a small set of objects that are stored in a JSON dynamic configuration file. The objects
+can be created and modified as files or specified by using the Bridge REST APIs. When the
+configuration objects are modified, the dynamic configuration file is updated with the current
+state.</p>
+<section class="section"><h2 class="title sectiontitle">Overview</h2>
+
+<p class="p">Each JSON object that is processed in a configuration file is considered to be a modification from the
+previous instance of the same object. During the initial configuration, when there is no existing object,
+the whole object is specified. When a dynamic update is made, only the changed fields are modified.
+Items such as strings, numbers, boolean, or arrays of strings are replaced.</p>
+<p class="p">To delete an object, you can either use the REST DELETE method or you can specify
+the object type and name in the configuration file and give the value as <code class="ph codeph">null</code>. Removing an object from the configuration file
+might not delete the object. For example, if the configuration defines a durable MQTT session with a
+SessionExpiry &gt; 0, the session continues to exist on the MQTT server after it is removed from a
+configuration file. If the configuration object is explicitly deleted, the object is removed from
+the MQTT server.</p>
+</section>
+<section class="section"><h2 class="title sectiontitle">Connecting to an MQTT server</h2>
+
+<p class="p">The following table shows the properties that are defined by a connection object, which are
+required to connect to an MQTT server: </p>
+<table class="table" id="br00010.dita__datasimpletable_r2l_1mn_qfb"><caption><span class="table--title-label">Table 1. </span><span class="title">A Connection object defines the following properties that are required to
+connect to an MQTT server.</span></caption><colgroup><col><col><col></colgroup><thead class="thead">
+<tr class="row">
+<th class="entry" id="br00010.dita__datasimpletable_r2l_1mn_qfb__entry__1">Name</th>
+<th class="entry" id="br00010.dita__datasimpletable_r2l_1mn_qfb__entry__2">Type</th>
+<th class="entry" id="br00010.dita__datasimpletable_r2l_1mn_qfb__entry__3">Description</th>
+</tr>
+</thead><tbody class="tbody">
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_r2l_1mn_qfb__entry__1">MQTTServerList</td>
+<td class="entry" headers="br00010.dita__datasimpletable_r2l_1mn_qfb__entry__2">Array of String (max 16)</td>
+<td class="entry" headers="br00010.dita__datasimpletable_r2l_1mn_qfb__entry__3">A list of MQTT servers where each entry is in the format <code class="ph codeph">host:port</code>. The host
+can be a resolvable name or an IP address. </td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_r2l_1mn_qfb__entry__1">Ciphers</td>
+<td class="entry" headers="br00010.dita__datasimpletable_r2l_1mn_qfb__entry__2">String</td>
+<td class="entry" headers="br00010.dita__datasimpletable_r2l_1mn_qfb__entry__3">The cipher list to use when TLS is set to TLS version 1.1 or TLS version1.2. The default is
+to use ciphers that are selected based on the version of TLS that is used. The cipher list is in
+openssl cipher selection format. It is best practice to leave the default settings unless they do
+not work.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_r2l_1mn_qfb__entry__1">ClientID</td>
+<td class="entry" headers="br00010.dita__datasimpletable_r2l_1mn_qfb__entry__2">String</td>
+<td class="entry" headers="br00010.dita__datasimpletable_r2l_1mn_qfb__entry__3">The initial part of the client identifier for this connection. The forwarder name and
+instance number are appended to the end of this name. The connection cannot start if the ClientID is not specified.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_r2l_1mn_qfb__entry__1">MaxPacketSize</td>
+<td class="entry" headers="br00010.dita__datasimpletable_r2l_1mn_qfb__entry__2">Int 0 to 2147483647</td>
+<td class="entry" headers="br00010.dita__datasimpletable_r2l_1mn_qfb__entry__3">The maximum packet size in bytes for MQTT and the maximum batch size in bytes for <span class="ph">Event Streams</span>. In MQTT, this value is sent to the server as the maximum size packet that the Bridge
+accepts. In <span class="ph">Event Streams</span>, the value is used along with <code class="ph codeph">MaxBatchTimeMS</code> to decide
+when a batch of messages are produced. A value of 0 indicates to use the default max packet size.  Small sizes might be rejected or ignored by the server.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_r2l_1mn_qfb__entry__1">Password</td>
+<td class="entry" headers="br00010.dita__datasimpletable_r2l_1mn_qfb__entry__2">String</td>
+<td class="entry" headers="br00010.dita__datasimpletable_r2l_1mn_qfb__entry__3">A string to send as the password. The password can be an obfuscated password. </td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_r2l_1mn_qfb__entry__1">ServerName</td>
+<td class="entry" headers="br00010.dita__datasimpletable_r2l_1mn_qfb__entry__2">String</td>
+<td class="entry" headers="br00010.dita__datasimpletable_r2l_1mn_qfb__entry__3">The server name to use for the SNI override. If not specified, the host from the
+<code class="ph codeph">MQTTServerList</code> entry is used unless it is an IP address.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_r2l_1mn_qfb__entry__1">SessionExpiry</td>
+<td class="entry" headers="br00010.dita__datasimpletable_r2l_1mn_qfb__entry__2">Int 0 to 2147483647</td>
+<td class="entry" headers="br00010.dita__datasimpletable_r2l_1mn_qfb__entry__3">The session expiry. In versions 3.1 or 3.1.1, setting the expiry to zero creates a
+CleanSession=true connection and any other value creates a CleanSession=false connection. For MQTT
+version 5, a value of 0 causes CleanStart=true to be set. The default value is 0.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_r2l_1mn_qfb__entry__1">TLS</td>
+<td class="entry" headers="br00010.dita__datasimpletable_r2l_1mn_qfb__entry__2">Enum: None, TLSv1.2, TLSv1.1</td>
+<td class="entry" headers="br00010.dita__datasimpletable_r2l_1mn_qfb__entry__3">The version of TLS to use. If <code class="ph codeph">None</code> is selected or this property is not
+set, a non-secure connection is used.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_r2l_1mn_qfb__entry__1">UserName</td>
+<td class="entry" headers="br00010.dita__datasimpletable_r2l_1mn_qfb__entry__2">String</td>
+<td class="entry" headers="br00010.dita__datasimpletable_r2l_1mn_qfb__entry__3">A string to send as the username </td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_r2l_1mn_qfb__entry__1">Version</td>
+<td class="entry" headers="br00010.dita__datasimpletable_r2l_1mn_qfb__entry__2">Enum: 3.1, 3.1.1, 5.0</td>
+<td class="entry" headers="br00010.dita__datasimpletable_r2l_1mn_qfb__entry__3">The MQTT version to use. Some features only work if MQTT version 5 is used. Version is not used
+for <span class="ph">Event Streams</span> connections. </td>
+</tr>
+</tbody></table>
+<p class="p">The following section shows an example connection object:</p>
+<pre class="pre codeblock"><code>
+{
+    "Connection": { 
+        "MyServer": 
+            "MQTTServerList”: [ mymqtt1.ibm.com:16104, mymqtt2.ibm.com:16104 ]
+            "ClientID": "MQTTBridge-",
+            “SessionExpiry”: 0,
+            "Version": "5.0",
+            "TLS": "TLSv1.2",
+            "Username": "msgUser2",
+            "Password": "!Fqun1VseY4Pmruz/Z5KjkmK/FhyZudVZVSdHYeXzx"
+        }
+    }
+}
+</code></pre>
+<p class="p">For an <span class="ph">Event Streams</span> destination, the <code class="ph codeph">MQTTServerList</code> is replaced with
+<code class="ph codeph">EventStreamsBrokerList</code>. </p>
+<table class="table" id="br00010.dita__datasimpletable_gfy_4ln_qfb"><caption><span class="table--title-label">Table 2. </span><span class="title">For an <span class="ph">Event Streams</span> destination the <code class="ph codeph">MQTTServerList</code> is replaced
+with <code class="ph codeph">EventStreamsBrokerList</code>.</span></caption><colgroup><col><col><col></colgroup><thead class="thead">
+<tr class="row">
+<th class="entry" id="br00010.dita__datasimpletable_gfy_4ln_qfb__entry__1">Name</th>
+<th class="entry" id="br00010.dita__datasimpletable_gfy_4ln_qfb__entry__2">Type</th>
+<th class="entry" id="br00010.dita__datasimpletable_gfy_4ln_qfb__entry__3">Description</th>
+</tr>
+</thead><tbody class="tbody">
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_gfy_4ln_qfb__entry__1">EventStreamsBrokerList</td>
+<td class="entry" headers="br00010.dita__datasimpletable_gfy_4ln_qfb__entry__2">Array of String (max 16)</td>
+<td class="entry" headers="br00010.dita__datasimpletable_gfy_4ln_qfb__entry__3">A list of <span class="ph">Event Streams</span> brokers where each entry is of the form <code class="ph codeph">host:port</code>.
+The host can be a resolvable name or an IP address.  </td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_gfy_4ln_qfb__entry__1">MaxBatchTimeMS</td>
+<td class="entry" headers="br00010.dita__datasimpletable_gfy_4ln_qfb__entry__2">Int 0 to 2147483647</td>
+<td class="entry" headers="br00010.dita__datasimpletable_gfy_4ln_qfb__entry__3">The maximum time to wait to complete a batch of messages. If the value is 0, the system
+default time is used. Otherwise, this is a time in milliseconds to wait to fill a batch. The batch
+of messages is sent to the broker when it exceeds either the <code class="ph codeph">MaxPacketSize</code>, or the
+<code class="ph codeph">MaxBatchTimeMS</code>.</td>
+</tr>
+</tbody></table>
+<p class="p">For <span class="ph">Event Streams</span> connections, the properties <code class="ph codeph">ClientID</code>,
+<code class="ph codeph">SessionExpiry</code> and <code class="ph codeph">Version</code> are not used. For MQTT connections the
+<code class="ph codeph">MaxBatchTimeMS</code> property is not used. </p><p class="p">Most items in Connection can be set back to the default by setting the value to <var class="keyword varname">null</var>.  This does not work for some values, which are required for the connection to work.</p>
+</section>
+<section class="section"><h2 class="title sectiontitle">Forwarder</h2>
+
+<p class="p">The following table shows the rules that are defined by the forwarder object. The rules are used
+to forward messages from a source MQTT server to a destination:</p>
+<table class="table" id="br00010.dita__datasimpletable_jhp_zmn_qfb"><caption><span class="table--title-label">Table 3. </span><span class="title">The forwarder object defines rules that  are used to forward messages from a
+source MQTT server to a destination.</span></caption><colgroup><col><col><col></colgroup><thead class="thead">
+<tr class="row">
+<th class="entry" id="br00010.dita__datasimpletable_jhp_zmn_qfb__entry__1">Name</th>
+<th class="entry" id="br00010.dita__datasimpletable_jhp_zmn_qfb__entry__2">Type</th>
+<th class="entry" id="br00010.dita__datasimpletable_jhp_zmn_qfb__entry__3">Description</th>
+</tr>
+</thead><tbody class="tbody">
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_jhp_zmn_qfb__entry__1">Source</td>
+<td class="entry" headers="br00010.dita__datasimpletable_jhp_zmn_qfb__entry__2">String</td>
+<td class="entry" headers="br00010.dita__datasimpletable_jhp_zmn_qfb__entry__3">The name of the source connection object.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_jhp_zmn_qfb__entry__1">Destination</td>
+<td class="entry" headers="br00010.dita__datasimpletable_jhp_zmn_qfb__entry__2">String</td>
+<td class="entry" headers="br00010.dita__datasimpletable_jhp_zmn_qfb__entry__3">The name of the destination connection object.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_jhp_zmn_qfb__entry__1">Enabled</td>
+<td class="entry" headers="br00010.dita__datasimpletable_jhp_zmn_qfb__entry__2">Boolean</td>
+<td class="entry" headers="br00010.dita__datasimpletable_jhp_zmn_qfb__entry__3">If the value is false, then the forwarder is not enabled and is not started.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_jhp_zmn_qfb__entry__1">Instances</td>
+<td class="entry" headers="br00010.dita__datasimpletable_jhp_zmn_qfb__entry__2">Int 0-100</td>
+<td class="entry" headers="br00010.dita__datasimpletable_jhp_zmn_qfb__entry__3">The number of instances. A value of 0 means that there no added instances. A value of 1 to
+100 means that this forwarder is used as a prototype to create the specified number of instances.
+</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_jhp_zmn_qfb__entry__1">Topic</td>
+<td class="entry" headers="br00010.dita__datasimpletable_jhp_zmn_qfb__entry__2">String or Array of String (max 16)</td>
+<td class="entry" headers="br00010.dita__datasimpletable_jhp_zmn_qfb__entry__3">The names of topics to subscribe to.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_jhp_zmn_qfb__entry__1">Selector</td>
+<td class="entry" headers="br00010.dita__datasimpletable_jhp_zmn_qfb__entry__2">String</td>
+<td class="entry" headers="br00010.dita__datasimpletable_jhp_zmn_qfb__entry__3">A selector in extended SQL92 format. </td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_jhp_zmn_qfb__entry__1">SourceQoS</td>
+<td class="entry" headers="br00010.dita__datasimpletable_jhp_zmn_qfb__entry__2">0, 1, 2</td>
+<td class="entry" headers="br00010.dita__datasimpletable_jhp_zmn_qfb__entry__3">The QoS for the subscription. This can be reduced if the source server does not support the
+requested QoS. If the destination is <span class="ph">Event Streams</span>, this value is reduced from 2 to 1.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_jhp_zmn_qfb__entry__1">TopicMap</td>
+<td class="entry" headers="br00010.dita__datasimpletable_jhp_zmn_qfb__entry__2">String</td>
+<td class="entry" headers="br00010.dita__datasimpletable_jhp_zmn_qfb__entry__3">The mapping from source topic to destination topic.</td>
+</tr>
+</tbody></table>
+<p class="p">The following section shows an example forwarder:</p>
+<pre class="pre codeblock"><code>
+{ 
+    "Forwarder": {
+        "m2w": {
+            "Topic": ["wiotp/event/+/+/MyEvent/#"],
+            "Enabled": true,
+            "Source": "MyServer",
+            "Destination": "WIoTP",
+            "TopicMap": "iot-2/type/${Topic2}/id/${Topic3}/evt/${Topic4}/fmt/json'"
+        }
+    }
+}
+</code></pre>
+<p class="p">The following table shows the name, type and description of the fields that are added for
+forwarders with an <span class="ph">Event Streams</span> destination:</p>
+<table class="table" id="br00010.dita__datasimpletable_xn1_bln_qfb"><caption><span class="table--title-label">Table 4. </span><span class="title">For forwarders with an <span class="ph">Event Streams</span> destination, the following fields are
+added:</span></caption><colgroup><col><col><col></colgroup><thead class="thead">
+<tr class="row">
+<th class="entry" id="br00010.dita__datasimpletable_xn1_bln_qfb__entry__1">Name</th>
+<th class="entry" id="br00010.dita__datasimpletable_xn1_bln_qfb__entry__2">Type</th>
+<th class="entry" id="br00010.dita__datasimpletable_xn1_bln_qfb__entry__3">Description</th>
+</tr>
+</thead><tbody class="tbody">
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_xn1_bln_qfb__entry__1">KeyMap</td>
+<td class="entry" headers="br00010.dita__datasimpletable_xn1_bln_qfb__entry__2">String</td>
+<td class="entry" headers="br00010.dita__datasimpletable_xn1_bln_qfb__entry__3">The map that is used to create the key. The key is always created as a string. If no KeyMap
+is given, a null Keymap is used in the same format as TopicMap. </td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_xn1_bln_qfb__entry__1">KafkaAPIVersion</td>
+<td class="entry" headers="br00010.dita__datasimpletable_xn1_bln_qfb__entry__2">0, 1, 2</td>
+<td class="entry" headers="br00010.dita__datasimpletable_xn1_bln_qfb__entry__3">The <span class="ph">Apache Kafka®</span> LogMessageVersion. This is value is based on the version of the <span class="ph">Event Streams</span> brokers, but in some cases requires a manual override. Sending MQTT version 5 properties requires
+KafkaAPIVersion=2, but this in turn requires an <span class="ph">Event Streams</span> instance based on <span class="ph">Kafka</span> 0.11 or
+later.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_xn1_bln_qfb__entry__1">PartitionRule</td>
+<td class="entry" headers="br00010.dita__datasimpletable_xn1_bln_qfb__entry__2">String</td>
+<td class="entry" headers="br00010.dita__datasimpletable_xn1_bln_qfb__entry__3">The rule that is used to choose a partition when there are multiple partitions for a
+topic. This can be one of the built in rules, or a string with replacement values which is then
+hashed.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_xn1_bln_qfb__entry__1">RoutingRule</td>
+<td class="entry" headers="br00010.dita__datasimpletable_xn1_bln_qfb__entry__2">Object containing a set of named strings.</td>
+<td class="entry" headers="br00010.dita__datasimpletable_xn1_bln_qfb__entry__3">The name of the string item within the RoutingRule object is an <span class="ph">Event Streams</span> topic, and
+the value of the item is a message selector. The name must be 1 to 100 characters in length and can only
+contain base alphanumerics and the special characters underscore, hyphen, and period. If a name is
+specified more than once, the latter name replaces the former.</td>
+</tr>
+</tbody></table>
+    <p class="p">Most items in Forwarder can be set back to the default by setting the value to <var class="keyword varname">null</var>. This does not work for some values, which are required for the forwarder to work.</p></section>
+<section class="section"><h2 class="title sectiontitle">Endpoint</h2>
+
+<p class="p">An Endpoint object defines the properties needed to define an administrative REST interface for
+the Bridge. The following table shows the name, type and description of the properties that are used
+to define an administrative REST interface for the Bridge:</p>
+<table class="table" id="br00010.dita__datasimpletable_m5x_m3n_qfb"><caption><span class="table--title-label">Table 5. </span><span class="title">The following table shows the name,type and description of the properties that
+are used to define an administrative REST interface for the Bridge.</span></caption><colgroup><col><col><col></colgroup><thead class="thead">
+<tr class="row">
+<th class="entry" id="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__1">Name</th>
+<th class="entry" id="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__2">Type</th>
+<th class="entry" id="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__3">Description</th>
+</tr>
+</thead><tbody class="tbody">
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__1">Port</td>
+    <td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__2">Integer (1 to 65535)</td>
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__3">The port number to listen on. This must be unique.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__1">Interface</td>
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__2">String</td>
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__3">The interface to listen on. If this value is not specified or "*" is entered, then listen on all interfaces.
+</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__1">Protocol</td>
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__2">enum: "admin"</td>
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__3">In the bridge, "admin" is the only supported protocol.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__1">Enabled</td>
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__2">Boolean</td>
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__3">If this value is false, the endpoint is not enabled.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__1">Authentication</td>
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__2">enum: "basic"</td>
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__3">If this value is set, an HTTP status of 401 is returned if the username is not
+specified. </td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__1">Certificate</td>
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__2">String</td>
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__3">The name of a file in the keystore that contains the certificate for this endpoint. This is
+needed to set the endpoint as secure.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__1">Ciphers</td>
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__2">enum: "fast" or "best"</td>
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__3">This value defines the ciphers to use. The default value "fast" gives faster ciphers and "best" gives better ciphers. Only high
+quality ciphers are used.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__1">KeyPassword</td>
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__2">String </td>
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__3">The password for the private key. The password can be in plain text or in a bidirectional
+password obfuscation starting with an exclamation point (!). When the dynamic configuration is written,
+the value is changed to an obfuscated password.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__1">Key</td>
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__2">String</td>
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__3">The name of a file in the keystore that contains the key for this endpoint. Any form of
+private key is allowed, but it must be the key that signed the certificate. This is needed to set the
+endpoint as secure. This key file can be password protected if the KeyPassword is
+specified.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__1">EnableAbout</td>
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__2">Boolean</td>
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__3">If true, the simple HTTP server is enabled showing the about page. Use to verify that the
+endpoint is correctly configured.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__1">Method</td>
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__2">enum: TLSv1.1 or TLSv1.2.</td>
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__3">The minimum TLS method to use. This value is ignored if Secure=false.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__1">Secure</td>
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__2">Boolean</td>
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__3">If this value is true, TLS security is used.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__1">UseClientCipher</td>
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__2">Boolean</td>
+<td class="entry" headers="br00010.dita__datasimpletable_m5x_m3n_qfb__entry__3">If this value is true, the client cipher order is used: otherwise, the server cipher order is used. The
+default value is server order.</td>
+</tr>
+</tbody></table>
+<div class="p">The following section shows an example admin
+endpoint:<pre class="pre codeblock"><code>
+{
+    "Endpoint": { 
+        "admin": { 
+            "Port": 9961,
+            "Enabled": true,
+            "Secure": true,
+            "Ciphers": "Fast", 
+            "Method": "TLSv1.2",
+            "Certificate": "mycert.pem",
+            "Key": "mykey.pem",
+            “KeyPassword”: “!HCuwKKpW2sUeQEUJIYkWpJp5HX/nBGDpMYQMhjRhE”
+        }
+    }
+}
+</code></pre>
+</div>
+</section>
+<section class="section"><h2 class="title sectiontitle">User</h2>
+
+<p class="p">A User object defines a user who can connect on the administrative endpoint.</p>
+<table class="table" id="br00010.dita__datasimpletable_ttx_pjn_qfb"><caption><span class="table--title-label">Table 6. </span><span class="title">The message types that define the type of content in JMS and
+MQTT.</span></caption><colgroup><col><col><col></colgroup><thead class="thead">
+<tr class="row">
+<th class="entry" id="br00010.dita__datasimpletable_ttx_pjn_qfb__entry__1">Name</th>
+<th class="entry" id="br00010.dita__datasimpletable_ttx_pjn_qfb__entry__2">Type</th>
+<th class="entry" id="br00010.dita__datasimpletable_ttx_pjn_qfb__entry__3">Description</th>
+</tr>
+</thead><tbody class="tbody">
+<tr class="row">
+<td class="entry" headers="br00010.dita__datasimpletable_ttx_pjn_qfb__entry__1">Password</td>
+<td class="entry" headers="br00010.dita__datasimpletable_ttx_pjn_qfb__entry__2">String</td>
+<td class="entry" headers="br00010.dita__datasimpletable_ttx_pjn_qfb__entry__3">The password for the user. The password can be plain text or an obfuscated password. When
+the Bridge updates a configuration file, it writes an obfuscated password. </td>
+</tr>
+</tbody></table>
+<div class="p">The following section shows an example
+user:<pre class="pre codeblock"><code>
+{
+    "User": { 
+        "user": { "Password": "=0hRDkZDpoF+e0sLJrgMpv7c2xeyApDR/6DWWzD8JfWI=" },
+        "fred": { "Password": "very_secret" }
+    }    
+}
+</code></pre></div>
+</section>
+</div>
+<nav role="navigation" class="related-links"><ul class="ullinks"><li class="link ulchildlink"><strong><a href="../Bridge/br00011.html">Installing the Bridge by using Docker containers</a></strong><br>Before you build and deploy the <span class="ph">Docker</span> images that you need to run <span class="ph"> Amlen Bridge</span>, you must provision your operating     system and install <span class="ph">Docker</span>. </li></ul><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Developing/develop_guide.html" title="You can develop your own client applications to use with Eclipse Amlen.">Developing client applications</a></div></div></nav></article></main></body></html>

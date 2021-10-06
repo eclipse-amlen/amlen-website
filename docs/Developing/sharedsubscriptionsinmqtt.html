@@ -1,0 +1,58 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="You can configure global-shared durable and global-shared non-durable topic subscriptions to be shared by Eclipse Amlen MQTT client applications. Shared subscriptions are an Eclipse Amlen extension of MQTT and, as such, are not part of the MQTT specification. Applications that depend on Eclipse Amlen global-shared subscriptions are not portable to other MQTT servers."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Global-shared subscriptions in MQTT</title></head><body id="sharedsubscriptionsinmqtt"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a><ul><li><a href="../Developing/devconcepts.html">Messaging concepts</a></li><li><a href="../Developing/devmsgtypes.html">Natively supported message types</a></li><li><a href="../Developing/devmsgsize.html">Message size</a></li><li><a href="../Developing/devclientids.html">Client IDs</a></li><li><a href="../Developing/devclientservercert.html">Server certificates</a></li><li><a href="../Developing/devretainmsg.html">Developing retained message applications</a></li><li><a href="../Developing/devexpiredmsg.html">Expired messages</a></li><li><a href="../Developing/devsharedsubscriptions.html">Shared subscriptions</a></li><li><a href="../Developing/devmqttapp.html">Developing MQTT applications</a><ul><li class="active"><a href="../Developing/sharedsubscriptionsinmqtt.html">Global-shared subscriptions in MQTT</a></li><li><a href="../Developing/sessiontakeoverinmqtt.html">MQTT considerations for large-scale public subscription deployments</a></li></ul></li><li><a href="../Developing/devjmsapp.html">Developing JMS applications</a></li><li><a href="../Developing/devplug-in.html">Developing a protocol plug-in</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li></ul></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Global-shared subscriptions in MQTT</h1>
+
+<div class="body conbody"><p class="shortdesc">You can configure global-shared durable and global-shared
+non-durable topic subscriptions to be shared by <span class="ph">Eclipse Amlen</span> MQTT client applications.
+Shared subscriptions are an <span class="ph">Eclipse Amlen</span> extension of
+MQTT and, as such, are not part of the MQTT specification. Applications
+that depend on <span class="ph">Eclipse Amlen</span> global-shared
+subscriptions are not portable to other MQTT servers.</p>
+<div class="p">Factors to consider before you start to develop MQTT applications
+to use global-shared subscriptions:<ul class="ul">
+<li class="li">Your application might need to block access to global-shared subscriptions
+if they are not to be used.</li>
+<li class="li">If you intend your application to use only global-shared subscriptions, you might consider designing your application to check input topic strings to ensure that they are correctly configured to create, or join, global-shared subscriptions in the <span class="ph">Eclipse Amlen</span> server.</li>
+<li class="li">When an application uses a global-shared subscription, it does
+not receive all of the published messages; it receives a subset of
+messages from the topic being subscribed to and shares the load of
+processing all of the published messages.</li>
+<li class="li">Applications that depend on <span class="ph">Eclipse Amlen</span> global-shared
+subscriptions are not portable to other MQTT servers.</li>
+<li class="li">The order of delivery of messages on shared subscriptions cannot be guaranteed. If you need to preserve message order, either include message order information for use by the client in the content of the message or do not use shared subscriptions.</li>
+</ul></div>
+<p class="p">To subscribe to topics on global-shared durable subscriptions,
+the MQTT SUBSCRIBE request must specify:</p>
+<pre class="pre codeblock"><code>$SharedSubscription/<var class="keyword varname">SubName</var>/<var class="keyword varname">topicFilter</var></code></pre>
+<p class="p">where:</p>
+<dl class="dl">
+<dt class="dt dlterm">$SharedSubscription</dt>
+<dd class="dd">Indicates that the target of the SUBSCRIBE request is a global-shared
+subscription. This literal string is case sensitive. </dd>
+</dl>
+<dl class="dl">
+<dt class="dt dlterm"><var class="keyword varname">SubName</var></dt>
+<dd class="dd">Is the name of the shared subscription.</dd>
+<dd class="dd ddexpand">This value must not include any forward slashes ( / ).</dd>
+</dl>
+<dl class="dl">
+<dt class="dt dlterm"><var class="keyword varname">topicFilter</var></dt>
+<dd class="dd">Is a standard MQTT topic filter for any type of topic subscription.
+ It can contain a single topic name, or it can contain a topic filter
+that includes wildcards. For information about wildcards in subscriptions,
+see <a class="xref" href="../Overview/ov00032.html">Wildcards</a>.</dd>
+</dl>
+<p class="p">As for any MQTT topic subscription, you must ensure that there is a topic policy with Subscribe authority for the topic or topics associated with your shared subscriptions. See <a class="xref" href="../Security/se00019_.html" title="You can configure global-shared durable and global-shared non-durable topic subscriptions to be shared by Eclipse Amlen MQTT client applications. You must configure a subscription policy and a corresponding topic policy if your MQTT applications are to use global-shared durable subscriptions. You must ensure that the Subscription and Topic parameters are correctly configured.">Topic filters for MQTT global-shared subscriptions</a> for further information about configuring topic policies for your shared subscriptions.</p>
+<p class="p">If you are using a global-shared durable subscription then you must ensure that there is also a subscription policy to authorize clients to use the global-shared durable subscription. The <span class="keyword parmname">Subscription</span> field of the subscription policy must have the same value as the <var class="keyword varname">SubName</var> in the MQTT SUBSCRIBE request. <span class="keyword parmname">Receive</span> authority must be granted for all subscribers. <span class="keyword parmname">Control</span> authority must be granted for the subscriber that initially creates the global-shared durable subscription.</p>
+<p class="p">See <a class="xref" href="../Security/se00014_.html" title="You can use a subscription policy to specify which clients can create, modify, or delete global-shared durable subscriptions. You can also set up the authorization for a client to receive messages from a global-shared durable subscription. Global-shared durable subscriptions require a subscription policy and a topic policy; all other types of subscriptions, including non-durable shared subscriptions, require only a topic messaging policy.">Subscription policy</a> for further information about configuring subscription policies for your global-shared durable subscriptions</p>
+<p class="p">MQTT applications end their use of a global-shared subscription
+by issuing an MQTT UNSUBSCRIBE request or by disconnecting. If the
+client being removed from the subscription is the last user of the
+subscription, the subscription is deleted. You should not share subscriptions
+between protocols, but if the global-shared subscription is also being
+shared by one or more JMS applications, the subscription is not deleted
+until the final JMS application has explicitly unsubscribed from it. </p>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Developing/devmqttapp.html" title="The MQ Telemetry Transport (MQTT) is a lightweight publish/subscribe protocol that uses TCP/IP to connect large numbers of remote sensors and control devices. MQTT is used by specialized applications on small footprint devices that must tolerate low bandwidth and unreliable communication.">Developing MQTT applications</a></div></div><div class="linklist relconcepts"><strong>Related concepts</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="../Overview/ov30010.html">Subscribers and Subscriptions</a></li></ul></div></nav>
+</article></main></body></html>

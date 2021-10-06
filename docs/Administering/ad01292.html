@@ -1,0 +1,107 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="You can specify syslog configuration by using REST Administration APIs."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Configuring and viewing syslog server information by using REST Administration APIs</title></head><body id="ad01292"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a><ul><li><a href="../Administering/ad00210_.html">Network interface controllers</a></li><li><a href="../Administering/ad00380_.html">Configuring the server name</a></li><li><a href="../Administering/ad00290_.html">Configuring log files</a><ul><li><a href="../Administering/ad00293_.html">Setting the logging level</a></li><li><a href="../Administering/ad01295_.html">Viewing the logging level by using REST Administration APIs</a></li><li><a href="../Administering/ad01291.html">Changing and viewing log location information by using REST Administration APIs</a></li><li class="active"><a href="../Administering/ad01292.html">Configuring and viewing syslog server information by using REST Administration APIs</a></li><li><a href="../Administering/ad01293.html">Store and forward syslog messages by using rsyslog </a></li><li><a href="../Administering/ad01294.html">Logging in a high availability environment</a></li><li><a href="../Administering/ad01297_.html">Configuring log rotation for Eclipse Amlen in a Docker environment</a></li></ul></li><li><a href="../Administering/ad00400_.html">Configuring your system for high availability</a></li><li><a href="../Administering/ad00790_.html">Configuring licensed usage and accepting the license for Eclipse Amlen  </a></li><li><a href="../Administering/ad00280_.html">Starting, stopping, restarting and viewing the status of the Eclipse Amlen server</a></li></ul></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+    <h1 class="title topictitle1" id="ariaid-title1">Configuring and viewing syslog server information by using REST Administration
+        APIs</h1>
+    
+    
+    
+    
+    
+    
+    <div class="body taskbody"><p class="shortdesc">You can specify syslog configuration by using <span class="ph">REST Administration APIs</span>.</p>
+        <section class="section context">
+            <p class="p">The syslog object cannot be deleted by using the REST API DELETE method. To configure
+                your syslog server, complete the following steps:</p>
+        </section>
+        <section><div class="ol steps"><div class="li step p">
+<span class="ph cmd">Use the <span class="ph">Eclipse Amlen</span> REST API POST method. </span>
+<ol type="a" class="ol substeps">
+<li class="li substep substepexpand">
+<span class="ph cmd">Use the following <span class="ph">Eclipse Amlen</span> configuration URI: </span>
+<div class="itemgroup info">
+<p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/configuration/</code></p>
+</div>
+</li>
+<li class="li substep substepexpand">
+<span class="ph cmd">Provide log location configuration data in the payload of the POST method by using the following schema:</span>
+<div class="itemgroup info">
+<pre class="pre codeblock"><code>
+"Syslog" 
+{    
+    "Host" : "string",    
+    "Port" : integer,   
+    "Protocol" : "tcp" | "upd",    
+    "Enabled" : true|false
+}</code></pre>
+<div class="p">where:<dl class="dl">
+
+<dt class="dt dlterm">Host</dt>
+<dd class="dd">Specifies the IP address of the syslog server.</dd>
+<dd class="dd ddexpand">The default value is 127.0.0.1 </dd>
+
+
+<dt class="dt dlterm">Port</dt>
+<dd class="dd">Specifies the port of the syslog server.</dd>
+<dd class="dd ddexpand">The default value is 514.</dd>
+
+
+<dt class="dt dlterm">Protocol</dt>
+<dd class="dd">Specifies the protocol that is used.</dd>
+<dd class="dd ddexpand">This value can be tcp or upd.</dd>
+<dd class="dd ddexpand">The default value is tcp.</dd>
+
+</dl></div>
+<dl class="dl">
+
+<dt class="dt dlterm">Enabled</dt>
+<dd class="dd">Specifies whether the syslog server connection is enabled.</dd>
+<dd class="dd ddexpand">This value can be true or false.</dd>
+<dd class="dd ddexpand">The default value is false.<div class="note note note_note"><span class="note__title">Note:</span> When <span class="keyword parmname">Enabled</span> is set to <kbd class="ph userinput">true</kbd>, <span class="ph">Eclipse Amlen</span> attempts to establish a connection to the syslog server. If a connection cannot be established, a <code class="ph codeph">CWLNA0150 "Unable to connect"</code> error is displayed. If <span class="keyword parmname">Enabled</span> is set to <kbd class="ph userinput">false</kbd>, setting <span class="keyword parmname">LocationType</span> to <kbd class="ph userinput">syslog</kbd> in <span class="keyword parmname">LogLocation</span> fails. If one or more <span class="keyword parmname">LogLocation</span> items use syslog, then syslog connectivity cannot be disabled by setting <span class="keyword parmname">Enabled</span> to <kbd class="ph userinput">false</kbd>. </div></dd>
+
+</dl>
+</div>
+</li>
+</ol>
+</div></div></section>
+        <section class="example">The following example updates the syslog server configuration by using
+                cURL:<pre class="pre codeblock"><code>curl -X POST \
+   -H  'Content-Type: application/json'  \
+   -d  '{                       
+           "Syslog": {   
+             "Host" : "127.0.0.1",    
+             "Port" : 514,   
+             "Protocol" : "tcp",    
+             "Enabled" : true
+         }
+      }
+  '   \
+http://127.0.0.1:9089/ima/v1/configuration/</code></pre><div class="p">An
+                example response to the POST
+                method:<pre class="pre codeblock"><code>
+{        
+  "Version": "v1",
+  "Code": "CWLNA6011",
+  "Message": "The requested configuration change has completed successfully."
+}
+</code></pre></div></section>
+        <section class="section postreq"><p class="p">You can view syslog server configuration information by using the <span class="ph">Eclipse Amlen</span> REST API GET method with the
+                following <span class="ph">Eclipse Amlen</span> configuration URI:
+                    </p><p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/configuration/Syslog</code></p><p class="p">The
+                following example displays syslog server configuration information by using cURL:
+                </p><code class="ph codeph">curl -X GET
+                http://127.0.0.1:9089/ima/v1/configuration/Syslog</code><p class="p">An example response to
+                the GET
+            method:</p><pre class="pre codeblock"><code>
+{
+  "Version": "v1",
+  "Syslog": {
+    "Host": "127.0.0.1",
+    "Port": 514,
+    "Protocol": "tcp",
+    "Enabled": true
+  }
+}
+</code></pre></section>
+    </div>
+</article></main></body></html>

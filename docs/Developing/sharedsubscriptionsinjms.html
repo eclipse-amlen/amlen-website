@@ -1,0 +1,122 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="The Eclipse Amlen JMS client provides support for shared subscriptions as an extension of the JMS 1.1 specification. JMS applications that use this extension to the JMS 1.1 specification can be compiled and run only with Eclipse Amlen JMS client implementations. You can use the client to configure durable and non-durable topic subscriptions to be shared. In a non-shared subscription, each consumer to a particular topic receives a copy of all of the messages that are published to that topic string. In a shared subscription, each message is delivered to only one of the consumers for that subscription. This is similar to message sharing on a multi-consumer queue."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Shared subscriptions in JMS</title></head><body id="sharedsubscriptionsinjms"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a><ul><li><a href="../Developing/devconcepts.html">Messaging concepts</a></li><li><a href="../Developing/devmsgtypes.html">Natively supported message types</a></li><li><a href="../Developing/devmsgsize.html">Message size</a></li><li><a href="../Developing/devclientids.html">Client IDs</a></li><li><a href="../Developing/devclientservercert.html">Server certificates</a></li><li><a href="../Developing/devretainmsg.html">Developing retained message applications</a></li><li><a href="../Developing/devexpiredmsg.html">Expired messages</a></li><li><a href="../Developing/devsharedsubscriptions.html">Shared subscriptions</a></li><li><a href="../Developing/devmqttapp.html">Developing MQTT applications</a></li><li><a href="../Developing/devjmsapp.html">Developing JMS applications</a><ul><li><a href="../Developing/devjms_working.html">Working with Eclipse Amlen JMS</a><ul><li><a href="../Developing/devjms_creatingadministeredobjects.html">Creating administered objects</a></li><li class="active"><a href="../Developing/sharedsubscriptionsinjms.html">Shared subscriptions in JMS</a></li><li><a href="../Developing/devjms_poisonmessages.html">Poison messages</a></li><li><a href="../Developing/securingjmsconnections.html">Securing Eclipse Amlen JMS client by using Java runtime environment global properties</a></li><li><a href="../Developing/devjms_underjavasecuritymanager.html">Running Eclipse Amlen JMS client applications under the Java Security Manager</a></li><li><a href="../Developing/exceptionhandling.html">Exception Handling</a></li><li><a href="../Developing/devjms_usingjmsclienttracetacilities.html">Using client trace facilities</a></li></ul></li><li><a href="../Developing/devjms_sampleapplications.html">Sample applications</a></li><li><a href="../Developing/devjms_writingjmsapplications.html">Writing JMS Applications</a></li><li><a href="../Developing/javadoc/com/ibm/ima/jms/package-summary.html">JMS API reference</a></li></ul></li><li><a href="../Developing/devplug-in.html">Developing a protocol plug-in</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li></ul></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Shared subscriptions in JMS</h1>
+
+<div class="body conbody"><p class="shortdesc">The <span class="ph">Eclipse Amlen</span> JMS
+client provides support for shared subscriptions as an extension of
+the JMS 1.1 specification. JMS applications that use this extension
+to the JMS 1.1 specification can be compiled and run only with <span class="ph">Eclipse Amlen</span> JMS client implementations.
+You can use the client to configure durable and non-durable topic
+subscriptions to be shared. In a non-shared subscription, each consumer
+to a particular topic receives a copy of all of the messages that
+are published to that topic string. In a shared subscription, each
+message is delivered to only one of the consumers for that subscription.
+This is similar to message sharing on a multi-consumer queue.</p>
+<p class="p">Shared subscriptions can be bound to a client ID, or can exist
+within a global namespace. If a client ID is specified for a connection
+that is used to create or join a shared subscription, then the subscription
+is bound to only that client ID. In this case, the client ID specifies
+the namespace for the subscription name. If no client ID is specified
+for a connection that is used to create or join a shared subscription,
+then the global namespace is used. By using a global namespace, it
+is possible to share a subscription between multiple connections.
+This configuration can be used, for example, to allow load balancing
+of a message-driven bean application that runs on an application server
+cluster.</p>
+<div class="p">To create and join a shared subscription in JMS, you can use an
+extended set of methods that match the JMS 2.0 methods of <code class="ph codeph">Session</code>.
+ These methods are added in an interface <code class="ph codeph">ImaSubscription</code>.
+ The <code class="ph codeph">Session</code> object that is returned by <code class="ph codeph">createSession()</code> within <span class="ph">Eclipse Amlen</span> implements the <code class="ph codeph">ImaSubscription</code> interface.
+   <pre class="pre codeblock"><code>MessageConsumer consumer;
+Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+consumer = ((ImaSubscription)session).createDurableConsumer(topic, subName);
+consumer = ((ImaSubscription)session).createSharedConsumer(topic, subName, selector);
+consumer = ((ImaSubscription)session).createSharedDurableConsumer(topic, subName, selector);
+</code></pre></div>
+<section class="section"><h2 class="title sectiontitle">Creating JMS shared subscriptions, examples of code</h2><div class="p">The
+following code examples show the configuration required to create
+JMS shared subscriptions.<div class="note note note_note"><span class="note__title">Note:</span> All shared subscriptions require a
+correctly configured topic messaging policy. Global-shared durable
+subscriptions also require a correctly configured subscription messaging
+policy.</div><dl class="dl">
+<dt class="dt dlterm">Create a global-shared non-durable subscription</dt>
+<dd class="dd"><pre class="pre codeblock"><code>ConnectionFactory connectionFactory;
+Connection connection;
+Session session;
+MessageConsumer consumer;
+Topic topic;
+String sharedSubName;
+String selector = null; /* For this example, there is no selector for this subscription. */
+.
+.
+.
+connection = connectionFactory.createConnection();
+session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+topic = session.createTopic("theTopic");
+consumer = ((ImaSubscription)session).createSharedConsumer(topic, sharedSubName, selector);</code></pre></dd>
+
+<dt class="dt dlterm">Create a private-shared durable subscription</dt>
+<dd class="dd"><pre class="pre codeblock"><code>ConnectionFactory connectionFactory;
+Connection connection;
+Session session;
+MessageConsumer consumer;
+Topic topic;
+String sharedSubName;
+String selector = null; /* For this example, there is no selector for this subscription. */
+.
+.
+.
+connection = connectionFactory.createConnection();
+
+/* Setting the client ID makes shared subscriptions for this connection private shared subscriptions.
+ * Only consumers in this connection can access the shared subscriptions created for this connection.
+ */
+connection.setClientID("myClient"); 
+session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+topic = session.createTopic("sharedTopic");
+consumer = ((ImaSubscription)session).createSharedConsumer(topic, sharedSubName, selector);</code></pre></dd>
+
+<dt class="dt dlterm">Create a global-shared durable subscription</dt>
+<dd class="dd"><div class="note note note_note"><span class="note__title">Note:</span> The correct subscription messaging policy and topic messaging
+policy must be configured in <span class="ph">Eclipse Amlen</span>.</div><pre class="pre codeblock"><code>ConnectionFactory connectionFactory;
+Connection connection;
+Session session;
+MessageConsumer consumer;
+Topic topic;
+String sharedDurableSubName;
+String selector = null; /* For this example, there is no selector for this subscription. */
+.
+.
+.
+connection = connectionFactory.createConnection();
+session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+topic = session.createTopic("theTopic");
+consumer = ((ImaSubscription)session).createSharedDurableConsumer(topic, sharedDurableSubName, selector);</code></pre></dd>
+
+<dt class="dt dlterm">Create a private-shared durable subscription</dt>
+<dd class="dd"><pre class="pre codeblock"><code>ConnectionFactory connectionFactory;
+Connection connection;
+Session session;
+MessageConsumer consumer;
+Topic topic;
+String sharedDurableSubName;
+String selector = null; /* For this example, there is no selector for this subscription. */
+.
+.
+.
+connection = connectionFactory.createConnection();
+
+/* Setting the client ID makes shared subscriptions for this connection private shared subscriptions.
+ * Only consumers in this connection can access the shared subscriptions created for this connection.
+ */
+connection.setClientID("myClient"); 
+session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+topic = session.createTopic("sharedTopic");
+consumer = ((ImaSubscription)session).createSharedDurableConsumer(topic, sharedDurableSubName, selector);</code></pre></dd>
+</dl></div><p class="p">JMS clients end their use of a durable subscription by using the JMS <code class="ph codeph">Session.unsubscribe</code> method. This action permanently ends their use of the subscription and deletes it if there are no active subscribers. If there are active subscribers, this action fails with an exception; implement appropriate exception handling for this case.</p><p class="p">JMS clients end their use
+of a non-durable subscription by using the JMS <code class="ph codeph">Session.unsubscribe</code> method
+or by closing the consumers. </p></section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Developing/devjms_working.html" title="The following topics cover specific Eclipse Amlen JMS client features, including the creation of administered objects and capabilities that can add value.">Working with Eclipse Amlen JMS</a></div></div><div class="linklist relconcepts"><strong>Related concepts</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="../Overview/ov30010.html">Subscribers and Subscriptions</a></li></ul></div></nav>
+</article></main></body></html>

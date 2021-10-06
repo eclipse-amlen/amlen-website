@@ -1,0 +1,40 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="In an HA pair, there can only be one primary node providing messaging operations. If the member acting as a primary detects that the other server is acting as a primary, it results in a split brain condition."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>High availability problems</title></head><body id="tr00015_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a><ul><li><a href="../Troubleshooting/tr00000_.html">Log files</a></li><li><a href="../Troubleshooting/tr00006_.html">Maintenance mode</a></li><li><a href="../Troubleshooting/tr00001_.html">Common problems</a><ul><li><a href="../Troubleshooting/tr00002_.html">The application fails to connect</a></li><li><a href="../Troubleshooting/tr00008_.html">The application disconnects</a></li><li><a href="../Troubleshooting/tr00010_.html">The application fails to publish</a></li><li><a href="../Troubleshooting/tr00009_.html">The application fails to subscribe</a></li><li><a href="../Troubleshooting/tr00003_.html">Messages are not sent</a></li><li><a href="../Troubleshooting/tr00004_.html">Messages do not arrive</a></li><li><a href="../Troubleshooting/tr00005_.html">  MQ Connectivity problems</a></li><li><a href="../Troubleshooting/raisnotworking.html">Eclipse Amlen resource adapter is not working</a></li><li><a href="../Troubleshooting/tr00020_.html">LTPA validation fails</a></li><li><a href="../Troubleshooting/tr00012_.html">The Amlen WebUI is not working</a></li><li class="active"><a href="../Troubleshooting/tr00015_.html">High availability problems</a></li><li><a href="../Troubleshooting/tr00026_.html">Cluster problems</a></li><li><a href="../Troubleshooting/tr00021_.html">Dynamic policy update problems</a></li><li><a href="../Troubleshooting/tr00023_.html">SNMP problems</a></li><li><a href="../Troubleshooting/tr00024_.html">LDAP is not working</a></li><li><a href="../Troubleshooting/tr00031_.html">Problems during upgrade from IBM MessageSight version 1.2</a></li></ul></li><li><a href="../Troubleshooting/tr00030.html">Platform must-gather</a></li><li><a href="../Troubleshooting/admin_messagecatalog.html">Message catalog</a></li></ul></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">High availability problems</h1>
+
+
+
+
+
+
+<div class="body conbody"><p class="shortdesc">In an HA pair, there can only be one primary node providing
+messaging operations.  If the member acting as a primary detects that
+the other server is acting as a primary, it results in a <dfn class="term">split
+brain</dfn> condition.</p>
+<section class="section"><h2 class="title sectiontitle">Split brain</h2><p class="p">When the HA pair detects it
+is in a split brain situation, both nodes are put into maintenance
+mode, and the administrator must select which member to operate as
+the primary and the standby nodes.  Split brain situations are infrequent.
+ You might see a split brain situation after simultaneous outages
+of both the primary and standby when they are both restarted.  An
+interruption of the network interfaces between two operation appliances,
+such as disconnecting the cable, can also result in a split brain
+situation.</p><ol class="ol">
+<li class="li">Identify which appliance is to be primary, and which appliance is to be standby.</li>
+<li class="li">Clean the store of the standby appliance. Type the following commands:<pre class="pre codeblock"><code><span class="ph">imaserver</span> runmode maintenance
+<span class="ph">imaserver</span> stop
+<span class="ph">imaserver</span> start
+<span class="ph">imaserver</span> runmode clean_store
+<span class="ph">imaserver</span> stop
+<span class="ph">imaserver</span> start</code></pre></li>
+<li class="li">Stop the standby appliance and then stop the primary appliance
+by typing the following at each console:<pre class="pre codeblock"><code><span class="ph">imaserver</span> stop</code></pre></li>
+<li class="li">Start the standby appliance by typing: <pre class="pre codeblock"><code><span class="ph">imaserver</span> start</code></pre>This
+will cause it to run in maintenance mode. </li>
+<li class="li">Set the standby appliance to run in production mode by typing:<pre class="pre codeblock"><code><span class="ph">imaserver</span> runmode production</code></pre></li>
+<li class="li">Start the primary appliance and then the standby appliance by
+typing at each console:<pre class="pre codeblock"><code><span class="ph">imaserver</span> start</code></pre></li>
+</ol><p class="p">See also <a class="xref" href="../../com.ibm.ism.messages.doc/CWLNA8462.html">CWLNA8462</a>.</p><p class="p">For more information about handling various HA scenarios, see <a class="xref" href="../Administering/ad00416_.html" title="The following scenarios assume that you are configuring your servers to run as an HA pair automatically, by enabling High Availability and by using the High Availability Group setting.">High availability scenarios</a>.</p></section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Troubleshooting/tr00001_.html" title="There are a number of common problems that you might encounter. Your application might fail to connect. Your application might disconnect unexpectedly. Your messages might not be published, or your messages might not arrive. MQ Connectivity might not work.">Common problems</a></div></div></nav></article></main></body></html>

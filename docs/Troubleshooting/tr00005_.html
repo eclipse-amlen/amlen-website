@@ -1,0 +1,212 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="There are several reasons why you might experience problems when you use MQ Connectivity."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>MQ Connectivity problems</title></head><body id="tr00005_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a><ul><li><a href="../Troubleshooting/tr00000_.html">Log files</a></li><li><a href="../Troubleshooting/tr00006_.html">Maintenance mode</a></li><li><a href="../Troubleshooting/tr00001_.html">Common problems</a><ul><li><a href="../Troubleshooting/tr00002_.html">The application fails to connect</a></li><li><a href="../Troubleshooting/tr00008_.html">The application disconnects</a></li><li><a href="../Troubleshooting/tr00010_.html">The application fails to publish</a></li><li><a href="../Troubleshooting/tr00009_.html">The application fails to subscribe</a></li><li><a href="../Troubleshooting/tr00003_.html">Messages are not sent</a></li><li><a href="../Troubleshooting/tr00004_.html">Messages do not arrive</a></li><li class="active"><a href="../Troubleshooting/tr00005_.html">  MQ Connectivity problems</a></li><li><a href="../Troubleshooting/raisnotworking.html">Eclipse Amlen resource adapter is not working</a></li><li><a href="../Troubleshooting/tr00020_.html">LTPA validation fails</a></li><li><a href="../Troubleshooting/tr00012_.html">The Amlen WebUI is not working</a></li><li><a href="../Troubleshooting/tr00015_.html">High availability problems</a></li><li><a href="../Troubleshooting/tr00026_.html">Cluster problems</a></li><li><a href="../Troubleshooting/tr00021_.html">Dynamic policy update problems</a></li><li><a href="../Troubleshooting/tr00023_.html">SNMP problems</a></li><li><a href="../Troubleshooting/tr00024_.html">LDAP is not working</a></li><li><a href="../Troubleshooting/tr00031_.html">Problems during upgrade from IBM MessageSight version 1.2</a></li></ul></li><li><a href="../Troubleshooting/tr00030.html">Platform must-gather</a></li><li><a href="../Troubleshooting/admin_messagecatalog.html">Message catalog</a></li></ul></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1"> <span class="ph">MQ Connectivity</span> problems</h1>
+
+<div class="body conbody"><p class="shortdesc">There are several  reasons why you might experience problems when you use <span class="ph">MQ Connectivity</span>.</p>
+<section class="section">When troubleshooting <span class="ph">MQ Connectivity</span> problems,
+there are a number of tools you can use to diagnose the problem:<ul class="ul">
+<li class="li">The destination mapping rule status information. The status of the destination mapping rules is
+					shown in the <span class="ph">Amlen WebUI</span> on the
+						<span class="ph uicontrol">MQ Connectivity</span> page. Alternatively, you can gather
+					information about the status of the destination mapping rules by using <span class="ph">REST Administration APIs</span>. For more information
+					about using <span class="ph">REST Administration APIs</span>, see <a class="xref" href="../Administering/ad00099_.html" title="System administrators can view the status of a destination mapping rule, along with other statistics, by using a REST Administration API.">Viewing the status of destination mapping rules by using REST Administration APIs</a>.</li>
+<li class="li">The <code class="ph codeph"> 						<span class="ph">imaserver</span>-mqconnectivity.log</code>.</li>
+<li class="li">The <span class="ph">IBM® MQ</span> log
+files.</li>
+</ul> 		</section>
+<section class="section"><h2 class="title sectiontitle">Has the <span class="ph">MQ Connectivity</span> process
+started?</h2> 			 			<p class="p">To create, view or edit queue manager connections
+and destination mapping rules, the <span class="ph">MQ Connectivity</span> process
+must be started. If the <span class="ph">MQ Connectivity</span> process
+is stopped, you might see an error such as <a class="xref" href="../../com.ibm.ism.messages.doc/CWLNA5035.html">CWLNA5035</a>.</p> 			<p class="p">For
+more information about how to start <span class="ph">MQ Connectivity</span>, see <a class="xref" href="../Administering/ad00129_.html" title="You can start, restart and stop the MQ Connectivity process by using REST Administration APIs. You can restart and stop the MQ Connectivity process by using the Amlen WebUI.">Starting, restarting, stopping, and viewing the status of MQ Connectivity</a>.</p> 		</section>
+<section class="section"><h2 class="title sectiontitle">Is the <span class="ph">IBM MQ</span> queue manager
+or listener stopped?</h2> 			 			<p class="p"> 				<span class="ph">Eclipse Amlen</span> cannot connect
+to a<span class="ph">IBM MQ</span> queue
+manager if the queue manager or the associated listener is stopped.
+If the queue manager or the listener is stopped, you might see an
+error such as <a class="xref" href="../../com.ibm.ism.messages.doc/CWLNA7011.html">CWLNA7011</a> in
+the <code class="ph codeph"> 					<span class="ph">imaserver</span>-mqconnectivity.log</code>.
+The error might include a reason such as <code class="ph codeph">MQRC_Q_MGR_NOT_AVAILABLE</code> if
+the queue manager is stopped, or <code class="ph codeph">MQRC_HOST_NOT_AVAILABLE</code> if
+the listener is stopped.</p> 			<p class="p">You can start the queue manager
+by using the <span class="keyword cmdname">strmqm</span> command on the <span class="ph">IBM MQ</span> system.
+For more information about <span class="keyword cmdname">strmqm</span>, see <a class="xref" href="http://www-01.ibm.com/support/knowledgecenter/SSFKSJ_7.5.0/com.ibm.mq.ref.adm.doc/q083650_.htm" target="_blank" rel="external noopener">strmqm</a> in the <span class="ph">IBM MQ</span> documentation.</p> 			<p class="p">You
+can start the listener by using the <span class="keyword cmdname">START LISTENER</span> MQSC
+command on the <span class="ph">IBM MQ</span> system.
+For more information about <span class="keyword cmdname">START LISTENER</span>, see <a class="xref" href="http://www-01.ibm.com/support/knowledgecenter/SSFKSJ_7.5.0/com.ibm.mq.ref.adm.doc/q086700_.htm" target="_blank" rel="external noopener">START LISTENER</a> in the <span class="ph">IBM MQ</span> documentation.</p> 		</section>
+<section class="section"><h2 class="title sectiontitle">Does the <span class="ph">IBM MQ</span> queue or
+topic exist?</h2> 			 			<p class="p"> 				<span class="ph">Eclipse Amlen</span> cannot connect
+to a <span class="ph">IBM MQ</span> queue
+or topic that does not exist. If <span class="ph">Eclipse Amlen</span> attempts
+to connect to a queue or topic that does not exist, you might see
+an error such as <a class="xref" href="../../com.ibm.ism.messages.doc/CWLNA7012.html">CWLNA7012</a> in
+the <code class="ph codeph"> 					<span class="ph">imaserver</span>-mqconnectivity.log</code>.
+The error might include a reason such as <code class="ph codeph">MQRC_UNKNOWN_OBJECT_NAME</code>.</p> 			<p class="p">You
+can check that the queue exists by using the <span class="keyword cmdname">DISPLAY QUEUE</span> MQSC
+command on the <span class="ph">IBM MQ</span> system.
+For more information about the <span class="keyword cmdname">DISPLAY QUEUE</span> command,
+see <a class="xref" href="http://www-01.ibm.com/support/knowledgecenter/SSFKSJ_7.5.0/com.ibm.mq.ref.adm.doc/q086270_.htm" target="_blank" rel="external noopener">DISPLAY QUEUE</a> in the <span class="ph">IBM MQ</span> documentation.</p> 			<p class="p">You
+can check that the topic exists by using the <span class="keyword cmdname">DISPLAY TOPIC</span> MQSC
+command on the <span class="ph">IBM MQ</span> system.
+For more information about the <span class="keyword cmdname">DISPLAY TOPIC</span> command,
+see <a class="xref" href="http://www-01.ibm.com/support/knowledgecenter/SSFKSJ_7.5.0/com.ibm.mq.ref.adm.doc/q086380_.htm" target="_blank" rel="external noopener">DISPLAY TOPIC</a> in the <span class="ph">IBM MQ</span> documentation.</p> 			<p class="p">If
+the queue or topic exists, check that the name in your destination
+mapping rule matches the name of the <span class="ph">IBM MQ</span> queue or
+object.</p> 		</section>
+<section class="section"><h2 class="title sectiontitle">Is the message too large for <span class="ph">IBM MQ</span>?</h2> 			 			<p class="p">You
+can set the maximum size of messages that are allowed on a <span class="ph">IBM MQ</span> queue manager.
+You can also set the maximum size of messages that can be transmitted
+over a server connection channel. If a message is too large for that
+queue manager or server connection channel, the message does not arrive.
+The maximum size of a message is determined by the <span class="keyword parmname">MAXMSGL</span> attribute
+on the queue manager, and on the server-connection channel. The default
+value of <span class="keyword parmname">MAXMSGL</span> is 4,194,304 bytes.</p> 			<p class="p">If
+the message is too large, you might see an error such as <a class="xref" href="../../com.ibm.ism.messages.doc/CWLNA7010.html">CWLNA7010</a> in the <code class="ph codeph"> 					<span class="ph">imaserver</span>-mqconnectivity.log</code>.</p> 			<p class="p">You
+can change the <span class="keyword parmname">MAXMSGL</span> queue manager attribute
+to increase the maximum size of messages that are allowed on the queue
+manager. The <span class="keyword parmname">MAXMSGL</span> attribute can be changed
+by using the <span class="keyword cmdname">ALTER QMGR</span> MQSC command. For more
+information, see <a class="xref" href="http://www-01.ibm.com/support/knowledgecenter/SSFKSJ_7.5.0/com.ibm.mq.ref.adm.doc/q085320_.htm" target="_blank" rel="external noopener">ALTER QMGR</a> and <a class="xref" href="http://www-01.ibm.com/support/knowledgecenter/SSFKSJ_7.5.0/com.ibm.mq.ref.adm.doc/q085170_.htm" target="_blank" rel="external noopener">ALTER CHANNEL</a>, in the <span class="ph">IBM MQ</span> documentation.</p> 		</section>
+<section class="section" id="tr00005___HasTheMaximumMessageLimitBeenReache"><h2 class="title sectiontitle">Has the
+maximum message limit been reached?</h2> 			 			<p class="p">In each destination
+mapping rule, a maximum message limit is set. This limit defines how
+many messages can be stored on <span class="ph">Eclipse Amlen</span> if messages
+cannot be sent on to <span class="ph">IBM MQ</span>.
+After the limit is reached, any attempts to publish messages to the <span class="ph">Eclipse Amlen</span> topic in
+the destination mapping rule fails. After the backlog reduces, messages
+can be published to <span class="ph">Eclipse Amlen</span> again.</p> 			<p class="p">You must investigate the cause of the message backlog, and ensure that messages are flowing
+				from <span class="ph">Eclipse Amlen</span> to <span class="ph">IBM MQ</span>. If messages are flowing,
+				but the limit is reached, you might want to increase the value of the maximum
+				messages parameter in the destination mapping rule. For more information about
+				editing a destination mapping rule, see <a class="xref" href="../Administering/ad00123_.html" title="System administrators can create and update destination mapping rules by using the REST Administration APIs.">Creating and updating a
+					destination mapping rule by using REST Administration APIs</a>.
+				Alternatively, if message order is not important, you might want to use more than
+				one queue manager to handle the volume of messages.</p> 		</section>
+<section class="section"><h2 class="title sectiontitle">Has the <span class="ph">IBM MQ</span> queue depth
+been reached?</h2> 			 			<p class="p">You can set the maximum number of messages
+that can be put on a <span class="ph">IBM MQ</span> queue
+at any time. If this maximum queue depth is reached, messages cannot
+be sent. The maximum queue depth is determined by the <span class="keyword parmname">MAXDEPTH</span> attribute
+on the queue.</p> 			<p class="p">If the queue depth is reached, you might see
+an error such as <a class="xref" href="../../com.ibm.ism.messages.doc/CWLNA7010.html">CWLNA7010</a> in
+the <code class="ph codeph"> 					<span class="ph">imaserver</span>-mqconnectivity.log</code>.
+The error might include a reason such as <code class="ph codeph">MQRC_Q_FULL</code>.</p> 			<p class="p">You
+can wait for the queue to empty, but you might consider ways to improve
+performance and make the queue empty faster. For example, you can
+change the <span class="keyword parmname">MAXDEPTH</span> attribute by using the <span class="keyword cmdname">ALTER</span> MQSC
+command on the <span class="ph">IBM MQ</span> system.
+For more information about the <span class="keyword cmdname">ALTER</span> command, see <a class="xref" href="http://www-01.ibm.com/support/knowledgecenter/SSFKSJ_7.5.0/com.ibm.mq.ref.adm.doc/q085330_.htm" target="_blank" rel="external noopener">ALTER queues</a> in the <span class="ph">IBM MQ</span> documentation.</p> 		</section>
+<section class="section"><h2 class="title sectiontitle">Is the <span class="ph">IBM MQ</span> authority
+correct?</h2> 			 			<p class="p"> 				<span class="ph">Eclipse Amlen</span> cannot send
+messages if it is not authorized to use the <span class="ph">IBM MQ</span> objects.
+If the authority is not correct, you might see an error such as <a class="xref" href="../../com.ibm.ism.messages.doc/CWLNA7011.html">CWLNA7011</a>  in the <code class="ph codeph"> 					<span class="ph">imaserver</span>-mqconnectivity.log</code>.
+The error might include a reason such as <code class="ph codeph">MQRC_NOT_AUTHORIZED</code>.</p> 			<p class="p">You
+can authorize <span class="ph">Eclipse Amlen</span> to
+connect to <span class="ph">IBM MQ</span> by
+using the <span class="keyword cmdname">SET CHLAUTH</span>, and <span class="keyword cmdname">SET AUTHREC</span> MQSC
+commands on the <span class="ph">IBM MQ</span> system.
+For more information about authorizing <span class="ph">Eclipse Amlen</span> to connect
+to <span class="ph">IBM MQ</span>,
+see step 6 in <a class="xref" href="../Administering/ad00091_.html" title="To send messages between IBM MQ and Eclipse Amlen, you must configure a server connection channel.">Configuring the IBM MQ server connection channel</a>.</p> 		</section>
+<section class="section"><h2 class="title sectiontitle">Does the <span class="ph">Eclipse Amlen</span> queue allow
+concurrent consumers?</h2> 			 			<p class="p">If you are using an <span class="ph">Eclipse Amlen</span> queue with
+more than one destination mapping rule, and the queue does not allow
+concurrent consumers, messages cannot be sent. If concurrent consumers
+are not allowed, you might see an error such as <a class="xref" href="../../com.ibm.ism.messages.doc/CWLNA7007.html">CWLNA7007</a> in
+the <code class="ph codeph"> 					<span class="ph">imaserver</span>-mqconnectivity.log</code>.
+The error might include a reason such as <code class="ph codeph">The destination has
+too many existing consumers.</code> 			</p> 			<p class="p">You can change
+the queue to allow concurrent consumers, or you can change the destination
+mapping rules to use different queues. For more information about
+changing the queue, see <a class="xref" href="../Administering/ad00350_.html" title="You can configure queues either by using the Amlen WebUI or by using REST Administration APIs.">Configuring message queues</a>.
+For more information about changing the destination mapping rules,
+see <a class="xref" href="../Administering/ad00110_.html" title="To send messages between Eclipse Amlen and IBM MQ, you must create destination mapping rules. Destination mapping rules are created by associating an Eclipse Amlen topic or queue with a IBM MQ topic or queue. You can create a maximum of 64 destination mapping rules.">Configuring destination mapping rules</a>.</p> 		</section>
+<section class="section"><h2 class="title sectiontitle">Is SSL configured correctly?</h2> 			 			<p class="p">If
+you use SSL to secure the connection between <span class="ph">Eclipse Amlen</span> and <span class="ph">IBM MQ</span>, but the
+connection does not work, check the <code class="ph codeph">imaserver-mqconnectivity.log</code> file
+for errors. You must also check the logs on the <span class="ph">IBM MQ</span> server to
+determine whether the error is occurring on <span class="ph">Eclipse Amlen</span>, or on <span class="ph">IBM MQ</span>.</p> 			<div class="p">Common
+causes of SSL problems on <span class="ph">Eclipse Amlen</span> include
+the following causes:<ul class="ul">
+<li class="li">The certificate is not in the key repository.</li>
+<li class="li">The certificate is not valid.</li>
+<li class="li">The SSL CipherSpec is not correctly defined in the queue manager
+connection.</li>
+</ul> 			</div> 		</section>
+<section class="section"><h2 class="title sectiontitle">Is the <span class="ph">IBM MQ</span> heartbeat
+interval too large?</h2> 			 			<p class="p">After you restart <span class="ph">Eclipse Amlen</span>, you might
+find a <a class="xref" href="../../com.ibm.ism.messages.doc/CWLNA7009.html">CWLNA7009</a> error
+in the logs with reason <code class="ph codeph">MQRC_SUBSCRIPTION_IN_USE</code>.
+This error can occur because the connection between <span class="ph">Eclipse Amlen</span> and <span class="ph">IBM MQ</span> was not
+yet cleaned up by the queue manager. This error does not mean that <span class="ph">MQ Connectivity</span> is
+not working, only that the connection is not yet cleaned up.</p> 			<p class="p">You
+can use the heartbeat interval setting on the <span class="ph">IBM MQ</span> server connection
+channel to ensure that <span class="ph">IBM MQ</span> cleans
+up the connection in a more timely manner. Alternatively, you can
+use the keep alive interval. For more information about the heartbeat
+interval, and the keep alive interval, see <a class="xref" href="http://www-01.ibm.com/support/knowledgecenter/SSFKSJ_7.5.0/com.ibm.mq.con.doc/q015650_.htm" target="_blank" rel="external noopener">Checking that the other end of the channel is still
+available</a>, in the <span class="ph">IBM MQ</span> documentation.</p> 			
+		</section>
+<section class="section"><h2 class="title sectiontitle">Is there an unwanted durable subscription on <span class="ph">IBM MQ</span>?</h2> 			 			<div class="p">In
+some cases, after you disable a destination mapping rule, a durable
+subscription for that rule can remain on <span class="ph">IBM MQ</span>. To remove
+the subscription, complete the following steps:<ol class="ol">
+<li class="li">Start an MQSC session for the queue manager that is associated
+with the destination mapping rule by entering the following command:<p class="p"> 							<code class="ph codeph">runmqsc <var class="keyword varname">qmgrName</var> 							</code> 						</p> 						<div class="p">Where:<dl class="dl">
+
+<dt class="dt dlterm">qmgrName</dt>
+<dd class="dd">Specifies the name of the queue manager that is associated with
+the destination mapping rule that you want to delete.</dd>
+</dl> 						</div> 					</li>
+<li class="li">List the <span class="ph">Eclipse Amlen</span> subscriptions
+by entering the following command:<p class="p"> 							<code class="ph codeph">display sub(SYSTEM.IMA.*)
+topicstr</code> 						</p> 					</li>
+<li class="li">Find the subscription that you want to delete. You can match the
+value of the <span class="keyword parmname">TOPICSTR</span> field with the topic string
+specified in the destination mapping rule. For example, <code class="ph codeph">TOPICSTR(/MQ/A1/#)</code>.</li>
+<li class="li">Delete the subscription by entering the following command:<p class="p"> 							<code class="ph codeph">delete
+sub(<var class="keyword varname">subName</var>)</code> 						</p> 						<div class="p">Where:<dl class="dl">
+
+<dt class="dt dlterm">subName</dt>
+<dd class="dd">Specifies the name of the subscription. The subscription name
+is the value that is specified in the <span class="keyword parmname">SUB</span> field.
+For example, <code class="ph codeph">  SUB(SYSTEM.IMA.001641EDA6BB.00000001.00000000.SUB)</code>.</dd>
+</dl> 						</div> 					</li>
+</ol> 			</div> 		</section>
+<section class="section"><h2 class="title sectiontitle">Is there an <code class="ph codeph">MQRC_NOT_AUTHORIZED</code> error
+after restarting the queue manager?</h2> 			 			<p class="p">It is possible to
+get an <code class="ph codeph">MQRC_NOT_AUTHORIZED</code> error when you attempt
+to publish or subscribe to a <span class="ph">IBM MQ</span> topic at
+or below a topic node that has a retained message. This error occurs
+after the queue manager is restarted. To resolve this problem, contact
+your IBM service representative
+about the <span class="ph">IBM MQ</span> APAR
+IV45712.</p> 		</section>
+<section class="section"><h2 class="title sectiontitle">Can the queue manager start the server channel?</h2> 			 			<p class="p">It
+is possible to get the following message in the <span class="ph">IBM MQ</span> logs: <code class="ph codeph">AMQ9575:
+Negotiation failed for channel</code>.</p> 			<p class="p">This message indicates that the queue manager cannot start the server channel. The cause of
+				this problem might be that the queue manager is running in a CCSID that cannot be
+				converted to the CCSID (819) that is used by the server. To resolve the problem, run
+				the queue manager with a different CCSID.</p> 		</section>
+<section class="section"><h2 class="title sectiontitle">Is there an <code class="ph codeph">MQRC_PUBLICATION_ERROR</code> error
+on a disabled destination mapping rule?</h2> 			 			<p class="p">When you configure <span class="ph">IBM MQ</span> topic objects,
+you decide how <span class="ph">IBM MQ</span> responds
+when it is unable to deliver a message to a subscriber. For more information,
+see <a class="xref" href="../Administering/ad00091_.html" title="To send messages between IBM MQ and Eclipse Amlen, you must configure a server connection channel.">Configuring the IBM MQ server connection channel</a>.</p> 			<p class="p">If
+you configure the topic object such that the message must be delivered
+to the subscribers, but the message cannot be delivered, the destination
+mapping rule is disabled. The reason that is shown is <code class="ph codeph">MQRC_PUBLICATION_ERROR</code>.
+This error typically occurs when there is a problem with the subscriber
+queue. The queue might be full, or the message might be larger than
+the<span class="keyword parmname"> MAXMSGL</span> attribute of the queue. Investigate
+the subscriber queue, and re-enable the destination mapping rule.</p> 		</section>
+		<section class="section"><h2 class="title sectiontitle">Does an <code class="ph codeph">MQRC_ENVIRONMENT_ERROR</code> error occur when a destination mapping rule is enabled?</h2>
+			
+			<p class="p">When you configure the server-connection channel, specifying a value of zero for the <span class="keyword parmname">SHARECNV</span> parameter can cause destination mapping rules to fail with <span class="ph">IBM MQ</span> reason code 2012 (MQRC_ENVIRONMENT_ERROR) when they are enabled. Ensure that you specify a value of at least 1 for the <span class="keyword parmname">SHARECNV</span> parameter. For more information, see <a class="xref" href="../Administering/ad00091_.html" title="To send messages between IBM MQ and Eclipse Amlen, you must configure a server connection channel.">Configuring the IBM MQ server connection channel</a>.</p>
+		</section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Troubleshooting/tr00001_.html" title="There are a number of common problems that you might encounter. Your application might fail to connect. Your application might disconnect unexpectedly. Your messages might not be published, or your messages might not arrive. MQ Connectivity might not work.">Common problems</a></div></div><div class="linklist relconcepts"><strong>Related concepts</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="tr10000_.html" title="Look for a troubleshooting task to help you solve a problem when using Eclipse Amlen.">Troubleshooting</a></li><li class="linklist"><a class="link" href="tr00001_.html" title="There are a number of common problems that you might encounter. Your application might fail to connect. Your application might disconnect unexpectedly. Your messages might not be published, or your messages might not arrive. MQ Connectivity might not work.">Common problems</a></li><li class="linklist"><a class="link" href="tr00008_.html" title="There are several common reasons why an application might disconnect unexpectedly.">The application disconnects</a></li><li class="linklist"><a class="link" href="tr00010_.html" title="There are several common reasons why an application might fail to publish to a topic.">The application fails to publish</a></li><li class="linklist"><a class="link" href="tr00009_.html" title="There are several common reasons why an application might fail to subscribe to a topic.">The application fails to subscribe</a></li><li class="linklist"><a class="link" href="tr00003_.html" title="There are several common reasons why messages might not be sent.">Messages are not sent</a></li><li class="linklist"><a class="link" href="tr00002_.html" title="There are several common reasons why an application might fail to connect.">The application fails to connect</a></li><li class="linklist"><a class="link" href="tr00004_.html" title="There are several common reasons why messages might not arrive.">Messages do not arrive</a></li><li class="linklist"><a class="link" href="../Administering/ad00102_.html" title="Eclipse Amlen can receive messages that are published to Eclipse Amlen topics, or sent to Eclipse Amlen queues and can forward the messages to IBM MQ queues or topics. Eclipse Amlen can also receive messages that are published to IBM MQ topics, or sent to IBM MQ queues, and can forward the messages to Eclipse Amlen topics or queues.">MQ Connectivity</a></li></ul></div><div class="linklist relref"><strong>Related reference</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="admin_messagecatalog.html" title="You can use the messages in this catalog to help you solve problems with Eclipse Amlen.">Message catalog</a></li></ul></div></nav>
+
+</article></main></body></html>

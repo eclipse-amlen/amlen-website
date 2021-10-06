@@ -1,0 +1,66 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="Client authentication occurs when Eclipse Amlen requests a certificate from a client to verify that the client is who it claims to be."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Client certificate authentication</title></head><body id="se00007"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a><ul><li><a href="../Security/se00010.html">Authentication</a></li><li><a href="../Security/se00011.html">Authorization</a></li><li><a href="../Security/se00005_.html">Transport Layer Security</a><ul><li class="active"><a href="../Security/se00007.html">Client certificate authentication</a></li><li><a href="../Security/se00012_.html">Federal Information Processing Standards (FIPS)</a></li><li><a href="../Security/se00017_.html">NIST 800-131a</a></li></ul></li></ul></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Client certificate authentication</h1>
+
+<div class="body conbody"><p class="shortdesc">Client authentication occurs when <span class="ph">Eclipse Amlen</span> requests a certificate from a
+        client to verify that the client is who it claims to be.</p>
+<p class="p">You can enable the use of client certificate authentication in
+your security profile by setting <span class="ph uicontrol">UseClientCertificate</span> to
+true. For more information about editing your security profile, see <a class="xref" href="../Administering/ad00700_.html" title="You can configure a number of security components. You can configure certificate profiles and security profiles to secure your endpoints. You can upload client certificates to the Eclipse Amlen truststore. You can configure Lightweight Third Party Authentication (LTPA) and OAuth. You can enable FIPS-compliant security. All these security components can be configured either by using the Amlen WebUI or by using REST Administration APIs.">Configuring security</a>.</p>
+<p class="p">The certificate must be an X.509 certificate and signed by a certificate
+authority (CA) trusted by <span class="ph">Eclipse Amlen</span>. For
+more information about certificates and CA, see <a class="xref" href="../Reference/_Topics/sy10530_.html" title="Digital certificates protect against impersonation, certifying that a public key belongs to a specified entity. They are issued by a Certificate Authority.">Digital certificates</a>.
+When <span class="ph">Eclipse Amlen</span> requests
+a certificate, the client sends its certificate. You can configure <span class="ph">Eclipse Amlen</span> to allow
+the connection if the client's certificate is trusted. </p>
+<div class="p">The following diagram shows the flow of requests between a client and <span class="ph">Eclipse Amlen</span>. <br><img class="image" src="se00007.jpg" alt="Request flow for client authentication between a client and Eclipse Amlen."><br></div>
+<div class="p"><ol class="ol">
+<li class="li">The client sends a request for an SSL session to <span class="ph">Eclipse Amlen</span>. </li>
+<li class="li">The client receives the <span class="ph">Eclipse Amlen</span> server
+certificate and checks this certificate against a list of trusted
+CAs. As the server certificate is signed by a trusted CA, the client
+accepts the certificate. <span class="ph">Eclipse Amlen</span> then
+asks the client for a certificate that identifies that client.</li>
+<li class="li">The client sends its certificate.</li>
+<li class="li"><span class="ph">Eclipse Amlen</span> checks
+its list of trusted certificates. Trusted certificates are stored
+in the <span class="ph">Eclipse Amlen</span> truststore.
+The system administrator can upload or remove individual trusted certificates
+from this store. If the client certificate is trusted, the secure
+session is established. For more information about uploading or deleting
+trusted certificates, see <a class="xref" href="../Administering/ad00700_.html" title="You can configure a number of security components. You can configure certificate profiles and security profiles to secure your endpoints. You can upload client certificates to the Eclipse Amlen truststore. You can configure Lightweight Third Party Authentication (LTPA) and OAuth. You can enable FIPS-compliant security. All these security components can be configured either by using the Amlen WebUI or by using REST Administration APIs.">Configuring security</a>.</li>
+</ol></div>
+<p class="p">For extra security, you can <span class="ph uicontrol">Use Password Authentication</span> to
+request a valid user ID and password from the client when that client
+connects. </p>
+<p class="p">When a certificate expires, follow the renewal procedures that
+are specified by the CA for that certificate. For more information
+about configuring client certificates, see <a class="xref" href="../Administering/ad00720_.html" title="You can authenticate based on client certificates by uploading the root CA certificates and intermediate CA certificates, or the client certificates to the Eclipse Amlen truststore. You can upload the CA certificates or client certificates by using the Amlen WebUI or by using REST Administration APIs.">Configuring
+client certificates </a>.</p>
+<section class="section"><h2 class="title sectiontitle">Using the identity of a client certificate for authentication
+and authorization</h2>  <p class="p">You can use the common name that is contained
+in a client certificate to restrict access to <span class="ph">Eclipse Amlen</span>. For example,
+if a device has a certificate that is burned in at the factory, you
+can use the unique common name in the certificate to ensure that only
+certain devices can connect, or can perform particular messaging actions. </p> <p class="p">In a connection policy, you can use the substitution variable <code class="ph codeph">${CommonName}</code> to specify that the client ID must match the client certificate common name. In a messaging policy, you can use the substitution variable <code class="ph codeph">${CommonName}</code> in the <code class="ph codeph">Topic</code>, <code class="ph codeph">Subscription</code>, or <code class="ph codeph">Queue</code> field, depending on the type of messaging policy, to ensure that only the device with that common name can access a particular topic. For more information about configuring connection policies and messaging policies, see <a class="xref" href="../Administering/ad00360_.html" title="You can configure messaging hubs either by using the Amlen WebUI or by using REST Administration APIs.">Configuring message hubs</a>.</p> <div class="p">The following
+steps outline how to set up authentication and authorization by using
+the common name of a client certificate: <ol class="ol">
+<li class="li">Upload a server certificate to the server, and create a certificate profile. The server certificate identifies <span class="ph">Eclipse Amlen</span> as a trusted system for the clients to connect to. For more information, see <a class="xref" href="../Administering/ad00710_.html" title="Certificate profiles define the server certificates that are used in security profiles to control Transport Layer Security. You can configure certificate profiles either by using the Amlen WebUI or by using REST Administration APIs.">Configuring certificate profiles</a>.</li>
+<li class="li">Create a security profile that uses the certificate profile and
+specifies to use client certificate authentication. For more information,
+see <a class="xref" href="../Administering/ad00740_.html" title="A security profile is used by an endpoint to define authentication and Transport Layer Security (TLS) settings for that endpoint. To enable TLS for the endpoint, you must enable TLS in the security profile and the security profile must have an associated certificate profile that defines the server certificate that is used to control TLS. To create a security profile with TLS enabled, you must create the certificate profile before you create the security profile. You can configure security profiles either by using the Amlen WebUI or by using REST Administration APIs.">Configuring security profiles</a>.</li>
+<li class="li">For each client device, create certificates with unique common
+names.</li>
+<li class="li">Import the root CA certificate, any intermediate CA certificates, and client certificates to the <span class="ph">Eclipse Amlen</span> truststore, and associate them with the security profile. These certificates ensure that <span class="ph">Eclipse Amlen</span> trusts the client certificate. For more information, see <a class="xref" href="../Administering/ad00720_.html" title="You can authenticate based on client certificates by uploading the root CA certificates and intermediate CA certificates, or the client certificates to the Eclipse Amlen truststore. You can upload the CA certificates or client certificates by using the Amlen WebUI or by using REST Administration APIs.">Configuring client certificates</a>. </li>
+<li class="li">Create a message hub with the following components: <ul class="ul">
+<li class="li">A connection policy that specifies that the Client ID must be <code class="ph codeph">${CommonName}</code></li>
+<li class="li">A messaging policy. The policy can optionally use <code class="ph codeph">${CommonName}</code> in the <code class="ph codeph">Topic</code>,  <code class="ph codeph">Subscription</code>, or <code class="ph codeph">Queue</code> field, depending on the type of messaging policy.</li>
+<li class="li">An endpoint that is associated with the connection policy, messaging
+policy, and security profile that you created.</li>
+</ul>For more information, see <a class="xref" href="../Administering/ad00360_.html" title="You can configure messaging hubs either by using the Amlen WebUI or by using REST Administration APIs.">Configuring message hubs</a>.</li>
+<li class="li">Connect the client devices, and send messages.</li>
+</ol></div> </section>
+</div>
+
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Security/se00005_.html" title="As an administrator, you can use certificate profiles and security profiles to configure Transport Layer Security (TLS) for Eclipse Amlen endpoints.">Transport Layer Security</a></div></div></nav></article></main></body></html>

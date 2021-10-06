@@ -1,0 +1,86 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content=""><link rel="stylesheet" type="text/css" href="../../commonltr.css"><link rel="stylesheet" type="text/css" href="../../doc.css"><title>Remove an inactive remote Eclipse Amlen server cluster member</title></head><body id="pdf_REST_configure_cluster"><nav role="toc"><ul><li><a href="../../welcome.html">Welcome</a></li><li><a href="../../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../../Overview/ov00000_.html">Product overview</a></li><li><a href="../../Planning/pl00001_.html">Planning</a></li><li><a href="../../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../../Administering/ad00000_.html">Administering</a></li><li><a href="../../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../../Security/se00000_.html">Security</a></li><li><a href="../../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../../Reference/re00000_.html">Reference</a><ul><li><a href="../../Reference/intro.html">REST API Reference</a><ul><li><a href="../../Reference/cmd_delete_config.html">Delete configuration objects</a></li><li><a href="../../Reference/cmd_show_config.html">Show configuration details of nameable configuration objects</a></li><li><a href="../../Reference/cmd_show_config_fix.html">Show configuration details of fixed-name configuration objects</a></li><li><a href="../../Reference/cmd_REST_file_put.html">Copy a file from the local machine to Eclipse Amlen  </a></li><li><a href="../../Reference/AdminEndpointCmd/adminendpoint.html">Admin endpoint REST Administration APIs</a></li><li><a href="../../Reference/ApplianceCmd/appliancesettingcommands.html">Server REST Administration APIs</a></li><li><a href="../../Reference/ClusterCmd/clustercommands.html">Cluster REST Administration APIs</a><ul><li><a href="../../Reference/ClusterCmd/cmd_configure_cluster.html">Configure Eclipse Amlen server cluster membership </a></li><li class="active"><a href="../../Reference/ClusterCmd/cmd_delete_clustermember.html">Remove an inactive remote Eclipse Amlen server cluster member </a></li><li><a href="../../Reference/ClusterCmd/cmd_status_cluster.html">Show cluster status</a></li><li><a href="../../Reference/ClusterCmd/cmd_show_cluster.html">Show configuration details of Eclipse Amlen server cluster membership </a></li></ul></li><li><a href="../../Reference/SecurityCmd/securitycommands.html">Security REST Administration APIs</a></li><li><a href="../../Reference/MsgHubCmd/messagehubcommands.html">Message hub REST Administration APIs</a></li><li><a href="../../Reference/QueueCmd/QueueCmd.html">Queue REST Administration APIs</a></li><li><a href="../../Reference/MQConnCmd/mqconnectivitycommands.html">MQ Connectivity  REST Administration APIs</a></li><li><a href="../../Reference/HACmd/HAcommands.html">High availability REST Administration APIs</a></li><li><a href="../../Reference/BackupCmd/backupandrestorecommands.html">Backup and restore commands</a></li><li><a href="../../Reference/MonitorCmd/monitoringandreportingcommands.html">REST Monitoring APIs</a></li><li><a href="../../Reference/XATranCmd/xatransactioncommands.html">XA transaction REST Administration APIs</a></li><li><a href="../../Reference/SNMPCmd/snmpcommands.html">SNMP REST Administration APIs</a></li><li><a href="../../Reference/ProtocolPluginCmd/ProtocolPluginCmd.html">Protocol plug-in REST Administration APIs</a></li><li><a href="../../Reference/SpecialCmd/spepcom.html">Special purpose REST Administration APIs</a></li></ul></li><li><a href="../../Reference/_Topics/sy10530_.html">Digital certificates</a></li><li><a href="../../Reference/_Topics/re00003_.html">Supported cipher lists</a></li><li><a href="../../Reference/_Topics/re00001_.html">Classless Inter-Domain Routing</a></li></ul></li><li><a href="../../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+  <h1 class="title topictitle1" id="ariaid-title1">Remove an inactive remote <span class="ph">Eclipse Amlen</span> server cluster member </h1>
+  
+  
+  
+  
+  
+  
+  <div class="body refbody"><p class="shortdesc"></p>
+    <section class="section"><h2 class="title sectiontitle">Purpose</h2>Removes an inactive remote cluster member by using the <span class="ph">Eclipse Amlen</span> REST API POST method. <p class="p">Use this
+        command with caution. If you have a member that you no longer want to participate in the
+        cluster, disable cluster membership  by setting <span class="keyword parmname">EnableClusterMembership</span>
+        to <kbd class="ph userinput">false</kbd> on that member. If  you have a cluster member that is
+        inactive and  cannot be restarted, then other cluster members queue the messages and
+        retained messages until that member becomes active. Eventually, this might lead to a
+        performance degradation. In this case you might want  to permanently remove that member from
+        the cluster by using this command. This command results in the member being permanently
+        removed from the cluster. All messages that are queued to be sent to the inactive member are
+        permanently deleted from the system. Outbound messages from the inactive member are also
+        permanently deleted. For more information about disabling cluster membership, see <a class="xref" href="cmd_configure_cluster.html">Configure Eclipse Amlen server cluster membership</a>.</p></section>
+    <section class="section"><h2 class="title sectiontitle">URI</h2>
+      
+      <p class="p">Use the <span class="ph">Eclipse Amlen</span> REST API POST method with
+        the following <span class="ph">Eclipse Amlen</span> configuration URI:</p>
+      <p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/service/remove/inactiveClusterMember</code></p>
+    </section>
+    <section class="section"><h2 class="title sectiontitle">Object configuration data</h2><p class="p">Provide cluster member identification data
+        in the payload of the POST method by using the following schema.
+          <span class="keyword parmname">Content-type</span> is set to <kbd class="ph userinput">application/json</kbd>: </p><pre class="pre codeblock"><code>
+    { 
+        "ServerName": "string", 
+        "ServerUID": "string"
+    }</code></pre>Where:<dl class="dl">
+        
+          <dt class="dt dlterm">ServerName</dt>
+          <dd class="dd">Specifies the name of the server</dd>
+        
+      </dl><dl class="dl">
+        
+          <dt class="dt dlterm">ServerUID</dt>
+          <dd class="dd">Specifies the UID of the server.</dd>
+          <dd class="dd ddexpand">The <span class="keyword parmname">ServerUID</span> is a unique identifier that is assigned to a server
+            when that server joins a cluster. If a server leaves and then re-joins a cluster, the
+            server is assigned a new <span class="keyword parmname">ServerUID</span>. </dd>
+          <dd class="dd ddexpand">In an HA environment, the <span class="keyword parmname">ServerUID</span> identifies the current
+            Primary. A Primary and Standby can have different server names, but both servers have
+            the same <span class="keyword parmname">ServerUID</span>.</dd>
+        
+      </dl></section>
+    <section class="section"><h2 class="title sectiontitle">Usage Notes®</h2>
+      
+      <ul class="ul">
+        <li class="li">Disabling cluster membership results in all messages that are being forwarded to or from
+          this member to be permanently deleted.</li>
+        <li class="li">Capitalization and double quotation marks must be used as shown.</li>
+        <li class="li">You must specify both the <span class="keyword parmname">ServerName</span> and the
+            <span class="keyword parmname">ServerUID</span>. </li>
+        <li class="li">You can query cluster members with a status of  <kbd class="ph userinput">inactive</kbd> by using
+            <a class="xref" href="../../Monitoring/admin00080.html" title="Cluster monitoring statistics allow you to establish how well the cluster is functioning by providing information about the cluster members and the flow of messages between the cluster members. Cluster monitoring statistics provide a set of statistics about each cluster member as they relate to the cluster member on which you are viewing the statistics.">cluster monitoring</a>.</li>
+      </ul>
+    </section>
+    <section class="section"><h2 class="title sectiontitle">Example</h2>
+      
+      <p class="p">The following example shows a POST method in cURL to remove an inactive remote cluster
+        member:</p>
+      <pre class="pre codeblock"><code>
+curl -X POST 
+    -H  'Content-Type: application/json'  \
+    -d '  { 
+            "ServerName":"ServerA",
+            "ServerUID":"mxxZxR6t" 
+          }
+       ' \
+http://127.0.0.1:9089/ima/v1/service/remove/inactiveClusterMember</code></pre>
+      <p class="p">The following example shows an example of response to the POST method:</p>
+      <pre class="pre codeblock"><code>
+    {          
+        "Version": "v1",  
+        "Code": "CWLNA6011",  
+        "Message": "The requested configuration change has completed successfully."
+    }</code></pre>
+    </section>
+  </div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../../Reference/ClusterCmd/clustercommands.html" title="The cluster REST Administration APIs allow you to configure and display cluster membership settings.">Cluster REST Administration APIs</a></div></div></nav></article></main></body></html>

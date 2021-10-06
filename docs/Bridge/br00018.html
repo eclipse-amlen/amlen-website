@@ -1,0 +1,57 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="You can update the Bridge configuration by using the imabridge command. In the Docker environment, the command is run from within the container."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Using the Bridge configuration file to configure the administration endpoint</title></head><body id="task_mpw_s2b_tfb"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a><ul><li><a href="../Bridge/br00026.html">Installing  Amlen Bridge  </a></li><li><a href="../Bridge/br00012.html">Post installation user actions</a><ul><li class="active"><a href="../Bridge/br00018.html">Using the Bridge configuration file to configure the administration endpoint</a></li><li><a href="../Bridge/br00025.html">Accepting the  Amlen Bridge license</a></li><li><a href="../Bridge/br00014.html">Changing the core pattern</a></li><li><a href="../Bridge/br00015.html">Configuring the log file rotation</a></li><li><a href="../Bridge/br00019.html">Configuring connections and forwarders</a></li></ul></li><li><a href="../Bridge/br00020.html">File paths</a></li><li><a href="../Bridge/br00021.html">Updating the Bridge configuration</a></li><li><a href="../Bridge/br00022.html">Monitoring</a></li><li><a href="../Bridge/br00023.html">Administrative REST interfaces</a></li></ul></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Using the Bridge configuration file to configure the administration endpoint</h1>
+
+
+
+
+
+
+<div class="body taskbody"><p class="shortdesc">You can update the Bridge configuration by using the <span class="keyword cmdname">imabridge</span> command. In the <span class="ph">Docker</span> environment, the command is run from within the container. </p>
+    <section class="section context"><div class="p"><div class="note note note_note"><span class="note__title">Note:</span> If you are running in a <span class="ph">Docker</span> container and you created an admin endpoint during the creation of the <span class="ph">Docker</span> container, this task is not required.
+    </div></div><p class="p">
+More than one administrative endpoint can be configured. For example, you might want one
+administrative endpoint to be available to both the localhost environment and to the private
+network.</p><p class="p">Instead of using a command, you can also update the dynamic configuration file <span class="ph filepath">/var/imabridge/bridge.cfg</span>
+directly by editing the file or by copying to the file. Updating the dynamic configuration file also
+changes the configuration of the running bridge. However, if there are any errors in the new
+configuration, it might not be possible for the Bridge to restart.</p>
+<p class="p">For a description of endpoint object properties, see <a class="xref" href="br00010.html" title="The Amlen Bridge is configured by using a small set of objects that are stored in a JSON dynamic configuration file. The objects can be created and modified as files or specified by using the Bridge REST APIs. When the configuration objects are modified, the dynamic configuration file is updated with the current state.">Configuring the Bridge.</a></p>
+</section><section><ol class="ol steps"><li class="li step stepexpand">
+<span class="ph cmd">Create a temporary configuration file, for example <span class="ph filepath">new.cfg</span>. Or you can
+modify the sample configuration file that is available at
+<span class="ph filepath">/opt/ibm/imabridge/sample-config/admin_default.cfg</span>. The contents of the
+configuration file must match the following format: </span>
+<div class="itemgroup info">
+<pre class="pre codeblock"><code>
+{
+    "Endpoint": {
+        "admin": {
+            "Port": 9082,
+            "Interface": "*",
+            "Secure": true,
+            "Protocol": "Admin",
+            "Method": "TLSv1.2",
+            "Certificate": "imabridge_default_cert.pem",
+            "Key": "imabridge_default_key.pem",
+            "KeyPassword": "",
+            "EnableAbout": true,
+            "Authentication": "basic"
+        }
+    },
+    "User": {
+        "admin": { "Password": "admin" }
+    }
+}
+</code></pre>
+<div class="note note note_note"><span class="note__title">Note:</span> If the new configuration file is correct, the configuration of the running bridge is updated
+successfully. If there are any errors in the new configuration file, error messages are
+generated.</div>
+</div></li><li class="li step stepexpand">
+        <span class="ph cmd">Run the following command: <code class="ph codeph">sudo /opt/ibm/imabridge/bin/imabridge -u <var class="keyword varname">path</var>/new.cfg</code> and replace the <var class="keyword varname">path</var> variable with the directory in which the configuration file is stored.</span></li><li class="li step stepexpand">
+<span class="ph cmd">If TLS is enabled, you must supply private key and server certificate files in the<span class="ph filepath">
+/var/imabridge/keystore</span> directory. If self-signed certificates are used, you must generate the
+certificates with the appropriate tools such as openssl. </span></li></ol></section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Bridge/br00012.html" title="After installation is complete, some host configuration changes might be required.">Post installation user actions</a></div></div></nav></article></main></body></html>

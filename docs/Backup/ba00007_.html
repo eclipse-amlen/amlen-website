@@ -1,0 +1,56 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can create a secure backup of the Eclipse Amlen high availability (HA) environment by using REST Administration APIs."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Creating a backup of the Eclipse Amlen server in a high availability environment</title></head><body id="ba00007_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a><ul><li><a href="../Backup/ba00001_.html">Creating a backup of the Eclipse Amlen messaging server</a></li><li><a href="../Backup/ba00002_.html">Restoring the Eclipse Amlen server from a backup in the same environment</a></li><li><a href="../Backup/ba00012_.html">Creating a backup of the Amlen WebUI</a></li><li><a href="../Backup/ba00013_.html">Restoring the Amlen WebUI from a backup</a></li><li><a href="../Backup/ba00004_.html">Backup and restore in a high availability environment</a><ul><li class="active"><a href="../Backup/ba00007_.html">Creating a backup of the Eclipse Amlen server in a high availability environment</a></li><li><a href="../Backup/ba00008_.html">Restoring the high availability environment</a></li></ul></li></ul></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Creating a backup of the <span class="ph">Eclipse Amlen</span> server in a high availability environment</h1>
+
+
+
+
+
+
+<div class="body taskbody"><p class="shortdesc">System administrators can create a secure backup of the <span class="ph">Eclipse Amlen</span> high availability (HA) environment by using <span class="ph">REST Administration APIs</span>.</p>
+<section class="section prereq">
+<p class="p">To ensure consistency of the backup, perform the backup operation in the HA environment on the standby node. </p>
+</section>
+<section class="section context">
+<p class="p">System administrators can create a secure backup that can be used to restore the <span class="ph">Eclipse Amlen</span> configuration and store data. Both of these sets of data are in directories on a file system and can be backed up by using standard system tools. Messaging services remain in progress during the backup operation. </p>
+</section>
+<section><ol class="ol steps"><li class="li step stepexpand">
+<span class="ph cmd">Check that the server is running and is in standby mode using the <span class="ph">Eclipse Amlen</span> REST API GET method with the following URI: </span>
+<div class="itemgroup info">
+<pre class="pre codeblock"><code>http://&lt;Standby-Server-IP:Port&gt;/ima/v1/service/status/</code></pre>
+</div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Messaging on the standby server must be stopped to ensure that the backup is valid during the restore process; however, do not force stop the standby server. Set the <span class="ph">Eclipse Amlen</span> server to maintenance mode by using the <span class="ph">Eclipse Amlen</span> REST API POST method with the following URI:</span>
+<div class="itemgroup info">
+<pre class="pre codeblock"><code>http://&lt;admin-endpoint-IP:port&gt;/ima/v1/service/restart</code></pre>
+<p class="p">Provide configuration data in the payload of the POST method by using the following schema. <span class="keyword parmname">Content-type</span> is set to <kbd class="ph userinput">application/json</kbd>:</p>
+<pre class="pre codeblock"><code>
+{    
+  "Service": "Server",
+  "Maintenance": "start"
+}</code></pre>
+</div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">When the standby server is in maintenance mode, use your standard system tools to back up the contents of the following directories:</span>
+<div class="itemgroup info">
+<ul class="ul">
+<li class="li"><span class="ph filepath">var/messagesight/data</span></li>
+<li class="li"><span class="ph filepath">var/messagesight/store</span></li>
+</ul>
+<div class="note note note_note"><span class="note__title">Note:</span> If you are operating in a Docker environment, ensure that you mount these directories on the host volume or volumes and back up the corresponding host directory or directories.</div>
+</div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Restart the standby server in production mode by using the <span class="ph">Eclipse Amlen</span> REST API POST method with the following URI:</span>
+<div class="itemgroup info">
+<pre class="pre codeblock"><code>http://&lt;admin-endpoint-IP:port&gt;/ima/v1/service/restart/</code></pre>
+<p class="p">Provide configuration data in the payload of the POST method by using the following schema. <span class="keyword parmname">Content-type</span> is set to <kbd class="ph userinput">application/json</kbd>:</p>
+<pre class="pre codeblock"><code>
+{    
+  "Service": "Server",
+  "Maintenance": "stop"
+}</code></pre>
+</div>
+</li></ol></section>
+</div>
+</article></main></body></html>

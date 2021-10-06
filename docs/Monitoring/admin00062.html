@@ -1,0 +1,166 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can view XA transaction branch information by using REST Monitoring APIs."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Viewing XA transaction information by using REST Monitoring APIs</title></head><body id="admin00062"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a><ul><li><a href="../Monitoring/admin00080.html">Cluster monitoring</a></li><li><a href="../Monitoring/admin00009.html">Connection Monitoring</a></li><li><a href="../Monitoring/admin00010.html">Endpoint Monitoring</a></li><li><a href="../Monitoring/admin00016.html">Topic Monitoring</a></li><li><a href="../Monitoring/admin00019.html">Queue Monitoring</a></li><li><a href="../Monitoring/admin00022.html">Subscription Monitoring</a></li><li><a href="../Monitoring/admin00025.html">MQTT Client Monitoring</a></li><li><a href="../Monitoring/admin00031.html">MQ Connectivity monitoring</a></li><li><a href="../Monitoring/admin00070.html">Viewing protocol plug-in monitoring statistics by using an external application</a></li><li><a href="../Monitoring/admin00028.html">Server Monitoring</a></li><li><a href="../Monitoring/admin00060.html">XA Transaction monitoring</a><ul><li><a href="../Monitoring/admin00061.html">Viewing XA transaction information by using the Amlen WebUI</a></li><li class="active"><a href="../Monitoring/admin00062.html">Viewing XA transaction information by using REST Monitoring APIs</a></li></ul></li></ul></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Viewing XA transaction information by using <span class="ph">REST Monitoring APIs</span></h1>
+
+<div class="body taskbody"><p class="shortdesc">System administrators can view XA transaction branch information by using <span class="ph">REST Monitoring APIs</span>. </p>
+<section class="section context"><p class="p">System administrators can view XA transaction branch information by using a  <span class="ph">REST Monitoring API</span>, or by using the <span class="ph">Amlen WebUI</span>. For more information about using the <span class="ph">Amlen WebUI</span> to view XA transaction branch information,
+    see <a class="xref" href="admin00061.html" title="Use the Transactions monitor to view information about XA transaction branches in Eclipse Amlen.">Viewing XA
+     transaction information by using the GUI</a>.</p></section>
+<section><div class="li stepsection">XA transaction statistics can be created by using a <span class="ph">REST Monitoring API</span>. To create XA
+    transaction monitoring information, complete the following steps:</div><ol class="ol steps"><li class="li step stepexpand">
+    <span class="ph cmd">Use the <span class="ph">Eclipse Amlen</span> REST API
+     GET method with the following <span class="ph">Eclipse Amlen</span> monitoring URI:</span>
+    <div class="itemgroup info">
+     <p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/monitor/&lt;ObjectType&gt;</code></p>
+    </div>
+   </li><li class="li step stepexpand">
+    <span class="ph cmd">Provide query parameters requesting the statistics that you want returned in the JSON
+     payload. The following example uses cURL to create transaction-related statistics:</span>
+    <div class="itemgroup info">
+     <pre class="pre codeblock"><code>curl -X GET http://127.0.0.1:9089/ima/v1/monitor/Transaction?XID=<var class="keyword varname">XID</var>%26StatType=<var class="keyword varname">StatType</var>%26TranState=<var class="keyword varname">TranState</var>%26ResultCount=<var class="keyword varname">ResultCount</var></code></pre>
+     <p class="p">Where:</p>
+     <ul class="ul">
+      <li class="li">
+       <dl class="dl">
+        
+         <dt class="dt dlterm">XID</dt>
+         <dd class="dd">Optional.</dd>
+         <dd class="dd ddexpand">
+          <p class="p">Specifies the identifier of the XA transaction branch. </p>
+          
+          <p class="p">Asterisk (*) matches 0 or more characters. </p>
+          <p class="p">The default value is <span class="keyword parmname">*</span>.</p>
+         </dd>
+        
+       </dl>
+      </li>
+      <li class="li">
+       <dl class="dl">
+        
+         <dt class="dt dlterm">StatType</dt>
+         <dd class="dd">Optional.</dd>
+         <dd class="dd ddexpand">
+          <p class="p">Specifies the type of data to order the results by.</p>
+          <div class="p">This value can be one of the following values:<ul class="ul">
+            <li class="li">
+             <dl class="dl">
+              
+               <dt class="dt dlterm"> LastStateChangeTime</dt>
+               <dd class="dd">The most recent time that the specified XA transaction branch changed state.
+               </dd>
+              
+             </dl>
+             <dl class="dl">
+              
+               <dt class="dt dlterm">Unsorted</dt>
+               <dd class="dd">The results are not returned in a specific order.</dd>
+              
+             </dl>
+            </li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm"> AllUnsorted</dt>
+<dd class="dd">Lists all transactions. </dd>
+<dd class="dd ddexpand">Any value that is specified for <span class="keyword parmname">ResultCount</span> is ignored, so setting
+<span class="keyword parmname">StatType</span>  to <kbd class="ph userinput">AllUnsorted</kbd> can result in a large number of
+responses being generated.</dd>
+
+</dl>
+</li>
+           </ul></div>
+          <p class="p">The default value is <span class="keyword parmname">LastStateChangeTime</span>.</p>
+         </dd>
+        
+       </dl>
+      </li>
+      <li class="li">
+       <dl class="dl">
+        
+         <dt class="dt dlterm">TranState</dt>
+         <dd class="dd">Optional.</dd>
+         <dd class="dd ddexpand">
+          <p class="p">Specifies the state of the XA transaction branches to be displayed.</p>
+          <div class="p">This value can be one of the following values:<ul class="ul">
+            <li class="li">
+             <dl class="dl">
+              
+               <dt class="dt dlterm">All</dt>
+               <dd class="dd">Data about transaction branches that are in any of prepared, committed or rolled
+                back states is reported.</dd>
+               <dd class="dd ddexpand">This value is the default value.</dd>
+              
+             </dl>
+            </li>
+            <li class="li">
+             <dl class="dl">
+              
+               <dt class="dt dlterm">Heuristic</dt>
+               <dd class="dd">Data about transaction branches that have been heuristically committed or rolled
+                back is reported.</dd>
+              
+             </dl>
+            </li>
+            <li class="li">
+             <dl class="dl">
+              
+               <dt class="dt dlterm">HeuristicCommit</dt>
+               <dd class="dd">Data about transaction branches that have been heuristically committed is
+                reported.</dd>
+              
+             </dl>
+            </li>
+            <li class="li">
+             <dl class="dl">
+              
+               <dt class="dt dlterm">HeuristicRollback</dt>
+               <dd class="dd">Data about transaction branches that have been heuristically rolled back is
+                reported.</dd>
+              
+             </dl>
+            </li>
+            <li class="li">
+             <dl class="dl">
+              
+               <dt class="dt dlterm">Prepared</dt>
+               <dd class="dd">Data about transaction branches that are in prepared state is reported.</dd>
+              
+             </dl>
+            </li>
+           </ul></div>
+         </dd>
+        
+       </dl>
+      </li>
+      <li class="li">
+       <dl class="dl">
+        
+         <dt class="dt dlterm">ResultCount</dt>
+         <dd class="dd">Optional.</dd>
+         <dd class="dd ddexpand">
+          <p class="p">Specifies the number of results to display.</p>
+          <p class="p">Options available for selection are 10, 25, 50, and 100.</p>
+          <p class="p">The default is <span class="keyword parmname">25</span>.</p>
+         </dd>
+        
+       </dl>
+      </li>
+     </ul>
+    </div>
+   </li></ol></section>
+  <section class="example">
+   <p class="p">The following example uses cURL to show how a GET method is used to create statistics about
+    all transaction branches:</p>
+   <pre class="pre codeblock"><code>curl -X GET http://127.0.0.1:9089/ima/v1/monitor/Transaction?XID=*%26TranState=All
+ 
+ </code></pre>
+   <p class="p">The following example shows a successful example response to the GET method that was used to
+    create statistics about transaction branches that have been heuristically rolled back:</p>
+   <pre class="pre codeblock"><code>{ "Version":"v1", "Transaction": [ { "XID":"57415344:0000014247FEBB3D0997000012008CC78A1A981840C3350B9E23A3C2EFB8E5A6D864A89C0:00000001",
+"TranState":"Prepared","LastStateChangeTime":1446728129213566618 }
+ ] }
+</code></pre>
+  </section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Monitoring/admin00060.html" title="View state information for XA transaction branches in Eclipse Amlen being coordinated by an external transaction manager.">XA Transaction monitoring</a></div></div></nav></article></main></body></html>

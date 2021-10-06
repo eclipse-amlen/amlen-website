@@ -1,0 +1,167 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="You can use the Server Dashboard or the Server Monitor or REST Monitoring APIs to view metrics on the store (persistent memory and disk)."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Store Monitoring</title></head><body id="admin00034"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a><ul><li><a href="../Monitoring/admin00080.html">Cluster monitoring</a></li><li><a href="../Monitoring/admin00009.html">Connection Monitoring</a></li><li><a href="../Monitoring/admin00010.html">Endpoint Monitoring</a></li><li><a href="../Monitoring/admin00016.html">Topic Monitoring</a></li><li><a href="../Monitoring/admin00019.html">Queue Monitoring</a></li><li><a href="../Monitoring/admin00022.html">Subscription Monitoring</a></li><li><a href="../Monitoring/admin00025.html">MQTT Client Monitoring</a></li><li><a href="../Monitoring/admin00031.html">MQ Connectivity monitoring</a></li><li><a href="../Monitoring/admin00070.html">Viewing protocol plug-in monitoring statistics by using an external application</a></li><li><a href="../Monitoring/admin00028.html">Server Monitoring</a><ul><li><a href="../Monitoring/admin00038.html">Viewing server statistics by using the Amlen WebUI</a></li><li><a href="../Monitoring/admin00037.html">Viewing server statistics by using REST Monitoring APIs</a></li><li class="active"><a href="../Monitoring/admin00034.html">Store Monitoring</a><ul><li><a href="../Monitoring/admin00035.html">Viewing store statistics by using the Amlen WebUI</a></li><li><a href="../Monitoring/admin00036.html">Viewing store statistics by using REST Monitoring APIs</a></li><li><a href="../Monitoring/admin00050.html">Viewing store statistics by using an external application</a></li></ul></li><li><a href="../Monitoring/admin00051.html">Memory Monitoring</a></li></ul></li><li><a href="../Monitoring/admin00060.html">XA Transaction monitoring</a></li></ul></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Store Monitoring</h1>
+
+<div class="body conbody"><p class="shortdesc">You can use the Server Dashboard or the <span class="keyword wintitle">Server Monitor</span> or <span class="ph">REST Monitoring APIs</span> to view metrics on
+  the store (persistent memory and disk).</p>
+<p class="p">You can view statistical information about the <span class="ph">Eclipse Amlen</span> persistent store. The persistent store
+   statistics provide information about the usage of persistent memory and disk. These statistics
+   describe how much persistent memory is being used, and by which category of owner: transactions,
+   client states, queues, subscriptions, topics with retained messages, MQ connectivity. You can use
+   the <span class="ph uicontrol">Server Memory Usage</span> graph on the <span class="keyword wintitle">Home</span> page of the
+    <span class="ph">Amlen WebUI</span> to understand persistent memory usage
+   over a period of 24 hours so that you can take appropriate action to continue efficient
+   operation. If your persistent memory is approaching full capacity, investigate how much memory is
+   being used by the various owner categories.</p>
+<div class="p">There are 2 pools of memory in the persistent store:<ul class="ul">
+<li class="li">Pool 1 contains records for topics that have retained messages,
+durable subscriptions, queues, clients, and connectivity with <span class="ph">IBM® MQ</span> queue managers. </li>
+<li class="li">Pool 2 contains records of acknowledgements with MQTT clients. </li>
+</ul></div>
+<p class="p">Use the Server Dashboard on the <span class="keyword wintitle">Home</span> page, or the <span class="keyword wintitle">Server
+    Monitor</span> page to view the following statistics about <span class="ph">Eclipse Amlen</span> persistent memory: </p>
+<ul class="ul">
+<li class="li"> <dl class="dl">
+<dt class="dt dlterm">MemoryUsedPercent</dt>
+<dd class="dd">Shows the percentage of persistent memory that is used, and, therefore,
+is not available.</dd>
+</dl> </li>
+<li class="li"> <dl class="dl">
+<dt class="dt dlterm">DiskUsedPercent</dt>
+<dd class="dd">Shows the percentage of disk space that is used.</dd>
+</dl> </li>
+<li class="li"> <dl class="dl">
+<dt class="dt dlterm">DiskFreeBytes</dt>
+<dd class="dd">Shows the amount of disk space, in bytes, that is available.</dd>
+</dl> </li>
+<li class="li"> <dl class="dl">
+<dt class="dt dlterm">Pool1TotalBytes</dt>
+<dd class="dd">Shows the amount of memory, in bytes, in pool 1.</dd>
+</dl> </li>
+<li class="li"> <dl class="dl">
+<dt class="dt dlterm">Pool1UsedBytes</dt>
+<dd class="dd">Shows the amount of memory, in bytes, that is currently in use
+in pool 1. </dd>
+</dl> </li>
+<li class="li"> <dl class="dl">
+<dt class="dt dlterm">Pool1UsedPercent</dt>
+<dd class="dd">Shows the percentage of memory that is in use in pool 1.</dd>
+</dl> </li>
+<li class="li"> <dl class="dl">
+<dt class="dt dlterm">Pool1RecordSizeBytes</dt>
+<dd class="dd">Shows the size, in bytes, of each record in pool 1.</dd>
+</dl> </li>
+<li class="li"> <dl class="dl">
+<dt class="dt dlterm">Pool1RecordsLimitBytes</dt>
+<dd class="dd">Shows the overall amount of memory, in bytes, that can be used
+by client applications. If this limit is exceeded, publications and
+subscriptions might be rejected.</dd>
+</dl> </li>
+<li class="li"> <dl class="dl">
+<dt class="dt dlterm">Pool1RecordsUsedBytes</dt>
+<dd class="dd">Shows the amount of memory, in bytes, that is being used for client
+records. If this value exceeds the value of <code class="ph codeph">Pool1RecordsLimitBytes</code>,
+publications and subscriptions might be rejected.</dd>
+</dl> </li>
+<li class="li"> <dl class="dl">
+<dt class="dt dlterm">ClientStatesBytes</dt>
+<dd class="dd">Shows the memory allocated for clients that must be remembered
+when they are disconnected. In MQTT, these are clients that connected
+using a <code class="ph codeph">cleanSession=0</code> setting or clients that connected
+and set a will message the quality of service of which is 1 or 2.</dd>
+</dl>                 <div class="p">To reduce the amount of store memory
+that is being used for this category, you can disconnect and delete
+MQTT clients by using either: <ul class="ul">
+<li class="li">The <span class="ph uicontrol">Disconnected MQTT Clients</span> monitoring
+page in the <span class="ph">Amlen WebUI</span>,
+or </li>
+<li class="li">The <span class="ph">Eclipse Amlen</span> REST API DELETE method. For more information about using the <span class="ph">Eclipse Amlen</span> REST API DELETE method, see <a class="xref" href="../Reference/cmd_delete_config.html">Delete configuration objects</a>.  </li>
+</ul> To prevent clients from connecting with a setting of <code class="ph codeph">cleanSession=0</code>,
+you can either:<ul class="ul">
+<li class="li">Edit the connection policy in the <span class="ph">Amlen WebUI</span>: clear the <span class="ph uicontrol">Allow
+Clients with Durable Subscriptions</span> check box, or</li>
+<li class="li">Edit the connection policy to set the <span class="keyword parmname">AllowDurable</span> parameter to
+<code class="ph codeph">False</code> by using the <span class="ph">Eclipse Amlen</span> REST API POST method. For more        information about using the <span class="ph">Eclipse Amlen</span> REST API POST method, see <a class="xref" href="../Reference/MsgHubCmd/cmd_create_update_conpol.html">Create or update a connection policy</a>.</li>
+</ul> </div> </li>
+<li class="li"> <dl class="dl">
+<dt class="dt dlterm">QueuesBytes</dt>
+<dd class="dd">Shows the memory, in bytes, allocated for queues. Memory is allocated
+in this category for each queue that is created for point-to-point
+messaging.</dd>
+</dl> </li>
+<li class="li"> <dl class="dl">
+<dt class="dt dlterm">TopicsBytes</dt>
+<dd class="dd">Shows the memory, in bytes, allocated for topics. The server allocates memory in this category
+       for each topic with a persistent retained message.<p class="p">A large amount of store memory being
+        consumed by this category indicates that the server is retaining messages for a large number
+        of topics. To reduce the amount of store memory that is being used by this category, publish
+        retained messages on a smaller number of topics. You can remove individual retained messages
+        by publishing zero-length messages on the same topic. Retained messages can also be removed
+        by the message expiration facility if message expiration is being used; check the value of
+         <span class="keyword parmname">MaxMessageTimeToLive</span> parameter of your topic policy.</p></dd>
+</dl> </li>
+<li class="li"> <dl class="dl">
+<dt class="dt dlterm">SubscriptionsBytes</dt>
+<dd class="dd">Shows the memory, in bytes, allocated for durable subscription
+records. In MQTT, these are subscriptions for clients that connected
+using a <code class="ph codeph">cleanSession=0</code> setting.<div class="p">To reduce the amount
+of store memory that is being used by this category, you can disconnect
+clients and delete subscriptions by using either: <ul class="ul">
+<li class="li">The <span class="ph uicontrol">Subscriptions</span> monitoring page in the <span class="ph">Amlen WebUI</span>, or </li>
+<li class="li">The <span class="ph">Eclipse Amlen</span> REST API DELETE method. For more information about using the <span class="ph">Eclipse Amlen</span> REST API DELETE method, see <a class="xref" href="../Reference/cmd_delete_config.html">Delete configuration objects</a>. </li>
+</ul>To prevent clients from connecting with a setting of <code class="ph codeph">cleanSession=0</code>,
+you can either:<ul class="ul">
+<li class="li">Edit the connection policy in the <span class="ph">Amlen WebUI</span>: clear the <span class="ph uicontrol">Allow
+Clients with Durable Subscriptions</span> check box, or</li>
+         <li class="li">Edit the connection policy to set the <span class="keyword parmname">AllowDurable</span> parameter to
+         <code class="ph codeph">False</code> by using the <span class="ph">Eclipse Amlen</span> REST API POST method. For more           information about using the <span class="ph">Eclipse Amlen</span> REST API POST method, see <a class="xref" href="../Reference/MsgHubCmd/cmd_create_update_conpol.html">Create or update a connection policy</a>.</li>
+</ul></div></dd>
+</dl> </li>
+<li class="li"> <dl class="dl">
+<dt class="dt dlterm">TransactionsBytes</dt>
+<dd class="dd">Shows the memory, in bytes, allocated for transaction records.
+The server allocates memory in this category for each transaction.<p class="p"> During
+normal operation, most of the store memory being used by this category
+is for transactions that are being used internally by <span class="ph">Eclipse Amlen</span> for
+a variety of purposes which ensure the consistency of its operations.
+To reduce the amount of store memory that is being by this category,
+reduce the workload of the server so that fewer internal transactions
+are used. Transactions continue to be created after the <code class="ph codeph">Pool1RecordsLimitBytes</code> has
+been exceeded.</p></dd>
+</dl> </li>
+<li class="li"> <dl class="dl">
+<dt class="dt dlterm">MQConnectivityBytes</dt>
+<dd class="dd">Shows the memory, in bytes, allocated for connectivity with <span class="ph">IBM MQ</span> queue managers.<div class="p">To reduce the amount of
+        store memory that is being used by this category, review your destination mapping rules and
+        remove any unnecessary rules. You can modify and review destination mapping rules by using either:<ul class="ul">
+         <li class="li">The <span class="ph uicontrol">MQ Connectivity</span> page that you can select from
+           the<span class="ph uicontrol">Messaging</span> menu in the <span class="ph">Amlen WebUI</span>, or </li>
+        <li class="li">The <span class="ph">Eclipse Amlen</span> REST API POST method or the <span class="ph">Eclipse Amlen</span> REST API GET method. For more information about editing and viewing destination mapping rules, see            <a class="xref" href="../Administering/ad00110_.html" title="To send messages between Eclipse Amlen and IBM MQ, you must create destination mapping rules. Destination mapping rules are created by associating an Eclipse Amlen topic or queue with a IBM MQ topic or queue. You can create a maximum of 64 destination mapping rules.">Configuring destination mapping rules</a>. </li>
+        </ul></div></dd>
+</dl> </li>
+<li class="li"> <dl class="dl">
+<dt class="dt dlterm">Pool2TotalBytes</dt>
+<dd class="dd">Shows the amount of memory, in bytes, in pool 2.</dd>
+</dl> </li>
+<li class="li"> <dl class="dl">
+<dt class="dt dlterm">Pool2UsedBytes</dt>
+<dd class="dd">Shows the amount of memory, in bytes, that is currently in use
+in pool 2.</dd>
+</dl> </li>
+<li class="li"> <dl class="dl">
+<dt class="dt dlterm">Pool2UsedPercent</dt>
+<dd class="dd">Shows the percentage of memory that is in use in pool 2.</dd>
+</dl> </li>
+<li class="li"> <dl class="dl">
+<dt class="dt dlterm">IncomingMessageAcksBytes</dt>
+<dd class="dd">Shows the memory, in bytes, allocated for acknowledging incoming
+messages. The server allocates memory in this category for MQTT clients
+that connected using a <code class="ph codeph">cleanSession=0</code> setting and
+are publishing messages the quality of service of which is 2. This
+memory is used to ensure once-and-once-only delivery.</dd>
+</dl> </li>
+</ul>
+</div>
+
+<nav role="navigation" class="related-links"><ul class="ullinks"><li class="link ulchildlink"><strong><a href="../Monitoring/admin00035.html">Viewing store statistics by using the Amlen WebUI</a></strong><br>Use the Server Dashboard or the Server Monitor to view statistics about <span class="ph">Eclipse Amlen</span> persistent memory.</li><li class="link ulchildlink"><strong><a href="../Monitoring/admin00036.html">Viewing store statistics by using REST Monitoring APIs</a></strong><br>System administrators can view store-related statistics by using a <span class="ph">REST Monitoring API</span></li><li class="link ulchildlink"><strong><a href="../Monitoring/admin00050.html">Viewing store statistics by using an external application</a></strong><br> External monitoring applications can access store data that is published by <span class="ph">Eclipse Amlen</span> by subscribing to the <span class="ph">Eclipse Amlen</span> topic <span class="ph filepath">$SYS/ResourceStatistics/Store</span>.</li></ul><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Monitoring/admin00028.html" title="View information about Eclipse Amlen statistics for the memory, and store (persistent memory and disk).">Server Monitoring</a></div></div></nav></article></main></body></html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can restore the high availability (HA) environment in Eclipse Amlen by using the backup file that was created for the standby server."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Restoring the high availability environment</title></head><body id="ba00008_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a><ul><li><a href="../Backup/ba00001_.html">Creating a backup of the Eclipse Amlen messaging server</a></li><li><a href="../Backup/ba00002_.html">Restoring the Eclipse Amlen server from a backup in the same environment</a></li><li><a href="../Backup/ba00012_.html">Creating a backup of the Amlen WebUI</a></li><li><a href="../Backup/ba00013_.html">Restoring the Amlen WebUI from a backup</a></li><li><a href="../Backup/ba00004_.html">Backup and restore in a high availability environment</a><ul><li><a href="../Backup/ba00007_.html">Creating a backup of the Eclipse Amlen server in a high availability environment</a></li><li class="active"><a href="../Backup/ba00008_.html">Restoring the high availability environment</a></li></ul></li></ul></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Restoring the high availability environment</h1>
+
+
+
+
+
+
+<div class="body taskbody"><p class="shortdesc">System administrators can restore the high availability (HA) environment in <span class="ph">Eclipse Amlen</span> by using the backup file that was created for the standby server. </p>
+<section class="section prereq">
+<ul class="ul">
+<li class="li"> You can restore the backup configuration and store only to the <span class="ph">Eclipse Amlen</span> software level that is greater than, or equal to, the <span class="ph">Eclipse Amlen</span> software level that the file was created with. That is, you cannot use a backup file that was created for a later version of <span class="ph">Eclipse Amlen</span> to restore to an earlier version of server. </li>
+<li class="li">As part of the restore process, you must clean the store unless you are using a backup of the store for this operation. Cleaning the store deletes all persistent data, including messages, subscriptions, and client states.</li>
+<li class="li">MQTT quality of service levels of message delivery cannot be guaranteed.</li>
+<li class="li">If you restore the store from a backed up version, consider that:<ul class="ul">
+<li class="li">All messages that were buffered in the store after the store was backed up are lost. </li>
+<li class="li">Retained messages that were sent after the store was backed up are lost.</li>
+<li class="li">Messages that were in store buffers when the store was backed up, and which were sent later and discarded from the store, are restored and resent when subscribers reconnect. They are not marked as duplicate messages for JMS and MQTT.</li>
+<li class="li">Retained messages that were replaced after the store was backed up are restored. The messages that replaced the retained messages are lost.</li>
+</ul></li>
+</ul>
+</section>
+<section><ol class="ol steps"><li class="li step stepexpand">
+<span class="ph cmd">Check that the standby server is running by using the <span class="ph">Eclipse Amlen</span> REST API GET method with the following URI:</span>
+<div class="itemgroup info">
+<pre class="pre codeblock"><code>http://&lt;Standby-Server-IP:port&gt;/ima/v1/service/status/</code></pre>
+</div>
+<ol type="a" class="ol substeps">
+<li class="li substep">
+<span class="ph cmd">Verify that the HA role is <code class="ph codeph">STANDBY</code>. If the HA role is <code class="ph codeph">UNSYNC</code>, wait for synchronization to complete before you proceed.</span>
+</li>
+<li class="li substep">
+<span class="ph cmd">If the standby server is in production mode, verify that the value of <span class="keyword parmname">NewRole</span> is <code class="ph codeph">STANDBY</code> and that there are 2 <span class="keyword parmname">SyncNodes</span>.</span>
+</li>
+</ol>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Messaging on the standby server must be stopped to ensure that the store is valid after the restore process. Set the server to maintenance mode using the <span class="ph">Eclipse Amlen</span> REST API POST method with the following URI: </span>
+<div class="itemgroup info">
+<pre class="pre codeblock"><code>http://&lt;Standby-Server-IP:port&gt;/ima/v1/service/restart/</code></pre>
+<p class="p">Provide configuration data in the payload of the POST method by using the following schema. <span class="keyword parmname">Content-type</span> is set to <kbd class="ph userinput">application/json</kbd>:</p>
+<pre class="pre codeblock"><code>
+{    
+  "Service": "Server",
+  "Maintenance": "start"
+}</code></pre>
+</div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Check that the primary server is running using the <span class="ph">Eclipse Amlen</span> REST API GET method with the following URI: </span>
+<div class="itemgroup info">
+<pre class="pre codeblock"><code>http://&lt;Primary-Server-IP:port&gt;/ima/v1/service/status/</code></pre>
+</div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Messaging on the primary server must be stopped to ensure that the store is valid after the restore process. Set the server to maintenance mode using the <span class="ph">Eclipse Amlen</span> REST API POST method with the following URI: </span>
+<div class="itemgroup info">
+<pre class="pre codeblock"><code>http://&lt;Primary-Server-IP:port&gt;/ima/v1/service/restart/</code></pre>
+<p class="p">Provide configuration data in the payload of the POST method by using the following schema. <span class="keyword parmname">Content-type</span> is set to <kbd class="ph userinput">application/json</kbd>:</p>
+<pre class="pre codeblock"><code>
+{    
+  "Service": "Server",
+  "Maintenance": "start"
+}</code></pre>
+</div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Use standard system tools to restore contents of the backup file to the appropriate directories for the designated primary server: </span>
+<div class="itemgroup info">
+<ul class="ul">
+<li class="li"><span class="ph filepath">var/messagesight/data</span></li>
+<li class="li"><span class="ph filepath">var/messagesight/store</span></li>
+</ul>
+<div class="note note note_note"><span class="note__title">Note:</span> If you are operating in a Docker environment, ensure that you mount these directories on the host volume or volumes and restore the contents of the backup file to the corresponding host directory or directories.</div>
+</div>
+</li><li class="li step stepexpand"><strong>Optional: </strong>
+<span class="ph cmd">If you are not restoring the store data, clean the store on the restored primary server to ensure that the store contents remain synchronized. Use the <span class="ph">Eclipse Amlen</span> REST API POST method with the following URI:</span>
+<div class="itemgroup info">
+<pre class="pre codeblock"><code>http://&lt;Primary-Server-IP:port&gt;/ima/v1/service/restart/</code></pre>
+<p class="p">Provide configuration data in the payload of the POST method by using the following schema. <span class="keyword parmname">Content-type</span> is set to <kbd class="ph userinput">application/json</kbd>:</p>
+<pre class="pre codeblock"><code>
+{    
+  "Service": "Server",
+  "CleanStore": true
+}</code></pre>
+</div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">When the restored primary server is running, verify that all ntwork settings are correct.</span>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Clean the store on the standby server by using the <span class="ph">Eclipse Amlen</span> REST API POST method with the following URI: </span>
+<div class="itemgroup info">
+<pre class="pre codeblock"><code>http://&lt;Standby-Server-IP:port&gt;/ima/v1/service/restart/</code></pre>
+<p class="p">Provide configuration data in the payload of the POST method by using the following schema. <span class="keyword parmname">Content-type</span> is set to <kbd class="ph userinput">application/json</kbd>:</p>
+<pre class="pre codeblock"><code>
+{    
+  "Service": "Server",
+  "CleanStore": true
+}</code></pre>
+</div>
+</li><li class="li step stepexpand" id="ba00008___restartprimary">
+<span class="ph cmd">Both servers are now ready to be brought back into production mode. You must restart the restored primary server first to ensure that the restored configuration is applied. Set the restored primary server to production mode using the <span class="ph">Eclipse Amlen</span> REST API POST method with the following URI: </span>
+<div class="itemgroup info">
+<pre class="pre codeblock"><code>http://&lt;Primary-Server-IP:port&gt;/ima/v1/service/restart/</code></pre>
+<p class="p">Provide configuration data in the payload of the POST method by using the following schema. <span class="keyword parmname">Content-type</span> is set to <kbd class="ph userinput">application/json</kbd>:</p>
+<pre class="pre codeblock"><code>
+{    
+  "Service": "Server",
+  "Maintenance": "stop"
+}</code></pre>
+</div>
+</li><li class="li step stepexpand" id="ba00008___restartstandby">
+        <span class="ph cmd">Restart the designated standby server and resynchronize it with the new primary server
+          using <span class="ph">Eclipse Amlen</span> REST API POST method with the
+          following URI: </span>
+        <div class="itemgroup info">
+          <pre class="pre codeblock"><code>http://&lt;Standby-Server-IP:port&gt;/ima/v1/service/restart/</code></pre>
+          <p class="p">Provide configuration data in the payload of the POST method by using the following
+            schema. <span class="keyword parmname">Content-type</span> is set to
+              <kbd class="ph userinput">application/json</kbd>:</p>
+          <pre class="pre codeblock"><code>
+{    
+  "Service": "Server",
+  "Maintenance": "stop"
+}</code></pre>
+          <div class="note tip note_tip"><span class="note__title">Tip:</span> If you have configured your HA environment to use auto-detect mode, you
+            must perform this step immediately after step <a class="xref" href="ba00008_.html#ba00008___restartprimary">9</a> so that the
+            HA pair can be successfully reestablished. A discovery timeout might occur if there is
+            significant delay between steps <a class="xref" href="ba00008_.html#ba00008___restartprimary">9</a> and <a class="xref" href="ba00008_.html#ba00008___restartstandby">10</a>. For more information about the discovery timeout, see <a class="xref" href="../Administering/ad00400_.html" title="To recover from outages that might include planned events (such as maintenance and backups) and unplanned events (such as software failures, hardware failures, power failures, and disasters) you can configure an Eclipse Amlen server to serve as a backup.">Configuring your system for high availability</a>.</div>
+        </div>
+      </li></ol></section>
+</div>
+</article></main></body></html>

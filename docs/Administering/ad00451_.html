@@ -1,0 +1,181 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can create and update topic policies by using REST Administration APIs."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Creating and updating a topic policy by using REST Administration APIs</title></head><body id="ad00451_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a><ul><li><a href="../Administering/ad00361_.html">Configuring message hubs by using the Amlen WebUI</a></li><li><a href="../Administering/ad00322_.html">Configuring message hubs by using REST Administration APIs</a><ul><li><a href="../Administering/ad00323_.html">Creating and updating a message hub by using REST Administration APIs</a><ul><li><a href="../Administering/ad00327_.html">Creating and updating a connection policy by using REST Administration APIs</a></li><li><a href="../Administering/ad00450_.html">Creating and updating a messaging policy type by using REST Administration APIs</a><ul><li class="active"><a href="../Administering/ad00451_.html">Creating and updating a topic policy by using REST Administration APIs</a></li><li><a href="../Administering/ad00452_.html">Creating and updating a subscription policy by using REST Administration APIs</a></li><li><a href="../Administering/ad00453_.html">Creating and updating a queue policy by using REST Administration APIs</a></li></ul></li><li><a href="../Administering/ad00369_.html">Creating and updating an endpoint by using REST Administration APIs</a></li></ul></li></ul></li></ul></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+  <h1 class="title topictitle1" id="ariaid-title1">Creating and updating a topic policy by using <span class="ph">REST Administration APIs</span></h1>
+  
+  <div class="body taskbody"><p class="shortdesc">System administrators can create and update topic policies by using <span class="ph">REST Administration APIs</span>.</p>
+    <section class="section prereq">Ensure that the following message hub creation tasks are complete:<ol class="ol">
+        <li class="li"><a class="xref" href="ad00323_.html" title="System administrators can create and update endpoints, connection policies, messaging policy types, and message hubs by using REST Administration APIs.">Create a message hub</a>.</li>
+        <li class="li"><a class="xref" href="ad00327_.html" title="System administrators can create and update connection policies by using REST Administration APIs.">Create a connection policy</a>.</li>
+      </ol></section>
+    <section class="section context"><p class="p">You can create a topic policy or update an existing topic policy by using a <span class="ph">REST Administration API</span>, or by using the <span class="ph">Amlen WebUI</span>. For more information about using the <span class="ph">Amlen WebUI</span> to create a topic policy, see <a class="xref" href="ad00361_.html" title="System administrators and messaging administrators can configure message hubs by using the Message Hubs page in the Amlen WebUI.">Configuring message hubs by using the Amlen WebUI</a>. Use a topic policy to control which clients can publish or subscribe to a specified topic.</p><p class="p">You can use the <span class="ph">Eclipse Amlen</span> REST API POST method to create or update one or more topic policy objects. If the topic policy that is specified in the request does not exist in the <span class="ph">Eclipse Amlen</span> configuration, then the topic policy is created. Otherwise the topic policy configuration is updated.</p>For more information about the components you must specify to create a topic policy, including naming restrictions, see <a class="xref" href="ad00360_.html" title="You can configure messaging hubs either by using the Amlen WebUI or by using REST Administration APIs.">Configuring message hubs</a>.</section>
+    <section><ol class="ol steps"><li class="li step stepexpand">
+        <span class="ph cmd">To create or update a topic policy, use the <span class="ph">Eclipse Amlen</span> REST API POST method with the following <span class="ph">Eclipse Amlen</span> configuration URI:</span>
+        <div class="itemgroup info">
+          <p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/configuration/</code></p>
+        </div>
+      </li><li class="li step stepexpand">
+        <span class="ph cmd">Provide TopicPolicy object configuration data in the payload of the POST method by using the following schema. <span class="keyword parmname">Content-type</span> is set to <kbd class="ph userinput">application/json</kbd>.  Ensure that capitalization and double quotation marks are used as shown. </span>
+        <div class="itemgroup info"><pre class="pre codeblock"><code>
+{    
+   "TopicPolicy": {
+     "&lt;NameOfTopicPolicy&gt;": {
+       "Description": "string",
+       "Topic": "string",
+       "ActionList": "string",
+       "MaxMessages": integer,
+       "MaxMessagesBehavior": "RejectNewMessages"|"DiscardOldMessages",
+       "MaxMessageTimeToLive": "string",
+       "DisconnectedClientNotification": true|false,
+       "ClientID": "string",
+       "UserID": "string",
+       "GroupID": "string",
+       "CommonNames": "string",
+       "ClientAddress": "string",
+       "Protocol": "string"             
+    }
+  }
+}</code></pre>Where:<dl class="dl">
+          
+            <dt class="dt dlterm"><var class="keyword varname">NameOfTopicPolicy</var></dt>
+            <dd class="dd">Required.</dd>
+            <dd class="dd ddexpand">Specifies the name of the topic policy.</dd>
+            <dd class="dd ddexpand">The name must not have leading or trailing spaces and cannot contain control characters, commas, double quotation marks, backslashes, or equal signs. The first character must not be a number or any of the following special characters: <p class="p"><code class="ph codeph">! # $ % &amp; ' ( ) * + - . / : ; &lt; &gt; ? @</code></p> </dd>
+            <dd class="dd ddexpand">After the topic policy is created, you cannot change this name.</dd>
+          
+          
+            <dt class="dt dlterm">Description</dt>
+            <dd class="dd">Optional.</dd>
+            <dd class="dd ddexpand">Specifies a description for the topic policy.</dd>
+            <dd class="dd ddexpand">If you do not want a description, omit <code class="ph codeph">"Description":"<em class="ph i">description</em>"</code>.</dd>
+          
+          
+            <dt class="dt dlterm">Topic</dt>
+            <dd class="dd">Required.</dd>
+            <dd class="dd ddexpand">Specifies the topic string or strings that the topic policy applies to.</dd>
+            <dd class="dd ddexpand">You can use an asterisk (*) as a wildcard. For example, to apply the topic policy to topic strings <code class="ph codeph">TOPICA/#</code>, enter a topic of <code class="ph codeph">TOPICA/*</code>. You must take care when you use a wildcard to ensure that you do not grant greater authority to topics than intended. For more information about how wildcard characters can be used, see <a class="xref" href="../Overview/ov00032.html">Wildcards</a>.</dd>
+            <dd class="dd ddexpand">The dollar sign ($) and asterisk (*) have special meanings in the Topic field. To use these characters as literals, use <code class="ph codeph">${$}</code> for a dollar sign, and use <code class="ph codeph">${*}</code> for an asterisk.</dd>
+            <dd class="dd ddexpand">
+              <div class="p">You can use variable substitution in the topic string to ensure that only clients with specific user IDs, group IDs, client IDs, or client certificate common names can access a topic. The variables are:<ul class="ul">
+                <li class="li"><code class="ph codeph">${UserID}</code> for the user ID. </li>
+                <li class="li"><code class="ph codeph">${GroupID}</code> for the group ID.</li>
+                <li class="li"><code class="ph codeph">${ClientID}</code> for the client ID. </li>
+                <li class="li"><code class="ph codeph">${CommonName}</code> for the client certificate common name. </li>
+                </ul></div>
+            </dd>
+            <dd class="dd ddexpand">For example, if a topic string in a topic policy is <code class="ph codeph">ExampleTopic/TopicA/${ClientID}</code>, a client with an ID of <code class="ph codeph">client_a</code> can access topic <code class="ph codeph">ExampleTopic/TopicA/client_a</code>. A client with an ID of <code class="ph codeph">client_b</code> cannot access topic <code class="ph codeph">ExampleTopic/TopicA/client_a</code>, but can access <code class="ph codeph">ExampleTopic/TopicA/client_b</code>.</dd>
+          
+          
+            <dt class="dt dlterm">ActionList</dt>
+            <dd class="dd">Required.</dd>
+            <dd class="dd ddexpand">Specifies which messaging actions can be used by clients that connect to endpoints associated with this topic policy.</dd>
+            <dd class="dd ddexpand">You can specify the following values for a topic policy. To specify more than one, separate each value with a comma:<ul class="ul">
+              <li class="li"><strong class="ph b"><code class="ph codeph">Publish</code></strong><p class="p">Allows clients to publish to the topic that is specified in the topic policy.</p></li>
+              <li class="li"><strong class="ph b"><code class="ph codeph">Subscribe</code></strong><p class="p">Allows clients to subscribe to the topic that is specified in the topic policy.</p></li>
+              </ul></dd>
+          
+          
+            <dt class="dt dlterm">MaxMessages</dt>
+            <dd class="dd">Optional.</dd>
+            <dd class="dd ddexpand">Specifies the maximum number of messages that are kept for a subscription. This value is a guideline, rather than an absolute limit. If the system is running under stress, then the number of buffered messages on a subscription might be slightly higher than the MaxMessages value.</dd>
+            <dd class="dd ddexpand">The default value is 5000.</dd>
+          
+          
+            <dt class="dt dlterm">MaxMessagesBehavior</dt>
+            <dd class="dd">Optional.</dd>
+            <dd class="dd ddexpand">Specifies the behavior that is applied when the number of messages in the buffer for a subscription reaches the max messages value. That is, when the buffer for a subscription is full. The behavior is applied to both durable and non-durable subscriptions.</dd>
+            <dd class="dd ddexpand">The behavior can be one of the following options:<ul class="ul">
+              <li class="li"><strong class="ph b">RejectNewMessages</strong><p class="p">New messages are not accepted on the buffer for the subscription.</p></li>
+              <li class="li"><strong class="ph b">DiscardOldMessages</strong><p class="p">A percentage of the old messages on the buffer for the subscription are discarded. If a retained message is one of the old messages, it is discarded. The quality of service, persistence, and priority of the message does not prevent a message from being discarded. Therefore, if all messages must be received in order for your applications to function correctly, you cannot set MaxMessagesBehavior to <code class="ph codeph">DiscardOldMessages</code>.</p></li>
+              </ul></dd>
+            <dd class="dd ddexpand">The default behavior is <code class="ph codeph">RejectNewMessages</code>.</dd>
+          
+          
+            <dt class="dt dlterm">MaxMessageTimeToLive</dt>
+            <dd class="dd">Optional.</dd>
+            <dd class="dd ddexpand">Specifies the maximum time, in seconds, that a published message that is associated with the topic policy can exist for in <span class="ph">Eclipse Amlen</span>.</dd>
+            <dd class="dd ddexpand">The value must be either <code class="ph codeph">unlimited</code> or in the range 1-2147483647.</dd>
+            <dd class="dd ddexpand">The default value is <code class="ph codeph">unlimited</code> and means that messages will not expire unless the publishing application specifies a time for messages to exist for.</dd>
+            <dd class="dd ddexpand">This value is applied only when the topic policy includes an action of publish.</dd>
+            <dd class="dd ddexpand">Ensure that client and server times are synchronized in order to minimize the possibility of expired messages being received. </dd>
+          
+          
+            <dt class="dt dlterm">DisconnectedClientNotification: true|false</dt>
+            <dd class="dd">Optional.</dd>
+            <dd class="dd ddexpand">Specifies whether notification messages are published for disconnected MQTT clients on arrival of a message.</dd>
+            <dd class="dd ddexpand">The default value is <code class="ph codeph">false</code>.</dd>
+            <dd class="dd ddexpand">This value is applied only when the MQTT protocol is used.</dd>
+            <dd class="dd ddexpand">The notification messages are published to the reserved system topic <code class="ph codeph">$SYS/DisconnectedClientNotification</code></dd>
+          
+          </dl><div class="p">You must specify at least one of the following filters:<dl class="dl">
+          
+            <dt class="dt dlterm">ClientID</dt>
+            <dd class="dd">Specifies the client ID that is allowed to use the messaging actions that are specified in the topic policy. The client ID is allowed to use the messaging actions only on the topics that are specified in the policy.</dd>
+            <dd class="dd ddexpand">You can use an asterisk (*) at the end of the value to match 0 or more characters.</dd>
+            <dd class="dd ddexpand">To use the default value, where all client ID values are allowed to use the actions, omit <code class="ph codeph">"ClientID":"<var class="keyword varname">ClientID</var>"</code>.</dd>
+          
+          
+            <dt class="dt dlterm">UserID</dt>
+            <dd class="dd">Specifies the messaging user ID that is allowed to use the messaging actions that are specified in the topic policy. The messaging user ID is allowed to use the messaging actions only on the topics that are specified in the policy.</dd>
+            <dd class="dd ddexpand">You can use an asterisk (*) at the end of the value to match 0 or more characters.</dd>
+            <dd class="dd ddexpand">To use the default value, where all user ID values are allowed to use the actions, omit <code class="ph codeph">"UserID": "<var class="keyword varname">UserID</var>"</code>.</dd>
+          
+          
+            <dt class="dt dlterm">GroupID</dt>
+            <dd class="dd">Specifies the messaging group that is allowed to use the messaging actions that are specified in the topic policy. The messaging group is allowed to use the messaging actions only on the topics that are specified in the policy.</dd>
+            <dd class="dd ddexpand">You can use an asterisk (*) at the end of the value to match 0 or more characters.</dd>
+            <dd class="dd ddexpand">To use the default value, where all groups are allowed to use the actions, omit <code class="ph codeph">"GroupID": "<var class="keyword varname">GroupID</var>"</code>.</dd>
+          
+          
+            <dt class="dt dlterm">CommonNames</dt>
+            <dd class="dd">Specifies the client certificate common name that must be used for a client to be allowed to use the actions that are specified in the topic policy. The client certificate common name allows clients to use the messaging actions only on the topics that are specified in the policy.</dd>
+            <dd class="dd ddexpand">You can use an asterisk (*) at the end of the value to match 0 or more characters.</dd>
+            <dd class="dd ddexpand">To use the default value, where all client certificates are allowed to use the actions, omit <code class="ph codeph">"CommonNames": "<var class="keyword varname">CommonNames</var>"</code>.</dd>
+          
+          
+            <dt class="dt dlterm">ClientAddress</dt>
+            <dd class="dd">Specifies the client IP addresses that are allowed to use the messaging actions that are specified in the topic policy. The client IP addresses are allowed to use the messaging actions only on the topics that are specified in the policy.</dd>
+            <dd class="dd ddexpand">The IP address can contain an asterisk (*), or a comma-separated list of IPv4 or IPv6 addresses or ranges. For example, 192.0.2.32, 192.0.0.0, 192.0.2.0-192.0.2.100. The range must be specified from low to high.</dd>
+            <dd class="dd ddexpand">However, each IPv6 address must be enclosed in brackets <code class="ph codeph">[ ]</code> either when expressed singly or in a range of addresses. IPv6 addresses cannot contain asterisks.</dd>
+            <dd class="dd ddexpand">The maximum number of client addresses that you can specify is 20.</dd>
+            <dd class="dd ddexpand">To use the default value, where all client IP addresses are allowed to connect, omit <code class="ph codeph">"ClientAddress":"<em class="ph i">IP_Address</em>"</code> or specify <code class="ph codeph">"ClientAddress":"<em class="ph i">*</em>"</code>.</dd>
+          
+          
+            <dt class="dt dlterm">Protocol</dt>
+            <dd class="dd">Specifies which protocols are allowed to use the actions that are specified in the topic policy on the topics that are specified in the policy.</dd>
+            <dd class="dd ddexpand">You can choose from JMS and MQTT protocols. If there are any protocol plug-ins installed on the <span class="ph">Eclipse Amlen</span> server, you can specify these as well. To specify more than one value, separate each value with a comma. To specify all protocols, either specify a null value or omit <code class="ph codeph">"Protocol": "string".</code></dd>
+          
+          </dl></div><p class="p">You can check that the configuration of your policy is as expected by using the <span class="ph">Eclipse Amlen</span> REST Administration API GET method. For more information about the GET method, see <a class="xref" href="ad00366_.html" title="System administrators can view configuration details of configuration objects for which the name can be configured.">Viewing configuration details of objects that can be named by using REST Administration APIs</a>.</p></div>
+      </li></ol></section>
+    <section class="example">
+      <p class="p">The following example shows a POST method to create a topic policy called "MyTopicPolicy"
+        by using cURL:</p>
+      <pre class="pre codeblock"><code>
+curl -X POST  \
+   -H 'Content-Type: application/json'  \
+   -d  '{                          
+           "TopicPolicy": {   
+               "MyTopicPolicy": {
+                "Description": "Topic policy to authorize a client to publish to a topic.",
+                "Topic": "*",
+                "ClientID": "*",
+                "ActionList": "Publish,Subscribe"
+              }
+          }
+      }
+ '   \
+http://127.0.0.1:9089/ima/v1/configuration/</code></pre>
+      <p class="p">The following example shows an example response to the POST method:</p>
+      <pre class="pre codeblock"><code>
+{        
+  "Version": "v1",
+  "Code": "CWLNA6011",
+  "Message": "The requested configuration change has completed successfully."
+}
+</code></pre>
+    </section>
+    <section class="section postreq">You must complete the following tasks to finish the message hub configuration:<ol class="ol">
+        <li class="li"><a class="xref" href="ad00369_.html" title="System administrators can create and update endpoints by using REST Administration APIs.">Create endpoints</a>.</li>
+      </ol></section>
+  </div>
+</article></main></body></html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="You can configure messaging users and groups by using an LDAP server. You can configure the LDAP server either by using the Amlen WebUI, or by using REST Administration APIs."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Configuring LDAP for user authentication</title></head><body id="ad00370_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a></li><li class="active"><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a><ul><li><a href="../Administering/ad00372_.html">Configuring an LDAP server by using the Amlen WebUI</a></li><li><a href="../Administering/ad00373_.html">Configuring an LDAP server by using REST Administration APIs</a></li></ul></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Configuring LDAP for user authentication</h1>
+
+<div class="body conbody"><p class="shortdesc">You can configure messaging users and groups by using an LDAP server. You can configure the LDAP server either by using the <span class="ph">Amlen WebUI</span>, or by using <span class="ph">REST Administration APIs</span>.</p>
+<p class="p">Messaging users send and receive messages. Messaging users are used in connection policies, messaging policies, and security policies when you filter access by user ID. Messaging groups are collections of messaging users. Messaging groups are also used in connection policies, messaging policies, and security policies when you filter access by group name. For more information about messaging users and groups, see <a class="xref" href="../Security/se00002_.html" title="System administrators can configure Eclipse Amlen to access an LDAP server to authenticate messaging users and groups. Messaging users and groups can be authorized by system and messaging administrators to publish, and subscribe to topics.">Messaging users and groups</a>.</p>
+<p class="p">If you have an existing LDAP server of users and groups, you can use the server to provide the
+   messaging user and group information. You can only use one LDAP server for your messaging users
+   and groups.</p>
+<p class="p">You can configure only one LDAP server. You might need to add a DNS entry to resolve the IP
+address of the LDAP server. <span class="ph">Eclipse Amlen</span> supports the following external LDAP servers:
+openLDAP, IBM Security Directory Server, and Microsoft Active Directory. </p>
+<div class="p">When you configure an LDAP server, you can specify the following components:<ul class="ul">
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">URL</dt>
+<dd class="dd">The URL to connect to the LDAP server.</dd>
+<dd class="dd ddexpand">The URL must start with <span class="ph filepath">ldap://</span> or <span class="ph filepath">ldaps://</span></dd>
+<dd class="dd ddexpand">If you use <span class="ph filepath">ldaps://</span>, and <span class="ph uicontrol">Check Server Certificate </span>
+is set to <span class="ph uicontrol">Use messaging server trust store</span>, you must upload a server
+certificate to allow verification of the LDAP server connection.</dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">Maximum connections</dt>
+<dd class="dd">The maximum number of concurrent connections that can be made to the LDAP server.</dd>
+<dd class="dd ddexpand">This value must be in the range 1-100.</dd>
+<dd class="dd ddexpand">The default value is 10.</dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">Base DN</dt>
+<dd class="dd">The base distinguished name of the directory service.</dd>
+<dd class="dd ddexpand">The base DN is the root of the tree that is searched for users and groups. For example, for a user with a DN of <code class="ph codeph">cn=user, ou=location, o=company, c=country</code> you can specify the base DN as one of the following strings: <ul class="sl simple">
+<li class="sli"><code class="ph codeph">ou=location, o=company, c=country</code></li>
+<li class="sli"><code class="ph codeph">o=company, c=country</code></li>
+<li class="sli"><code class="ph codeph">c=country</code></li>
+</ul></dd>
+<dd class="dd ddexpand">The base DN is case-sensitive.</dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">Bind DN</dt>
+<dd class="dd">The distinguished name to use when you bind to LDAP.</dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">Bind password</dt>
+<dd class="dd">The password to use when you bind to LDAP.</dd>
+<dd class="dd ddexpand">The password cannot contain a double quotation mark (<code class="ph codeph">"</code>). </dd>
+
+</dl>
+
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">Ignore case</dt>
+<dd class="dd">Whether to ignore case during an LDAP search.</dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">User suffix</dt>
+<dd class="dd">The distinguished name that is the suffix of the user distinguished name.</dd>
+<dd class="dd ddexpand">For example, for a user DN of <code class="ph codeph">cn=user, ou=users, ou=location, o=company, c=country</code>, the user suffix is <code class="ph codeph">ou=users, ou=location, o=company, c=country</code></dd>
+<dd class="dd ddexpand">If the user suffix is not specified, <span class="ph">Eclipse Amlen</span> searches for the user DN. The user ID map is used as part of this search.</dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">Group suffix</dt>
+<dd class="dd">The distinguished name that is the suffix of the group distinguished name.</dd>
+<dd class="dd ddexpand">For example, for a group DN of <code class="ph codeph">cn=Developer, ou=groups, ou=location, o=company, c=country</code>, the group suffix is <code class="ph codeph">ou=groups, ou=location, o=company, c=country</code></dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">User ID map</dt>
+<dd class="dd">The LDAP filter that maps the short name of a user to an LDAP entry.</dd>
+<dd class="dd ddexpand">For example, to show entries of the <code class="ph codeph">object class = inetOrgPerson</code> type by ID, specify <code class="ph codeph">inetOrgPerson:uid</code></dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">Group ID map</dt>
+<dd class="dd">The LDAP filter that maps the short name of a group to an LDAP entry.</dd>
+<dd class="dd ddexpand">For example, to show groups by name, specify <code class="ph codeph">*:cn</code>. The asterisk (*) is a wildcard character that searches on any object class.</dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">Group member ID map</dt>
+<dd class="dd">The LDAP filter that identifies user-to-group relationships.</dd>
+<dd class="dd ddexpand">For example, for IBM® Directory, the value is <code class="ph codeph">ibm-allGroup:member</code>.</dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">Timeout</dt>
+<dd class="dd">The timeout for LDAP calls, in seconds.</dd>
+<dd class="dd ddexpand">This value must be in the range 1-60.</dd>
+<dd class="dd ddexpand">The default value is 10.</dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">Enable cache</dt>
+<dd class="dd">Whether credentials are cached.</dd>
+<dd class="dd ddexpand">The default value is True.</dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">Cache Timeout</dt>
+<dd class="dd">The time to live of the authentication token, in seconds. After a user is authenticated, an authentication token is created for each user. This token is cached. If the cached token is not expired, then this token is used for authentication. If the cached token is expired, the user is authenticated against the configured LDAP server. </dd>
+<dd class="dd ddexpand">This value must be in the range 1-60.</dd>
+<dd class="dd ddexpand">The default value is 10.</dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">Group Cache Timeout</dt>
+<dd class="dd">The group cache time to live, in seconds.</dd>
+<dd class="dd ddexpand">This value must be in the range 1-86400.</dd>
+<dd class="dd ddexpand">The default value is 300.</dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">Nested Group Search</dt>
+<dd class="dd">Whether to use nested group searching to find the group membership of a user.</dd>
+<dd class="dd ddexpand">The default value is False.</dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm" id="ad00370___CertificateTheCAClientCertificateTo">Certificate</dt>
+<dd class="dd">The certificate that is used to verify the LDAP server, if the LDAP URL uses TLS.</dd>
+<dd class="dd ddexpand">When you create an LDAP server connection by using the <span class="ph">Amlen WebUI</span>, you can upload and
+                        specify the certificate in the <span class="ph uicontrol">Edit LDAP Connection</span>
+                        pane.</dd>
+<dd class="dd ddexpand">The certificate must be a pem format certificate. The certificate is renamed to <span class="ph filepath">ldap.pem</span> after it is uploaded.</dd>
+<dd class="dd ddexpand">If you change the LDAP certificate, the new LDAP settings will be used the next time a client or connection is authenticated or authorized.</dd>
+<dd class="dd ddexpand">When you configure an LDAP server connection by using <span class="ph">REST Administration APIs</span>, you must import the certificate before you create the connection. For more information about importing the certificate, see <a class="xref" href="ad00378_.html" title="System administrators can import a certificate to use with an LDAP connection by using REST Administration APIs.">Importing and applying a certificate for an LDAP connection by using REST Administration APIs</a>.</dd>
+
+</dl>
+<dl class="dl">
+
+<dt class="dt dlterm">Check Server Certificate</dt>
+<dd class="dd">Available in version 5.0.0.2 and later releases.  Possible options are as follows:<dl class="dl">
+
+<dt class="dt dlterm">Use messaging server trust store</dt>
+<dd class="dd">When connecting to the LDAP server, the certificate that is presented by the server is checked
+using the certificate that is uploaded to the product trust store.</dd>
+
+
+<dt class="dt dlterm">Use public trust store</dt>
+<dd class="dd">The certificate that is presented by the LDAP server is checked against the public certificates
+that are installed as part of the operating system.</dd>
+
+
+<dt class="dt dlterm">Disable certificate verification</dt>
+<dd class="dd">No certificate verification is performed when connecting to the LDAP server. This is an insecure
+option that is designed for testing purposes only.</dd>
+
+</dl></dd>
+
+</dl>
+</li>
+</ul></div>
+<p class="p">If you are updating an LDAP certificate in a High Availability (HA) environment, you must upload
+   the new certificate on the primary server and then replicate this certificate on the standby
+   server.</p>
+  <p class="p">For more information about how to update certificates in an HA environment,
+   see <a class="xref" href="ad00379_.html" title="System administrators can update a certificate on the primary and standby nodes by using REST Administration APIs.">Updating a certificate for
+    an LDAP connection in a High Availability environment by using REST Administration
+   APIs</a>.</p>
+<p class="p">For more information about configuring an LDAP server connection by using the <span class="ph">Amlen WebUI</span>, see <a class="xref" href="ad00372_.html" title="System administrators and messaging administrators can configure an LDAP server connection by using the User Authentication page in the Amlen WebUI.">Configuring an LDAP server by using the Amlen WebUI</a>.</p>
+<p class="p">For more information about configuring an LDAP server connection by using <span class="ph">REST Administration APIs</span>, see <a class="xref" href="ad00373_.html" title="System administrators can configure an LDAP server for messaging users and groups by using REST Administration APIs.">Configuring an LDAP server by using REST Administration APIs</a>.</p>
+</div>
+<nav role="navigation" class="related-links"><ul class="ullinks"><li class="link ulchildlink"><strong><a href="../Administering/ad00372_.html">Configuring an LDAP server by using the Amlen WebUI</a></strong><br>System administrators and messaging administrators can configure an LDAP server     connection by using the <span class="ph uicontrol">User Authentication</span> page in the <span class="ph">Amlen WebUI</span>.</li><li class="link ulchildlink"><strong><a href="../Administering/ad00373_.html">Configuring an LDAP server by using REST Administration APIs</a></strong><br>System administrators can configure an LDAP server for messaging users and groups by using <span class="ph">REST Administration APIs</span>.</li></ul><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Administering/ad00000_.html" title="Administration tasks can be completed by system administrators or messaging administrators by using the Amlen WebUI, or by using REST Administration APIs.">Administering</a></div></div></nav></article></main></body></html>

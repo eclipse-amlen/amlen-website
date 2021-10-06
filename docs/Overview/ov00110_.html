@@ -1,0 +1,48 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="An endpoint authorizes a client to connect to Eclipse Amlen on one or all configured ethernet interfaces, and a specific port."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Endpoints</title></head><body id="ov00110_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a><ul><li><a href="../Overview/ov00002_.html">Architecture Overview</a></li><li><a href="../Overview/ov60000_.html">Eclipse Amlen in Containers</a></li><li><a href="../Overview/ov00050.html">Supported protocols</a></li><li><a href="../Bridge/br00000.html">   Amlen Bridge</a></li><li><a href="../Overview/ov00003_.html">Key Concepts</a><ul><li><a href="../Overview/ov20000.html">Point-to-point messaging</a></li><li><a href="../Overview/ov00030.html">Publish/Subscribe</a></li><li><a href="../Planning/ov00102_.html">Message delivery</a></li><li><a href="../Planning/ov00101_.html">Messaging patterns</a></li><li><a href="../Overview/ov00060.html">Message hubs, endpoints, and policies</a><ul><li><a href="../Overview/ov00100_.html">Message hubs</a></li><li class="active"><a href="../Overview/ov00110_.html">Endpoints</a></li></ul></li><li><a href="../Overview/ov00150_.html">Clustering in Eclipse Amlen</a></li><li><a href="../Overview/ov00140_.html">Disconnected client notifications</a></li><li><a href="../Overview/ov00070.html">MQ Connectivity</a></li><li><a href="../Overview/ov40000.html">High availability</a></li><li><a href="../Bridge/br00001.html">   Amlen Bridge concepts</a></li></ul></li><li><a href="../Overview/accessibility_topic.html">Accessibility features for Eclipse Amlen</a></li><li><a href="../Overview/notices.html">Notices</a></li></ul></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Endpoints</h1>
+
+<div class="body conbody"><p class="shortdesc">An endpoint authorizes a client to connect to <span class="ph">Eclipse Amlen</span> on one
+or all configured ethernet interfaces, and a specific port.</p>
+<p class="p">You create endpoints on a message hub. You must have at least one connection policy and one type
+   of messaging policy - topic policy, queue policy, or subscription policy - associated with an
+   endpoint in order for the system to work. If you do not have a connection policy, clients cannot
+   connect. If you do not have at least one type of  messaging policy, clients have no authority to
+   perform an action. Connection policies and messaging policy types are specific to a message hub.
+   However, you can associate the policies with more than one endpoint within the same message hub.
+   You can associate more than one connection policy or messaging policy type with an endpoint. </p>
+<p class="p">When you plan the number of endpoints to create in your message
+hub, consider what you want to achieve. There is little performance
+cost in having a number of endpoints, but large numbers increase configuration
+and management complexity. </p>
+<p class="p">Multiple endpoints create separation. For example, you might want
+one relatively open endpoint with limited authorization, and one more
+secure endpoint with more power. Or you might have a user group that
+is made up of customers with the authority to publish large messages
+that are associated with one endpoint, and a user group authorized
+to publish smaller message sizes that are associated with another
+endpoint. </p>
+<p class="p">You can also associate specific security policies with an endpoint.
+You must have separate endpoints if you need any variation of the
+transport security, such as secure or non-secure transport. Or when
+you use different certificates. </p>
+<div class="p">Example of situations where you might want to create at least two
+endpoints on a message hub are:  <ul class="ul">
+<li class="li">In a DMZ. In this scenario, you might create an SSL/TLS enabled
+endpoint which is bound to the external-facing ethernet interface,
+and another endpoint that is bound to an internal-facing ethernet
+interface. Additionally, you might want to authorize only MQTT connections
+on the external-facing endpoint, and JMS connections only on the internal-facing
+endpoint. </li>
+<li class="li">In a scenario where you have distinct applications, or applications
+with different policies. Multiple endpoints can be used to organize
+policies, and might reduce management complexity. In this situation,
+you might also want to consider creating multiple message hubs. </li>
+</ul></div>
+<p class="p">When you create endpoints, consider your monitoring requirements.
+All connection and messages can be monitored for a specific endpoint.
+For example, you might want to set up endpoints to monitor transactions
+for a specific application, or for internal or external traffic. </p>
+</div>
+</article></main></body></html>

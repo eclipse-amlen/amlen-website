@@ -1,0 +1,246 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can create a secure backup of the Eclipse Amlen messaging server by using REST Administration APIs and standard system tools."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Creating a backup of the Eclipse Amlen messaging server</title></head><body id="ba00001_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a><ul><li class="active"><a href="../Backup/ba00001_.html">Creating a backup of the Eclipse Amlen messaging server</a></li><li><a href="../Backup/ba00002_.html">Restoring the Eclipse Amlen server from a backup in the same environment</a></li><li><a href="../Backup/ba00012_.html">Creating a backup of the Amlen WebUI</a></li><li><a href="../Backup/ba00013_.html">Restoring the Amlen WebUI from a backup</a></li><li><a href="../Backup/ba00004_.html">Backup and restore in a high availability environment</a></li></ul></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Creating a backup of the <span class="ph">Eclipse Amlen</span> messaging server</h1>
+
+
+
+
+
+
+<div class="body taskbody"><p class="shortdesc">System administrators can create a secure backup of the <span class="ph">Eclipse Amlen</span> messaging server
+by using <span class="ph">REST Administration APIs</span> and
+standard system tools.</p>
+<section class="section prereq"> <ul class="ul">
+<li class="li">To ensure consistency of the backup, perform the backup procedure
+while the <span class="ph">Eclipse Amlen</span> server
+is in maintenance mode.</li>
+<li class="li">If your server is a member of a cluster:<ul class="ul">
+<li class="li">Ensure that you back up the configuration data and store data.</li>
+<li class="li">To avoid a conflict, do not start a server by using the backed-up
+data while the original server is still running.</li>
+<li class="li">Do not disable cluster membership while you are backing up your
+server. Disabling cluster membership causes the store to be emptied.</li>
+</ul></li>
+</ul> </section>
+<section class="section context"> <p class="p">System administrators can create a secure backup that
+can be used to restore the <span class="ph">Eclipse Amlen</span> configuration
+and store data. Both of these sets of data are in directories in your
+file system and can be backed up by using standard system tools. Configuration
+data and store data can be backed up together or separately.</p> </section>
+<section><ol class="ol steps"><li class="li step stepexpand"><span class="ph cmd">Check that the <span class="ph">Eclipse Amlen</span> server is running
+by using the <span class="ph">Eclipse Amlen</span> REST
+API GET method with the following URI:</span><div class="itemgroup info"> <pre class="pre codeblock"><code>http://&lt;admin-endpoint-IP:port&gt;/ima/v1/service/status/</code></pre> </div>
+</li><li class="li step stepexpand"><span class="ph cmd">Set the <span class="ph">Eclipse Amlen</span> server
+to maintenance mode by using the <span class="ph">Eclipse Amlen</span> REST API POST
+method with the following URI:</span><div class="itemgroup info"> <pre class="pre codeblock"><code>http://&lt;admin-endpoint-IP:port&gt;/ima/v1/service/restart</code></pre> <p class="p">Provide
+configuration data in the payload of the POST method by using the
+following schema. <span class="keyword parmname">Content-type</span> is set to <kbd class="ph userinput">application/json</kbd>:</p> <pre class="pre codeblock"><code>
+{    
+  "Service": "Server",
+  "Maintenance": "start"
+}</code></pre> </div></li><li class="li step stepexpand"><span class="ph cmd">When the server is in maintenance mode, use your standard
+system tools to back up the contents of the following directories:</span>
+<div class="itemgroup info"> <ul class="ul">
+<li class="li"><span class="ph filepath">var/messagesight/data</span></li>
+<li class="li"><span class="ph filepath">var/messagesight/store</span></li>
+</ul> <div class="note note note_note"><span class="note__title">Note:</span> If you are operating in a Docker environment, ensure that
+you mount these directories on the host volume or volumes and back
+up the corresponding host directory or directories.</div> </div>
+</li><li class="li step stepexpand"><span class="ph cmd">Restart the server in production mode by using the <span class="ph">Eclipse Amlen</span> REST API POST
+method with the following URI:</span><div class="itemgroup info"> <pre class="pre codeblock"><code>http://&lt;admin-endpoint-IP:port&gt;/ima/v1/service/restart/</code></pre> <p class="p">Provide
+configuration data in the payload of the POST method by using the
+following schema. <span class="keyword parmname">Content-type</span> is set to <kbd class="ph userinput">application/json</kbd>:</p> <pre class="pre codeblock"><code>
+{    
+  "Service": "Server",
+  "Maintenance": "stop"
+}</code></pre> </div></li></ol></section>
+<section class="example">The following example shows creating a backup of the <span class="ph">Eclipse Amlen</span> server:<div class="p">Check
+that the server is running:<pre class="pre screen">[admin@localhost ~]$ curl -X GET http://127.0.0.1:9089/ima/v1/service/status
+{ 
+  "Version":"v1",
+  "Server": {
+    "Name": "TestSystem:9089",
+    "UID": "aFWxYf32",
+    "Status": "Running",
+    "State": 1,
+    "StateDescription": "Running (production)",
+    "ServerTime": "2016-03-04T14:46:53.081Z",
+    "UpTimeSeconds": 4134,
+    "UpTimeDescription": "0 days 1 hours 8 minutes 54 seconds",
+    "Version": "2.0 20160304-0400",
+    "ErrorCode": 0,
+    "ErrorMessage": ""
+  },
+  "Container": {
+    "UUID":"034c91ce828a4f5c2c21d7cd7f04628368b63bd308825ec2d9dab5096ff04ca0"
+  },
+  "HighAvailability": {
+    "Status": "Inactive",
+    "Enabled": false
+  },  
+  "Cluster": {
+    "Status": "Inactive",
+    "Enabled": false
+  },  
+  "Plugin": {
+    "Status": "Inactive",
+    "Enabled": false
+  },  
+  "MQConnectivity": {
+    "Status": "Active",
+    "Enabled": true
+  },  
+  "SNMP": {
+    "Status": "Inactive",
+    "Enabled": false
+  }
+}
+
+</pre></div><div class="p">Set the server to maintenance mode:<pre class="pre screen">[admin@localhost ~]$ curl -X POST \
+&gt;    -H  'Content-Type: application/json'  \
+&gt;    -d  '{
+&gt;          "Service": "Server",
+&gt;            "Maintenance": "start",
+&gt;           }
+&gt;   '   \
+&gt; http://127.0.0.1:9089/ima/v1/service/restart
+
+[admin@localhost ~]$ curl -k -H "Content-Type: application/json" -X GET  
+https://127.0.0.1:9089/ima/v1/service/status
+{
+  "Version":"v1",
+  "Server": {
+    "Name": "TestSysem:9089",
+    "UID": "aFWxYf32",
+    "Status": "Running",
+    "State": 9,
+    "StateDescription": "Running (maintenance)",
+    "ServerTime": "2016-03-04T14:46:53.081Z",
+    "UpTimeSeconds": 4140,
+    "UpTimeDescription": "0 days 1 hours 8 minutes 57 seconds",
+    "Version": "2.0 20160304-0400",
+    "ErrorCode": 0,
+    "ErrorMessage": ""
+  },
+  "Container": {
+    "UUID":"034c91ce828a4f5c2c21d7cd7f04628368b63bd308825ec2d9dab5096ff04ca0"
+  },
+  "HighAvailability": {
+    "Status": "Inactive",
+    "Enabled": false
+  },
+  "Cluster": {
+    "Status": "Inactive",
+    "Enabled": false
+  },
+  "Plugin": {
+    "Status": "Inactive",
+    "Enabled": false
+  },
+  "MQConnectivity": {
+    "Status": "Inactive",
+    "Enabled": false
+  },
+  "SNMP": {
+    "Status": "Inactive",
+    "Enabled": false
+  }
+}
+
+  
+</pre></div><div class="p">Back up <span class="ph filepath">var/messagesight/data</span> and <span class="ph filepath">var/messagesight/store</span>:<pre class="pre screen">[admin@localhost ~]$ zip -r -P &lt;<var class="keyword varname">password</var>&gt; messagesight-11042015-0933.zip /var/messagesight/data 
+/var/messagesight/store 
+adding: mnt/messagesight/data/ (stored 0%)  
+adding: mnt/messagesight/data/config/ (stored 0%)  
+adding: mnt/messagesight/data/config/accepted.json (stored 0%)  
+adding: mnt/messagesight/data/config/server_docker.cfg (deflated 70%)  
+adding: mnt/messagesight/data/config/store.init (stored 0%)  
+adding: mnt/messagesight/data/config/testLicense.json (stored 0%)  
+adding: mnt/messagesight/data/config/ILMT_PROD.def (stored 0%)  
+adding: mnt/messagesight/data/config/ILMT_NONPROD.def (stored 0%)  
+adding: mnt/messagesight/data/config/mqclient.ini (deflated 70%)  
+adding: mnt/messagesight/data/config/server.cfg (deflated 70%)  
+adding: mnt/messagesight/data/config/IBMIoTMessageSight.service (deflated 52%)  
+adding: mnt/messagesight/data/config/vmprofile.cfg (deflated 53%)  
+adding: mnt/messagesight/data/config/MessageSightInstance.inited (stored 0%)  
+adding: mnt/messagesight/data/config/.serverCFGUpdated (stored 0%)  
+adding: mnt/messagesight/data/config/server_dynamic.json.org (deflated 73%)  
+adding: mnt/messagesight/data/config/server_dynamic.json.bak (deflated 73%)  
+adding: mnt/messagesight/data/config/server_dynamic.json (deflated 73%)  
+adding: mnt/messagesight/data/certificates/ (stored 0%)  
+adding: mnt/messagesight/data/certificates/keystore/ (stored 0%)  
+adding: mnt/messagesight/data/certificates/keystore/AdminDefaultKey.pem (deflated 21%)  
+adding: mnt/messagesight/data/certificates/keystore/AdminDefaultCert.pem (deflated 34%)  
+adding: mnt/messagesight/data/certificates/LDAP/ (stored 0%)  
+adding: mnt/messagesight/data/certificates/MQC/ (stored 0%)  
+adding: mnt/messagesight/data/certificates/truststore/ (stored 0%)  
+adding: mnt/messagesight/data/certificates/LTPAKeyStore/ (stored 0%)  
+adding: mnt/messagesight/data/certificates/OAuth/ (stored 0%)  
+adding: mnt/messagesight/data/certificates/PSK/ (stored 0%)  
+adding: mnt/messagesight/store/ (stored 0%)  
+adding: mnt/messagesight/store/com.ibm.ism/ (stored 0%)  
+adding: mnt/messagesight/store/com.ibm.ism/com.ibm.ism.0.store.lock (stored 0%)  
+adding: mnt/messagesight/store/persist/ (stored 0%)  
+adding: mnt/messagesight/store/persist/PState (deflated 32%)  
+adding: mnt/messagesight/store/persist/CPM_0_1 (deflated 97%)  
+adding: mnt/messagesight/store/persist/CPG_0_1 (deflated 98%)  
+adding: mnt/messagesight/store/persist/ST_0_0 (deflated 100%)  
+adding: mnt/messagesight/store/persist/ST_1_0 (deflated 100%)  
+adding: mnt/messagesight/store/persist/ST_0_1 (deflated 100%)  
+adding: mnt/messagesight/store/persist/ST_1_1 (deflated 100%)  
+adding: mnt/messagesight/store/persist/CPM_0_0 (deflated 95%)  
+adding: mnt/messagesight/store/persist/CPG_0_0 (deflated 98%)</pre></div><div class="p">Restart
+the server in production mode:<pre class="pre screen">[admin@localhost ~]$ curl -X POST \
+&gt;    -H  'Content-Type: application/json'  \
+&gt;    -d  '{
+&gt;          "Service": "Server",
+&gt;            "Maintenance": "stop",
+&gt;           }
+&gt;   '   \
+&gt; http://127.0.0.1:9089/ima/v1/service/restart
+</pre></div><div class="p">Check that the server is running in production mode::<pre class="pre screen">[admin@localhost ~]$ curl -k -H "Content-Type: application/json" -X GET
+ https://127.0.0.1:9089/ima/v1/service/status 
+ "Version":"v1",
+  "Server": {
+    "Name": "TestSysem:9089",
+    "UID": "aFWxYf32",
+    "Status": "Running",
+    "State": 1,
+    "StateDescription": "Running (production)",
+    "ServerTime": "2016-03-04T14:46:53.081Z",
+    "UpTimeSeconds": 24,
+    "UpTimeDescription": "0 days 0 hours 0 minutes 24 seconds",
+    "Version": "2.0 20160304-0400",
+    "ErrorCode": 0,
+    "ErrorMessage": ""
+  },
+  "Container": {
+    "UUID":"034c91ce828a4f5c2c21d7cd7f04628368b63bd308825ec2d9dab5096ff04ca0"
+  },
+  "HighAvailability": {
+    "Status": "Inactive",
+    "Enabled": false
+  },
+  "Cluster": {
+    "Status": "Inactive",
+    "Enabled": false
+  },
+  "Plugin": {
+    "Status": "Inactive",
+    "Enabled": false
+  },
+  "MQConnectivity": {
+    "Status": "Inactive",
+    "Enabled": false
+  },
+  "SNMP": {
+    "Status": "Inactive",
+    "Enabled": false
+  }
+}
+
+</pre></div></section>
+</div>
+<nav role="navigation" class="related-links"><div class="linklist relref"><strong>Related reference</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="../Reference/BackupCmd/cmd_export_serverconfig.html">Export Eclipse Amlen server configuration</a></li><li class="linklist"><a class="link" href="../Reference/BackupCmd/cmd_import_serverconfig.html">Import Eclipse Amlen server configuration</a></li></ul></div></nav>
+</article></main></body></html>

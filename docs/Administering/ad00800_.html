@@ -1,0 +1,61 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="You can set activation specification properties programmatically in Message-Driven beans (MDBs) or by configuring the properties of an ActivationSpec object."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Programmatically configuring the Eclipse Amlen resource adapter for inbound communication</title></head><body id="ad00800_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a><ul><li><a href="../Administering/ad00102_.html">MQ Connectivity</a></li><li><a href="../Administering/workingwithjmsra.html">Eclipse Amlen resource adapter</a><ul><li><a href="../Administering/installingra.html">Installing Eclipse Amlen resource adapter on WebSphere Application Server</a></li><li><a href="../Administering/upgradingra.html">Updating the Eclipse Amlen resource adapter on WebSphere Application Server</a></li><li><a href="../Administering/configuringra.html">Configuring Eclipse Amlen resource adapter for WebSphere Application Server</a><ul><li><a href="../Administering/configurationoftheraobject.html">Configuring the Eclipse Amlen ResourceAdapter object</a></li><li><a href="../Administering/configuringinboundcomms.html">Configuring the Eclipse Amlen resource adapter for inbound communication</a></li><li class="active"><a href="../Administering/ad00800_.html">Programmatically configuring the Eclipse Amlen resource adapter for inbound communication</a></li><li><a href="../Administering/configuringoutboundcomms.html">Configuring the Eclipse Amlen resource adapter for outbound communication</a></li><li><a href="../Administering/configuringadminobjs.html">Configuring the Eclipse Amlen resource adapter for administered objects</a></li><li><a href="../Administering/ratransactionoptions.html">Configuring transactions in the Eclipse Amlen resource adapter</a></li><li><a href="../Administering/ad00820.html">Tuning messaging performance for the Eclipse Amlen resource adapter in WebSphere Application Server</a></li></ul></li><li><a href="../Administering/tlssecurityforjmsra.html">Transport Layer Security for the Eclipse Amlen resource adapter</a></li><li><a href="../Administering/xaconsiderations.html">Working with XA transactions</a></li><li><a href="../Administering/adscenarios.html">Scenarios</a></li></ul></li><li><a href="../Administering/vm00001_.html">Using VMware vSphere to handle Eclipse Amlen failover</a></li></ul></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Programmatically configuring the <span class="ph">Eclipse Amlen</span> resource adapter
+for inbound communication</h1>
+
+<div class="body conbody"><p class="shortdesc">You can set activation specification properties programmatically
+in Message-Driven beans (MDBs) or by configuring the properties of
+an ActivationSpec object.</p>
+<p class="p">The configuration values that are provided in an MDB can set or
+override the properties of an ActivationSpec object. At least three
+properties must be set for an <span class="ph">Eclipse Amlen</span> MDB application.
+Other required settings have default values that work if <span class="ph">Eclipse Amlen</span> is configured
+appropriately. The following information lists the properties that
+must be set: </p>
+<ul class="ul">
+<li class="li">The properties that describe the destination. You must set either <span class="keyword parmname">destination</span> and <span class="keyword parmname">destinationType</span> or <span class="keyword parmname">destinationLookup</span>.</li>
+<li class="li">The properties that allow an application to connect to <span class="ph">Eclipse Amlen</span>. You must set <span class="keyword parmname">server</span> and <span class="keyword parmname">port</span>.
+The <span class="keyword parmname">server</span> property can be set to the <span class="ph">Eclipse Amlen</span> host name or
+names, or to the <span class="ph">Eclipse Amlen</span> 
+IP address or IP addresses. The <span class="keyword parmname">port</span> property
+can be set to the <span class="ph">Eclipse Amlen</span> port.</li>
+</ul>
+<p class="p">Other property settings might be required depending on your <span class="ph">Eclipse Amlen</span> configuration.
+For example, if secure connections are required then the <span class="keyword parmname">protocol</span> property
+must be set to <code class="ph codeph">tcps</code>.</p>
+<div class="p">The following sample code shows the minimal configuration that
+is required in an MDB to allow an application to connect to <span class="ph">Eclipse Amlen</span>:<pre class="pre screen"><code class="ph codeph">
+/**
+* Message-Driven Bean implementation class for: SampleBean
+*/
+@MessageDriven(
+   activationConfig = {
+       @ActivationConfigProperty(
+           propertyName = "destinationType", propertyValue = "javax.jms.Topic"),
+       @ActivationConfigProperty(
+           propertyName = "destination", propertyValue = "myTopic"),
+       @ActivationConfigProperty(
+           propertyName = "server", propertyValue = "192.168.161.11"),
+       @ActivationConfigProperty(
+           propertyName = "port", propertyValue = "16102")
+   })
+
+public class SampleBean implements MessageListener {
+   /**
+    * @see MessageListener#onMessage(Message)
+    */
+   public void onMessage(Message message) {
+       .
+       .
+       .
+   }</code></pre> </div>
+<p class="p">You can set any activation specification properties in an MDB.
+The application developer and application deployer need to decide
+whether to set these properties directly in the MDB or at deployment
+time. </p>
+<p class="p">For more information about setting values in an ActivationSpec
+object, see <a class="xref" href="configuringinboundcomms.html" title="To configure inbound communication, define the properties of one or more ActivationSpec objects.">Configuring the Eclipse Amlen resource adapter for inbound communication</a>.</p>
+</div>
+
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Administering/configuringra.html" title="To configure the Eclipse Amlen resource adapter for WebSphere Application Server, you must define a number of JCA resources.">Configuring Eclipse Amlen resource adapter for WebSphere Application Server</a></div></div></nav></article></main></body></html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can create and update security profiles by using REST Administration APIs."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Creating and updating a security profile by using REST Administration APIs</title></head><body id="ad00743_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a><ul><li><a href="../Administering/ad00710_.html">Configuring certificate profiles</a></li><li><a href="../Administering/ad00730_.html">Configuring Lightweight Third Party Authentication</a></li><li><a href="../Administering/ad00760_.html">Configuring OAuth</a></li><li><a href="../Administering/ad00740_.html">Configuring security profiles</a><ul><li><a href="../Administering/ad00741_.html">Configuring security profiles by using the Amlen WebUI</a></li><li class="active"><a href="../Administering/ad00743_.html">Creating and updating a security profile by using REST Administration APIs</a></li></ul></li><li><a href="../Administering/ad00720_.html">Configuring client certificates</a></li><li><a href="../Administering/ad00728_.html">Configuring trusted certificates</a></li><li><a href="../Administering/dv00022.html">Configuring a pre-shared key file</a></li><li><a href="../Administering/ad00750_.html">Configuring Federal Information Processing Standards (FIPS)</a></li><li><a href="../Administering/ad00753_.html">Closing client connections</a></li></ul></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Creating and updating a security profile by using <span class="ph">REST Administration APIs</span></h1>
+
+<div class="body taskbody"><p class="shortdesc">System administrators can create and update security profiles by using <span class="ph">REST Administration APIs</span>.</p>
+<section class="section prereq"><p class="p">To enable Transport Layer Security (TLS) for the endpoint, you must enable TLS in the security profile and the security profile must have an associated certificate profile that defines the server certificate that is used to control TLS. The certificate profile defines the server certificate to use in the security profile. To create a security profile with TLS enabled, you must create the certificate profile before you create the security profile. For more information about creating a certificate profile, see <a class="xref" href="ad00710_.html" title="Certificate profiles define the server certificates that are used in security profiles to control Transport Layer Security. You can configure certificate profiles either by using the Amlen WebUI or by using REST Administration APIs.">Configuring certificate profiles</a>.</p><p class="p">You
+might want to create an LTPA profile or an OAuth profile to use in
+your security profile. For more information about creating an LTPA
+profile, see <a class="xref" href="ad00730_.html" title="You can configure Lightweight Third Party Authentication (LTPA) by using LTPA profiles. An LTPA profile specifies the key that is used for authentication across servers within the same domain name system. The LTPA profile must be associated with a security profile, and the security profile must be associated with an endpoint.">Configuring Lightweight Third Party Authentication</a>. For more information
+about creating an OAuth profile, see <a class="xref" href="ad00760_.html" title="You can configure OAuth by using OAuth profiles. The OAuth profile defines the URLs and keys that are required to use OAuth single sign-on with Eclipse Amlen. The OAuth profile must be associated with a security profile, and the security profile must be associated with an endpoint.">Configuring OAuth</a>. </p></section>
+<section class="section context"><p class="p">The security profile defines the TLS and authentication method that are applied to an endpoint.</p><p class="p">You can create a security profile or update an existing security profile by using a <span class="ph">REST Administration API</span>, or by using the <span class="ph">Amlen WebUI</span>. For more information about using the <span class="ph">Amlen WebUI</span> to create or update a security profile, see <a class="xref" href="ad00741_.html" title="System administrators can configure security profiles by using the Security Settings page in the Amlen WebUI.">Configuring security profiles by using the Amlen WebUI</a>.</p><p class="p">For
+more information about the components that you must specify when you
+create security profiles, see <a class="xref" href="ad00740_.html" title="A security profile is used by an endpoint to define authentication and Transport Layer Security (TLS) settings for that endpoint. To enable TLS for the endpoint, you must enable TLS in the security profile and the security profile must have an associated certificate profile that defines the server certificate that is used to control TLS. To create a security profile with TLS enabled, you must create the certificate profile before you create the security profile. You can configure security profiles either by using the Amlen WebUI or by using REST Administration APIs.">Configuring security profiles</a>.</p></section>
+<section><ol class="ol steps"><li class="li step stepexpand">
+<span class="ph cmd">To create or update a security profile, use the <span class="ph">Eclipse Amlen</span> REST API POST method with the following <span class="ph">Eclipse Amlen</span> configuration URI:</span>
+<div class="itemgroup info">
+<p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/configuration/</code></p>
+</div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Provide SecurityProfile object configuration data in the payload of the POST method by using the following schema. <span class="keyword parmname">Content-type</span> is set to <kbd class="ph userinput">application/json</kbd>. Ensure that capitalization and double quotation marks are used as shown.</span>
+<div class="itemgroup info"><pre class="pre codeblock"><code>
+{    
+  "SecurityProfile": {
+    "&lt;NameOfSecurityProfile&gt;": {
+      "TLSEnabled": true|false,
+      "MinimumProtocolMethod": "string",
+      "UseClientCertificate": true|false,
+      "UsePasswordAuthentication": true|false,
+      "Ciphers": "string",
+      "CertificateProfile": "string",
+      "UseClientCipher": true|false, 
+      "LTPAProfile": "string",
+      "OAuthProfile": "string"
+     }
+   }
+}</code></pre>Where:<dl class="dl">
+          
+            <dt class="dt dlterm"><var class="keyword varname">NameOfSecurityProfile</var></dt>
+            <dd class="dd">Required.</dd>
+            <dd class="dd ddexpand">Specifies a name for the certificate profile.</dd>
+            <dd class="dd ddexpand">The maximum length of the name is 32 alphanumeric characters. The first character must not be a number.</dd>
+            <dd class="dd ddexpand">After the profile is created, this name cannot be changed.</dd>
+          
+          
+            <dt class="dt dlterm">TLSEnabled: true|false</dt>
+            <dd class="dd">Specifies whether to use (true) or not use (false) TLS on the endpoints that use the security profile.</dd>
+            <dd class="dd ddexpand">The default value is true.</dd>
+            <dd class="dd ddexpand">If <span class="keyword parmname">TLSEnabled</span> is true, you must first create a certificate profile to use with this security profile.</dd>
+          
+          
+            <dt class="dt dlterm">MinimumProtocolMethod</dt>
+            <dd class="dd">Specifies the lowest level of protocol that is allowed when a client connects to <span class="ph">Eclipse Amlen</span>.</dd>
+            <dd class="dd ddexpand">The value can be one of the following values:<ul class="ul">
+              <li class="li">TLSv1</li>
+              <li class="li">TLSv1.1</li>
+              <li class="li">TLSv1.2</li>
+              </ul>The default value is TLSv1.2</dd>
+          
+          
+            <dt class="dt dlterm">UseClientCertificate: true|false</dt>
+            <dd class="dd">Specifies whether to use (true) or not use (false) client certificate authentication.</dd>
+            <dd class="dd ddexpand">The default value is false.</dd>
+          
+          
+            <dt class="dt dlterm">UsePasswordAuthentication: true|false</dt>
+            <dd class="dd">Specifies whether to authenticate the user ID and password (true) or not (false).</dd>
+            <dd class="dd ddexpand">The default value is true.</dd>
+          
+          
+            <dt class="dt dlterm">Ciphers</dt>
+            <dd class="dd">Specifies the encryption algorithm that is used by the security policy.</dd>
+            <dd class="dd ddexpand">The value can be one of the following values:<ul class="ul">
+              <li class="li">
+                <dl class="dl">
+                  
+                    <dt class="dt dlterm">Best</dt>
+                    <dd class="dd">The most secure cipher that is supported by the server and the client.</dd>
+                  
+                  
+                    <dt class="dt dlterm">Medium</dt>
+                    <dd class="dd">The fastest high security cipher that is supported by the server and the client.</dd>
+                  
+                  
+                    <dt class="dt dlterm">Fast</dt>
+                    <dd class="dd">The fastest medium or high security cipher that is supported by server and the client.</dd>
+                  
+                </dl>
+              </li>
+              </ul>The default value is Fast.</dd>
+          
+          
+            <dt class="dt dlterm">CertificateProfile</dt>
+            <dd class="dd">Specifies the name of the certificate profile to use with this security profile. The certificate profile must exist and is required when <span class="keyword parmname">TLSEnabled</span> is true.</dd>
+          
+          
+            <dt class="dt dlterm">UseClientCipher: true|false</dt>
+            <dd class="dd">Specifies whether to use (true) or not use (false) the cipher setting of the client when it connects to <span class="ph">Eclipse Amlen</span>.</dd>
+            <dd class="dd ddexpand">The default value is false.</dd>
+          
+          
+            <dt class="dt dlterm">LTPAProfile</dt>
+            <dd class="dd">Specifies the LTPA profile to use with this security profile. The LTPA profile must exist.</dd>
+            <dd class="dd ddexpand">If you specify this option, <span class="keyword parmname">UsePasswordAuthentication</span> must be set to true. If you omit the <span class="keyword parmname">UsePasswordAuthentication</span> parameter from the command, it is automatically set to true.</dd>
+            <dd class="dd ddexpand">If you specify an LTPA profile, you cannot specify an OAuth profile in the same security profile.</dd>
+          
+          
+            <dt class="dt dlterm">OAuthProfile</dt>
+            <dd class="dd">Specifies the OAuth profile to use with this security profile. The OAuth profile must exist.</dd>
+            <dd class="dd ddexpand">If you specify this option, <span class="keyword parmname">UsePasswordAuthentication</span> must be set to true. If you omit the <span class="keyword parmname">UsePasswordAuthentication</span> parameter from the command, it is automatically set to true.</dd>
+            <dd class="dd ddexpand">If you specify an OAuth profile, you cannot specify an LTPA profile in the same security profile.</dd>
+          
+          </dl><p class="p">You can check that the configuration of your policy is as expected by using the <span class="ph">Eclipse Amlen</span> <span class="ph">REST Administration API</span> GET method. For more information about the GET method, see <a class="xref" href="ad00366_.html" title="System administrators can view configuration details of configuration objects for which the name can be configured.">Viewing configuration details of objects that can be named by using REST Administration APIs</a>.</p></div>
+</li></ol></section>
+<section class="example">The following example shows the creation of a security profile that is called <code class="ph codeph">exampleSecProfile</code>. The security profile uses the certificate profile <code class="ph codeph">certProfile</code>, and uses the default values for all other options:<pre class="pre codeblock"><code>  
+curl -X POST \
+   -H 'Content-Type: application/json'  \
+   -d  '{ 
+           "SecurityProfile": {
+            "exampleSecProfile": {
+             "CertificateProfile": "certProfile" 
+            } 
+         }
+       }
+ '  \
+http://127.0.0.1:9089/ima/v1/configuration/</code></pre></section>
+<section class="section postreq">After you create a security profile, you must associate it
+with an endpoint. For more information about creating endpoints and
+message hubs, see <a class="xref" href="ad00360_.html" title="You can configure messaging hubs either by using the Amlen WebUI or by using REST Administration APIs.">Configuring message hubs</a>.</section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Administering/ad00740_.html" title="A security profile is used by an endpoint to define authentication and Transport Layer Security (TLS) settings for that endpoint. To enable TLS for the endpoint, you must enable TLS in the security profile and the security profile must have an associated certificate profile that defines the server certificate that is used to control TLS. To create a security profile with TLS enabled, you must create the certificate profile before you create the security profile. You can configure security profiles either by using the Amlen WebUI or by using REST Administration APIs.">Configuring security profiles</a></div></div></nav></article></main></body></html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="If you are a IBM Watson IoT Platform Message Gateway customer who is upgrading to Eclipse Amlen version 0.1, you will find that normal product operation is almost entirely unchanged by the renaming of the product. Migration requires some simple steps outlined here."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Upgrading from IBM Watson IoT Platform Message Gateway to Eclipse Amlen</title></head><body id="up00021_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a><ul><li><a href="../Upgrading/up00014_.html">Upgrading and rolling back the software level of Eclipse Amlen</a></li><li class="active"><a href="../Upgrading/up00021_.html">Upgrading from IBM Watson IoT Platform Message Gateway to Eclipse Amlen</a><ul><li><a href="../Upgrading/up00022_.html">TLS in IBM Watson IoT Platform Message Gateway and Eclipse Amlen</a></li></ul></li><li><a href="../Upgrading/up00020_.html">Upgrading from IBM IoT MessageSight v2 (or above) to Eclipse Amlen</a></li><li><a href="../Upgrading/up00015_.html">Upgrading from IBM IoT MessageSight version 1.2</a></li></ul></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Upgrading from <span class="ph">IBM Watson IoT Platform Message Gateway</span> to <span class="ph">Eclipse Amlen</span></h1>
+
+<div class="body conbody"><p class="shortdesc">If you are a <span class="ph">IBM® Watson IoT Platform Message Gateway</span> customer
+who is upgrading to <span class="ph">Eclipse Amlen</span> version <span class="ph">0.1</span>, you will find that normal product
+operation is almost entirely unchanged by the renaming of the product. Migration requires some
+simple steps outlined here.
+</p>
+    <section class="section"><h2 class="title sectiontitle">Overview of key changes</h2>
+        
+        <p class="p">The main changes from <span class="ph">IBM Watson IoT Platform Message Gateway</span> to 
+        be aware of during migration are:</p>
+        <ol class="ol">
+            <li class="li">Packages have been renamed and made more granular</li>
+            <li class="li">Directories have different locations</li>
+            <li class="li">TLS keys used for validating peers in HA pairs and clusters have changed</li>
+        </ol>
+        <p class="p">In the following sections we'll look at each change then the actions required during migration</p>
+    </section>
+    <section class="section"><h2 class="title sectiontitle">New Packages</h2>
+        
+        <p class="p">Previously the main server package (the rpm that contains the files to be installed) 
+        contained code that was not needed by all users, in particular the bridge to IBM MQ and 
+        code used with plugins for custom protocols has been split out into separate packages</p>
+        <table class="table"><caption><span class="table--title-label">Table 1. </span><span class="title">Comparing old and new package names</span></caption><colgroup><col><col></colgroup><thead class="thead">
+                <tr class="row">
+                    <th class="entry" id="up00021___entry__1">Old Package Name</th>
+                    <th class="entry" id="up00021___entry__2">New Package Name(s)</th>
+                </tr>
+            </thead><tbody class="tbody">
+                <tr class="row">
+                    <td class="entry" headers="up00021___entry__1"><p class="p">IBMWIoTPMessageGatewayServer</p></td>
+                    <td class="entry" headers="up00021___entry__2"><p class="p">EclipseAmlenServer</p>
+                           <p class="p">EclipseAmlen</p>
+                           <p class="p">EclipseAmlenProtocolPlugin</p></td>
+                </tr>
+            </tbody></table>
+    </section>
+    <section class="section"><h2 class="title sectiontitle">Directories have been moved</h2>
+        
+        <p class="p">Due to the renaming of the product the following directories have been moved</p>
+            <table class="table"><caption><span class="table--title-label">Table 2. </span><span class="title">Comparing old and new directory paths</span></caption><colgroup><col><col><col></colgroup><thead class="thead">
+                <tr class="row">
+                    <th class="entry" id="up00021___entry__5">Old Location</th>
+                    <th class="entry" id="up00021___entry__6">New Location</th>
+                    <th class="entry" id="up00021___entry__7">Description</th>
+                </tr>
+            </thead><tbody class="tbody">
+                <tr class="row">
+                    <td class="entry" headers="up00021___entry__5"><span class="ph filepath">/opt/ibm/imaserver</span></td>
+                    <td class="entry" headers="up00021___entry__6"><span class="ph filepath">/usr/share/amlen-server</span></td>
+                    <td class="entry" headers="up00021___entry__7">Server install path</td>
+                </tr>
+                <tr class="row">
+                    <td class="entry" headers="up00021___entry__5"><span class="ph filepath">/var/messagesight</span></td>
+                    <td class="entry" headers="up00021___entry__6"><span class="ph filepath">/var/lib/amlen-server</span></td>
+                    <td class="entry" headers="up00021___entry__7">Data/config/diagnostics for the server</td>
+                </tr>
+                <tr class="row">
+                    <td class="entry" headers="up00021___entry__5"><span class="ph filepath">/opt/ibm/imawebui</span></td>
+                    <td class="entry" headers="up00021___entry__6"><span class="ph filepath">/usr/share/amlen-webui</span></td>
+                    <td class="entry" headers="up00021___entry__7">WebUI install path</td>
+                </tr>
+               <tr class="row">
+                    <td class="entry" headers="up00021___entry__5"><span class="ph filepath">/var/messagesight/webui</span></td>
+                    <td class="entry" headers="up00021___entry__6"><span class="ph filepath">/var/lib/amlen-webui</span></td>
+                    <td class="entry" headers="up00021___entry__7">Data/config/diagnostics path for the WebUI</td>
+                </tr>
+                <tr class="row">
+                    <td class="entry" headers="up00021___entry__5"><span class="ph filepath">/opt/ibm/imabridge</span></td>
+                    <td class="entry" headers="up00021___entry__6"><span class="ph filepath">/usr/share/amlen-bridge</span></td>
+                    <td class="entry" headers="up00021___entry__7">Bridge install path</td>
+                </tr>
+               <tr class="row">
+                    <td class="entry" headers="up00021___entry__5"><span class="ph filepath">/var/imabridge</span></td>
+                    <td class="entry" headers="up00021___entry__6"><span class="ph filepath">/var/lib/amlen-bridge</span></td>
+                    <td class="entry" headers="up00021___entry__7">Data/config/diagnostics path for the Bridge</td>
+                </tr>
+            </tbody></table>
+    </section>
+    <section class="section"><h2 class="title sectiontitle">TLS keys for peers in HA Pairs and Clusters</h2>
+        
+        <p class="p">Both <span class="ph">Eclipse Amlen</span> and 
+         <span class="ph">IBM Watson IoT Platform Message Gateway</span> contain default TLS keys used as a check on connections
+         to peers in Highly Available Pairs and in Clusters. The default keys have changed in
+         <span class="ph">Eclipse Amlen</span>. If the servers being migrated are part of
+         an HA pair or a cluster then the simplest migration method is to temporarily
+         disable the checking of certificates during the upgrade then switch to using the default Amlen certificates
+         and then finally  move to custom certificates for significantly improved security. For more details about
+         TLS certificates in  <span class="ph">Eclipse Amlen</span> and 
+         <span class="ph">IBM Watson IoT Platform Message Gateway</span> see 
+         <a class="xref" href="up00022_.html">TLS in <span class="ph">IBM Watson IoT Platform Message Gateway</span> and <span class="ph">Eclipse Amlen</span></a>
+        </p>
+    </section>
+    <section class="section"><h2 class="title sectiontitle">Suggested Procedure for Server Migration</h2>
+        
+        <p class="p">A suggested procedure to migrate from <span class="ph">IBM Watson IoT Platform Message Gateway</span> to 
+        <span class="ph">Eclipse Amlen</span> is:</p>
+        <ol class="ol">
+            <li class="li">If using HA or Clustering - stop the links requiring TLS certificates (see <a class="xref" href="up00022_.html">TLS in <span class="ph">IBM Watson IoT Platform Message Gateway</span> and <span class="ph">Eclipse Amlen</span></a>)</li>
+            <li class="li">On each server in turn (starting with standbys):
+                  <ol class="ol" type="a">
+                    <li class="li">Stop the server:
+                    <pre class="pre codeblock"><code>sudo systemctl stop imaserver</code></pre>
+                    </li>
+                    <li class="li">Uninstall <span class="ph">IBM Watson IoT Platform Message Gateway</span></li>
+                    <li class="li">Move the data directory:
+                    <pre class="pre codeblock"><code>mv /var/messagesight /var/lib/amlen-server</code></pre>
+                    </li>
+                    <li class="li">Install <span class="ph">Eclipse Amlen</span></li>
+                    <li class="li">Start the server:
+                    <pre class="pre codeblock"><code>sudo systemctl start imaserver</code></pre>
+                    </li>
+                 </ol>
+            </li>
+            <li class="li">After each server has been migrated, require certificates on all HA and Cluster links; either by initially using the default
+            Amlen keys and certificates or moving straight to custom keys/certs (see <a class="xref" href="up00022_.html">TLS in <span class="ph">IBM Watson IoT Platform Message Gateway</span> and 
+            <span class="ph">Eclipse Amlen</span></a>)</li>
+        </ol>
+    </section> 
+</div>
+<nav role="navigation" class="related-links"><ul class="ullinks"><li class="link ulchildlink"><strong><a href="../Upgrading/up00022_.html">TLS in IBM Watson IoT Platform Message Gateway and Eclipse Amlen</a></strong><br></li></ul><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Upgrading/up00001_.html" title="System administrators can upgrade Eclipse Amlen from earlier versions or ifixes. System administrators can also upgrade to Eclipse Amlen from IBM Watson IoT Platform Message Gateway or IBM IoT MessageSight">Upgrading</a></div></div></nav></article></main></body></html>

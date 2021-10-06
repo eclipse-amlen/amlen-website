@@ -1,0 +1,33 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="The .tz files contain the files that are required to install Eclipse Amlen."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Preparing the Eclipse Amlen .tz packages for installation</title></head><body id="qs00054_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a><ul><li><a href="../QuickStartGuide/qs00030_.html">Provisioning your operating system </a></li><li><a href="../QuickStartGuide/qs00040_.html">Installing Docker on your operating system</a></li><li class="active"><a href="../QuickStartGuide/qs00054_.html">Preparing the Eclipse Amlen .tz packages for installation</a></li><li><a href="../QuickStartGuide/qs00059_.html">Installing Eclipse Amlen  </a></li><li><a href="../QuickStartGuide/qs00053_.html">Logging in to the Amlen WebUI</a></li><li><a href="../QuickStartGuide/qs00002_.html">Verifying the installation of Eclipse Amlen</a></li></ul></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Preparing the <span class="ph">Eclipse Amlen</span> .tz packages for installation</h1>
+
+
+
+
+
+
+<div class="body taskbody"><p class="shortdesc">The .tz files contain the files that are required to install <span class="ph">Eclipse Amlen</span>.</p>
+<section class="section prereq">
+<p class="p">Before you prepare the .tz file, ensure that the OS has been provisioned on an appropriate supported environment. For more information, see <a class="xref" href="qs00030_.html" title="Before you install Eclipse Amlen, you must provision an operating system in one of the supported operating environments.">Provisioning your operating system</a>. </p>
+</section>
+<section><ol class="ol steps"><li class="li step stepexpand">
+<span class="ph cmd">Copy the following files to the OS on which you are installing <span class="ph">Eclipse Amlen</span>:</span>
+<div class="itemgroup info">
+<ul class="ul">
+<li class="li"><span class="ph filepath">EclipseAmlenServer-&lt;<var class="keyword varname">build_info</var>&gt;.tz</span></li>
+<li class="li"><span class="ph filepath">EclipseAmlenWebUI-&lt;<var class="keyword varname">build_info</var>&gt;.tz</span></li>
+</ul>
+</div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Create subdirectories for the .tz files.</span>
+<div class="itemgroup info">For example, create a subdirectory called <span class="ph filepath">imaserver</span> for the <span class="ph filepath">EclipseAmlenServer-&lt;<var class="keyword varname">build_info</var>&gt;.tz</span> file and a subdirectory called <span class="ph filepath">imawebui</span> for the <span class="ph filepath">EclipseAmlenWebUI-&lt;<var class="keyword varname">build_info</var>&gt;.tz</span> file</div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Unpack the contents of the <span class="ph filepath">EclipseAmlenServer-&lt;<var class="keyword varname">build_info</var>&gt;.tz</span> file into the <span class="ph filepath">imaserver</span> subdirectory.</span>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Unpack the contents of the <span class="ph filepath">EclipseAmlenWebUI-&lt;<var class="keyword varname">build_info</var>&gt;.tz</span> file into the <span class="ph filepath">imawebui</span> subdirectory.</span>
+</li></ol></section>
+<section class="section postreq">If you are using Docker, you can proceed to install <span class="ph">Eclipse Amlen</span> in Docker containers. For more information, see <a class="xref" href="qs00055_.html" title="Install Eclipse Amlen in Docker containers by building and deploying the Docker images that you need to run Eclipse Amlen.">Installing Eclipse Amlen in Docker containers</a>. Alternatively, you can install the RPM directly on your host OS. For more information, see <a class="xref" href="qs00056_.html" title="Install the Eclipse Amlen RPM directly on your host operating system (OS).">Installing the Eclipse Amlen RPM on a host OS</a>.</section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../QuickStartGuide/qsg10000.html" title="You can install Eclipse Amlen in Docker images or as RPMs directly on your host operating system (OS).">Installing Eclipse Amlen</a></div></div></nav></article></main></body></html>

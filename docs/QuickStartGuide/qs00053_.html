@@ -1,0 +1,60 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="Log in to the Amlen WebUI to verify the installation of Eclipse Amlen and to administer the Eclipse Amlen messaging server."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Logging in to the Amlen WebUI</title></head><body id="qs00053_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a><ul><li><a href="../QuickStartGuide/qs00030_.html">Provisioning your operating system </a></li><li><a href="../QuickStartGuide/qs00040_.html">Installing Docker on your operating system</a></li><li><a href="../QuickStartGuide/qs00054_.html">Preparing the Eclipse Amlen .tz packages for installation</a></li><li><a href="../QuickStartGuide/qs00059_.html">Installing Eclipse Amlen  </a></li><li class="active"><a href="../QuickStartGuide/qs00053_.html">Logging in to the Amlen WebUI</a></li><li><a href="../QuickStartGuide/qs00002_.html">Verifying the installation of Eclipse Amlen</a></li></ul></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Logging in to the <span class="ph">Amlen WebUI</span></h1>
+
+
+
+
+
+
+<div class="body taskbody"><p class="shortdesc">Log in to the <span class="ph">Amlen WebUI</span> to verify the installation of <span class="ph">Eclipse Amlen</span> and to administer the <span class="ph">Eclipse Amlen</span> messaging server. </p>
+<section class="section prereq">Ensure that the <span class="ph">Amlen WebUI</span> and <span class="ph">Eclipse Amlen</span> messaging server are running.</section>
+<section class="section context">
+<p class="p">You can use the URL <code class="ph codeph">http://&lt;server:Port&gt;</code> to connect to the <span class="ph">Amlen WebUI</span>. This task uses
+                    <code class="ph codeph">https://10.10.2.149:9087/</code> to connect to the <span class="ph">Amlen WebUI</span>. To use this URL, your <span class="ph">Amlen WebUI</span> container must be running on
+                the host with IP address <code class="ph codeph">10.10.2.149</code>.</p>
+            <p class="p">You need to accept an <span class="ph">Amlen WebUI</span>
+                certificate and an <span class="ph">Eclipse Amlen</span> server
+                certificate before you can start using the <span class="ph">Amlen WebUI</span>. Both of these certificates
+                must be changed if you move from a non-production to a production environment.</p>
+</section>
+<section><ol class="ol steps"><li class="li step stepexpand">
+                <span class="ph cmd">Open an Internet Explorer 11, Firefox, or Chrome browser and connect to the <span class="ph">Amlen WebUI</span> by entering the following URL:</span>
+                <div class="itemgroup info"> <code class="ph codeph">10.10.2.149:9087</code></div>
+            </li><li class="li step stepexpand">
+                <span class="ph cmd">Accept the <span class="ph">Amlen WebUI</span> certificate
+                    so that you can view the login page.</span>
+            </li><li class="li step stepexpand">
+                <span class="ph cmd">Log in and accept the <span class="ph">Eclipse Amlen</span> server certificate in one of the following ways: </span>
+                <ul class="ul choices">
+                    <li class="li choice">If you are using Internet Explorer 11, complete the following steps to log in and accept the <span class="ph">Eclipse Amlen</span> server certificate: <ol class="ol" type="a">
+                        <li class="li">At the login prompt, type the default ID and password <span class="ph">(<code class="ph codeph">admin</code>/<code class="ph codeph">admin</code> )</span> and click <span class="ph uicontrol">Log in</span>. </li>
+                        <li class="li">After you are logged in, follow the browser prompts to accept the certificate. </li>
+                        <li class="li">The <span class="keyword wintitle">Common configuration and customization tasks</span>
+                                section of the <span class="keyword wintitle">IBM Watson IoT Platform - Message Gateway Web UI</span> home
+                                page is displayed.</li>
+                        </ol> </li>
+                    <li class="li choice">If you are using Firefox or Google Chrome, complete the following steps to log in and accept the <span class="ph">Eclipse Amlen</span> server certificate: <ol class="ol" type="a">
+                        <li class="li">At the login prompt, type the default ID and password
+<span class="ph">(<code class="ph codeph">admin</code>/<code class="ph codeph">admin</code> )</span> and click <span class="ph uicontrol">Log in</span>.
+The error <samp class="ph systemoutput sysout">Cannot connect to the IBM Message Gateway server</samp> is
+displayed.</li>
+                        <li class="li">Click <span class="ph uicontrol">Click here</span> in the message text. An error page is displayed that indicates that you need to accept the certificate.</li>
+                        <li class="li">Follow the browser prompts to accept the certificate. The
+                        <span class="keyword wintitle">About IBM Watson IoT Platform - Message Gateway</span> page is
+                                displayed in a new browser window.</li>
+                        <li class="li">Return to the <span class="keyword wintitle">IBM Watson IoT Platform - Message Gateway Web UI</span> page. If
+                                the error box is still displayed, refresh the page.</li>
+                        <li class="li">The <span class="keyword wintitle">Common configuration and customization tasks</span>
+                        section of the <span class="keyword wintitle">IBM Watson IoT Platform - Message Gateway Web UI</span> home
+                                page is displayed.</li>
+                        </ol></li>
+                </ul>
+                <div class="itemgroup info">
+                    <div class="note note note_note"><span class="note__title">Note:</span> You can replace the default certificate with your own appropriately signed certificate and then you do not have to keep accepting certificates. For information about specifying your own certificate to replace the default certificate, see <a class="xref" href="../AdministeringWebUI/ad00196_.html" title="You can change the security certificate that is used by the Amlen WebUI by using the Web UI Settings page.">Changing the Amlen WebUI security certificate</a>.</div>
+                </div>
+            </li></ol></section>
+<section class="section postreq">You can use the <span class="ph">Amlen WebUI</span> to verify your installation of <span class="ph">Eclipse Amlen</span> and to administer the <span class="ph">Eclipse Amlen</span> messaging server. For more information about verifying your installation, see <a class="xref" href="qs00002_.html" title="You can verify the installation of Eclipse Amlen by using the Messaging Tester sample application.">Verifying the installation of Eclipse Amlen</a>. For more information about using the <span class="ph">Amlen WebUI</span> to administer the <span class="ph">Eclipse Amlen</span> messaging server, see <a class="xref" href="../Administering/ad00000_.html" title="Administration tasks can be completed by system administrators or messaging administrators by using the Amlen WebUI, or by using REST Administration APIs.">Administering</a>.<div class="note note note_note"><span class="note__title">Note:</span> The <span class="ph">Amlen WebUI</span> can administer the messaging server only after the license has been accepted on the  messaging server. Use the <span class="ph">Eclipse Amlen</span> REST API POST method to accept the license on the messaging server. For more information about accepting the license by using the <span class="ph">Eclipse Amlen</span> REST API POST method, see <a class="xref" href="../Administering/ad00793_.html" title="System administrators can change the configured licensed usage for Eclipse Amlen and accept the license by using a single REST Administration API.">Configuring the licensed usage for Eclipse Amlen and accepting the license by using REST Administration APIs</a>.</div></section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../QuickStartGuide/qsg10000.html" title="You can install Eclipse Amlen in Docker images or as RPMs directly on your host operating system (OS).">Installing Eclipse Amlen</a></div></div></nav></article></main></body></html>

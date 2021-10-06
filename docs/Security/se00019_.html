@@ -1,0 +1,49 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="You can configure global-shared durable and global-shared non-durable topic subscriptions to be shared by Eclipse Amlen MQTT client applications. You must configure a subscription policy and a corresponding topic policy if your MQTT applications are to use global-shared durable subscriptions. You must ensure that the Subscription and Topic parameters are correctly configured."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Topic filters for MQTT global-shared subscriptions</title></head><body id="se00019_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a><ul><li><a href="../Security/se00010.html">Authentication</a></li><li><a href="../Security/se00011.html">Authorization</a><ul><li><a href="../Security/se00003_.html">Authorizing client connections</a></li><li><a href="../Security/se00004_.html">Authorizing client messaging</a><ul><li><a href="../Security/se00015_.html">Topic policy</a><ul><li class="active"><a href="../Security/se00019_.html">Topic filters for MQTT global-shared subscriptions</a></li></ul></li><li><a href="../Security/se00016_.html">Queue policy</a></li><li><a href="../Security/se00014_.html">Subscription policy</a></li><li><a href="../Security/se00018.html">Variable substitution in messaging policies</a></li></ul></li><li><a href="../Security/se00008_.html">OAuth</a></li></ul></li><li><a href="../Security/se00005_.html">Transport Layer Security</a></li></ul></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Topic filters for MQTT global-shared subscriptions</h1>
+
+<div class="body conbody"><p class="shortdesc">You can configure global-shared durable and global-shared non-durable topic subscriptions to be shared by <span class="ph">Eclipse Amlen</span> MQTT client applications. You must configure a subscription policy and a corresponding topic policy if your MQTT applications are to use global-shared durable subscriptions. You must ensure that the <span class="keyword parmname">Subscription</span> and <span class="keyword parmname">Topic</span> parameters are correctly configured.</p>
+<p class="p">When you create a subscription policy, you authorize clients to use the global-shared durable subscription, but not the associated topic. Therefore, you must create a separate topic policy to authorize clients to use the associated topic.</p>
+<section class="section"><h2 class="title sectiontitle">The MQTT SUBSCRIBE request</h2><div class="p">The SUBSCRIBE request in MQTT specifies one of the following strings: <pre class="pre codeblock"><code>$SharedSubscription/<var class="keyword varname">subName</var>/<var class="keyword varname">topicFilter</var></code></pre><pre class="pre codeblock"><code>$share/<var class="keyword varname">subName</var>/<var class="keyword varname">topicFilter</var></code></pre>where:<dl class="dl">
+
+<dt class="dt dlterm">$SharedSubscription</dt>
+<dd class="dd">Indicates that the target of the SUBSCRIBE request is a global-shared subscription.</dd>
+<dd class="dd ddexpand">Clients that connect with the clean session flag set to <kbd class="ph userinput">false</kbd> in MQTTv3,
+or with the clean session flag set to <kbd class="ph userinput">true</kbd> , cannot share a subscription.
+Trying to share a subscription results in the creation of two subscriptions with the same
+<var class="keyword varname">subName</var>.</dd>
+
+</dl><dl class="dl">
+
+<dt class="dt dlterm">$share</dt>
+<dd class="dd">Indicates that the target of the SUBSCRIBE request is a global-shared subscription.</dd>
+<dd class="dd ddexpand">All MQTT clients that use $share to subscribe can connect to the same shared subscription. </dd>
+
+</dl><dl class="dl">
+
+<dt class="dt dlterm"><var class="keyword varname">subName</var></dt>
+<dd class="dd">Is the name of the global-shared subscription.</dd>
+<dd class="dd ddexpand">This value must not include any forward slashes ( / ).</dd>
+
+</dl><dl class="dl">
+
+<dt class="dt dlterm"><var class="keyword varname">topicFilter</var></dt>
+<dd class="dd">Is a standard MQTT topic filter for any type of topic subscription. It can contain a single
+topic name, or it can contain a topic filter that includes wildcards. </dd>
+
+</dl></div></section>
+<section class="section"><h2 class="title sectiontitle">Setting the <span class="keyword parmname">Subscription</span> and <span class="keyword parmname">Topic</span> parameter in the susbcription policy and topic policy</h2><p class="p">If you are using an MQTT global-shared durable subscriptions, you must configure a subscription policy and a corresponding topic policy. In the subscription policy, the value of the <span class="keyword parmname">Subscription</span> parameter must be the same as the <var class="keyword varname">SubName</var> element in the MQTT SUBSCRIBE request. This value must not contain any forward slashes ( / ). In the topic policy, the value of  the <span class="keyword parmname">Topic</span> parameter must be the same as the <var class="keyword varname">topicFilter</var> element in the MQTT SUBSCRIBE request. To make the subscription durable, set <code class="ph codeph">cleanSession=0</code>.</p><p class="p">If you are using an MQTT global-shared non-durable subscription, you need only configure a topic policy. The value of the <span class="keyword parmname">Topic</span> parameter in the topic policy must grant access to the topicFilter on the MQTT SUBSCRIBE request.</p><p class="p">For more information about configuring
+messaging policies, see <a class="xref" href="../Administering/ad00360_.html">Configuring
+message hubs</a>.</p></section>
+<section class="section"><h2 class="title sectiontitle">Examples</h2><div class="p"> <ul class="ul">
+<li class="li"><div class="p">For example, an MQTT client specifies the following <span class="ph">Eclipse Amlen</span> topic filter for a global-shared subscription (in this case, a global-shared durable subscription):<pre class="pre codeblock"><code>$SharedSubscription/ProGolfSub//Golf/Professional</code></pre><pre class="pre codeblock"><code></code></pre>The subscription policy must specify the following value for the <span class="keyword parmname">Subscription</span> parameter:<pre class="pre codeblock"><code>ProGolfSub</code></pre>Then the topic policy must specify the following value for the <span class="keyword parmname">Topic</span> parameter:<pre class="pre codeblock"><code>/Golf/Professional</code></pre>However, if an MQTT client specifies the following topic string:<pre class="pre codeblock"><code>$SharedSubscription/ProBaseballSub/Baseball/Professional</code></pre>The subscription policy must specify the following value for the <span class="keyword parmname">Subscription</span> parameter:<pre class="pre codeblock"><code>Subscription=ProBaseballSub</code></pre>Then the topic messaging policy must specify the following value for the <span class="keyword parmname">Topic</span> parameter:<pre class="pre codeblock"><code>Topic=Baseball/Professional</code></pre></div></li>
+<li class="li">For a global-shared non-durable subscription, your topic string must look like the following example:<pre class="pre codeblock"><code>$SharedSubscription/<var class="keyword varname">SubName</var>/<var class="keyword varname">topicFilter</var></code></pre><ul class="ul">
+<li class="li">The <code class="ph codeph">$SharedSubscription/</code> segment must be present.</li>
+<li class="li">The <code class="ph codeph"><var class="keyword varname">SubName</var></code> must be the name of the subscription.</li>
+<li class="li">The <code class="ph codeph"><var class="keyword varname">topicFilter</var></code> must match the topic on the topic policy. The <code class="ph codeph"><var class="keyword varname">topicFilter</var></code> must include a leading forward slash ( / ) if the topic has one.</li>
+</ul><div class="p">For example, an MQTT client specifies the following topic string:<pre class="pre codeblock"><code>$SharedSubscription/ProHockeySub//Hockey/Professional</code></pre>Then the topic policy must specify the following value for the <span class="keyword parmname">Topic</span> parameter:<pre class="pre codeblock"><code>/Hockey/Professional</code></pre>A subscription policy is not necessary.</div><p class="p">All subscribers to the global-shared non-durable subscription must use the same subscription name.</p></li>
+</ul> </div></section>
+</div>
+
+</article></main></body></html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="You can use variable substitution in messaging policies to avoid configuring large numbers of messaging policies. You can set up a topic policy or queue policy so that the topic or queue parameter in the policy includes a user ID, group ID, client ID, or client certificate common name variable. The user ID, group ID, client ID, or common name is matched to the topic string or queue name, and access is granted to that topic tree or queue only."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Variable substitution in messaging policies</title></head><body id="se00018"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a><ul><li><a href="../Security/se00010.html">Authentication</a></li><li><a href="../Security/se00011.html">Authorization</a><ul><li><a href="../Security/se00003_.html">Authorizing client connections</a></li><li><a href="../Security/se00004_.html">Authorizing client messaging</a><ul><li><a href="../Security/se00015_.html">Topic policy</a></li><li><a href="../Security/se00016_.html">Queue policy</a></li><li><a href="../Security/se00014_.html">Subscription policy</a></li><li class="active"><a href="../Security/se00018.html">Variable substitution in messaging policies</a></li></ul></li><li><a href="../Security/se00008_.html">OAuth</a></li></ul></li><li><a href="../Security/se00005_.html">Transport Layer Security</a></li></ul></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Variable substitution in messaging policies</h1>
+
+<div class="body conbody"><p class="shortdesc">You can use variable substitution in messaging policies to avoid configuring large numbers of messaging policies. You can set up a topic policy or queue policy so that the topic or queue parameter in the policy includes a user ID, group ID, client ID, or client certificate common name variable. The user ID, group ID, client ID, or common name is matched to the topic string or queue name, and access is granted to that topic tree or queue only.</p>
+<div class="p">The variables are:<ul class="ul">
+<li class="li"><code class="ph codeph">${UserID}</code> for the user ID. </li>
+<li class="li"><code class="ph codeph">${GroupID}</code> for the group ID. </li>
+<li class="li"><code class="ph codeph">${ClientID}</code> for the client ID. You cannot use <code class="ph codeph">${ClientID}</code> in
+a subscription messaging policy. </li>
+<li class="li"><code class="ph codeph">${CommonName}</code> for the client certificate common
+name. </li>
+</ul></div>
+<p class="p">The topic parameter or queue parameter can contain multiple variables, but only one instance of each variable. For example, <code class="ph codeph">EXAMPLE/${ClientID}/A/${UserID}</code> is valid, but <code class="ph codeph">EXAMPLE/${ClientID}/A/${ClientID}</code> is not valid. You can specify extra characters along with the variable, for example <code class="ph codeph">EXAMPLE/${UserID}</code>. However, if you use an unknown variable, the matching of the policy fails.</p>
+<div class="p">When you use variables, take care and be consistent with the position of the variable in your topic strings. For example, you have the following topic strings in your application:<ul class="ul">
+<li class="li"><code class="ph codeph">MOBILEAPP/ACCOUNT/<var class="keyword varname">ClientID</var></code></li>
+<li class="li"><code class="ph codeph">MOBILEAPP/ACCOUNT/<var class="keyword varname">ClientID</var>/PRIVILEGE</code></li>
+</ul>The first topic string is to authorize clients, and the second topic string is to authorize administrators. However, with these topic strings you can unintentionally allow access to the administrator topics. For example, if the topic policy has a topic of <code class="ph codeph">MOBILEAPP/ACCOUNT/${ClientID}</code>, a malicious client can use a client ID that ends with <code class="ph codeph">/PRIVILEGE</code>, and can gain access to the administrator topics.</div>
+<section class="section"><h2 class="title sectiontitle">Using the <code class="ph codeph">${UserID}</code> variable</h2><div class="p">The following example shows how you might configure a topic policy in a scenario where you have thousands of items that need tracking. You might also have thousands of users that want to subscribe to the status of one of these items. You can use the variable substitution option to avoid creating thousands of messaging policies. For example:<pre class="pre codeblock"><code>    Name:SubscribeItemTracking,
+    Description:Topic policy for clients IDs with item tracking,
+    Clientid:*,
+    Topic:item/tracking/${UserID},
+    ActionList:Subscribe
+</code></pre></div><p class="p">Using this topic policy, all clients can subscribe to topic string <code class="ph codeph">item/tracking/</code>. However, each user can see only their items, as the <code class="ph codeph">${UserID}</code> is replaced by the user ID in the topic string. For example, there are two users, <code class="ph codeph">user_a</code> and <code class="ph codeph">user_b</code>. When <code class="ph codeph">user_a</code> accesses the topic, they can subscribe only to the topic <code class="ph codeph">item/tracking/user_a</code>. When <code class="ph codeph">user_b</code> accesses the topic, they can subscribe only to the topic <code class="ph codeph">item/tracking/user_b</code>. <code class="ph codeph">user_b</code> cannot subscribe to the topic <code class="ph codeph">item/tracking/user_a</code>.</p></section>
+<section class="section" id="se00018__UsingGroupIDVar"><h2 class="title sectiontitle">Using the <code class="ph codeph">${GroupID}</code> variable</h2><div class="p">The following example shows how you might configure a topic policy in a scenario where you want to publish a message to all drivers who operate within a particular geographic region. You can use the variable substitution option to avoid creating thousands of messaging policies. For example:<pre class="pre codeblock"><code>    Name:PublishbyGeographicRegion,
+    Description:Topic policy for group IDs by geographic region,
+    Clientid:*,
+    Topic:drivers/USA/${GroupID}/*,
+    Action:Publish
+</code></pre></div><p class="p">Using this topic policy, a message can be published to topic string <code class="ph codeph">drivers/USA</code>. Only users in a specific group can receive messages to which they are authorized, as the <code class="ph codeph">${GroupID}</code> is replaced by a specific group ID in the topic string. For example, there are two users, <code class="ph codeph">user_a</code> and <code class="ph codeph">user_b</code>. <code class="ph codeph">user_a</code> is in the group <code class="ph codeph">Los Angeles</code>. <code class="ph codeph">user_b</code> is in the group <code class="ph codeph">San Francisco</code>. <code class="ph codeph">user_a</code> is authorized to receive only messages that are published to the topic <code class="ph codeph">drivers/USA/Los Angeles</code>. <code class="ph codeph">user_b</code> is authorized to receive only messages that are published to the topic <code class="ph codeph">drivers/USA/San Francisco</code>. <code class="ph codeph">user_b</code> cannot receive messages that are published to the topic <code class="ph codeph">drivers/USA/Los Angeles</code>. <code class="ph codeph">user_c</code> is in the group <code class="ph codeph">Los Angeles</code> and the group <code class="ph codeph">San Francisco</code>, so <code class="ph codeph">user_c</code> is authorized to receive messages that are published to the topic <code class="ph codeph">drivers/USA/Los Angeles</code> and the topic <code class="ph codeph">drivers/USA/San Francisco</code>.</p><p class="p">When you
+use the <code class="ph codeph">${GroupID}</code> variable but have different users
+with the same user ID in different groups with the same group ID,
+consider using unique group IDs. Unique group IDs help to ensure that
+only those users that you intend to have the authority to publish
+or subscribe to a topic can do so. For example, there are two users
+with the same user ID, <code class="ph codeph">Truck1</code>.  One user drives during
+the day and the other user drives during the night. They are both
+members of different groups which are both called <code class="ph codeph">Los Angeles</code>;
+these groups called <code class="ph codeph">Los Angeles</code> are nested as members
+of other groups. The driver who drives during the day has user ID <code class="ph codeph">Truck1</code> in
+group <code class="ph codeph">Los Angeles</code> which is nested within group <code class="ph codeph">Daytime</code>.
+The driver who drives during the night has user ID <code class="ph codeph">Truck1</code> in
+group <code class="ph codeph">Los Angeles</code> which is nested within group <code class="ph codeph">Nighttime</code>.
+If you specify the <code class="ph codeph">${GroupID}</code> variable, when it is
+replaced by the specific group ID in the topic string, both users
+receive messages that are published to the topic <code class="ph codeph">drivers/USA/Los
+Angeles</code>. It might not be your intention for both of these
+users to receive these messages; you might only require one of these
+users to receive these messages and for the other user to receive
+messages from a different topic string. Consider using unique group
+names in this situation. You might consider replacing the group ID <code class="ph codeph">Los
+Angeles</code> with group IDs similar to <code class="ph codeph">Los Angeles Day</code> and <code class="ph codeph">Los
+Angeles Night</code>.</p><p class="p">A user can be a member of a maximum
+of 200 groups.</p></section>
+</div>
+</article></main></body></html>

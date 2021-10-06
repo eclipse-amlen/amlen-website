@@ -1,0 +1,62 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="View live, aggregated connection data, and query the best and worst performing connections across several connection metrics."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Connection Monitoring</title></head><body id="admin00009"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a><ul><li><a href="../Monitoring/admin00080.html">Cluster monitoring</a></li><li class="active"><a href="../Monitoring/admin00009.html">Connection Monitoring</a><ul><li><a href="../Monitoring/admin00014.html">Viewing connection level statistics by using the Amlen WebUI</a></li><li><a href="../Monitoring/admin00012.html">Viewing connection level statistics by REST Monitoring APIs</a></li></ul></li><li><a href="../Monitoring/admin00010.html">Endpoint Monitoring</a></li><li><a href="../Monitoring/admin00016.html">Topic Monitoring</a></li><li><a href="../Monitoring/admin00019.html">Queue Monitoring</a></li><li><a href="../Monitoring/admin00022.html">Subscription Monitoring</a></li><li><a href="../Monitoring/admin00025.html">MQTT Client Monitoring</a></li><li><a href="../Monitoring/admin00031.html">MQ Connectivity monitoring</a></li><li><a href="../Monitoring/admin00070.html">Viewing protocol plug-in monitoring statistics by using an external application</a></li><li><a href="../Monitoring/admin00028.html">Server Monitoring</a></li><li><a href="../Monitoring/admin00060.html">XA Transaction monitoring</a></li></ul></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Connection Monitoring</h1>
+
+<div class="body conbody"><p class="shortdesc">View live, aggregated connection data, and query the best
+and worst performing connections across several connection metrics. </p>
+<section class="section"><h2 class="title sectiontitle">Connection Chart</h2><p class="p">Use the connection chart
+to monitor the current number of active connections to the <span class="ph">Amlen WebUI</span> server, and
+the rate of new connections.</p></section>
+<section class="section"><h2 class="title sectiontitle">Connection Data</h2><p class="p">Use the connection data
+table to view the best or worst performing connections for a particular
+endpoint and metric. The top 50 connections are displayed. </p><p class="p">Predefined
+queries can be run to view the following metrics: </p><ul class="ul">
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Newest connections </dt>
+<dd class="dd">The clients that are connected to the <span class="ph">Amlen WebUI</span> server for
+the least amount of time.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Oldest connections</dt>
+<dd class="dd">The clients that are connected to the <span class="ph">Amlen WebUI</span> server for
+the most amount of time.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Lowest throughput (messages)</dt>
+<dd class="dd">Shows the connections that have the lowest throughput that is
+based on the number of messages that are sent and received. </dd>
+</dl><p class="p">Message throughput is a summary of the number of
+messages that are received and sent over time. For example, if 0 messages
+are received and 1000 messages are sent across a connection over a
+period of 1000 seconds, the throughput in terms of messages per second
+is 1. A connection across which 500 messages are received and 1000
+messages are sent over a period of 1500 seconds, also has a throughput
+of 1.</p></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Highest throughput (messages)</dt>
+<dd class="dd">Shows the connections that have the highest throughput that is
+based on the number of messages that are sent and received. </dd>
+</dl><p class="p">Message throughput is a summary of the number of
+messages that are received and sent over time. For example, if 0 messages
+are received and 1000 messages are sent across a connection over a
+period of 1000 seconds, the throughput in terms of messages per second
+is 1. A connection across which 500 messages are received and 1000
+messages are sent over a period of 1500 seconds, also has a throughput
+of 1.</p></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Lowest throughput (KB)</dt>
+<dd class="dd">Shows the connections that have the lowest throughput that is
+based on Kilobytes of data that is sent and received. </dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Highest throughput (KB) </dt>
+<dd class="dd">Shows the connections that have the highest throughput that is
+based on Kilobytes of data that is sent and received. </dd>
+</dl></li>
+</ul><p class="p">You can monitor only the connections that are based on a specified
+endpoint. Select a specific endpoint policy, and filter the Connection
+Data Table output to view connections that use that policy. Use this
+filter to help you to identify endpoints that are performing poorly. </p></section>
+</div>
+<nav role="navigation" class="related-links"><ul class="ullinks"><li class="link ulchildlink"><strong><a href="../Monitoring/admin00014.html">Viewing connection level statistics by using the Amlen WebUI</a></strong><br>Use the connection monitor to view live, aggregated connection data, and to query the best and worst performing connections across several connection metrics.</li><li class="link ulchildlink"><strong><a href="../Monitoring/admin00012.html">Viewing connection level statistics by REST Monitoring APIs</a></strong><br>System administrators can view connection level monitoring statistics by using <span class="ph">REST Monitoring APIs</span>.</li></ul><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Monitoring/admin00008_.html" title="Monitoring provides a picture of the health of Eclipse Amlen. You can monitor Eclipse Amlen to understand how it is being used, and watch for potential problems.">Monitoring and reporting</a></div></div></nav></article></main></body></html>

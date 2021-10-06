@@ -1,0 +1,39 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="Use the queue monitor to view live, aggregated queue data, and to query the best and worst performing queues across several connection metrics."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Viewing queue related statistics by using the Amlen WebUI</title></head><body id="admin00020"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a><ul><li><a href="../Monitoring/admin00080.html">Cluster monitoring</a></li><li><a href="../Monitoring/admin00009.html">Connection Monitoring</a></li><li><a href="../Monitoring/admin00010.html">Endpoint Monitoring</a></li><li><a href="../Monitoring/admin00016.html">Topic Monitoring</a></li><li><a href="../Monitoring/admin00019.html">Queue Monitoring</a><ul><li class="active"><a href="../Monitoring/admin00020.html">Viewing queue related statistics by using the Amlen WebUI</a></li><li><a href="../Monitoring/admin00021.html">Viewing queue-related statistics by using REST Monitoring APIs</a></li></ul></li><li><a href="../Monitoring/admin00022.html">Subscription Monitoring</a></li><li><a href="../Monitoring/admin00025.html">MQTT Client Monitoring</a></li><li><a href="../Monitoring/admin00031.html">MQ Connectivity monitoring</a></li><li><a href="../Monitoring/admin00070.html">Viewing protocol plug-in monitoring statistics by using an external application</a></li><li><a href="../Monitoring/admin00028.html">Server Monitoring</a></li><li><a href="../Monitoring/admin00060.html">XA Transaction monitoring</a></li></ul></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Viewing queue related statistics by using the <span class="ph">Amlen WebUI</span></h1>
+
+<div class="body taskbody"><p class="shortdesc">Use the queue monitor to view live, aggregated queue data,
+and to query the best and worst performing queues across several connection
+metrics. </p>
+<section class="section context"><p class="p">You can view queue monitoring statistics by using the <span class="ph">Amlen WebUI</span>, or by using <span class="ph">REST Administration APIs</span>. For more information
+    about using <span class="ph">REST Administration APIs</span> to view
+    queue monitoring statistics, see <a class="xref" href="admin00021.html" title="System administrators can view queue-related statistics by using a REST Monitoring API.">Viewing queue-related statistics by using REST Monitoring APIs</a>. For more information about the
+    predefined queries that you can run, see <a class="xref" href="admin00019.html" title="View individual, live data for a specified queue, or queues.">Queue Monitoring</a>.</p></section>
+<section><ol class="ol steps"><li class="li step"><span class="ph cmd">From the <span class="ph">Amlen WebUI</span>,
+navigate to the <span class="keyword wintitle">Queues</span> page by selecting <span class="ph menucascade"><span class="ph uicontrol">Monitoring</span><abbr title="and then"> &gt; </abbr><span class="ph uicontrol">Queues</span></span>.</span></li><li class="li step"><span class="ph cmd">In <span class="ph uicontrol">Queue Name</span>, enter the value of
+the queue you want to monitor. You can enter one of the following
+values: </span>
+<ul class="ul choices">
+<li class="li choice">A specific queue name.</li>
+<li class="li choice">The asterisk sign (*) to select all queues.</li>
+<li class="li choice">Part of a queue name in combination with the  asterisk sign
+(*)  to select a subset of queues.</li>
+</ul>
+</li><li class="li step"><span class="ph cmd">In <span class="ph uicontrol">Query</span>, select the <a class="xref" href="admin00019.html" title="View individual, live data for a specified queue, or queues.">predefined
+query</a> that you want to filter on. </span></li><li class="li step"><span class="ph cmd">Click <span class="ph uicontrol">Refresh</span> to generate the output
+in the queue monitor table.</span></li><li class="li step"><span class="ph cmd" id="admin00020__EnterAValueIntoFilterClickApplyFilt">Enter
+a value into <span class="ph uicontrol">Filter</span> to change the visibility
+of the data that is shown in the table. The filter is applied to the
+maximum of items that are returned by the query. </span></li></ol></section>
+<section class="section result"><p class="p">The <span class="ph uicontrol">Timestamp</span> is updated to show
+the time that query is generated.</p><p class="p">The table is updated with
+the results of the query and any filter that is applied to those results.</p><p class="p">You
+can view the total number of items that are returned in the <span class="ph uicontrol">Total</span> field.
+You can see the number of items that are selected in the <span class="ph uicontrol">Selected</span> field.
+You can move through the table of results by using <span class="ph uicontrol">Next
+Page</span> and <span class="ph uicontrol">Previous Page</span> or <span class="ph uicontrol">Go
+to a specific page</span>. You can change the number of items
+to view per page by selecting from the available options. </p></section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Monitoring/admin00019.html" title="View individual, live data for a specified queue, or queues.">Queue Monitoring</a></div></div></nav></article></main></body></html>

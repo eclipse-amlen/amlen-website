@@ -1,0 +1,199 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can create and update connection policies by using REST Administration APIs."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Creating and updating a connection policy by using REST Administration APIs</title></head><body id="ad00327_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a><ul><li><a href="../Administering/ad00361_.html">Configuring message hubs by using the Amlen WebUI</a></li><li><a href="../Administering/ad00322_.html">Configuring message hubs by using REST Administration APIs</a><ul><li><a href="../Administering/ad00323_.html">Creating and updating a message hub by using REST Administration APIs</a><ul><li class="active"><a href="../Administering/ad00327_.html">Creating and updating a connection policy by using REST Administration APIs</a></li><li><a href="../Administering/ad00450_.html">Creating and updating a messaging policy type by using REST Administration APIs</a></li><li><a href="../Administering/ad00369_.html">Creating and updating an endpoint by using REST Administration APIs</a></li></ul></li></ul></li></ul></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Creating and updating a connection policy by using <span class="ph">REST Administration APIs</span></h1>
+
+<div class="body taskbody"><p class="shortdesc">System administrators can create and update connection policies by using <span class="ph">REST Administration APIs</span>.</p>
+<section class="section prereq">Ensure that the following message hub creation tasks are complete:<ol class="ol">
+<li class="li"><a class="xref" href="ad00323_.html" title="System administrators can create and update endpoints, connection policies, messaging policy types, and message hubs by using REST Administration APIs.">Create a message hub</a>.</li>
+</ol></section>
+<section class="section context"><p class="p">You can create a connection policy by using a <span class="ph">REST Administration API</span>, or by using the
+          <span class="ph">Amlen WebUI</span>. For more
+        information about using the <span class="ph">Amlen WebUI</span> to create a
+        connection policy, see <a class="xref" href="ad00361_.html" title="System administrators and messaging administrators can configure message hubs by using the Message Hubs page in the Amlen WebUI.">Configuring message hubs by using the Amlen WebUI</a>.</p><p class="p">You can use the <span class="ph">Eclipse Amlen</span> REST API POST method
+        to create or update one or more connection policy objects. If the connection policy that is
+        specified in the request does not exist in the <span class="ph">Eclipse Amlen</span> configuration table,
+        then the connection policy is created. Otherwise the connection policy configuration is
+        updated.</p>For more information about the components you must specify to create a
+      connection policy, including naming restrictions, see <a class="xref" href="ad00360_.html" title="You can configure messaging hubs either by using the Amlen WebUI or by using REST Administration APIs.">Configuring message hubs</a>.</section>
+<section><ol class="ol steps"><li class="li step stepexpand">
+        <span class="ph cmd">To create or update one or more connection policy objects, use the <span class="ph">Eclipse Amlen</span> REST API POST method
+          with the following <span class="ph">Eclipse Amlen</span>
+          configuration URI:</span>
+        <div class="itemgroup info">
+          <p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/configuration/</code></p>
+        </div>
+      </li><li class="li step stepexpand">
+        <span class="ph cmd">Provide ConnectionPolicy object configuration data in the payload of the POST method by using the following schema. <span class="keyword parmname">Content-type</span> is set to <kbd class="ph userinput">application/json</kbd>.  Ensure that capitalization and double quotation marks are used as shown. </span>
+        <div class="itemgroup info"><pre class="pre codeblock"><code>
+{    
+  "ConnectionPolicy": {
+    "&lt;NameOfConnectionPolicy&gt;": {
+      "Description": "string",
+      "AllowDurable": true|false,
+      "AllowPersistentMessages": true|false,
+      "ClientID": "string",
+      "ClientAddress": "string",
+      "UserID": "string",
+      "GroupID": "string",
+      "CommonNames": "string",
+      "Protocol": "string",
+      "MaximumSessionExpiryInterval" : "string",
+      "ExpectedMessageRate" : "string"
+     }
+   }
+}</code></pre>Where:<dl class="dl">
+
+<dt class="dt dlterm"><var class="keyword varname">NameOfConnectionPolicy</var></dt>
+<dd class="dd">Required.</dd>
+<dd class="dd ddexpand">Specifies the name of the connection policy.</dd>
+<dd class="dd ddexpand">The name must not have leading or trailing spaces and cannot contain control characters, commas,
+double quotation marks, backslashes, or equal signs. The first character must not be a number or any
+of the following special characters: <p class="p"><code class="ph codeph">! # $ % &amp; ' ( ) * + - . / : ; &lt; &gt; ?
+@</code></p>
+</dd>
+<dd class="dd ddexpand">The maximum length of the name is 256 characters. </dd>
+<dd class="dd ddexpand">After the connection policy is created, you cannot change this name.</dd>
+
+
+<dt class="dt dlterm">Description</dt>
+<dd class="dd">Optional.</dd>
+<dd class="dd ddexpand">Specifies a description for the connection policy.</dd>
+<dd class="dd ddexpand">If you do not want a description, omit <code class="ph codeph">"Description":"<em class="ph i">description</em>"</code>.</dd>
+
+
+<dt class="dt dlterm">AllowDurable: true|false</dt>
+<dd class="dd">Optional.</dd>
+<dd class="dd ddexpand">Specifies whether MQTT clients can connect using a setting of <code class="ph codeph">cleanSession=0</code>
+(true) or not (false).</dd>
+<dd class="dd ddexpand">The default value is true.</dd>
+<dd class="dd ddexpand">This value is applied only when the protocol that is being used is MQTT.</dd>
+
+
+<dt class="dt dlterm">AllowPersistentMessages: true|false</dt>
+<dd class="dd">Optional.</dd>
+<dd class="dd ddexpand">Specifies whether MQTT clients can publish messages with a QoS of 1 or 2 (true) or not
+(false).</dd>
+<dd class="dd ddexpand">The default value is true.</dd>
+<dd class="dd ddexpand">This value is applied only when the protocol that is being used is MQTT.</dd>
+
+</dl>You must specify at least one of the following filters:<dl class="dl">
+
+<dt class="dt dlterm">ClientID</dt>
+<dd class="dd">Specifies the client ID that is allowed to connect to <span class="ph">Eclipse Amlen</span>.</dd>
+<dd class="dd ddexpand">You can use an asterisk (*) at the end of the value to match 0 or more characters.</dd>
+<dd class="dd ddexpand">You can use variable substitution in the client ID to ensure that only clients with a client ID
+that matches the user ID or the certificate common name, can connect. The variable for user IDs is
+<code class="ph codeph">${UserID}</code>. The variable for certificate common name is
+<code class="ph codeph">${CommonName}</code>. You can specify extra characters along with the variable. For
+example, you can specify that the client ID must match <code class="ph codeph">myClient/${UserID}</code>. In this
+case, a client with the user ID <code class="ph codeph">userA</code> and the client ID
+<code class="ph codeph">myClient/userA</code> can connect. A client with the user ID <code class="ph codeph">userB</code> and
+the client ID <code class="ph codeph">myClient/userB</code> can connect. However, a client with the user ID
+<code class="ph codeph">userB</code> and the client ID <code class="ph codeph">notMyClient</code> cannot connect.</dd>
+<dd class="dd ddexpand">To use the default value, where all client ID values are allowed to connect, omit
+<code class="ph codeph">"ClientID": "<var class="keyword varname">clientID</var>"</code>.</dd>
+
+
+<dt class="dt dlterm">ClientAddress</dt>
+<dd class="dd">Specifies the client IP addresses that are allowed to connect to <span class="ph">Eclipse Amlen</span>.</dd>
+<dd class="dd ddexpand">The IP address can contain an asterisk (*), or a comma-separated list of IPv4 or IPv6 addresses
+or ranges. For example, 192.0.2.32, 192.0.0.0, 192.0.2.0-192.0.2.100. The range must be specified
+from low to high.</dd>
+<dd class="dd ddexpand">However, each IPv6 address must be enclosed in brackets <code class="ph codeph">[ ]</code> either when
+expressed singly or in a range of addresses. IPv6 addresses cannot contain asterisks.</dd>
+<dd class="dd ddexpand">The maximum number of client addresses that you can specify is 20.</dd>
+<dd class="dd ddexpand">To use the default value, where all client IP addresses are allowed to connect, omit
+<code class="ph codeph">"ClientAddress": "<var class="keyword varname">IP_Address</var>"</code> or specify
+<code class="ph codeph">"ClientAddress":"<em class="ph i">*</em>"</code>.</dd>
+
+
+<dt class="dt dlterm">UserID</dt>
+<dd class="dd">Specifies the messaging user ID that is allowed to connect to <span class="ph">Eclipse Amlen</span>.</dd>
+<dd class="dd ddexpand">You can use an asterisk (*) at the end of the value to match 0 or more characters.</dd>
+<dd class="dd ddexpand">To use the default value, where all user ID values are allowed to connect, omit
+<code class="ph codeph">"UserID": "<var class="keyword varname">UserID</var>"</code>.</dd>
+
+
+<dt class="dt dlterm">GroupID</dt>
+<dd class="dd">Optional.</dd>
+<dd class="dd ddexpand">Specifies the messaging group that is allowed to connect to <span class="ph">Eclipse Amlen</span>.</dd>
+<dd class="dd ddexpand">You can use an asterisk (*) at the end of the value to match 0 or more characters.</dd>
+<dd class="dd ddexpand">To use the default value, where all groups are allowed to connect, omit <code class="ph codeph">"GroupID":
+"<var class="keyword varname">GroupID</var>"</code>.</dd>
+
+
+<dt class="dt dlterm">CommonNames</dt>
+<dd class="dd">Specifies the client certificate common name that must be used to connect to <span class="ph">Eclipse Amlen</span>.</dd>
+<dd class="dd ddexpand">You can use an asterisk (*) at the end of the value to match 0 or more characters.</dd>
+<dd class="dd ddexpand">To use the default value, where all client certificates are allowed to connect, omit
+<code class="ph codeph">"CommonNames": "<var class="keyword varname">CommonNames</var>"</code>.</dd>
+
+
+<dt class="dt dlterm">Protocol</dt>
+<dd class="dd">Specifies which protocols are allowed to connect to <span class="ph">Eclipse Amlen</span>.</dd>
+<dd class="dd ddexpand">You can choose from JMS and MQTT protocols. If there are any protocol plug-ins installed on the
+<span class="ph">Eclipse Amlen</span> server, you can specify these as well. To
+specify more than one value, separate each value with a comma. To select all protocols, specify a
+null value for Protocol or omit the parameter from the command.</dd>
+<dd class="dd ddexpand">To specify more than one value, separate each value with a comma.</dd>
+
+
+<dt class="dt dlterm">MaximumSessionExpiryInterval</dt>
+<dd class="dd">Optional.</dd>
+<dd class="dd ddexpand">Specifies the maximum time, in seconds, that a session is kept alive before expiring.</dd>
+<dd class="dd ddexpand">The value must be either <code class="ph codeph">unlimited</code>, or in the range 1-2147483647.</dd>
+<dd class="dd ddexpand">The default value is <code class="ph codeph">unlimited</code> and means that a session will not expire.</dd>
+
+
+<dt class="dt dlterm">ExpectedMessageRate</dt>
+<dd class="dd">Optional.</dd>
+<dd class="dd ddexpand">Specifies the expected throughput of messages.</dd>
+<dd class="dd ddexpand">Valid values are <code class="ph codeph">Low</code>, <code class="ph codeph">Default</code>, <code class="ph codeph">High</code>,
+<code class="ph codeph">Max</code>.</dd>
+<dd class="dd ddexpand">The default value is <code class="ph codeph">Default</code>.</dd>
+<dd class="dd ddexpand">A value of <code class="ph codeph">Low</code> might be used for a throughput of less than 10 messages per
+second, a value of <code class="ph codeph">Max</code> might be used for a throughput of more than a few thousand
+messages per second.</dd>
+<dd class="dd ddexpand">When selecting the value, consider factors such as the latency of the connection, and the size
+and number of devices. If you have many devices, you might want to use a lower setting in order to
+save memory. </dd>
+
+</dl></div>
+      </li></ol></section>
+<section class="example">
+<p class="p">The following example shows a POST method to create a connection policy called
+"MyConnectionPolicy" by using cURL:</p>
+<pre class="pre codeblock"><code>
+curl -X POST \
+   -H  'Content-Type: application/json'  \
+   -d  '{                       
+           "ConnectionPolicy": {   
+             "MyConnectionPolicy": {
+               "Description": "Connection policy to authorize connection from demo client.",
+               "ClientID": "*"
+              }
+          }
+      }
+  '   \
+http://127.0.0.1:9089/ima/v1/configuration/</code></pre>
+<div class="p"><div class="note note note_note"><span class="note__title">Note:</span> </div>You must specify at least one of the following properties in the POST method even if the
+property value is not updated:  <code class="ph codeph">ClientID</code>,<code class="ph codeph">ClientAddress,</code>,
+<code class="ph codeph">UserID</code>, <code class="ph codeph">GroupID</code>,
+<code class="ph codeph">CommonNames</code>,<code class="ph codeph">Protocol</code>.</div>
+<p class="p">The following example shows an example response to the POST method:</p>
+<pre class="pre codeblock"><code>
+{        
+  "Version": "v1",
+  "Code": "CWLNA6011",
+  "Message": "The requested configuration change has completed successfully."
+}
+</code></pre>
+</section>
+<section class="section postreq">You must complete the following tasks to finish the message
+hub configuration:<ol class="ol">
+<li class="li"><a class="xref" href="ad00450_.html" title="You can use the Eclipse Amlen REST API POST method to create or update one or more types of messaging policy object. There are three types of messaging policy; topic policy, subscription policy and queue policy. If the type of messaging policy that is specified in the request does not exist in the Eclipse Amlen configuration, then the policy is created. Otherwise, the existing policy configuration is updated.">Create messaging policies</a>.</li>
+<li class="li"><a class="xref" href="ad00369_.html" title="System administrators can create and update endpoints by using REST Administration APIs.">Create endpoints</a>.</li>
+</ol></section>
+</div>
+</article></main></body></html>

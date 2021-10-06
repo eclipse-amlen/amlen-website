@@ -1,0 +1,54 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can upgrade the Eclipse Amlen server or Web UI running in a Docker container."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Upgrading Eclipse Amlen in a Docker environment</title></head><body id="up00006_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a><ul><li><a href="../Upgrading/up00014_.html">Upgrading and rolling back the software level of Eclipse Amlen</a><ul><li class="active"><a href="../Upgrading/up00006_.html">Upgrading Eclipse Amlen in a Docker environment</a></li><li><a href="../Upgrading/up00004_.html">Rolling back the level of Eclipse Amlen in a Docker environment</a></li><li><a href="../Upgrading/up00003_.html">Upgrading the Eclipse Amlen RPM</a></li><li><a href="../Upgrading/up00007_.html">Rolling back the Eclipse Amlen RPM</a></li></ul></li><li><a href="../Upgrading/up00021_.html">Upgrading from IBM Watson IoT Platform Message Gateway to Eclipse Amlen</a></li><li><a href="../Upgrading/up00020_.html">Upgrading from IBM IoT MessageSight v2 (or above) to Eclipse Amlen</a></li><li><a href="../Upgrading/up00015_.html">Upgrading from IBM IoT MessageSight version 1.2</a></li></ul></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Upgrading <span class="ph">Eclipse Amlen</span> in a Docker environment</h1>
+
+<div class="body taskbody"><p class="shortdesc">System administrators can upgrade the <span class="ph">Eclipse Amlen</span> server or Web UI  running in a Docker container. </p>
+<section class="section prereq">Data that must persist for <span class="ph">Eclipse Amlen</span> in the <span class="ph filepath">/var/messagesight</span> directory must be volume mapped to a directory outside the container. </section>
+<section class="section context">When you are updating the <span class="ph">Eclipse Amlen</span> server or Web UI software that is running in a Docker container, it is best practice to update the container. The process of updating the container is the same as the process for building a new container, with the exception that you must remove the existing container.</section>
+<section><ol class="ol steps"><li class="li step stepexpand">
+<span class="ph cmd">Prepare the <span class="ph">Eclipse Amlen</span> .tz files for installation. </span>
+<div class="itemgroup info">
+<p class="p">For more information, see <a class="xref" href="../QuickStartGuide/qs00054_.html" title="The .tz files contain the files that are required to install Eclipse Amlen.">Preparing the Eclipse Amlen .tz packages for installation</a>.</p>
+
+</div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Build the <span class="ph">Eclipse Amlen</span> Docker image.</span>
+<ul class="ul choices">
+<li class="li choice">Build the <span class="ph">Eclipse Amlen</span> server image by issuing the following command:<pre class="pre codeblock"><code>docker build --force-rm=true -t imaserver:2.0 .</code></pre></li>
+<li class="li choice">Build the <span class="ph">Eclipse Amlen</span> Web UI image by issuing the following command:<pre class="pre codeblock"><code>docker build --force-rm=true -t imawebui:2.0 .</code></pre></li>
+</ul>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Stop the existing containers. </span>
+<ul class="ul choices">
+<li class="li choice">Stop the server container by issuing the following command:<pre class="pre codeblock"><code>docker stop &lt;<var class="keyword varname">server_container_name</var>&gt;</code></pre>where &lt;<var class="keyword varname">server_container_name</var>&gt; is the name of the container in which the <span class="ph">Eclipse Amlen</span> server is running. For example, <pre class="pre codeblock"><code>docker stop IMA</code></pre></li>
+<li class="li choice">Stop the Web UI container by issuing the following command:<pre class="pre codeblock"><code>docker stop &lt;<var class="keyword varname">webui_container_name</var>&gt;</code></pre>where &lt;<var class="keyword varname">webui_container_name</var>&gt; is the name of the container in which the <span class="ph">Eclipse Amlen</span> Web UI is running. For example, <pre class="pre codeblock"><code>docker stop IMAWEBUI</code></pre></li>
+</ul>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Remove the containers.</span>
+<ul class="ul choices">
+<li class="li choice">Remove the server container by issuing the following command:<pre class="pre codeblock"><code>docker rm &lt;<var class="keyword varname">server_container_name</var>&gt;</code></pre>where &lt;<var class="keyword varname">server_container_name</var>&gt; is the name of the container in which the <span class="ph">Eclipse Amlen</span> server was running. For example, <pre class="pre codeblock"><code>docker rm IMA</code></pre></li>
+<li class="li choice">Remove the Web UI container by issuing the following command:<pre class="pre codeblock"><code>docker rm &lt;<var class="keyword varname">webui_container_name</var>&gt;</code></pre>where &lt;<var class="keyword varname">webui_container_name</var>&gt; is the name of the container in which the <span class="ph">Eclipse Amlen</span> Web UI was running. For example, <pre class="pre codeblock"><code>docker rm IMAWEBUI</code></pre></li>
+</ul>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Remove the Docker images.</span>
+<ul class="ul choices">
+<li class="li choice">Remove the <span class="ph">Eclipse Amlen</span> server image by issuing the following command:<pre class="pre codeblock"><code>docker rmi -f $(docker ps | grep imaserver | awk '{print $3}')</code></pre></li>
+<li class="li choice">Remove the <span class="ph">Eclipse Amlen</span> Web UI image by issuing the following command:<pre class="pre codeblock"><code>docker rmi -f $(docker ps | grep imawebui | awk '{print $3}')</code></pre></li>
+</ul>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Start the containers. </span>
+<div class="itemgroup info">Use the same Docker run command that you used previously before applying the update.</div>
+<ul class="ul choices">
+<li class="li choice">For example, to start the <span class="ph">Eclipse Amlen</span> server container, use a command similar to the following command:<pre class="pre codeblock"><code>docker run --cap-add SYS_PTRACE --cap-add SYS_ADMIN --cap-add NET_ADMIN 
+--security-opt apparmor:unconfined --net=host -P -it --name=IMA --env-file=imaserver-docker.env 
+-m 84G -v /mnt/messagesight:/var/messagesight -v /mnt/tmp:/var/tmp -d imaserver:2.0</code></pre></li>
+<li class="li choice">To start the <span class="ph">Eclipse Amlen</span> Web UI container, use a command similar to the following command:<pre class="pre codeblock"><code>docker run --cap-add SYS_PTRACE --cap-add SYS_ADMIN --cap-add NET_ADMIN 
+--security-opt apparmor:unconfined --net=host -P -it --name=IMAW --env-file=imaserver-docker.env 
+-m 4G -v /mnt/messagesight:/var/messagesight -v /mnt/tmp:/var/tmp -d imaserver:2.0
+            </code></pre></li>
+</ul>
+</li></ol></section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Upgrading/up00014_.html" title="System administrators can upgrade the software level of the Eclipse Amlen by applying interim fixes. The software level can also be rolled back by removing interim fixes.">Upgrading and rolling back the software level of Eclipse Amlen</a></div></div><div class="linklist reltasks"><strong>Related tasks</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="up00004_.html" title="If, after an upgrade of the software level of Eclipse Amlen in a Docker environment, a rollback to a prior level is required, system administrators can perform the rollback operation.">Rolling back the level of Eclipse Amlen in a Docker environment</a></li><li class="linklist"><a class="link" href="../QuickStartGuide/qs00055_.html" title="Install Eclipse Amlen in Docker containers by building and deploying the Docker images that you need to run Eclipse Amlen.">Installing Eclipse Amlen in Docker containers</a></li></ul></div></nav>
+</article></main></body></html>

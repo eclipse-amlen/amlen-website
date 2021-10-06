@@ -1,0 +1,341 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can view queue-related statistics by using a REST Monitoring API."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Viewing queue-related statistics by using REST Monitoring APIs</title></head><body id="admin00021"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a><ul><li><a href="../Monitoring/admin00080.html">Cluster monitoring</a></li><li><a href="../Monitoring/admin00009.html">Connection Monitoring</a></li><li><a href="../Monitoring/admin00010.html">Endpoint Monitoring</a></li><li><a href="../Monitoring/admin00016.html">Topic Monitoring</a></li><li><a href="../Monitoring/admin00019.html">Queue Monitoring</a><ul><li><a href="../Monitoring/admin00020.html">Viewing queue related statistics by using the Amlen WebUI</a></li><li class="active"><a href="../Monitoring/admin00021.html">Viewing queue-related statistics by using REST Monitoring APIs</a></li></ul></li><li><a href="../Monitoring/admin00022.html">Subscription Monitoring</a></li><li><a href="../Monitoring/admin00025.html">MQTT Client Monitoring</a></li><li><a href="../Monitoring/admin00031.html">MQ Connectivity monitoring</a></li><li><a href="../Monitoring/admin00070.html">Viewing protocol plug-in monitoring statistics by using an external application</a></li><li><a href="../Monitoring/admin00028.html">Server Monitoring</a></li><li><a href="../Monitoring/admin00060.html">XA Transaction monitoring</a></li></ul></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Viewing queue-related statistics by using <span class="ph">REST Monitoring APIs</span></h1>
+
+<div class="body taskbody"><p class="shortdesc">System administrators can view queue-related statistics by using a <span class="ph">REST Monitoring API</span>. </p>
+<section class="section context"><p class="p">System administrators can view queue-related statistics by using the <span class="ph">Amlen WebUI</span>, or by using a <span class="ph">REST Monitoring API</span>. For more
+    information about using the <span class="ph">Amlen WebUI</span> to view
+    queue-related statistics, see <a class="xref" href="admin00014.html" title="Use the connection monitor to view live, aggregated connection data, and to query the best and worst performing connections across several connection metrics.">Viewing queue related statistics by using the GUI</a>.</p></section>
+<section><div class="li stepsection">Queue-related monitoring statistics can be viewed by using a <span class="ph">REST Monitoring API</span>. To create
+    queue-related monitoring statistics, complete the following steps:</div><ol class="ol steps"><li class="li step stepexpand">
+    <span class="ph cmd">Use the <span class="ph">Eclipse Amlen</span> REST API
+     GET method with the following <span class="ph">Eclipse Amlen</span> monitoring URI:</span>
+    <div class="itemgroup info">
+     <p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/monitor/&lt;Object Type&gt;</code></p>
+    </div>
+   </li><li class="li step stepexpand">
+    <span class="ph cmd">Provide query parameters requesting the statistics that you want returned in the JSON
+     payload. The following example uses cURL to create queue-related statistics:</span>
+    <div class="itemgroup info">
+     <pre class="pre codeblock"><code>curl -X GET http://127.0.0.1:9089/ima/v1/monitor/Queue?Name=<var class="keyword varname">Name</var>%26StatType=<var class="keyword varname">StatType</var>%26ResultCount=<var class="keyword varname">ResultCount</var></code></pre>
+     <p class="p">where:</p>
+     <ul class="ul">
+      <li class="li">
+       <dl class="dl">
+        
+         <dt class="dt dlterm">Name</dt>
+         <dd class="dd">Optional.</dd>
+         <dd class="dd ddexpand">The name of the queue. You can use an asterisk (*) to match 0 or more characters. The
+          default value is <span class="keyword parmname">*</span>.</dd>
+        
+       </dl>
+       
+      </li>
+      <li class="li">
+       <dl class="dl">
+        
+         <dt class="dt dlterm">StatType</dt>
+         <dd class="dd">Optional.</dd>
+         <dd class="dd ddexpand">Specifies the type of data to order the results by.</dd>
+         <dd class="dd ddexpand">This value can be one of the following values:<ul class="ul">
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">BufferedMsgsHighest</dt>
+              <dd class="dd">Queues with the highest backlog of messages. </dd>
+             
+            </dl>
+           </li>
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">BufferedMsgsLowest</dt>
+              <dd class="dd">Queues with the lowest backlog of messages. </dd>
+             
+            </dl>
+           </li>
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">BufferedPercentHighest</dt>
+              <dd class="dd">Queues with the highest relative number of buffered messages, as a percentage of
+               the total number of messages that can be buffered.</dd>
+             
+            </dl>
+           </li>
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">BufferedPercentLowest</dt>
+              <dd class="dd">Queues with the lowest relative number of buffered messages, as a percentage of
+               the total number of messages that can be buffered. </dd>
+             
+            </dl>
+           </li>
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">BufferedHWMPercentHighest</dt>
+              <dd class="dd">Queues with the highest peaks of buffered messages as a percentage of the total
+               number of messages that can be buffered. That is, the queues that have come closest
+               to reaching the Max Messages limit.</dd>
+             
+            </dl>
+           </li>
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">BufferedHWMPercentLowest</dt>
+              <dd class="dd">Queues with the lowest peaks of buffered messages as a percentage of the total
+               number of messages that can be buffered. That is, the queues that have stayed
+               furthest from the Max Messages limit.</dd>
+             
+            </dl>
+           </li>
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">ProducedMsgsHighest </dt>
+              <dd class="dd">Queues with the highest number of messages that are received from a producer.</dd>
+             
+            </dl>
+           </li>
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">ProducedMsgsLowest</dt>
+              <dd class="dd">Queues with the least number messages received from a producer.</dd>
+             
+            </dl>
+           </li>
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">ConsumedMsgsHighest </dt>
+              <dd class="dd">Queues with the greatest number of messages consumed.</dd>
+             
+            </dl>
+           </li>
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">ConsumedMsgsLowest</dt>
+              <dd class="dd">Queues with the least number of messages consumed.</dd>
+             
+            </dl>
+           </li>
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">ConsumersHighest </dt>
+              <dd class="dd">Queues with the highest number of consumers.</dd>
+             
+            </dl>
+           </li>
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">ConsumersLowest</dt>
+              <dd class="dd">Queues with the lowest number of consumers.</dd>
+             
+            </dl>
+           </li>
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">ProducersHighest </dt>
+              <dd class="dd">Queues with the highest number of producers.</dd>
+             
+            </dl>
+           </li>
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">ProducersLowest</dt>
+              <dd class="dd">Queues with the lowest number of producers.</dd>
+             
+            </dl>
+           </li>
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">ExpiredMsgsHighest</dt>
+              <dd class="dd">Queues with the greatest number of expired messages.</dd>
+             
+            </dl>
+           </li>
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">ExpiredMsgsLowest</dt>
+              <dd class="dd">Queues with the lowest number of expired messages.</dd>
+             
+            </dl>
+           </li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm"> AllUnsorted</dt>
+<dd class="dd">Lists all queue names. </dd>
+<dd class="dd ddexpand">Any value that is specified for <span class="keyword parmname">ResultCount</span> is ignored, so setting
+<span class="keyword parmname">StatType</span>  to <kbd class="ph userinput">AllUnsorted</kbd> can result in a large number of
+responses being generated.</dd>
+
+</dl>
+</li>
+          </ul></dd>
+        
+       </dl>
+       <p class="p">The default is <var class="keyword varname">BufferedMsgsHighest</var>.</p>
+      </li>
+      <li class="li">
+       <dl class="dl">
+        
+         <dt class="dt dlterm">ResultCount</dt>
+         <dd class="dd">Optional.</dd>
+         <dd class="dd ddexpand">The maximum number of results to return. <p class="p">Options available for selection are 10, 25,
+           50, and 100. </p><p class="p">The default is <span class="keyword parmname">25</span>.</p></dd>
+        
+       </dl>
+      </li>
+     </ul>
+    </div>
+   </li></ol></section>
+  <section class="section result">
+   <div class="p">The following fields are returned: <ul class="ul">
+     <li class="li">
+      <dl class="dl">
+       
+        <dt class="dt dlterm">Name</dt>
+        <dd class="dd">String</dd>
+        <dd class="dd ddexpand">The name of the queue.</dd>
+       
+      </dl>
+     </li>
+     <li class="li">
+      <dl class="dl">
+       
+        <dt class="dt dlterm">Producers</dt>
+        <dd class="dd">Numeric</dd>
+        <dd class="dd ddexpand">The number of active producers on the queue.</dd>
+       
+      </dl>
+     </li>
+     <li class="li">
+      <dl class="dl">
+       
+        <dt class="dt dlterm">Consumers</dt>
+        <dd class="dd">Numeric</dd>
+        <dd class="dd ddexpand">The number of active consumers on the queue.</dd>
+       
+      </dl>
+     </li>
+     <li class="li">
+      <dl class="dl">
+       
+        <dt class="dt dlterm">BufferedMsgs</dt>
+        <dd class="dd">Numeric</dd>
+        <dd class="dd ddexpand">The number of messages that are buffered on the queue and waiting to be consumed.</dd>
+       
+      </dl>
+     </li>
+     <li class="li">
+      <dl class="dl">
+       
+        <dt class="dt dlterm">BufferedMsgsHWM</dt>
+        <dd class="dd">Numeric</dd>
+        <dd class="dd ddexpand">The highest number of messages that are buffered on the queue since the server was
+         started or the queue was created, whichever is most recent.</dd>
+       
+      </dl>
+     </li>
+     <li class="li">
+      <dl class="dl">
+       
+        <dt class="dt dlterm">BufferedHWMPercent</dt>
+        <dd class="dd">Numeric</dd>
+        <dd class="dd ddexpand">The peak number of buffered messages, as a percentage of the maximum number of messages
+         that can be buffered.</dd>
+       
+      </dl>
+     </li>
+     <li class="li">
+      <dl class="dl">
+       
+        <dt class="dt dlterm">BufferedPercent</dt>
+        <dd class="dd">Numeric</dd>
+        <dd class="dd ddexpand">The number of buffered messages as a percentage of the maximum number of buffered
+         messages.</dd>
+       
+      </dl>
+     </li>
+     <li class="li">
+      <dl class="dl">
+       
+        <dt class="dt dlterm">MaxMessages</dt>
+        <dd class="dd">Numeric</dd>
+        <dd class="dd ddexpand">The maximum number of buffered messages that are allowed on the queue. This value is a
+         guideline, rather than an absolute limit. If the system is running under stress, then the
+         number of buffered messages on a queue might be slightly higher than the
+          <code class="ph codeph">MaxMessages</code> value.</dd>
+       
+      </dl>
+     </li>
+     <li class="li">
+      <dl class="dl">
+       
+        <dt class="dt dlterm">ProducedMsgs</dt>
+        <dd class="dd">Numeric</dd>
+        <dd class="dd ddexpand">The number of messages that are sent to the queue since the server was started or the
+         queue was created, whichever is most recent.</dd>
+       
+      </dl>
+     </li>
+     <li class="li">
+      <dl class="dl">
+       
+        <dt class="dt dlterm">ConsumedMsgs</dt>
+        <dd class="dd">Numeric</dd>
+        <dd class="dd ddexpand">The number of messages consumed from the queue since the server was started or the queue
+         was created, whichever is most recent.</dd>
+       
+      </dl>
+     </li>
+     <li class="li">
+      <dl class="dl">
+       
+        <dt class="dt dlterm">RejectedMsgs</dt>
+        <dd class="dd">Numeric</dd>
+        <dd class="dd ddexpand">The number of messages that are not sent to the queue because the maximum number of
+         buffered messages is reached.</dd>
+       
+      </dl>
+     </li>
+     <li class="li">
+      <dl class="dl">
+       
+        <dt class="dt dlterm">ExpiredMsgs</dt>
+        <dd class="dd">Numeric</dd>
+        <dd class="dd ddexpand">The number of messages that expired on the queue since the server was started or the
+         queue was created, whichever is most recent.</dd>
+       
+      </dl>
+     </li>
+    </ul></div>
+  </section>
+<section class="example">
+   <p class="p">The following example uses cURL to show how a GET method is used to create statistics about
+    queues with the highest backlog of messages:</p>
+   <pre class="pre codeblock"><code>curl -X GET http://127.0.0.1:9089/ima/v1/monitor/Queue?Name=*%26StatType=BufferedMsgsHighest%26ResultCount=10
+ 
+ </code></pre>
+   <p class="p">The following example shows a successful example response to the GET method that was used to
+    create statistics about queues with the highest backlog of messages:</p>
+   <pre class="pre codeblock"><code>{ "Version":"v1", "Queue": [ { "Name":"MyQueue","Producers":5,"Consumers":2,"BufferedMsgs":50,"BufferedMsgsHWM":40,"BufferedHWMPercent":25,
+"BufferedPercent":14,"MaxMessages":134,"ProducedMsgs":14670,"ConsumedMsgs":10145,"RejectedMsgs":100,"ExpiredMsgs":10 }
+ ] }
+</code></pre>
+  </section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Monitoring/admin00019.html" title="View individual, live data for a specified queue, or queues.">Queue Monitoring</a></div></div></nav></article></main></body></html>

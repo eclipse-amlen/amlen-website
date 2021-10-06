@@ -1,0 +1,46 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can view destination mapping rule-related statistics by using the MQ Connectivity monitor in the Amlen WebUI."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Viewing MQ Connectivity statistics by using the Amlen WebUI</title></head><body id="admin00032"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a><ul><li><a href="../Monitoring/admin00080.html">Cluster monitoring</a></li><li><a href="../Monitoring/admin00009.html">Connection Monitoring</a></li><li><a href="../Monitoring/admin00010.html">Endpoint Monitoring</a></li><li><a href="../Monitoring/admin00016.html">Topic Monitoring</a></li><li><a href="../Monitoring/admin00019.html">Queue Monitoring</a></li><li><a href="../Monitoring/admin00022.html">Subscription Monitoring</a></li><li><a href="../Monitoring/admin00025.html">MQTT Client Monitoring</a></li><li><a href="../Monitoring/admin00031.html">MQ Connectivity monitoring</a><ul><li class="active"><a href="../Monitoring/admin00032.html">Viewing MQ Connectivity statistics by using the Amlen WebUI</a></li><li><a href="../Monitoring/admin00033.html">Viewing MQ Connectivity statistics by using REST Monitoring APIs</a></li></ul></li><li><a href="../Monitoring/admin00070.html">Viewing protocol plug-in monitoring statistics by using an external application</a></li><li><a href="../Monitoring/admin00028.html">Server Monitoring</a></li><li><a href="../Monitoring/admin00060.html">XA Transaction monitoring</a></li></ul></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Viewing MQ Connectivity statistics by using the <span class="ph">Amlen WebUI</span></h1>
+
+<div class="body taskbody"><p class="shortdesc">System administrators can view destination mapping rule-related
+statistics by using the MQ Connectivity monitor in the <span class="ph">Amlen WebUI</span>. </p>
+<section class="section context"><p class="p">You can view destination mapping rule statistics by using the <span class="ph">Amlen WebUI</span>, or by using a <span class="ph">REST Monitoring API</span>. For more
+    information about using a <span class="ph">REST Monitoring API</span> to view destination
+    mapping rule statistics, see <a class="xref" href="admin00033.html" title="System administrators can view destination mapping rule-related statistics by using a REST Monitoring API.">Viewing MQ Connectivity statistics by using REST Monitoring APIs</a>. For more information about the
+    predefined queries that you can run, see <a class="xref" href="admin00031.html" title="View destination mapping rule-related data based on predefined queries. MQ Connectivity monitoring helps you to understand the health of your enterprise by highlighting any destination mapping rules that are not operating normally.">MQ Connectivity monitoring</a>.</p><p class="p">You can use the hover help over <span class="ph uicontrol">Status</span> to
+view more information about why a particular rule might be unavailable
+or restarting. A status of <span class="ph uicontrol">Enabled</span> usually
+indicates that the rule is operating normally. However, it is possible
+that messages might not be published for other reasons. For example,
+a connected client might not be authorized to publish on a particular
+topic. </p></section>
+<section><ol class="ol steps"><li class="li step"><span class="ph cmd">From the <span class="ph">Amlen WebUI</span>,
+select <span class="ph menucascade"><span class="ph uicontrol">Monitoring</span><abbr title="and then"> &gt; </abbr><span class="ph uicontrol"> MQ
+Connectivity</span></span>.</span></li><li class="li step"><span class="ph cmd">Enter a value into <span class="ph uicontrol">Rule
+Name</span>. The default value is <kbd class="ph userinput">*</kbd>. </span>
+</li><li class="li step"><span class="ph cmd">Enter a value into <span class="ph uicontrol">Queue
+Manager Connection</span>. The default value is <kbd class="ph userinput">*</kbd>. </span>
+</li><li class="li step"><span class="ph cmd">Enter a value into <span class="ph uicontrol">Rule
+Type</span>. The default value is <kbd class="ph userinput">Any</kbd>. </span>
+</li><li class="li step"><span class="ph cmd">Enter a value into <span class="ph uicontrol">Query</span> to
+select the predefined query that you want to run. The default value
+is <kbd class="ph userinput">Rules with most commit operations</kbd>. </span>
+</li><li class="li step"><span class="ph cmd">Click <span class="ph uicontrol">Refresh</span> to generate the output
+in the table.</span></li><li class="li step"><span class="ph cmd">You can change the number of rules
+that are added to the table by selecting a value of 10, 25, 50, or
+100. </span></li><li class="li step"><span class="ph cmd">Enter
+a value into <span class="ph uicontrol">Filter</span> to change the visibility
+of the data that is shown in the table. The filter is applied to the
+maximum of items that are returned by the query. </span></li></ol></section>
+<section class="section result"><p class="p">The <span class="ph uicontrol">Timestamp</span> is updated to show
+the time that query is generated.</p><p class="p">The table is updated to display
+the results of the query and any filter that is applied to those results.</p><p class="p">You
+can view the total number of items that are returned in the <span class="ph uicontrol">Total</span> field.
+You can see the number of items that are selected in the <span class="ph uicontrol">Selected</span> field.
+You can move through the table of results by using <span class="ph uicontrol">Next
+Page</span> and <span class="ph uicontrol">Previous Page</span> or <span class="ph uicontrol">Go
+to a specific page</span>. You can change the number of items
+to view per page by selecting from the available options. </p></section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Monitoring/admin00031.html" title="View destination mapping rule-related data based on predefined queries. MQ Connectivity monitoring helps you to understand the health of your enterprise by highlighting any destination mapping rules that are not operating normally.">MQ Connectivity monitoring</a></div></div></nav></article></main></body></html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can configure an LDAP connection by using REST Administration APIs."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Configuring an LDAP connection by using REST Administration APIs</title></head><body id="ad00374_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a><ul><li><a href="../Administering/ad00372_.html">Configuring an LDAP server by using the Amlen WebUI</a></li><li><a href="../Administering/ad00373_.html">Configuring an LDAP server by using REST Administration APIs</a><ul><li><a href="../Administering/ad00378_.html">Importing and applying a certificate for an LDAP connection by using REST Administration APIs</a></li><li><a href="../Administering/ad00379_.html">Updating an LDAP certificate in a High Availability environment by using REST Administration APIs</a></li><li class="active"><a href="../Administering/ad00374_.html">Configuring an LDAP connection by using REST Administration APIs</a></li><li><a href="../Administering/ad00376_.html">Viewing the LDAP connection by using a REST Administration API</a></li></ul></li></ul></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Configuring an LDAP connection by using <span class="ph">REST Administration APIs</span></h1>
+
+<div class="body taskbody"><p class="shortdesc">System administrators can configure an LDAP connection
+by using <span class="ph">REST Administration APIs</span>. </p>
+<section class="section prereq">If you want to use a secure LDAP connection, you must upload
+a certificate to use with the connection. For more information about
+importing a certificate for an LDAP connection, see <a class="xref" href="ad00378_.html" title="System administrators can import a certificate to use with an LDAP connection by using REST Administration APIs.">Importing and applying a certificate for an LDAP connection by using REST Administration APIs</a>.</section>
+<section class="section context">You can configure an LDAP connection by using <span class="ph">REST Administration APIs</span>, or by using
+the <span class="ph">Amlen WebUI</span>. For
+more information about using the <span class="ph">Amlen WebUI</span> to configure
+an LDAP connection, see <a class="xref" href="ad00372_.html" title="System administrators and messaging administrators can configure an LDAP server connection by using the User Authentication page in the Amlen WebUI.">Configuring an LDAP server by using the Amlen WebUI</a>.<p class="p">For
+more information about the parameters that you must specify to configure
+an LDAP connection, see <a class="xref" href="ad00370_.html" title="You can configure messaging users and groups by using an LDAP server. You can configure the LDAP server either by using the Amlen WebUI, or by using REST Administration APIs.">Configuring LDAP for user authentication</a>.</p><p class="p">If
+you want to secure an LDAP connection, you must import an LDAP certificate.
+For more information about importing an LDAP certificate, see <a class="xref" href="ad00378_.html" title="System administrators can import a certificate to use with an LDAP connection by using REST Administration APIs.">Importing and applying a certificate for an LDAP connection by using REST Administration APIs</a>.</p></section>
+<section><ol class="ol steps"><li class="li step">
+<span class="ph cmd">To configure an LDAP connection, use the <span class="ph">Eclipse Amlen</span> REST API POST method. </span>
+<ol type="a" class="ol substeps">
+<li class="li substep substepexpand">
+<span class="ph cmd">Use the following <span class="ph">Eclipse Amlen</span> configuration URI:</span>
+<div class="itemgroup info">
+<p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/configuration/</code></p>
+</div>
+</li>
+<li class="li substep substepexpand">
+<span class="ph cmd">Provide LDAP object configuration data in the payload of the POST method by using the following schema. <span class="keyword parmname">Content-type</span> is set to <kbd class="ph userinput">application/json</kbd>. Ensure that capitalization and double quotation marks are used as shown. </span>
+<div class="itemgroup info">
+<pre class="pre codeblock"><code>
+{    
+  "LDAP": {
+    "URL": "string",
+    "Certificate": "string",
+    "IgnoreCase": true|false,
+    "BaseDN": "string",
+    "BindDN": "string",
+    "BindPassword":  "string",
+    "UserSuffix": "string",
+    "GroupSuffix": "string",
+    "GroupCacheTimeout": integer,
+    "UserIdMap": "string",
+    "GroupIdMap": "string",
+    "GroupMemberIdMap": "string",
+    "Timeout": integer,
+    "EnableCache": true|false,
+    "CacheTimeout": integer,
+    "MaxConnections": integer,
+    "NestedGroupSearch": true|false,
+    "Enabled": true|false,
+    "Verify": true|false,
+    "Overwrite": true|false 
+   }
+}</code></pre>
+<div class="p">Where:<dl class="dl">
+
+<dt class="dt dlterm">URL</dt>
+<dd class="dd">Required if you are configuring an LDAP connection.</dd>
+<dd class="dd ddexpand">Specifies the URL of the LDAP server.</dd>
+<dd class="dd ddexpand">The URL must be of the form:<code class="ph codeph"> ldap://<var class="keyword varname">ipAddress</var>:<var class="keyword varname">portNumber</var></code> or <code class="ph codeph">ldaps://<var class="keyword varname">ipAddress</var>:<var class="keyword varname">portNumber</var></code> </dd>
+<dd class="dd ddexpand">If you use <code class="ph codeph">ldaps://</code>, you must upload an LDAP certificate before you configure the LDAP connection.</dd>
+
+
+<dt class="dt dlterm">Certificate</dt>
+<dd class="dd">Specifies the certificate to use if the LDAP URL uses SSL or TLS. This is the name of a
+certificate in the truststore.</dd>
+
+
+<dt class="dt dlterm">CheckServerCert</dt>
+<dd class="dd">Available in version 5.0.0.2 and later releases.  Possible options are as follows:<dl class="dl">
+
+<dt class="dt dlterm">TrustStore</dt>
+<dd class="dd">When connecting to the LDAP server, the certificate that is presented by the server is checked
+using the certificate that is uploaded to the product trust store.</dd>
+
+
+<dt class="dt dlterm">PublicTrust</dt>
+<dd class="dd">The certificate that is presented by the LDAP server is checked against the public certificates
+that are installed as part of the operating system.</dd>
+
+
+<dt class="dt dlterm">DisableVerify</dt>
+<dd class="dd">No certificate verification is performed when connecting to the LDAP server. This is an insecure
+option that is designed for testing purposes only.</dd>
+
+</dl></dd>
+
+
+<dt class="dt dlterm">IgnoreCase: true|false</dt>
+<dd class="dd">Specifies whether case is ignored (true) or not ignored (false).</dd>
+<dd class="dd ddexpand">The default value is true.</dd>
+
+
+<dt class="dt dlterm">BaseDN</dt>
+<dd class="dd">Required if you are creating an LDAP connection.</dd>
+<dd class="dd ddexpand">Specifies the base distinguished name of the directory service.</dd>
+
+
+<dt class="dt dlterm">BindDN</dt>
+<dd class="dd">Specifies the distinguished name to use when you bind to LDAP.</dd>
+
+
+<dt class="dt dlterm">BindPassword</dt>
+<dd class="dd">Specifies the password to use when you bind to LDAP.</dd>
+<dd class="dd ddexpand">The value of this parameter is not returned on the REST API GET method.</dd>
+
+
+<dt class="dt dlterm">UserSuffix</dt>
+<dd class="dd">Specifies the distinguished name that is the suffix of the user distinguished name.</dd>
+
+
+<dt class="dt dlterm">GroupSuffix</dt>
+<dd class="dd">Specifies distinguished name that is the suffix of the group distinguished name.</dd>
+
+
+<dt class="dt dlterm">GroupCacheTimeout</dt>
+<dd class="dd">Specifies the group cache time to live, in seconds.</dd>
+<dd class="dd ddexpand">This value must be in the range 1-86400.</dd>
+<dd class="dd ddexpand">The default value is 300.</dd>
+
+
+<dt class="dt dlterm">UserIdMap</dt>
+<dd class="dd">Specifies the LDAP filter that maps the short name of a user to an LDAP entry.</dd>
+
+
+<dt class="dt dlterm">GroupIdMap</dt>
+<dd class="dd">Specifies the LDAP filter that maps the short name of a group to an LDAP entry.</dd>
+
+
+<dt class="dt dlterm">GroupMemberIdMap</dt>
+<dd class="dd">Specifies LDAP filter that identifies user-to-group relationships.</dd>
+
+
+<dt class="dt dlterm">Timeout</dt>
+<dd class="dd">Specifies the timeout for LDAP calls, in seconds.</dd>
+<dd class="dd ddexpand">This value must be in the range 1-60.</dd>
+<dd class="dd ddexpand">The default value is 10.</dd>
+
+
+<dt class="dt dlterm">EnableCache: true|false</dt>
+<dd class="dd">Specifies whether the authentication result is cached (true) or not cached (false).</dd>
+<dd class="dd ddexpand">The default value is true.</dd>
+
+
+<dt class="dt dlterm">CacheTimeout</dt>
+<dd class="dd">Specifies the cache time to live, in seconds.</dd>
+<dd class="dd ddexpand">This value must be in the range 1-60.</dd>
+<dd class="dd ddexpand">The default value is 10.</dd>
+
+
+<dt class="dt dlterm">MaxConnections</dt>
+<dd class="dd">Specifies the maximum number of concurrent connections that can be made to the LDAP server.</dd>
+<dd class="dd ddexpand">This value must be in the range 1-100.</dd>
+<dd class="dd ddexpand">The default value is 10.</dd>
+
+
+<dt class="dt dlterm">NestedGroupSearch</dt>
+<dd class="dd">Specifies whether to use nested group searching (true) to find the group membership of a user.</dd>
+<dd class="dd ddexpand">The default value is false which means that nested group searching is not used.</dd>
+
+
+<dt class="dt dlterm">Enabled: true|false</dt>
+<dd class="dd">Specifies whether the LDAP connection is enabled (true) or disabled (false).</dd>
+<dd class="dd ddexpand">The default value is true.</dd>
+
+
+<dt class="dt dlterm">Verify: true|false</dt>
+<dd class="dd">Specifies whether the LDAP connection is tested with the configuration change without committing the configuration change. </dd>
+<dd class="dd ddexpand">The default value is false which means that the configuration change is committed without first testing the LDAP connection.</dd>
+
+
+<dt class="dt dlterm">Overwrite: true|false</dt>
+<dd class="dd">Specifies whether an existing certificate is overwritten if the certificates have the same name.</dd>
+<dd class="dd ddexpand">The default value is false which means that an existing certificate is not overwritten if the certificates have the same name.</dd>
+
+</dl></div>
+</div>
+</li>
+</ol>
+</li><li class="li step"><span class="ph cmd">Test the LDAP connection by using
+the same REST API POST method           that you used to configure
+your LDAP connection, but ensure that             <span class="keyword parmname">Verify</span> is
+set to <kbd class="ph userinput">true</kbd>. </span>
+<ul class="ul choices">
+<li class="li choice">You can test the LDAP connection before you save your LDAP
+configuration. You must             provide information that is required
+to establish a connection. If you are using TLS,             you must
+ensure that the certificate is uploaded before you include the certificate
+name             in the test connection request.</li>
+<li class="li choice">You can test the LDAP connection to ensure that a configured
+LDAP object is             configured correctly. You must ensure that <span class="keyword parmname">Verify</span> is
+set to               <kbd class="ph userinput">true</kbd>. </li>
+<li class="li choice">You can test changes that you made to a configured LDAP object
+before you commit             the changes. You only need to include
+the properties that you want to update. The server             uses
+all of the previously set values except those values that are included
+in the REST             request. To change a value, you must set <span class="keyword parmname">Verify</span> to
+              <kbd class="ph userinput">false</kbd>.</li>
+</ul>
+</li></ol></section>
+<section class="example">The following example shows the configuration of an LDAP
+server connection by using cURL:<pre class="pre codeblock"><code>
+curl -X POST \
+   -H 'Content-Type: application/json'  \
+   -d  '{ 
+         "LDAP": {
+           "URL": "ldap://192.0.2.0:1000",
+           "BaseDN": "ou=DEPT,o=COMPANY,c=COUNTRY",
+           "BindDN": "cn=root",
+           "BindPassword": "password",
+           "UserSuffix": "ou=users,ou=DEPT,o=COMPANY,c=COUNTRY",
+           "GroupSuffix": "ou=groups,ou=DEPT,o=COMPANY,c=COUNTRY",         
+           "UserIdMap": "*:UID",
+           "GroupIdMap": "*:cn",
+           "GroupMemberIdMap": "member",
+           "Enabled": true
+       }
+    }
+ '  \
+http://127.0.0.1:9089/ima/v1/configuration/</code></pre><div class="p">An example
+response to the POST method:<pre class="pre codeblock"><code>
+{        
+  "Version": "v1",
+  "Code": "CWLNA6011",
+  "Message": "The requested configuration change has completed successfully."
+}
+</code></pre></div><div class="p">The following example shows how to test that an
+LDAP URL port can be successfully changed from ldap://192.0.2.0:1000
+to ldap://192.0.2.0:1089 by using cURL but without committing the
+change:<pre class="pre codeblock"><code>
+curl -X POST \
+    -H 'Content-Type: application/json'  \
+    -d  '{
+           "LDAP": {
+             "URL": "ldap://192.0.2.0:1089",
+             "Verify":true
+          }
+       }
+      '  \
+http://127.0.0.1:9089/ima/v1/configuration/
+</code></pre></div></section>
+</div>
+
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Administering/ad00373_.html" title="System administrators can configure an LDAP server for messaging users and groups by using REST Administration APIs.">Configuring an LDAP server by using REST Administration APIs</a></div></div></nav></article></main></body></html>

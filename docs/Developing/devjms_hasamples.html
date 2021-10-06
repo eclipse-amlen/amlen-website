@@ -1,0 +1,119 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="The HATopicPublisher and HADurableSubscriber applications demonstrate how to enable JMS client applications to use Eclipse Amlen high availability features."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>The HATopicPublisher and HADurableSubscriber applications</title></head><body id="devjms_hasamples"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a><ul><li><a href="../Developing/devconcepts.html">Messaging concepts</a></li><li><a href="../Developing/devmsgtypes.html">Natively supported message types</a></li><li><a href="../Developing/devmsgsize.html">Message size</a></li><li><a href="../Developing/devclientids.html">Client IDs</a></li><li><a href="../Developing/devclientservercert.html">Server certificates</a></li><li><a href="../Developing/devretainmsg.html">Developing retained message applications</a></li><li><a href="../Developing/devexpiredmsg.html">Expired messages</a></li><li><a href="../Developing/devsharedsubscriptions.html">Shared subscriptions</a></li><li><a href="../Developing/devmqttapp.html">Developing MQTT applications</a></li><li><a href="../Developing/devjmsapp.html">Developing JMS applications</a><ul><li><a href="../Developing/devjms_working.html">Working with Eclipse Amlen JMS</a></li><li><a href="../Developing/devjms_sampleapplications.html">Sample applications</a><ul><li><a href="../Developing/devjms_jmssampleadmin.html">The JMSSampleAdmin application</a></li><li><a href="../Developing/devjms_jmssample.html">The JMSSample application</a></li><li class="active"><a href="../Developing/devjms_hasamples.html">The HATopicPublisher and HADurableSubscriber applications</a></li></ul></li><li><a href="../Developing/devjms_writingjmsapplications.html">Writing JMS Applications</a></li><li><a href="../Developing/javadoc/com/ibm/ima/jms/package-summary.html">JMS API reference</a></li></ul></li><li><a href="../Developing/devplug-in.html">Developing a protocol plug-in</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li></ul></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">The HATopicPublisher and HADurableSubscriber applications</h1>
+
+
+
+
+
+
+<div class="body refbody"><p class="shortdesc">The HATopicPublisher and HADurableSubscriber applications
+demonstrate how to enable JMS client applications to use <span class="ph">Eclipse Amlen</span> high availability
+features.</p>
+<section class="section"><p class="p">These applications are in the <code class="ph codeph">com.ibm.ima.samples.jms</code> package
+and are designed to work with each other.  The HATopicPublisher publishes
+messages to a durable topic and the HADurableSubscriber reads messages
+from that topic. These samples show how to use built-in high availability
+features in the <span class="ph">Eclipse Amlen</span> JMS
+client, and how client applications can function with resilience when
+the primary server goes down and the standby server becomes the primary
+server in a high availability configuration.</p><div class="p">A high availability
+configuration provides the following features:<ul class="ul">
+<li class="li">The ability to use the client <span class="keyword parmname">Server</span> ConnectionFactory
+property to configure the list of host names (or IP addresses) for
+the configured high availability servers. </li>
+<li class="li">The ability to use the client <span class="keyword parmname">isClosed</span> property
+to determine whether the connection to the server was lost when a
+failure is reported.</li>
+</ul></div><div class="p">When the ConnectionFactory <span class="keyword parmname">Server</span> property
+contains a list of servers, the <span class="ph">Eclipse Amlen</span> JMS client attempts
+to connect to each server in the list until a successful connection
+is established. If a client application is connected to a server that
+goes down, the <span class="ph">Eclipse Amlen</span> JMS
+client sets the <span class="keyword parmname">isClosed</span> property in the Connection
+object to <code class="ph codeph">true</code>. Client applications always check
+the <span class="keyword parmname">isClosed</span> property when failures occur. When
+a client application finds that <span class="keyword parmname">isClosed</span> is <code class="ph codeph">true</code>,
+a new connection is created so that processing can continue. <div class="note note note_note"><span class="note__title">Note:</span> During
+failover or synchronization the primary server might not be responsive
+for some time, depending on the current server state. </div></div><p class="p">You
+can run the HATopicPublisher application by using the following command.
+The command consists of five required positional arguments and three
+more positional arguments that are optional.</p><pre class="pre codeblock"><code>java com.ibm.ima.samples.jms.HATopicPublisher serverlist serverport topicname count messagetext [msgspersec] [initdurablesub] [debug]</code></pre><p class="p">Where
+the positional arguments are:</p><dl class="dl">
+<dt class="dt dlterm">serverlist</dt>
+<dd class="dd">A string that represents a list of <span class="ph">Eclipse Amlen</span> server
+      host names or IP addresses. This list can be comma or space delimited.</dd>
+
+<dt class="dt dlterm">serverport</dt>
+<dd class="dd">An integer value that represents the port number for connections to the <span class="ph">Eclipse Amlen</span> server.</dd>
+
+<dt class="dt dlterm">topicname</dt>
+<dd class="dd">A string that represents the name of the topic destination for
+published messages.</dd>
+
+<dt class="dt dlterm">count</dt>
+<dd class="dd">An integer value that represents the number of messages to publish.</dd>
+
+<dt class="dt dlterm">messagetext</dt>
+<dd class="dd"> A string that represents the content of the published messages.</dd>
+
+<dt class="dt dlterm">msgspersec</dt>
+<dd class="dd">Optional.</dd>
+<dd class="dd ddexpand">An integer value that represents the number of messages to send
+per second. The default value is <code class="ph codeph">5000</code>.</dd>
+
+<dt class="dt dlterm">initdurablesub</dt>
+<dd class="dd">Optional.</dd>
+<dd class="dd ddexpand">A Boolean value that indicates whether a durable subscription
+is initialized for the specified topic. The default value is <code class="ph codeph">true</code>.</dd>
+<dd class="dd ddexpand">As <code class="ph codeph">initdurablesub</code> is a positional argument, if
+you change the default value then you must specify <code class="ph codeph">msgspersec</code> in
+the command.</dd>
+
+<dt class="dt dlterm">debug</dt>
+<dd class="dd">Optional.</dd>
+<dd class="dd ddexpand">A Boolean value that indicates whether to provide debug output
+from the application. The default value is <code class="ph codeph">false</code>.</dd>
+<dd class="dd ddexpand">As <code class="ph codeph">debug</code> is a positional argument, if you change
+the default value then you must specify <code class="ph codeph">msgspersec</code> and <code class="ph codeph">initdurablesub</code> in
+the command.</dd>
+</dl><p class="p"></p><p class="p">You can run the HADurableSubscriber application
+by using the following command. The command consists of four required
+positional arguments and a fifth positional argument that is optional.</p><pre class="pre codeblock"><code>java com.ibm.ima.samples.jms.HADurableSubscriber serverlist serverport topicname count [receivetimeout]</code></pre><p class="p">Where
+the positional arguments are:</p><dl class="dl">
+<dt class="dt dlterm">serverlist</dt>
+<dd class="dd">A string that represents a list of <span class="ph">Eclipse Amlen</span> server
+      host names or IP addresses. This list can be comma or space delimited.</dd>
+
+<dt class="dt dlterm">serverport</dt>
+<dd class="dd">An integer value that represents the port number for connections to the <span class="ph">Eclipse Amlen</span> server.</dd>
+
+<dt class="dt dlterm">topicname</dt>
+<dd class="dd">A string that represents the durable subscription topic name.</dd>
+
+<dt class="dt dlterm">count</dt>
+<dd class="dd">An integer value that represents the number of messages to receive.</dd>
+
+<dt class="dt dlterm">receivetimeout</dt>
+<dd class="dd">Optional.</dd>
+<dd class="dd ddexpand">The number of seconds to wait for the first message to be received.
+The default value is <code class="ph codeph">10</code> seconds.</dd>
+</dl></section>
+<section class="section"><h2 class="title sectiontitle">Examples</h2><p class="p">The following commands show examples
+of the arguments that you can use to run the HATopicPublisher application.</p><p class="p">This
+example uses the default values of the optional arguments.</p><pre class="pre codeblock"><code>java com.ibm.ima.samples.jms.HATopicPublisher "server1.example.com, server2.example.com" 16102  durableTopic 2000 "Test message"</code></pre><p class="p">This
+example sets <span class="keyword parmname">debug</span> to <code class="ph codeph">true</code> rather
+than using the default value of <code class="ph codeph">false</code>. This setting
+means that debug output is provided. As <span class="keyword parmname">debug</span> is
+a positional argument, the values of <span class="keyword parmname">msgspersec</span> and
+ <span class="keyword parmname">initdurablesub</span> must be specified even when the
+default values are used.</p><pre class="pre codeblock"><code>java com.ibm.ima.samples.jms.HATopicPublisher "server1.example.com, server2.example.com" 16102  durableTopic 2000 "Test message" 5000 true true </code></pre><p class="p">The
+following commands show examples of the arguments that you can use
+to run the HADurableSubscriber application.</p><p class="p">This example uses
+the default <span class="keyword parmname">receivetimeout</span> value of 10 seconds.</p><pre class="pre codeblock"><code>java com.ibm.ima.samples.jms.HADurableSubscriber "server1.example.com, server2.example.com" 16102  durableTopic 2000</code></pre><p class="p">This
+example sets the <span class="keyword parmname">receivetimeout</span> value to 60 seconds.</p><pre class="pre codeblock"><code>java com.ibm.ima.samples.jms.HADurableSubscriber "server1.example.com, server2.example.com" 16102  durableTopic 2000 60 </code></pre></section>
+</div>
+
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Developing/devjms_sampleapplications.html" title="There are four sample applications for JMS: JMSSampleAdmin, JMSSample, HATopicPublisher, and HADurableSubscriber. These sample applications are in the com.ibm.ima.samples.jms package.">Sample applications</a></div></div></nav></article></main></body></html>

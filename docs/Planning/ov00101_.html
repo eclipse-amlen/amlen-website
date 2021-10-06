@@ -1,0 +1,86 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="The messaging patterns identify common message flows that are used in messaging solutions. There are five messaging patterns: fan out broadcast, fan in per device notification, fan out per device notification, fan out per device request-reply, and fan in per device request-reply."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Messaging patterns</title></head><body id="pl00001_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a><ul><li><a href="../Overview/ov00002_.html">Architecture Overview</a></li><li><a href="../Overview/ov60000_.html">Eclipse Amlen in Containers</a></li><li><a href="../Overview/ov00050.html">Supported protocols</a></li><li><a href="../Bridge/br00000.html">   Amlen Bridge</a></li><li><a href="../Overview/ov00003_.html">Key Concepts</a><ul><li><a href="../Overview/ov20000.html">Point-to-point messaging</a></li><li><a href="../Overview/ov00030.html">Publish/Subscribe</a></li><li><a href="../Planning/ov00102_.html">Message delivery</a></li><li class="active"><a href="../Planning/ov00101_.html">Messaging patterns</a></li><li><a href="../Overview/ov00060.html">Message hubs, endpoints, and policies</a></li><li><a href="../Overview/ov00150_.html">Clustering in Eclipse Amlen</a></li><li><a href="../Overview/ov00140_.html">Disconnected client notifications</a></li><li><a href="../Overview/ov00070.html">MQ Connectivity</a></li><li><a href="../Overview/ov40000.html">High availability</a></li><li><a href="../Bridge/br00001.html">   Amlen Bridge concepts</a></li></ul></li><li><a href="../Overview/accessibility_topic.html">Accessibility features for Eclipse Amlen</a></li><li><a href="../Overview/notices.html">Notices</a></li></ul></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Messaging patterns</h1>
+
+<div class="body conbody"><p class="shortdesc">The messaging patterns identify common message flows that
+are used in messaging solutions. There are five messaging patterns:
+fan out broadcast, fan in per device notification, fan out per device
+notification, fan out per device request-reply, and fan in per device
+request-reply.</p>
+<section class="section"><h2 class="title sectiontitle">Fan out broadcast</h2><p class="p">One publisher device publishes
+a message to a topic string. The messages have many subscriber devices.</p><div class="p">An example usage of this pattern is broadcasting reference data. For example, broadcasting an
+    updated price list.<figure class="fig fignone"><figcaption><span class="fig--title-label">Figure 1. </span>Fan out broadcast</figcaption>
+     
+     <img class="image" src="ov00101a_v2.gif" alt="One message is published. Eclipse Amlen delivers the message to all subscribers.">
+    </figure><span class="ph">For an example implementation of this pattern, see <a class="xref" href="../Scenarios/sc00006_.html" title="In this scenario, multiple publisher devices broadcast messages to a number of subscribers.">Scenario: Fan out
+      broadcast</a>.</span></div></section>
+<section class="section"><h2 class="title sectiontitle">Fan in per device notification</h2><p class="p">Many publisher
+devices publish messages to a topic string. The messages have one
+subscriber device.</p><div class="p">An example usage of this pattern is receiving data from a number of sensors. For example,
+        receiving data from earthquake sensors.<figure class="fig fignone"><figcaption><span class="fig--title-label">Figure 2. </span>Fan in per device notification</figcaption>
+          
+          <img class="image" src="ov00101b_v2.gif" alt="Many messages are published. Eclipse Amlen delivers the message to one subscriber.">
+        </figure></div><p class="p">For
+an example implementation of this pattern, see <a class="xref" href="../Scenarios/sc00002_.html" title="In this scenario, many publisher devices publish messages to one topic string. There is one subscriber device that subscribes to this topic string.">Scenario
+2: Fan in per device notification</a></p></section>
+<section class="section"><h2 class="title sectiontitle">Fan out per device notification</h2><p class="p">One publisher
+device publishes messages to many topic strings. Each message has
+only one subscriber device.</p><div class="p">An example usage of this pattern
+is sending control commands to a device. For example, sending a command
+to an application to activate a feature.<figure class="fig fignone"><figcaption><span class="fig--title-label">Figure 3. </span>Fan out per device
+notification</figcaption><img class="image" src="ov00101c_v2.gif" alt="Many unique messages are sent by one publisher to many devices. Eclipse Amlen sends the messages to each subscriber."></figure></div><p class="p">For this messaging pattern,
+each subscriber must subscribe to a unique topic. By using the unique
+user ID, group ID or client ID of the subscribing application in the
+topic string, you can ensure that each topic is unique. For example,
+a subscriber application instance that connects with a client ID of <code class="ph codeph">123</code> subscribes
+to <code class="ph codeph">RESPONSE/123</code>. A subscriber application instance
+that connects with a client ID of <code class="ph codeph">456</code> subscribes
+to <code class="ph codeph">RESPONSE/456</code>. A subscriber application instance
+with a client ID of <code class="ph codeph">789</code> subscribes to <code class="ph codeph">RESPONSE/789</code>.</p><div class="p">For
+an MQTT application, the code might look like the following example:<pre class="pre codeblock"><code>//Generate clientID
+String clientID = String.format("%-23.23s", UUID.randomUUID().toString()).trim().replace('-', '_');
+
+//Create an MQTT client with the generated clientID
+MqttClient mobileClient = new MqttClient("tcp://MessageSightHostName:MessageSightEndpointPort", clientID);
+
+//Subscribe to the RESPONSE/${ClientID} topic
+mobileClient.subscribe("RESPONSE/"+clientID, 0);</code></pre></div><p class="p">To
+ensure that subscribers cannot access the topics of other subscribers,
+you can use the topic string variable substitution available in the <span class="ph">Eclipse Amlen</span> messaging policies.
+ By using topic string variable substitution you can create a messaging
+policy with single topic string that includes a user ID, group ID
+or client ID variable. This substitution ensures that applications
+can subscribe only to the topic string that matches their user ID,
+group ID or client ID. For example, a topic string of <code class="ph codeph">RESPONSE/${ClientID}</code> is
+specified in the messaging policy. The application with a client ID
+of <code class="ph codeph">123</code> is allowed to subscribe to <code class="ph codeph">RESPONSE/123</code>,
+but is not allowed to subscribe to <code class="ph codeph">RESPONSE/456</code>,
+or <code class="ph codeph">RESPONSE/789</code> because the client ID does not match.
+For more information about messaging policies and variable substitution,
+see <a class="xref" href="../Security/se00004_.html" title="You can use messaging policies to authorize client messaging. There are three types of messaging policies: Topic policies, queue policies, and subscription policies.">Authorizing client messaging</a>.</p><p class="p"><span class="ph">For an example implementation of this pattern,
+see <a class="xref" href="../Scenarios/sc00003_.html" title="In this scenario, publisher devices publish messages to many topic strings. Each topic string has only one subscriber device.">Scenario
+3: Fan out per device notification</a>.</span></p></section>
+<section class="section"><h2 class="title sectiontitle">Fan out per device request-reply</h2><p class="p">One publisher
+device publishes messages to many topic strings. Each topic string
+has only one subscriber device. Each subscriber device publishes reply
+messages on a separate topic string. The publisher device subscribes
+to all the reply topics.</p><div class="p">An example usage of this pattern is
+a control center that interrogates the state of a device. For example,
+requesting a temperature reading from a sensor.<figure class="fig fignone"><figcaption><span class="fig--title-label">Figure 4. </span>Fan out
+per device request-reply</figcaption><img class="image" src="ov00101d_v2.gif" alt="Many messages are sent by one publisher.Eclipse Amlen sends the messages to each subscriber. Each subscriber sends a reply to the publisher."></figure></div><p class="p"><span class="ph">For an example implementation
+of this pattern, see <a class="xref" href="../Scenarios/sc00004_.html" title="In this scenario, one publisher device publishes messages to many topic strings. Each message has only one subscriber device. Each subscriber device publishes reply messages to the publisher device.">Scenario
+4: Fan out per device request-reply</a>.</span></p></section>
+<section class="section"><h2 class="title sectiontitle">Fan in per device request-reply</h2><p class="p">Many publisher
+devices publish messages to many topic strings. A single subscriber
+device subscribes to all of the topic strings. The subscriber device
+publishes reply messages on separate topic strings for each publisher
+device.</p><div class="p">An example usage of this pattern is a device polling a control center for information updates.
+        For example, polling for information about firmware updates.<figure class="fig fignone"><figcaption><span class="fig--title-label">Figure 5. </span>Fan in per device request-reply</figcaption>
+          
+          <img class="image" src="ov00101e_v2.gif" alt="Many messages are sent by many publishers. Eclipse Amlen sends the messages to one subscriber. The subscriber sends a reply to each publisher.">
+        </figure></div><p class="p"><span class="ph">For an example implementation of this pattern,
+see <a class="xref" href="../Scenarios/sc00005_.html" title="In this scenario, many internet devices publish messages to unique topic strings, and subscribe to a unique topic string to receive a response. There is one intranet device that subscribes to the unique topic strings to receive the requests, and then publishes to unique topic strings to send a reply.">Scenario 5: Fan in per device request-reply</a>.</span></p></section>
+</div>
+
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Planning/pl00001_.html" title="When you plan your Eclipse Amlen solution, you must make a number of decisions to ensure your solution works effectively.">Planning</a></div></div></nav></article></main></body></html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can clean the store by using REST Administration APIs. Cleaning the store deletes all persistent data."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Cleaning the store by using REST Administration APIs</title></head><body id="tr00019_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a><ul><li><a href="../Troubleshooting/tr00000_.html">Log files</a></li><li><a href="../Troubleshooting/tr00006_.html">Maintenance mode</a><ul><li><a href="../Troubleshooting/tr00007_.html">Changing the server state</a></li><li><a href="../Troubleshooting/tr00013_.html">Cleaning the store</a><ul><li><a href="../Troubleshooting/tr00018_.html">Cleaning the store by using the Amlen WebUI</a></li><li class="active"><a href="../Troubleshooting/tr00019_.html">Cleaning the store by using REST Administration APIs</a></li></ul></li></ul></li><li><a href="../Troubleshooting/tr00001_.html">Common problems</a></li><li><a href="../Troubleshooting/tr00030.html">Platform must-gather</a></li><li><a href="../Troubleshooting/admin_messagecatalog.html">Message catalog</a></li></ul></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Cleaning the store by using <span class="ph">REST Administration APIs</span></h1>
+
+<div class="body taskbody"><p class="shortdesc">System administrators can clean the store by using <span class="ph">REST Administration APIs</span>. Cleaning the store deletes all
+    persistent data.</p>
+<section class="section context"><p class="p">If you are cleaning the store in an HA environment, you must follow the procedure and complete
+        each step on both <span class="ph">Eclipse Amlen</span> servers
+        before proceeding to the next step. For example, complete step 1 on the primary server and
+        on the standby server before you begin step 2. </p><div class="note caution note_caution"><span class="note__title">CAUTION:</span>  Cleaning the store deletes all persistent
+data, including messages, subscriptions, and client states. Do not
+clean the store unless you want to delete all persistent data on the
+system.</div></section>
+<section><ol class="ol steps"><li class="li step stepexpand">
+    <span class="ph cmd">Check the status of the <span class="ph">Eclipse Amlen</span> server, by
+     using the <span class="ph">Eclipse Amlen</span> REST API POST method with the
+     following <span class="ph">Eclipse Amlen</span> configuration URI:</span>
+    <div class="itemgroup info">
+     <p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:port&gt;/ima/v1/service/status/Server</code></p>
+    </div>
+    <ul class="ul choices">
+     <li class="li choice">If the server status is <code class="ph codeph">Running</code>, the server is running in production
+            mode.</li>
+     <li class="li choice">If the server status is <code class="ph codeph">Maintenance</code>, the server is in maintenance
+      mode. For more information about maintenance mode, see <a class="xref" href="tr00006_.html" title="Maintenance mode is an Eclipse Amlen server state that allows a system administrator to complete a number of tasks. In maintenance mode, a system administrator can clean the server store, stop and start the server, and change the server state from Maintenance to Running.">Maintenance mode</a>.</li>
+    </ul>
+        <div class="itemgroup info">
+          <div class="note note note_note"><span class="note__title">Note:</span>  If the server is not running, a failure to connect error is received in response to
+            the REST call. You can start the server by using docker or systemctl commands.</div>
+        </div>
+   </li><li class="li step stepexpand"><strong>Optional: </strong>
+    <span class="ph cmd">If the server state is <code class="ph codeph">Stopped</code>, you must start the server before you can
+     continue. For more information about starting the server, see <a class="xref" href="../Administering/ad00282_.html" title="System administrators can restart and stop the Eclipse Amlen server by using REST Administration APIs.">Starting, restarting and stopping the Eclipse Amlen server by using REST Administration APIs</a>.</span>
+   </li><li class="li step stepexpand">
+    <span class="ph cmd">Stop the <span class="ph">MQ Connectivity</span> service. For more
+     information about stopping the MQ Connectivity service, see <a class="xref" href="../Administering/ad00129_.html" title="You can start, restart and stop the MQ Connectivity process by using REST Administration APIs. You can restart and stop the MQ Connectivity process by using the Amlen WebUI.">Starting, restarting, stopping, and viewing the status of MQ Connectivity</a>.</span>
+   </li><li class="li step stepexpand">
+        <span class="ph cmd">Set the server state to <code class="ph codeph">Maintenance</code>. For more information about
+          setting the server state to <code class="ph codeph">Maintenance</code>, see <a class="xref" href="../Administering/ad00282_.html" title="System administrators can restart and stop the Eclipse Amlen server by using REST Administration APIs.">Starting, restarting and stopping the Eclipse Amlen server by using REST Administration APIs</a></span>
+        <div class="itemgroup info">
+          <div class="note note note_note"><span class="note__title">Note:</span> You must complete this step even if the current server state is
+              <code class="ph codeph">Maintenance</code>.</div>
+        </div>
+      </li><li class="li step stepexpand">
+        <span class="ph cmd">Clean the store. For more information about cleaning the store, see <a class="xref" href="../Administering/ad00282_.html" title="System administrators can restart and stop the Eclipse Amlen server by using REST Administration APIs.">Starting, restarting and stopping the Eclipse Amlen server by using REST Administration APIs</a>. </span>
+        <div class="itemgroup stepresult"></div>
+      </li></ol><div class="li stepsection">After you clean the store, the server state is set to <code class="ph codeph">Maintenance</code>. You
+        must change the server state to <code class="ph codeph">Running</code>:</div><ol class="ol steps" start="6"><li class="li step stepexpand">
+        <span class="ph cmd">Set the server state to <code class="ph codeph">Running</code> by setting the
+            <span class="keyword parmname">Maintenance</span> parameter value to <kbd class="ph userinput">stop</kbd>. For
+          more information about setting the <span class="keyword parmname">Maintenance</span> parameter value, see
+            <a class="xref" href="../Administering/ad00282_.html" title="System administrators can restart and stop the Eclipse Amlen server by using REST Administration APIs.">Starting, restarting and stopping the Eclipse Amlen server by using REST Administration APIs</a></span>
+      </li><li class="li step stepexpand">
+        <span class="ph cmd">Confirm that the server state is set to <code class="ph codeph">Running</code> by using the <span class="ph">Eclipse Amlen</span> REST API POST method with the following
+            <span class="ph">Eclipse Amlen</span> configuration URI:</span>
+        <div class="itemgroup info">
+          <p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:port&gt;/ima/v1/service/status/Server</code></p>
+        </div>
+      </li><li class="li step stepexpand">
+    <span class="ph cmd">Restart the <span class="ph">MQ Connectivity</span> service. For more
+     information about restarting the MQ Connectivity service, see <a class="xref" href="../Administering/ad00129_.html" title="You can start, restart and stop the MQ Connectivity process by using REST Administration APIs. You can restart and stop the MQ Connectivity process by using the Amlen WebUI.">Starting, restarting, stopping, and viewing the status of MQ Connectivity</a>.</span>
+   </li></ol></section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Troubleshooting/tr00013_.html" title="System administrators can clean the store by using a REST Administration API or by using the Amlen WebUI. Cleaning the store deletes all persistent data.">Cleaning the store</a></div></div><div class="linklist relconcepts"><strong>Related concepts</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="tr00006_.html" title="Maintenance mode is an Eclipse Amlen server state that allows a system administrator to complete a number of tasks. In maintenance mode, a system administrator can clean the server store, stop and start the server, and change the server state from Maintenance to Running.">Maintenance mode</a></li></ul></div><div class="linklist reltasks"><strong>Related tasks</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="tr00007_.html" title="System administrators can change the server state from Maintenance to Running, or from Running to Maintenance. The server state can be changed by using either REST Administration APIs or the Amlen WebUI.">Changing the server state</a></li></ul></div></nav>
+</article></main></body></html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="Eclipse Amlen version 5.0 includes a script that collects must-gather data, in both Docker and non-Docker environments. The same script is used for the messaging server and for the Web UI. System administrators can use the script to collect the must-gather diagnostic data that is required for reporting a problem to IBM support."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Platform must-gather</title></head><body id="must-gather"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a><ul><li><a href="../Troubleshooting/tr00000_.html">Log files</a></li><li><a href="../Troubleshooting/tr00006_.html">Maintenance mode</a></li><li><a href="../Troubleshooting/tr00001_.html">Common problems</a></li><li class="active"><a href="../Troubleshooting/tr00030.html">Platform must-gather</a></li><li><a href="../Troubleshooting/admin_messagecatalog.html">Message catalog</a></li></ul></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+    <h1 class="title topictitle1" id="ariaid-title1">Platform must-gather</h1>
+    
+    
+    
+    
+    
+    
+    <div class="body taskbody"><p class="shortdesc"><span class="ph">Eclipse Amlen</span> version 5.0 includes a script
+that collects must-gather data, in both Docker and non-Docker environments. The same script is used
+for the messaging server and for the Web UI. System administrators can use the script to collect the
+must-gather diagnostic data that is required for reporting a problem to IBM® support. </p>
+        <section class="section prereq"><p class="p">To collect must-gather data for <span class="ph">Eclipse Amlen</span> running in a Docker container,
+                the script must be copied from the container onto the host system by using the
+                following <span class="ph filepath">docker cp</span> command:</p><code class="ph codeph">docker cp
+                IMA:/opt/ibm/imaserver/bin/messagesight-must-gather.sh</code><p class="p">where IMA is the
+                Docker container name.</p></section>
+        <section class="section context">
+            <p class="p">The script must be executed with the same privileges as other docker commands, for
+                example as superuser or by using sudo.</p>
+            <p class="p">For a Docker environment, the script exports the container into a file and includes
+                the file in must-gather by default. If you do not want this configuration, you can
+                set the <span class="keyword option">-e</span> option to <kbd class="ph userinput">false</kbd>. If the
+                    <span class="keyword option">-e</span> option is set to <kbd class="ph userinput">false</kbd>, the script
+                creates a temporary image of the container and runs it to collect the necessary
+                data. Both the temporary container and the images are automatically removed after
+                the data is collected.</p>
+        </section>
+        <section><div class="ol steps"><div class="li step p">
+                <span class="ph cmd">Run the must-gather script with the following options:</span>
+                <div class="itemgroup info">
+                    <div class="note note note_note"><span class="note__title">Note:</span> <span class="keyword option">-d</span> and <span class="keyword option">-e</span> options do not apply if <span class="ph">Eclipse Amlen</span> is running directly on
+                        the host.</div>
+                    <pre class="pre codeblock"><code>
+messagesight-must-gather.sh   [ -d containerId  [ -e {true|false} ] ]                                  
+                              [ -a additional_directories ] [ -w working_dir ] [ -o output_file ]</code></pre>
+                    <div class="p">where:<dl class="dl">
+                            
+                                <dt class="dt dlterm">containerId</dt>
+                                <dd class="dd">Specifies the name of the Docker container or the container
+                                    ID.</dd>
+                            
+                            
+                                <dt class="dt dlterm">additional_directories</dt>
+                                <dd class="dd">Specifies additional directories to include in the compressed
+                                    must-gather file - for example directories with log files.</dd>
+                            
+                            
+                                <dt class="dt dlterm">working_dir </dt>
+                                <dd class="dd">Specifies the directory on the host to use for temporary files.
+                                    Temporary files can include the exported container, so ensure
+                                    that the partition has enough free space. </dd>
+                                <dd class="dd ddexpand">The default is the current directory.</dd>
+                            
+                            
+                                <dt class="dt dlterm">output_file</dt>
+                                <dd class="dd">Specifies the output file name. If not specified,
+                                        <span class="ph filepath">./messagesight-must-gather-"timestamp".tar.gz</span>
+                                    is created.</dd>
+                            
+                        </dl></div>
+                    <div class="note note note_note"><span class="note__title">Note:</span> You can find additional help by using the
+                            <span class="keyword cmdname">/path/messagesight-must-gather.sh --help</span>
+                        command.</div>
+                </div>
+            </div></div></section>
+        <section class="section result">
+            <table class="table frame-all" id="must-gather__table_u4g_hyy_lv"><caption><span class="table--title-label">Table 1. </span><span class="title">Must-gather information in a docker environment</span></caption><colgroup><col style="width:50%"><col style="width:50%"></colgroup><thead class="thead">
+                        <tr class="row">
+                            <th class="entry" id="must-gather__table_u4g_hyy_lv__entry__1">Output </th>
+                            <th class="entry" id="must-gather__table_u4g_hyy_lv__entry__2">Additional information</th>
+                        </tr>
+                    </thead><tbody class="tbody">
+                        <tr class="row">
+                            <td class="entry" headers="must-gather__table_u4g_hyy_lv__entry__1">host_data-timestamp.txt</td>
+                            <td class="entry" headers="must-gather__table_u4g_hyy_lv__entry__2">System information about the host.</td>
+                        </tr>
+                        <tr class="row">
+                            <td class="entry" headers="must-gather__table_u4g_hyy_lv__entry__1">dmesg.txt</td>
+                            <td class="entry" headers="must-gather__table_u4g_hyy_lv__entry__2">System log (demesg output)</td>
+                        </tr>
+                        <tr class="row">
+                            <td class="entry" headers="must-gather__table_u4g_hyy_lv__entry__1">dmidecode.txt</td>
+                            <td class="entry" headers="must-gather__table_u4g_hyy_lv__entry__2">Hardware information (dmidecode output)</td>
+                        </tr>
+                        <tr class="row">
+                            <td class="entry" headers="must-gather__table_u4g_hyy_lv__entry__1">docker_mustgather.txt</td>
+                            <td class="entry" headers="must-gather__table_u4g_hyy_lv__entry__2">System information about the docker container</td>
+                        </tr>
+                        <tr class="row">
+                            <td class="entry" headers="must-gather__table_u4g_hyy_lv__entry__1"><span class="ph filepath">/etc</span> and <span class="ph filepath">/var/log</span>
+                            </td>
+                            <td class="entry" headers="must-gather__table_u4g_hyy_lv__entry__2">Directories on the host</td>
+                        </tr>
+                        <tr class="row">
+                            <td class="entry" headers="must-gather__table_u4g_hyy_lv__entry__1"><span class="ph filepath">messagesight-container-<var class="keyword varname">timestamp</var>.tar.gz</span></td>
+                            <td class="entry" headers="must-gather__table_u4g_hyy_lv__entry__2">Exported container (if allowed)</td>
+                        </tr>
+                        <tr class="row">
+                            <td class="entry" headers="must-gather__table_u4g_hyy_lv__entry__1">container_mustgather.tar.gz</td>
+                            <td class="entry" headers="must-gather__table_u4g_hyy_lv__entry__2">Additional must-gather information collected inside the container
+                                    <span class="ph filepath">var/messagesight/diag/cores</span>. Includes files
+                                with environment variables, compressed binaries and libraries
+                                (messaging server) or Liberty dumps and Liberty configuration (Web
+                                UI), compressed <span class="ph filepath"> /etc</span> and <span class="ph filepath">
+                                    /var/log</span> directories inside the container.</td>
+                        </tr>
+                    </tbody></table>
+            <table class="table frame-all" id="must-gather__table_fs1_2zy_lv"><caption><span class="table--title-label">Table 2. </span><span class="title">Must-gather information in a  non docker environment</span></caption><colgroup><col style="width:50%"><col style="width:50%"></colgroup><thead class="thead">
+                        <tr class="row">
+                            <th class="entry" id="must-gather__table_fs1_2zy_lv__entry__1">Output </th>
+                            <th class="entry" id="must-gather__table_fs1_2zy_lv__entry__2">Additional information</th>
+                        </tr>
+                    </thead><tbody class="tbody">
+                        <tr class="row">
+                            <td class="entry" headers="must-gather__table_fs1_2zy_lv__entry__1">host_data-timestamp.txt</td>
+                            <td class="entry" headers="must-gather__table_fs1_2zy_lv__entry__2">General system information about the host.</td>
+                        </tr>
+                        <tr class="row">
+                            <td class="entry" headers="must-gather__table_fs1_2zy_lv__entry__1">dmesg.txt</td>
+                            <td class="entry" headers="must-gather__table_fs1_2zy_lv__entry__2">System log (demesg output)</td>
+                        </tr>
+                        <tr class="row">
+                            <td class="entry" headers="must-gather__table_fs1_2zy_lv__entry__1">dmidecode.txt</td>
+                            <td class="entry" headers="must-gather__table_fs1_2zy_lv__entry__2">Hardware information (dmidecode output)</td>
+                        </tr>
+                        <tr class="row">
+                            <td class="entry" headers="must-gather__table_fs1_2zy_lv__entry__1">software_mustgather.txt</td>
+                            <td class="entry" headers="must-gather__table_fs1_2zy_lv__entry__2">System information about the installation</td>
+                        </tr>
+                        <tr class="row">
+                            <td class="entry" headers="must-gather__table_fs1_2zy_lv__entry__1"><span class="ph filepath">/etc</span> and <span class="ph filepath">/var/log</span>
+                            </td>
+                            <td class="entry" headers="must-gather__table_fs1_2zy_lv__entry__2">Directories on the host</td>
+                        </tr>
+                        <tr class="row">
+                            <td class="entry" headers="must-gather__table_fs1_2zy_lv__entry__1"><span class="ph filepath">messagesight-container-<var class="keyword varname">timestamp</var>.tar.gz</span></td>
+                            <td class="entry" headers="must-gather__table_fs1_2zy_lv__entry__2">Exported container (if allowed)</td>
+                        </tr>
+                        <tr class="row">
+                            <td class="entry" headers="must-gather__table_fs1_2zy_lv__entry__1">container_mustgather.tar.gz</td>
+                            <td class="entry" headers="must-gather__table_fs1_2zy_lv__entry__2">Additional must-gather information. Includes files with
+                                environment variables, compressed binaries and libraries (messaging
+                                server) or Liberty dumps and Liberty configuration (Web UI). Liberty
+                                configuration and logs are under
+                                    <span class="ph filepath">opt/ibm/wlp/usr/servers/ISMWebUI/</span>.</td>
+                        </tr>
+                    </tbody></table>
+            <p class="p">In all cases, if <span class="ph filepath">perf</span> utility is available, a
+                    <span class="ph filepath">perf</span> report is included in the
+                    <span class="ph filepath">*_mustgather.tar.gz </span> file as
+                    <span class="ph filepath">*_perf.report</span>. If <span class="ph filepath">iostat</span> utility is
+                available, the output from <span class="ph filepath">iostat 1 5</span> is included in
+                    <span class="ph filepath">software_mustgather.txt</span> or
+                    <span class="ph filepath">docker_mustgather.txt</span>.</p>
+        </section>
+    </div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Troubleshooting/tr10000_.html" title="Look for a troubleshooting task to help you solve a problem when using Eclipse Amlen.">Troubleshooting</a></div></div></nav></article></main></body></html>

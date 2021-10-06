@@ -1,0 +1,140 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="In this scenario, an Eclipse Amlen server that has high availability (HA) disabled is now paired with another Eclipse Amlen server to act as its backup. System administrators can configure a pair of servers for high availability by using REST Administration APIs."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Configuring Eclipse Amlen servers as an HA pair by using REST Administration APIs</title></head><body id="ad00992_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a><ul><li><a href="../Administering/ad00210_.html">Network interface controllers</a></li><li><a href="../Administering/ad00380_.html">Configuring the server name</a></li><li><a href="../Administering/ad00290_.html">Configuring log files</a></li><li><a href="../Administering/ad00400_.html">Configuring your system for high availability</a><ul><li><a href="../Administering/ad00909_.html">Configuring HA </a><ul><li><a href="../Administering/ad01001_.html">Configuring high availability by using the Amlen WebUI</a></li><li><a href="../Administering/ad00993_.html">Configuring high availability by using REST Administration APIs</a><ul><li class="active"><a href="../Administering/ad00992_.html">Configuring Eclipse Amlen servers as an HA pair by using REST Administration APIs</a></li><li><a href="../Administering/ad00996_.html">Configuring high availability in an Eclipse Amlen cluster by using REST Administration APIs</a></li><li><a href="../Administering/ad00995_.html">Viewing high availability configuration details by using a REST Administration API</a></li><li><a href="../Administering/ad00994_.html">Viewing the status of the high availability service by using a REST Administration API</a></li></ul></li></ul></li><li><a href="../Administering/ad00416_.html">High availability scenarios</a></li></ul></li><li><a href="../Administering/ad00790_.html">Configuring licensed usage and accepting the license for Eclipse Amlen  </a></li><li><a href="../Administering/ad00280_.html">Starting, stopping, restarting and viewing the status of the Eclipse Amlen server</a></li></ul></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Configuring <span class="ph">Eclipse Amlen</span> servers as an HA pair by using <span class="ph">REST Administration APIs</span></h1>
+
+
+
+
+
+
+<div class="body taskbody"><p class="shortdesc">In this scenario, an <span class="ph">Eclipse Amlen</span> server that has high availability (HA) disabled is now paired with another <span class="ph">Eclipse Amlen</span> server to act as its backup. System administrators can configure a pair of servers for high availability by using <span class="ph">REST Administration APIs</span>.</p>
+<section class="section context">
+<p class="p">You can configure <span class="ph">Eclipse Amlen</span> servers for high availability by using <span class="ph">REST Administration APIs</span> or by using the <span class="ph">Amlen WebUI</span>. For more information about using the <span class="ph">Amlen WebUI</span> to configure servers for HA, see <a class="xref" href="ad00401_.html" title="In this scenario, a server that has HA disabled is now paired with another server to act as its backup. System administrators can configure a pair of servers for high availability (HA) by using the High Availability page in the Amlen WebUI.">Configuring Eclipse Amlen servers as an HA pair by using the Amlen WebUI</a>.</p>
+<p class="p">In this scenario, Server A is the primary node and Server B is the standby node in the HA pair. Server A can be a server that has data on it. Any data on Server B will be destroyed. </p>
+<div class="note important note_important"><span class="note__title">Important:</span> The following scenario describes changing one server from standby to primary if one of the server is stopped.<ul class="ul">
+<li class="li">An HA pair of <span class="ph">Eclipse Amlen</span> servers are identified as HA1 and HA2. Both are configured <code class="ph codeph">StartupMode: "AutoDetect"</code>. <ul class="sl simple">
+<li class="sli">HA1 is active and is the standby server</li>
+<li class="sli">HA2 is active and is the primary server</li>
+</ul></li>
+<li class="li">HA2 is stopped. So, now HA1 is active and is the standby server.</li>
+<li class="li">Next, you stop HA1. Now both HA1 and HA2 are stopped.</li>
+<li class="li">If you restart HA1, you will get a message saying it can't determine the true HA status because HA2 is still down.</li>
+<li class="li">In order to bring HA1 up as the primary with HA2 still stopped, you need to update <code class="ph codeph">StartupMode: "StandAlone"</code></li>
+</ul><p class="p">Do <em class="ph i">not</em> start a node as <code class="ph codeph">StartupMode: "StandAlone"</code> if another node is already running and is acting as a primary. Doing so could create a split-brain condition, where both nodes act as primary nodes. In this instance, both nodes will go into maintenance mode. </p></div>
+</section>
+<section><ol class="ol steps"><li class="li step stepexpand">
+<span class="ph cmd">On Server A, configure the primary server for HA by using the <span class="ph">Eclipse Amlen</span> REST API POST method. </span>
+<ol type="a" class="ol substeps">
+<li class="li substep substepexpand">
+<span class="ph cmd">Use the following <span class="ph">Eclipse Amlen</span> configuration URI:</span>
+<div class="itemgroup info">
+<p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/configuration/</code></p>
+</div>
+</li>
+<li class="li substep substepexpand">
+<span class="ph cmd">Provide HighAvailability object configuration data in the payload of the POST method by using the following schema. <span class="keyword parmname">Content-type</span> is set to <kbd class="ph userinput">application/json</kbd>. Ensure that capitalization and double quotation marks are used as shown. </span>
+<div class="itemgroup info"><pre class="pre codeblock"><code>
+{    
+   "HighAvailability": {
+      "Group": "string",
+      "EnableHA": true,
+      "StartupMode": "AutoDetect",
+      "RemoteDiscoveryNIC": "string",
+      "LocalReplicationNIC": "string",
+      "LocalDiscoveryNIC": "string",
+      "DiscoveryTimeout": integer,
+      "HeartbeatTimeout": integer,
+      "PreferredPrimary": true          
+    }
+}</code></pre>Where:<dl class="dl">
+
+<dt class="dt dlterm">Group</dt>
+<dd class="dd">The group name of the HA pair. The value must be the same on both servers in the pair. </dd>
+
+
+<dt class="dt dlterm">RemoteDiscoveryNIC</dt>
+<dd class="dd">Specifies the IP address of the NIC that is used for HA discovery on the remote (standby) node in the HA pair.</dd>
+
+
+<dt class="dt dlterm">LocalDiscoveryNIC</dt>
+<dd class="dd">Specifies the IP address of the NIC that is used for HA discovery on the local (primary) node in the HA pair.</dd>
+
+
+<dt class="dt dlterm">LocalReplicationNIC</dt>
+<dd class="dd">Specifies the IP address of the NIC that is used for HA discovery on the local (primary) node in the HA pair.</dd>
+
+
+<dt class="dt dlterm">DiscoveryTimeout</dt>
+<dd class="dd">Specifies the time in seconds that the node attempts to discover the HA pair node.</dd>
+<dd class="dd ddexpand">The value must be in the range 10-2147483647.</dd>
+<dd class="dd ddexpand">The default value is 600.</dd>
+
+
+<dt class="dt dlterm">HeartbeatTimeout</dt>
+<dd class="dd">Specifies the time in seconds to detect that the other node in the HA pair has failed.</dd>
+<dd class="dd ddexpand">The value must be in the range 1-2147483647.</dd>
+<dd class="dd ddexpand">The default value is 10.</dd>
+
+</dl></div>
+</li>
+</ol>
+</li><li class="li step stepexpand"><strong>Optional: </strong>
+        <span class="ph cmd">If Server B is a newly installed server, you do not need to perform this step. If
+          Server B is not a newly installed server and has been used for messaging services, you
+          must delete any JMS queues that exist on the server and then clean the store. </span>
+        <div class="itemgroup info">
+          <p class="p">For more information about deleting message queues, see <a class="xref" href="ad00356_.html" title="System administrators can delete queues by using a REST Administration API.">Deleting a queue by using a REST Administration API</a>.</p>
+          <p class="p">For more information about cleaning the store, see <a class="xref" href="ad00282_.html" title="System administrators can restart and stop the Eclipse Amlen server by using REST Administration APIs.">Starting, restarting and stopping the Eclipse Amlen server by using REST Administration APIs</a>.</p>
+        </div>
+      </li><li class="li step stepexpand">
+<span class="ph cmd">On Server B, configure the standby server for HA by using the <span class="ph">Eclipse Amlen</span> REST API POST method. </span>
+<ol type="a" class="ol substeps">
+<li class="li substep substepexpand">
+<span class="ph cmd">Use the following <span class="ph">Eclipse Amlen</span> configuration URI:</span>
+<div class="itemgroup info">
+<p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/configuration/</code></p>
+</div>
+</li>
+<li class="li substep substepexpand">
+<span class="ph cmd">Provide HighAvailability object configuration data in the payload of the POST method by using the following schema. <span class="keyword parmname">Content-type</span> is set to <kbd class="ph userinput">application/json</kbd>. Ensure that capitalization and double quotation marks are used as shown. </span>
+<div class="itemgroup info">
+<pre class="pre codeblock"><code>
+{    
+   "HighAvailability": {
+      "Group": "string",
+      "EnableHA": true,
+      "StartupMode": "AutoDetect",
+      "RemoteDiscoveryNIC": "string",
+      "LocalReplicationNIC": "string",
+      "LocalDiscoveryNIC": "string",
+      "DiscoveryTimeout": integer,
+      "HeartbeatTimeout": integer,
+      "PreferredPrimary": false          
+    }
+}</code></pre>
+</div>
+</li>
+</ol>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Stop and then restart both <span class="ph">Eclipse Amlen</span> servers. Ensure that you restart server B in production mode.</span>
+<ol type="a" class="ol substeps">
+<li class="li substep substepexpand">
+<span class="ph cmd">Use the <span class="ph">Eclipse Amlen</span> REST API POST method with the following <span class="ph">Eclipse Amlen</span> configuration URI: </span>
+<div class="itemgroup info"><pre class="pre codeblock"><code><code class="ph codeph">http://&lt;admin-endpoint-IP:port&gt;/ima/v1/service/restart</code></code></pre>Provide configuration data in the payload of the POST method by using the following schema.  Ensure that capitalization and double quotation marks are used as shown.<pre class="pre codeblock"><code>
+{    
+  "Service": "Server"      
+}</code></pre></div>
+</li>
+</ol>
+<div class="itemgroup info">
+<div class="note tip note_tip"><span class="note__title">Tip:</span> As a best practice, restart the standby server first. Then restart the primary to limit the amount of time that the primary spends waiting for the standby to become available.</div>
+</div>
+</li></ol></section>
+<section class="section postreq">
+<div class="p">You can view HA configuration details of the <span class="ph">Eclipse Amlen</span> server by using the <span class="ph">Eclipse Amlen</span> REST API GET method with the following <span class="ph">Eclipse Amlen</span> configuration URI:<pre class="pre codeblock"><code>http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/configuration/HighAvailability</code></pre></div>
+<div class="p">You can view information about the HA role of the <span class="ph">Eclipse Amlen</span> server by using the <span class="ph">Eclipse Amlen</span> REST API GET method with the following <span class="ph">Eclipse Amlen</span> configuration URI:<pre class="pre codeblock"><code>http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/service/status/HighAvailability</code></pre></div>
+</section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Administering/ad00993_.html" title="System administrators can configure Eclipse Amlen servers for high availability by using REST Administration APIs.">Configuring high availability by using REST Administration APIs</a></div></div><div class="linklist relconcepts"><strong>Related concepts</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="ad00280_.html" title="You can restart, stop and view the status of the Eclipse Amlen server by using REST Administration APIs or by using the Amlen WebUI.">Starting, stopping, restarting and viewing the status of the Eclipse Amlen server</a></li></ul></div><div class="linklist reltasks"><strong>Related tasks</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="../Troubleshooting/tr00013_.html" title="System administrators can clean the store by using a REST Administration API or by using the Amlen WebUI. Cleaning the store deletes all persistent data.">Cleaning the store</a></li><li class="linklist"><a class="link" href="../Troubleshooting/tr00007_.html" title="System administrators can change the server state from Maintenance to Running, or from Running to Maintenance. The server state can be changed by using either REST Administration APIs or the Amlen WebUI.">Changing the server state</a></li><li class="linklist"><a class="link" href="ad00921_.html" title="System administrators can display the status of the Eclipse Amlen server and services by using REST Administration APIs.">Viewing the status of an Eclipse Amlen server and services by using REST Administration APIs</a></li></ul></div></nav>
+</article></main></body></html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can configure log rotation for Eclipse Amlen in a Docker environment. A sample logrotate file is provided for amendment to your system requirements. Log rotation can then occur on the server that hosts Docker."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Configuring log rotation for Eclipse Amlen in a Docker environment</title></head><body id="ad01297_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a><ul><li><a href="../Administering/ad00210_.html">Network interface controllers</a></li><li><a href="../Administering/ad00380_.html">Configuring the server name</a></li><li><a href="../Administering/ad00290_.html">Configuring log files</a><ul><li><a href="../Administering/ad00293_.html">Setting the logging level</a></li><li><a href="../Administering/ad01295_.html">Viewing the logging level by using REST Administration APIs</a></li><li><a href="../Administering/ad01291.html">Changing and viewing log location information by using REST Administration APIs</a></li><li><a href="../Administering/ad01292.html">Configuring and viewing syslog server information by using REST Administration APIs</a></li><li><a href="../Administering/ad01293.html">Store and forward syslog messages by using rsyslog </a></li><li><a href="../Administering/ad01294.html">Logging in a high availability environment</a></li><li class="active"><a href="../Administering/ad01297_.html">Configuring log rotation for Eclipse Amlen in a Docker environment</a></li></ul></li><li><a href="../Administering/ad00400_.html">Configuring your system for high availability</a></li><li><a href="../Administering/ad00790_.html">Configuring licensed usage and accepting the license for Eclipse Amlen  </a></li><li><a href="../Administering/ad00280_.html">Starting, stopping, restarting and viewing the status of the Eclipse Amlen server</a></li></ul></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Configuring log rotation for <span class="ph">Eclipse Amlen</span> in a Docker environment</h1>
+
+
+
+
+
+
+<div class="body taskbody"><p class="shortdesc">System administrators can configure log rotation for <span class="ph">Eclipse Amlen</span> in a Docker environment. A sample logrotate file is provided for amendment to your system requirements. Log rotation can then occur on the server that hosts Docker.  </p>
+<section class="section prereq">
+<ul class="ul">
+<li class="li">Ensure the persistence of data, logs, and store information across successive updates to the Docker container by first volume mapping the <span class="ph filepath">/var/messagesight</span> volume of the Docker container to a directory that the host can access. </li>
+<li class="li">The Linux™ server that is hosting the Docker environment or the RPM installation must have a cron daemon installed and enabled, and the logrotate RPM installed. By default, Centos 7 and RHEL Linux 7 install the cronie package version of the crond daemon. If the package is not configured or installed, see the documentation that relates to installation and configuration of the cronie package for guidance, or investigate an alternative cron implementation. </li>
+</ul>
+</section>
+<section><ol class="ol steps"><li class="li step stepexpand">
+<span class="ph cmd">Copy the <span class="ph">Eclipse Amlen</span> sample log rotation configuration file to the <span class="ph filepath">tmp</span> directory on the server that is hosting the Docker environment by using the following command:</span>
+<div class="itemgroup info">
+<pre class="pre codeblock"><code>docker cp IMA:/etc/logrotate.d/imaserver /tmp/imaserver</code></pre>
+</div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">In the copied file, specify the correct paths to the <span class="ph">Eclipse Amlen</span> log files.</span>
+<div class="itemgroup info">The paths in the sample file use the default log file location, <span class="ph filepath">/var/messagesight/diag/logs</span>, for an <span class="ph">Eclipse Amlen</span> installation. Amend these paths to match the actual location of the log files on the host system as specified in the Docker run command that you use to start <span class="ph">Eclipse Amlen</span>.<div class="p">For example, if your Docker run command
+is:<pre class="pre codeblock"><code>docker run --cap-add SYS_PTRACE --cap-add SYS_ADMIN --cap-add NET_ADMIN --security-opt apparmor:unconfined 
+--net=host -P -it --name=IMA --env-file=imaserver-docker.env -v /mnt/messagesight:/var/messagesight 
+-v /mnt/tmp:/var/tmp -d imaserver:2.0
+</code></pre>you
+must replace the <span class="ph filepath">/var/messagesight</span> element of the default path with
+<span class="ph filepath">/mnt/messagesight</span>. </div><div class="p">The default path for the imaserver-connection.log is:<pre class="pre codeblock"><code><strong class="ph b">/var/messagesight</strong>/diag/logs/imaserver-connection.log {
+        size 20M
+        rotate 3
+        compress
+        notifempty
+        missingok
+        copytruncate
+}
+</code></pre>Therefore, you need to amend the path to:<pre class="pre codeblock"><code><strong class="ph b">/mnt/messagesight</strong>/diag/logs/imaserver-connection.log {
+        size 20M
+        rotate 3
+        compress
+        notifempty
+        missingok
+        copytruncate
+}
+</code></pre></div><p class="p">Make the same amendment to the paths to all the other log files.</p>
+</div>
+</li><li class="li step stepexpand"><strong>Optional: </strong>
+<span class="ph cmd">Amend the other parameters in the configuration file to suit your system requirements. For further information about amending the parameters, see your local Linux man pages for logrotate. </span>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Copy the updated configuration file to the <span class="ph filepath">/etc/logrotate.d</span> location by issuing the following command:</span>
+<div class="itemgroup info">
+<pre class="pre codeblock"><code>cp /tmp/imaserver /etc/logrotate.d</code></pre>
+</div>
+</li></ol></section>
+</div>
+</article></main></body></html>

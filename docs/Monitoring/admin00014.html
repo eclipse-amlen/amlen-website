@@ -1,0 +1,60 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="Use the connection monitor to view live, aggregated connection data, and to query the best and worst performing connections across several connection metrics."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Viewing connection level statistics by using the Amlen WebUI</title></head><body id="admin00014"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a><ul><li><a href="../Monitoring/admin00080.html">Cluster monitoring</a></li><li><a href="../Monitoring/admin00009.html">Connection Monitoring</a><ul><li class="active"><a href="../Monitoring/admin00014.html">Viewing connection level statistics by using the Amlen WebUI</a></li><li><a href="../Monitoring/admin00012.html">Viewing connection level statistics by REST Monitoring APIs</a></li></ul></li><li><a href="../Monitoring/admin00010.html">Endpoint Monitoring</a></li><li><a href="../Monitoring/admin00016.html">Topic Monitoring</a></li><li><a href="../Monitoring/admin00019.html">Queue Monitoring</a></li><li><a href="../Monitoring/admin00022.html">Subscription Monitoring</a></li><li><a href="../Monitoring/admin00025.html">MQTT Client Monitoring</a></li><li><a href="../Monitoring/admin00031.html">MQ Connectivity monitoring</a></li><li><a href="../Monitoring/admin00070.html">Viewing protocol plug-in monitoring statistics by using an external application</a></li><li><a href="../Monitoring/admin00028.html">Server Monitoring</a></li><li><a href="../Monitoring/admin00060.html">XA Transaction monitoring</a></li></ul></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Viewing connection level statistics by using the <span class="ph">Amlen WebUI</span></h1>
+
+<div class="body taskbody"><p class="shortdesc">Use the connection monitor to view live, aggregated connection
+data, and to query the best and worst performing connections across
+several connection metrics.</p>
+<section class="section context"><p class="p">You can view connection monitoring statistics by using the <span class="ph">Amlen WebUI</span>, or by using <span class="ph">REST Monitoring API</span>. For more
+    information about using a <span class="ph">REST Monitoring API</span> to view connection
+    monitor statistics, see <a class="xref" href="admin00012.html" title="System administrators can view connection level monitoring statistics by using REST Monitoring APIs.">Viewing connection level statistics by REST Monitoring APIs</a>. For more information about the
+    predefined queries that you can run, see <a class="xref" href="admin00009.html" title="View live, aggregated connection data, and query the best and worst performing connections across several connection metrics.">Connection monitoring</a>.</p></section>
+<section><div class="ol steps"><div class="li step p"><span class="ph cmd">From the <span class="ph">Amlen WebUI</span>,
+navigate to the <span class="keyword wintitle">Connections</span> page by selecting <span class="ph menucascade"><span class="ph uicontrol">Monitoring</span><abbr title="and then"> &gt; </abbr><span class="ph uicontrol">Connections</span></span>.</span>
+<ul class="ul choices">
+<li class="li choice">To view active connections in real time, complete the following
+steps:<ol class="ol" type="a">
+<li class="li">From the <span class="keyword wintitle">Connections</span> page, go to the Connection
+Chart pane.<p class="p">The Connection Chart displays the number of active connections
+to the server over a period, and the number of new connections per
+second. The number of connections per second shows the average number
+of connections added during the previous second. This metric gives
+an indication of how active new connections are. For example, there
+might be a high turnover of connections and disconnections every second
+but the number of new connections might vary. New connections generate
+an extra load on the server, and therefore server health is important
+during these peaks. A message throughput of 0 might indicate that
+less than one message is received or sent per second. For example,
+a device that publishes intermittent messages about GPS position. </p></li>
+<li class="li">Optional. To pause chart updates, click <span class="ph uicontrol">Pause chart
+updates</span> located beneath the chart.</li>
+</ol></li>
+<li class="li choice">To view statistics on the best or worst performing connections
+for a particular endpoint and metric, complete the following steps:<ol class="ol" type="a">
+<li class="li">From the Connection Data section on the <span class="keyword wintitle">Connections</span> page,
+select the name of the endpoint that you want to monitor from the
+drop-down list in <span class="ph uicontrol">Endpoint</span>. To monitor all
+endpoints, select <kbd class="ph userinput">All</kbd>.</li>
+<li class="li">In <span class="ph uicontrol">Query</span>, select the <a class="xref" href="admin00009.html" title="View live, aggregated connection data, and query the best and worst performing connections across several connection metrics.">predefined query</a> that
+you want to filter on. </li>
+<li class="li">Click <span class="ph uicontrol">Refresh</span> to generate the output in
+the connection monitor table.</li>
+<li class="li" id="admin00014__Filter">Optional. Enter a value into <span class="ph uicontrol">Filter</span> to
+change the visibility of the data that is shown in the table. The
+filter is applied to the maximum of items that are returned by the
+query. </li>
+</ol></li>
+</ul>
+<div class="itemgroup info"></div></div></div></section>
+<section class="section result"><p class="p">The connection chart and connection monitor table are updated
+to display the results of the query and any filter that is applied
+to those results. </p><p class="p" id="admin00014__YouCanViewTheTotalNumberOfItemsThat">You
+can view the total number of items that are returned in the <span class="ph uicontrol">Total</span> field.
+You can see the number of items that are selected in the <span class="ph uicontrol">Selected</span> field.
+You can move through the table of results by using <span class="ph uicontrol">Next
+Page</span> and <span class="ph uicontrol">Previous Page</span> or <span class="ph uicontrol">Go
+to a specific page</span>. You can change the number of items
+to view per page by selecting from the available options. </p></section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Monitoring/admin00009.html" title="View live, aggregated connection data, and query the best and worst performing connections across several connection metrics.">Connection Monitoring</a></div></div></nav></article></main></body></html>

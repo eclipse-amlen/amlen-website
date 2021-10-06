@@ -1,0 +1,107 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="You can configure OAuth by using OAuth profiles. The OAuth profile defines the URLs and keys that are required to use OAuth single sign-on with Eclipse Amlen. The OAuth profile must be associated with a security profile, and the security profile must be associated with an endpoint."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Configuring OAuth</title></head><body id="ad00760_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a><ul><li><a href="../Administering/ad00710_.html">Configuring certificate profiles</a></li><li><a href="../Administering/ad00730_.html">Configuring Lightweight Third Party Authentication</a></li><li class="active"><a href="../Administering/ad00760_.html">Configuring OAuth</a><ul><li><a href="../Administering/ad00761_.html">Configuring OAuth profiles by using the Amlen WebUI</a></li><li><a href="../Administering/ad00763_.html">Creating and updating an OAuth profile by using REST Administration APIs</a></li></ul></li><li><a href="../Administering/ad00740_.html">Configuring security profiles</a></li><li><a href="../Administering/ad00720_.html">Configuring client certificates</a></li><li><a href="../Administering/ad00728_.html">Configuring trusted certificates</a></li><li><a href="../Administering/dv00022.html">Configuring a pre-shared key file</a></li><li><a href="../Administering/ad00750_.html">Configuring Federal Information Processing Standards (FIPS)</a></li><li><a href="../Administering/ad00753_.html">Closing client connections</a></li></ul></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Configuring OAuth</h1>
+
+<div class="body conbody"><p class="shortdesc">You can configure OAuth by using OAuth profiles. The OAuth profile defines the URLs and
+keys that are required to use OAuth single sign-on with <span class="ph">Eclipse Amlen</span>. The OAuth profile must be associated with a
+security profile, and the security profile must be associated with an endpoint.</p>
+<p class="p">For more information about OAuth, see <a class="xref" href="../Security/se00008_.html" title="OAuth is a protocol that enables a resource owner, such as a user, to allow a third party access to a protected resource without sharing a user name or password. Instead, an access token is used to grant access to the protected resource. For Eclipse Amlen, it enables a client application to connect to the Eclipse Amlen server without sharing the user name or password with Eclipse Amlen. Eclipse Amlen supports OAuth 2.0.">OAuth</a>.</p>
+<div class="p">When you create an OAuth profile, you must specify the following components:<ul class="ul">
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">Name</dt>
+<dd class="dd">Specifies the name that identifies the OAuth profile.</dd>
+<dd class="dd ddexpand">The name must not have leading or trailing spaces and cannot contain control characters, commas,
+double quotation marks, backslashes, or equal signs. The first character must not be a number or any
+of the following special characters: <p class="p"><code class="ph codeph">! # $ % &amp; ' ( ) * + - . / : ; &lt; &gt; ?
+@</code></p></dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">Resource URL</dt>
+<dd class="dd">Specifies the authorization server URL that is used to validate the access token.</dd>
+<dd class="dd ddexpand">The URL must include the protocol. The protocol can be <code class="ph codeph">http</code> or
+<code class="ph codeph">https</code>.</dd>
+
+</dl>
+</li>
+</ul></div>
+<p class="p">You can also specify the following components:</p>
+<ul class="ul">
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">OAuth Server Certificate</dt>
+<dd class="dd">Specifies the name of the file that contains the certificate that is used to secure the connection to the authorization server.</dd>
+<dd class="dd ddexpand">This parameter is known as the <span class="keyword parmname">KeyFileName </span> if you are using <span class="ph">REST Administration APIs</span>.</dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">Check Server Certificate</dt>
+<dd class="dd">Available in version 5.0.0.2 and later releases.  Possible options are as follows:<dl class="dl">
+
+<dt class="dt dlterm">Use messaging server trust store</dt>
+<dd class="dd">When connecting to the LDAP server, the certificate that is presented by the server is checked
+using the certificate that is uploaded to the product trust store.</dd>
+
+
+<dt class="dt dlterm">Use public trust store</dt>
+<dd class="dd">The certificate that is presented by the LDAP server is checked against the public certificates
+that are installed as part of the operating system.</dd>
+
+
+<dt class="dt dlterm">Disable certificate verification</dt>
+<dd class="dd">No certificate verification is performed when connecting to the LDAP server. This is an insecure
+option that is designed for testing purposes only.</dd>
+
+</dl></dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">Authorization Key</dt>
+<dd class="dd">Specifies the name of the key that is used to store the access token.</dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">User Info URL</dt>
+<dd class="dd">Specifies the authorization server URL that is used to retrieve the user information.</dd>
+<dd class="dd ddexpand">The URL must include the protocol. The protocol can be <code class="ph codeph">http</code> or <code class="ph codeph">https</code>.</dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">User Info Key</dt>
+<dd class="dd">Specifies the name of the key that is used to retrieve the user information.</dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">Group Info Key</dt>
+<dd class="dd">Specifies the name of the key that is used to retrieve the group information.</dd>
+<dd class="dd ddexpand"> If this parameter is specified, <span class="ph">Eclipse Amlen</span> does not retrieve group information from any other source.</dd>
+
+</dl>
+</li>
+</ul>
+<p class="p">For more information about configuring OAuth profiles by using the <span class="ph">Amlen WebUI</span>, see <a class="xref" href="ad00761_.html" title="System administrators can configure OAuth profiles by using the Security Settings page in the Amlen WebUI.">Configuring OAuth profiles by using the Amlen WebUI</a>.</p>
+<p class="p">For more information about configuring OAuth profiles by using <span class="ph">REST Administration APIs</span>, see <a class="xref" href="ad00763_.html" title="System administrators can copy a key file to Eclipse Amlen to use in an OAuth profile by using the Eclipse Amlen REST API PUT method. System administrators can create an OAuth profile by using the Eclipse Amlen REST API POST method. Existing OAuth profiles can also be updated by system administrators by using the Eclipse Amlen REST API POST method.">Creating and updating an OAuth profile by using REST Administration APIs</a>.</p>
+</div>
+</article></main></body></html>

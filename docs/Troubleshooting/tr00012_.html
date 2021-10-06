@@ -1,0 +1,88 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="There are several common reasons why the Amlen WebUI might not work."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>The Amlen WebUI is not working</title></head><body id="tr00012_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a><ul><li><a href="../Troubleshooting/tr00000_.html">Log files</a></li><li><a href="../Troubleshooting/tr00006_.html">Maintenance mode</a></li><li><a href="../Troubleshooting/tr00001_.html">Common problems</a><ul><li><a href="../Troubleshooting/tr00002_.html">The application fails to connect</a></li><li><a href="../Troubleshooting/tr00008_.html">The application disconnects</a></li><li><a href="../Troubleshooting/tr00010_.html">The application fails to publish</a></li><li><a href="../Troubleshooting/tr00009_.html">The application fails to subscribe</a></li><li><a href="../Troubleshooting/tr00003_.html">Messages are not sent</a></li><li><a href="../Troubleshooting/tr00004_.html">Messages do not arrive</a></li><li><a href="../Troubleshooting/tr00005_.html">  MQ Connectivity problems</a></li><li><a href="../Troubleshooting/raisnotworking.html">Eclipse Amlen resource adapter is not working</a></li><li><a href="../Troubleshooting/tr00020_.html">LTPA validation fails</a></li><li class="active"><a href="../Troubleshooting/tr00012_.html">The Amlen WebUI is not working</a></li><li><a href="../Troubleshooting/tr00015_.html">High availability problems</a></li><li><a href="../Troubleshooting/tr00026_.html">Cluster problems</a></li><li><a href="../Troubleshooting/tr00021_.html">Dynamic policy update problems</a></li><li><a href="../Troubleshooting/tr00023_.html">SNMP problems</a></li><li><a href="../Troubleshooting/tr00024_.html">LDAP is not working</a></li><li><a href="../Troubleshooting/tr00031_.html">Problems during upgrade from IBM MessageSight version 1.2</a></li></ul></li><li><a href="../Troubleshooting/tr00030.html">Platform must-gather</a></li><li><a href="../Troubleshooting/admin_messagecatalog.html">Message catalog</a></li></ul></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">The <span class="ph">Amlen WebUI</span> is
+not working</h1>
+
+<div class="body conbody"><p class="shortdesc">There are several common reasons why the <span class="ph">Amlen WebUI</span> might not
+work.</p>
+<section class="section"><h2 class="title sectiontitle">Is the <span class="ph">Amlen WebUI</span> container running in your
+                Docker environment?</h2><p class="p">If the <span class="ph">Amlen WebUI</span> container is not running, you
+                cannot connect to the <span class="ph">Amlen WebUI</span>. To
+                determine whether the container is running, enter the following command:</p><p class="p"><code class="ph codeph">docker ps -a</code></p><p class="p">If the status is not <code class="ph codeph">Running</code>, start the <span class="ph">Amlen WebUI</span> container. </p>
+            <p class="p">You can start the container by entering the following command: <code class="ph codeph">docker start
+                        <var class="keyword varname">&lt;WebUI container name&gt;</var></code></p></section>
+<section class="section"><h2 class="title sectiontitle">Does restarting the <span class="ph">Amlen WebUI</span> process resolve
+the issue?</h2><p class="p">With some issues, restarting the <span class="ph">Amlen WebUI</span> process can resolve the issue.</p>
+            <div class="p">If you are using Docker: <ul class="ul">
+                <li class="li">You can stop the container by entering the following command: <code class="ph codeph">docker stop <var class="keyword varname">&lt;WebUI container name&gt;</var></code></li>
+                <li class="li">You can start the container by entering the following command: <code class="ph codeph">docker start <var class="keyword varname">&lt;WebUI container name&gt;</var></code></li>
+                </ul></div>
+            <div class="p">If you are not using Docker:<ul class="ul">
+            <li class="li">You can stop the process by entering the following command: <code class="ph codeph">systemctl stop imawebui</code></li>
+            <li class="li">You can start the process by entering the following command: <code class="ph codeph">systemctl start imawebui</code></li>
+                </ul></div></section>
+        <section class="section"><h2 class="title sectiontitle">Is the port in use?</h2>
+            
+            <p class="p">If you have changed the port, and can no longer access the <span class="ph">Amlen WebUI</span> you can check if the new
+                port is in use. </p>
+            <p class="p">You must first stop the <span class="ph">Amlen WebUI</span>. </p>
+            <p class="p">If you are using Docker you can stop the process by entering the following command:
+                    <code class="ph codeph">docker stop <var class="keyword varname">&lt;WebUI container name&gt;</var></code></p>
+            <p class="p">If you are not using Docker you can stop the process by entering the following
+            command: <code class="ph codeph">systemctl stop imawebui</code></p>
+            <p class="p">You can then check to see whether the port is in use. If the port is in use, you
+                might be able to locate the application that is using that port and temporarily stop
+                that application. This might provide you with enough time to start the Web UI again
+                by using the port. You can then select a new port that is valid and available. </p>
+            <p class="p">To start the <span class="ph">Amlen WebUI</span> you can use one
+                of  the following commands: </p>
+            <p class="p">If you are using Docker you can start the process by entering the following command:
+                    <code class="ph codeph">docker start <var class="keyword varname">&lt;WebUI container name&gt;</var></code></p>
+            <p class="p">If you are not using Docker you can start the process by entering the following
+            command: <code class="ph codeph">systemctl start imawebui</code></p>
+        </section>
+<section class="section"><h2 class="title sectiontitle">Does closing the browser application resolve the issue?</h2><p class="p">If you experience problems with the <span class="ph">Amlen WebUI</span>,
+                closing the browser application might resolve the issue. After you close the browser
+                application and all of your browser windows, open a new browser application and log
+                in again.</p></section>
+<section class="section"><h2 class="title sectiontitle">Can you ping the <span class="ph">Amlen WebUI</span> host from
+the machine that you are running the browser from?</h2><p class="p">If the ping test is not successful, there might be a problem with your network setup or the <span class="ph">Eclipse Amlen</span> server might not be powered on.
+                If the ping test is successful, check that the network <span class="ph">Eclipse Amlen</span> server configuration is
+                correct. </p></section>
+<section class="section"><h2 class="title sectiontitle">Is the <span class="ph">Amlen WebUI</span> connection
+timing out?</h2><p class="p">If you have a slow connection, your connection
+to the <span class="ph">Amlen WebUI</span> might
+time out.</p><p class="p">By default, the HTTP Read timeout is set to 20 seconds. If you increase this value, you can reduce the chance of a timeout. For more information about changing the HTTP Read timeout, see <a class="xref" href="../AdministeringWebUI/ad00193_.html" title="The HTTP read timeout determines how long the Amlen WebUI waits before it times out when it is waiting for an HTTP read request to complete. By default, this value is set to 20 seconds. If you have a slow connection, it is possible that your HTTP read request cannot complete within 20 seconds. In this case, you might consider increasing the HTTP read timeout.">Changing the HTTP read timeout</a>.</p></section>
+<section class="section"><h2 class="title sectiontitle">Is the <span class="ph">Amlen WebUI</span> not working
+after a firmware update?</h2><p class="p">The <span class="ph">Amlen WebUI</span> might show
+a blank page after a firmware update. To resolve this issue, clear
+your browser cache and try again.</p></section>
+<section class="section"><h2 class="title sectiontitle">Is the <span class="ph">Amlen WebUI</span> not loading
+in Firefox?</h2><div class="p">When you are using Firefox with an IPv6 address
+and the default, self-signed web UI certificate, the <span class="ph">Amlen WebUI</span> might not
+load. To resolve the problem, take one of the following actions:<ul class="ul">
+<li class="li">If you have a DNS server that can map a host name to the <span class="ph">Amlen WebUI</span> IP address,
+you can assign a host name to the static IP address and use the host
+name to access the <span class="ph">Amlen WebUI</span>.</li>
+<li class="li">Replace the <span class="ph">Amlen WebUI</span> self-signed certificate with a certificate from a certifying authority. You must use a different browser to replace the certificate. For more information about replacing the <span class="ph">Amlen WebUI</span> certificate, see <a class="xref" href="../AdministeringWebUI/ad00196_.html" title="You can change the security certificate that is used by the Amlen WebUI by using the Web UI Settings page.">Changing the Amlen WebUI security certificate</a>.</li>
+<li class="li">Replace the <span class="ph">Amlen WebUI</span> self-signed certificate with a certificate that the user can install into Firefox. You must use a different browser to replace the certificate. For more information about replacing the <span class="ph">Amlen WebUI</span> certificate, see <a class="xref" href="../AdministeringWebUI/ad00196_.html" title="You can change the security certificate that is used by the Amlen WebUI by using the Web UI Settings page.">Changing the Amlen WebUI security certificate</a>.</li>
+</ul></div></section>
+<section class="section"><h2 class="title sectiontitle">Are you using Internet Explorer 10?</h2><p class="p">Ensure that you are using the latest version with the latest fixes by running Windows™ Update.</p></section>
+<section class="section"><h2 class="title sectiontitle">Is the URL used to connect to the <span class="ph">Amlen WebUI</span> the fully
+qualified domain name?</h2><p class="p">If you use a short name in the URL,
+for example, <code class="ph codeph">https://abc:9087</code>, you might see the
+error code <code class="ph codeph">CWLNA5001</code>, and a server status of <code class="ph codeph">UNKNOWN</code>.
+To resolve this issue, you must use the fully qualified domain name,
+for example, <code class="ph codeph">https://abc.example.com:9087</code>.</p></section>
+<section class="section"><h2 class="title sectiontitle">Is the IP address that you are using configured correctly? </h2><p class="p">If
+you are using a static IP address, ensure that the address is from
+the IP range that is defined for a given VMnetX adapter in the Virtual
+Network Editor.</p><p class="p">If you are using a dynamic IP address, ensure
+that DHCP is enabled for the corresponding VMnetX adapter(s) in the
+Virtual Network Editor. The <span class="ph uicontrol">Use local DHCP service to distribute
+IP address to VMs</span> checkbox must be selected.</p></section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Troubleshooting/tr00001_.html" title="There are a number of common problems that you might encounter. Your application might fail to connect. Your application might disconnect unexpectedly. Your messages might not be published, or your messages might not arrive. MQ Connectivity might not work.">Common problems</a></div></div><div class="linklist relconcepts"><strong>Related concepts</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="tr10000_.html" title="Look for a troubleshooting task to help you solve a problem when using Eclipse Amlen.">Troubleshooting</a></li><li class="linklist"><a class="link" href="../AdministeringWebUI/ad00199_.html" title="The Amlen WebUI can be used by system administrators and messaging administrators to administer Eclipse Amlen.">The Amlen WebUI</a></li></ul></div><div class="linklist reltasks"><strong>Related tasks</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="../AdministeringWebUI/ad00197_.html" title="System administrators can change the IP address and Port values that are used to connect to the Amlen WebUI by using the Web UI Settings page.">Changing the Amlen WebUI address</a></li><li class="linklist"><a class="link" href="../AdministeringWebUI/ad00198_.html" title="The Amlen WebUI logs users out after a default period of 30 minutes of browser inactivity. The Amlen WebUI logs users out after a default period of 120 minutes, regardless of browser activity. You can change these timeout periods by using the Web UI Settings page.">Changing the Amlen WebUI timeout</a></li><li class="linklist"><a class="link" href="../AdministeringWebUI/ad00193_.html" title="The HTTP read timeout determines how long the Amlen WebUI waits before it times out when it is waiting for an HTTP read request to complete. By default, this value is set to 20 seconds. If you have a slow connection, it is possible that your HTTP read request cannot complete within 20 seconds. In this case, you might consider increasing the HTTP read timeout.">Changing the HTTP read timeout</a></li><li class="linklist"><a class="link" href="../AdministeringWebUI/ad00195_.html" title="The authentication cache timeout specifies how long an authenticated credential in the cache is valid. By default, the authentication cache timeout is set to 60 seconds. You can change this timeout by using the Web UI Settings page.">Changing the Amlen WebUI authentication cache timeout</a></li><li class="linklist"><a class="link" href="../AdministeringWebUI/ad00196_.html" title="You can change the security certificate that is used by the Amlen WebUI by using the Web UI Settings page.">Changing the Amlen WebUI security certificate</a></li><li class="linklist"><a class="link" href="../AdministeringWebUI/ad00194_.html" title="System administrators can start and stop the Amlen WebUI by using the following docker commands.">Starting and stopping the Amlen WebUI process in a Docker environment</a></li></ul></div></nav>
+
+</article></main></body></html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="When messages are converted between MQTT and JMS, there is a set of rules that are applied to the conversion."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Conversion between MQTT and JMS</title></head><body id="pl00005"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a><ul><li><a href="../Planning/pl00030.html">Installation planning</a></li><li><a href="../Planning/ov00101_.html">Messaging patterns</a></li><li><a href="../Planning/pl00010.html">Messaging planning</a><ul><li><a href="../Planning/ov00102_.html">Message delivery</a></li><li class="active"><a href="../Planning/pl00005.html">Conversion between MQTT and JMS</a></li></ul></li><li><a href="../Planning/clusteringconsiderations.html">Clustering considerations</a></li><li><a href="../Planning/pl00002_.html">Capacity planning</a></li><li><a href="../Planning/pl00004.html">Performance planning</a></li><li><a href="../Planning/ov40001.html">High availability planning</a></li><li><a href="../Planning/pl00020.html">Connecting to an existing infrastructure</a></li></ul></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Conversion between MQTT and JMS</h1>
+
+<div class="body conbody"><p class="shortdesc">When messages are converted between MQTT and JMS, there
+is a set of rules that are applied to the conversion.</p>
+<p class="p">If the source and destination protocols are the same, then no conversion occurs. For MQTT to JMS
+message conversion, when the content is ambiguous, the property
+<span class="ph uicontrol">ConvertMessageType</span> is used to decide what action to take. <span class="ph">Eclipse Amlen</span> sets the message type when a message is
+received from <span class="ph">IBM® MQ</span>. Messages are treated as JMS
+messages when received from <span class="ph">Eclipse Amlen</span>.</p>
+<p class="p">The following table shows the six message types that define the type of content in JMS, and two
+message types that defines the type of content in MQTT:</p>
+<div class="p">
+<table class="table"><caption><span class="table--title-label">Table 1. </span><span class="title">The message types that define the type of content in JMS and MQTT.</span></caption><colgroup><col><col><col></colgroup><thead class="thead">
+<tr class="row">
+<th class="entry" id="pl00005__entry__1">Message type</th>
+<th class="entry" id="pl00005__entry__2">To MQTT</th>
+<th class="entry" id="pl00005__entry__3">From MQTT</th>
+</tr>
+</thead><tbody class="tbody">
+<tr class="row">
+<td class="entry" headers="pl00005__entry__1">Message</td>
+<td class="entry" headers="pl00005__entry__2">Zero length payload</td>
+<td class="entry" headers="pl00005__entry__3">Never created </td>
+</tr>
+<tr class="row">
+<td class="entry" headers="pl00005__entry__1">BytesMessage</td>
+<td class="entry" headers="pl00005__entry__2">The byte array content is used as the payload.</td>
+<td class="entry" headers="pl00005__entry__3">Use the payload as a byte content if one of the following is true:<ul class="ul">
+<li class="li">The <span class="ph uicontrol">ConvertMessageType</span> property is 'bytes'</li>
+<li class="li">The convert type is automatic and the payload contains any byte sequence that is not a valid
+UTF-8 encoded string, or contains any byte less than 0x20 except 0x09, 0x0a, or 0x0d.</li>
+</ul>
+</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="pl00005__entry__1">MapMessage</td>
+<td class="entry" headers="pl00005__entry__2">The map is converted to JSON in a UTF-8 encoding.</td>
+<td class="entry" headers="pl00005__entry__3">Never created </td>
+</tr>
+<tr class="row">
+<td class="entry" headers="pl00005__entry__1">ObjectMessage</td>
+<td class="entry" headers="pl00005__entry__2">The serialized form of the object is used as the payload. If the object is null, a zero
+length payload is used.</td>
+<td class="entry" headers="pl00005__entry__3">Never created </td>
+</tr>
+<tr class="row">
+<td class="entry" headers="pl00005__entry__1">StreamMessage</td>
+<td class="entry" headers="pl00005__entry__2">The stream is converted to JSON in a UTF-8 encoding.</td>
+<td class="entry" headers="pl00005__entry__3">Never created </td>
+</tr>
+<tr class="row">
+<td class="entry" headers="pl00005__entry__1">TextMessage</td>
+<td class="entry" headers="pl00005__entry__2">The UTF-8 encoding of the text is used as the payload. If the text is null, a zero length
+payload is used.</td>
+<td class="entry" headers="pl00005__entry__3">Interpret the payload as a UTF-8 encoded string if the convert type is text, or the convert
+type is automatic and the payload contains only valid UTF-8 characters and only the control
+characters <span class="ph uicontrol">NL</span>, <span class="ph uicontrol">CR</span>, and
+<span class="ph uicontrol">HT</span>.</td>
+</tr>
+</tbody></table>
+</div>
+<p class="p">Differences exist in the implementation of common concepts between the MQTT and JMS protocols.
+If you are planning to interchange messages between the two protocols, restrict your messages to
+functionality that is supported by both.  Before you convert your messages, familiarize yourself
+with the following implementation characteristics of MQTT and JMS protocols and with the mapping
+information.</p>
+<ul class="ul" id="pl00005__ul_l2x_ps4_xhb">
+<li class="li">Named user properties are mapped in both directions.</li>
+<li class="li">JMS user properties must start with <code class="ph codeph">JMSX</code> and cannot start with
+<code class="ph codeph">JMS</code>. When you convert from MQTT to JMS, ensure user properties start with
+<code class="ph codeph">JMSX</code>.</li>
+<li class="li">Differences exist in how property values are handled:<ul class="ul" id="pl00005__ul_zly_cw4_xhb">
+<li class="li">MQTT allows  a string only as a property type. </li>
+<li class="li">JMS allows a string, integers of various sizes, a floating value, a Boolean, and a byte array as
+a property type. </li>
+<li class="li">When you convert a JMS property value to an MQTT property value, covert the JMS property value
+to a string, where possible. </li>
+<li class="li">When you convert a JMS byte array, convert the value to a string. If the value cannot be
+converted to a valid UTF-8 string, the property value is not written.</li>
+<li class="li">When you convert from MQTT to JMS, all property values are converted to strings.</li>
+</ul></li>
+<li class="li">MQTT Content Type maps to <span class="ph uicontrol">JMSType</span> in both directions.</li>
+<li class="li">MQTT Response Topic maps to <span class="ph uicontrol">JMSReplyTo</span> in both directions</li>
+<li class="li">MQTT Correlation Identifier maps to <span class="ph uicontrol">JMSCorrelationID</span> in both directions.
+Use valid UTF-8 strings as correlation IDs when you interchange messages between protocols. For JMS,
+the correlation identifier must be a string. To use request and response between JMS and MQTT, you
+must update to the new version of the MQTT client.</li>
+<li class="li"><span class="ph uicontrol">JMSMessageID</span> maps to the MQTT user property
+<span class="ph uicontrol">JMSMessageID</span> in both directions.</li>
+<li class="li"><span class="ph uicontrol">JMSTimestamp</span> maps to the MQTT user property
+<span class="ph uicontrol">JMSTimestamp</span> in both directions. In MQTT, <span class="ph uicontrol">JMSTimestamp</span>
+is an ISO8601 formatted string  that starts with year.</li>
+<li class="li">JMS places more stringent restrictions on the names of properties than MQTT. Use property names
+that meet both sets of requirements. </li>
+<li class="li">MQTT allows multiple instances of the same key. However, JMS allows only one instance of each
+key. If multiple instances of a key exist when you send properties from MQTT to JMS, the client sees
+one key only . It is not possible to determine which key the client sees. </li>
+</ul>
+<p class="p">For information about other considerations when MQTT applications interact with JMS applications,
+see <a class="xref" href="../Developing/devmqttapp.html" title="The MQ Telemetry Transport (MQTT) is a lightweight publish/subscribe protocol that uses TCP/IP to connect large numbers of remote sensors and control devices. MQTT is used by specialized applications on small footprint devices that must tolerate low bandwidth and unreliable communication.">Developing
+MQTT applications</a>.</p>
+
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Planning/pl00010.html" title="Key points to consider when you plan the messaging aspects of your Eclipse Amlen solution.">Messaging planning</a></div></div></nav></article></main></body></html>

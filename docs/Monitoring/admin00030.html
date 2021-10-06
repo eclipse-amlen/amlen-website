@@ -1,0 +1,197 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can view statistics about Eclipse Amlen memory by using REST Monitoring APIs."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Viewing memory statistics by using REST Monitoring APIs</title></head><body id="admin00030"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a><ul><li><a href="../Monitoring/admin00080.html">Cluster monitoring</a></li><li><a href="../Monitoring/admin00009.html">Connection Monitoring</a></li><li><a href="../Monitoring/admin00010.html">Endpoint Monitoring</a></li><li><a href="../Monitoring/admin00016.html">Topic Monitoring</a></li><li><a href="../Monitoring/admin00019.html">Queue Monitoring</a></li><li><a href="../Monitoring/admin00022.html">Subscription Monitoring</a></li><li><a href="../Monitoring/admin00025.html">MQTT Client Monitoring</a></li><li><a href="../Monitoring/admin00031.html">MQ Connectivity monitoring</a></li><li><a href="../Monitoring/admin00070.html">Viewing protocol plug-in monitoring statistics by using an external application</a></li><li><a href="../Monitoring/admin00028.html">Server Monitoring</a><ul><li><a href="../Monitoring/admin00038.html">Viewing server statistics by using the Amlen WebUI</a></li><li><a href="../Monitoring/admin00037.html">Viewing server statistics by using REST Monitoring APIs</a></li><li><a href="../Monitoring/admin00034.html">Store Monitoring</a></li><li><a href="../Monitoring/admin00051.html">Memory Monitoring</a><ul><li><a href="../Monitoring/admin00029.html">Viewing memory statistics by using the Amlen WebUI</a></li><li class="active"><a href="../Monitoring/admin00030.html">Viewing memory statistics by using REST Monitoring APIs</a></li><li><a href="../Monitoring/admin00052.html">Viewing memory statistics by using an external application</a></li></ul></li></ul></li><li><a href="../Monitoring/admin00060.html">XA Transaction monitoring</a></li></ul></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Viewing memory statistics by using <span class="ph">REST Monitoring APIs</span></h1>
+
+<div class="body taskbody"><p class="shortdesc">System administrators can view statistics about <span class="ph">Eclipse Amlen</span> memory by using <span class="ph">REST Monitoring APIs</span>.</p>
+<section class="section context"> <p class="p">You can view statistical information about the <span class="ph">Eclipse Amlen</span> memory.
+The memory statistics provide information about the <span class="ph">Eclipse Amlen</span> volatile
+memory.</p><p class="p">System administrators can view statistics about <span class="ph">Eclipse Amlen</span> memory by using a <span class="ph">REST Monitoring API</span>, by using the <span class="ph">Amlen WebUI</span>, or by using an external monitoring
+    application. For more information about using the <span class="ph">Amlen WebUI</span> to view statistics about <span class="ph">Eclipse Amlen</span> memory, see <a class="xref" href="admin00029.html" title="Use the Server monitor to view statistics about Eclipse Amlen memory.">Viewing memory statistics by using the <span class="ph">Amlen WebUI</span></a>. For more information about using
+    an external application to view statistics about <span class="ph">Eclipse Amlen</span> memory, see <a class="xref" href="admin00052.html" title="External monitoring applications can access memory data that is published by Eclipse Amlen by subscribing to the Eclipse Amlen topic $SYS/ResourceStatistics/Memory.">Viewing memory statistics by using an external
+     application</a>.</p></section>
+<section><div class="li stepsection">Memory-related monitoring statistics can be viewed by using a <span class="ph">REST Monitoring API</span>. To create
+    memory-related monitoring statistics, complete the following steps:</div><ol class="ol steps"><li class="li step stepexpand">
+        <span class="ph cmd">Use the <span class="ph">Eclipse Amlen</span> REST
+          API GET method with the following <span class="ph">Eclipse Amlen</span> monitoring URI: </span>
+        <div class="itemgroup info">
+          <pre class="pre codeblock"><code>http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/monitor/Memory</code></pre>
+        </div>
+      </li><li class="li step stepexpand">
+        <span class="ph cmd">Provide query parameters requesting the statistics that you want returned in the JSON
+          payload. The following example uses cURL to create memory-related statistics:</span>
+        <div class="itemgroup info">
+          <pre class="pre codeblock"><code>curl -X GET http://127.0.0.1:9089/ima/v1/monitor/Memory?SubType=<var class="keyword varname">SubType</var>%26Duration=<var class="keyword varname">Duration</var>%26StatType=<var class="keyword varname">StatType</var></code></pre>
+          <div class="p">Where:<ul class="ul">
+              <li class="li">
+                <dl class="dl">
+                  
+                    <dt class="dt dlterm"><var class="keyword varname">SubType</var></dt>
+                    <dd class="dd">Optional.</dd>
+                    <dd class="dd ddexpand">Specifies the time period of data to report.</dd>
+                    <dd class="dd ddexpand">This value can be one of the following values:<ul class="ul">
+                        <li class="li">
+                          <dl class="dl">
+                            
+                              <dt class="dt dlterm">Current®</dt>
+                              <dd class="dd">View the most recent statistics.</dd>
+                            
+                          </dl>
+                        </li>
+                        <li class="li">
+                          <dl class="dl">
+                            
+                              <dt class="dt dlterm">History</dt>
+                              <dd class="dd">View older statistics.</dd>
+                            
+                          </dl>
+                        </li>
+                      </ul>The default value is <span class="keyword parmname">Current</span>.</dd>
+                  
+                </dl>
+              </li>
+              <li class="li">
+                <dl class="dl">
+                  
+                    <dt class="dt dlterm"><var class="keyword varname">time</var></dt>
+                    <dd class="dd">Optional.</dd>
+                    <dd class="dd ddexpand">Specifies the time span (in seconds) of the data to be collected. <p class="p">Valid
+                        value range is 1 - 86400.</p><p class="p">The default value is
+                          <span class="keyword parmname">1800</span>.</p>
+                    </dd>
+                  
+                </dl>
+              </li>
+              <li class="li">
+                <dl class="dl">
+                  
+                    <dt class="dt dlterm"><var class="keyword varname">StatType</var></dt>
+                    <dd class="dd">Optional.</dd>
+                    <dd class="dd ddexpand">Specifies the types of data to return when <code class="ph codeph">SubType</code> is set
+                      to <span class="keyword parmname">History</span>.</dd>
+                    <dd class="dd ddexpand">You can specify multiple values in a comma delimited list. This value can be
+                      one of the following values:<ul class="ul">
+                        <li class="li">
+                          <dl class="dl">
+                            
+                              <dt class="dt dlterm">MemoryTotalBytes</dt>
+                              <dd class="dd">This statistic shows the total amount of physical memory on <span class="ph">Eclipse Amlen</span>.</dd>
+                            
+                          </dl>
+                        </li>
+                        <li class="li">
+                          <dl class="dl">
+                            
+                              <dt class="dt dlterm">MemoryFreeBytes</dt>
+                              <dd class="dd">This statistic shows the amount of physical memory that is
+                                available.</dd>
+                            
+                          </dl>
+                        </li>
+                        <li class="li">
+                          <dl class="dl">
+                            
+                              <dt class="dt dlterm">MemoryFreePercent</dt>
+                              <dd class="dd">This statistic shows the amount of free memory as a percentage of
+                                total physical memory.</dd>
+                            
+                          </dl>
+                        </li>
+                        <li class="li">
+                          <dl class="dl">
+                            
+                              <dt class="dt dlterm">ServerVirtualMemoryBytes</dt>
+                              <dd class="dd">This statistic shows the amount of virtual memory that is being
+                                used by <span class="ph">Eclipse Amlen</span>.</dd>
+                            
+                          </dl>
+                        </li>
+                        <li class="li">
+                          <dl class="dl">
+                            
+                              <dt class="dt dlterm">ServerResidentSetBytes</dt>
+                              <dd class="dd">This statistic shows the amount of physical memory that is being
+                                used by <span class="ph">Eclipse Amlen</span>.</dd>
+                            
+                          </dl>
+                        </li>
+                        <li class="li">
+                          <dl class="dl">
+                            
+                              <dt class="dt dlterm">MessagePayloads</dt>
+                              <dd class="dd">This statistic shows the amount of memory that is being consumed
+                                by <span class="ph">Eclipse Amlen</span>
+                                for message payloads.</dd>
+                            
+                          </dl>
+                        </li>
+                        <li class="li">
+                          <dl class="dl">
+                            
+                              <dt class="dt dlterm">PublishSubscribe</dt>
+                              <dd class="dd">This statistic shows the amount of memory that is being consumed
+                                by <span class="ph">Eclipse Amlen</span>
+                                for publish/subscribe data structures. For example, topics and
+                                subscriptions.</dd>
+                            
+                          </dl>
+                        </li>
+                        <li class="li">
+                          <dl class="dl">
+                            
+                              <dt class="dt dlterm">Destinations</dt>
+                              <dd class="dd">This statistic shows the amount of memory that is being consumed
+                                by <span class="ph">Eclipse Amlen</span>
+                                for destinations on which messages can be buffered. For example,
+                                queues.</dd>
+                            
+                          </dl>
+                        </li>
+                        <li class="li">
+                          <dl class="dl">
+                            
+                              <dt class="dt dlterm">CurrentActivity</dt>
+                              <dd class="dd">This statistic shows the amount of memory that is being consumed
+                                by <span class="ph">Eclipse Amlen</span>
+                                for current activity. For example, transactions and message
+                                acknowledgements.</dd>
+                            
+                          </dl>
+                        </li>
+                        <li class="li">
+                          <dl class="dl">
+                            
+                              <dt class="dt dlterm">ClientStates</dt>
+                              <dd class="dd">This statistic shows the amount of memory that is being consumed
+                                by <span class="ph">Eclipse Amlen</span>
+                                for connected and disconnected clients.</dd>
+                            
+                          </dl>
+                        </li>
+                      </ul><p class="p">The default value is <span class="keyword parmname">MemoryTotalBytes</span>.</p></dd>
+                  
+                </dl>
+              </li>
+            </ul></div>
+        </div>
+      </li></ol></section>
+<section class="section result"><p class="p">If the <code class="ph codeph">SubType</code> is set to <span class="keyword parmname">History</span>,
+and monitoring data is not available for the requested statistic,
+a value of <code class="ph codeph">-1</code> is returned.</p>For more information
+about the fields that are returned, see <a class="xref" href="admin00051.html" title="Eclipse Amlen tracks the memory that is in use. Different workloads use memory in different ways. You can view how much memory is being used in different categories by using the Eclipse Amlen memory monitoring tools.">Memory Monitoring</a>.</section>
+<section class="example">
+   <p class="p">The following example uses cURL to show how a GET method is used to view statistical
+        information about the <span class="ph">Eclipse Amlen</span> volatile
+        memory. </p>
+   <pre class="pre codeblock"><code>curl -X GET http://127.0.0.1:9089/ima/v1/monitor/Memory?SubType=Current  
+ 
+ </code></pre>
+   <p class="p">The following example shows a successful example response to the GET method that was used to
+    create statistical information about the <span class="ph">Eclipse Amlen</span> volatile memory:</p>
+   <pre class="pre codeblock"><code>
+{ "Version":"v1", "Memory": { "MemoryTotalBytes":7934193664, "MemoryFreeBytes":5428342784, "MemoryFreePercent":68, 
+"ServerVirtualMemoryBytes":2334150656, "ServerResidentSetBytes":795844608, "MessagePayloads":1048576, "PublishSubscribe":9961472, 
+"Destinations":6299616, "CurrentActivity":3149808 , "ClientStates":524288 } }</code></pre></section>
+</div>
+
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Monitoring/admin00051.html" title="Eclipse Amlen tracks the memory that is in use. Different workloads use memory in different ways. You can view how much memory is being used in different categories by using the Eclipse Amlen memory monitoring tools.">Memory Monitoring</a></div></div></nav></article></main></body></html>

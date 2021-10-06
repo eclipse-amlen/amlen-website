@@ -1,0 +1,202 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="A subscriber is an application that requests information about a specific topic in a publish/subscribe network. A subscriber receives messages, about the same or different topics, from more than one publisher. A subscription is a request that is sent by the subscriber to receive messages from a relevant topic."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Subscribers and Subscriptions</title></head><body id="ov300010"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a><ul><li><a href="../Overview/ov00002_.html">Architecture Overview</a></li><li><a href="../Overview/ov60000_.html">Eclipse Amlen in Containers</a></li><li><a href="../Overview/ov00050.html">Supported protocols</a></li><li><a href="../Bridge/br00000.html">   Amlen Bridge</a></li><li><a href="../Overview/ov00003_.html">Key Concepts</a><ul><li><a href="../Overview/ov20000.html">Point-to-point messaging</a></li><li><a href="../Overview/ov00030.html">Publish/Subscribe</a><ul><li class="active"><a href="../Overview/ov30010.html">Subscribers and Subscriptions</a></li><li><a href="../Overview/ov00031.html">Topic Strings</a></li><li><a href="../Overview/ov00032.html">Wildcards</a></li><li><a href="../Overview/ov00033.html">Retained messages</a></li></ul></li><li><a href="../Planning/ov00102_.html">Message delivery</a></li><li><a href="../Planning/ov00101_.html">Messaging patterns</a></li><li><a href="../Overview/ov00060.html">Message hubs, endpoints, and policies</a></li><li><a href="../Overview/ov00150_.html">Clustering in Eclipse Amlen</a></li><li><a href="../Overview/ov00140_.html">Disconnected client notifications</a></li><li><a href="../Overview/ov00070.html">MQ Connectivity</a></li><li><a href="../Overview/ov40000.html">High availability</a></li><li><a href="../Bridge/br00001.html">   Amlen Bridge concepts</a></li></ul></li><li><a href="../Overview/accessibility_topic.html">Accessibility features for Eclipse Amlen</a></li><li><a href="../Overview/notices.html">Notices</a></li></ul></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Subscribers and Subscriptions</h1>
+
+<div class="body conbody"><p class="shortdesc">A subscriber is an application that requests information
+about a specific topic in a publish/subscribe network. A subscriber
+receives messages, about the same or different topics, from more than
+one publisher.  A subscription is a request that is sent by the subscriber
+to receive messages from a relevant topic. </p>
+<p class="p">You can use six types of subscription in <span class="ph">Eclipse Amlen</span>:</p>
+<dl class="dl">
+<dt class="dt dlterm">Unshared non-durable subscriptions</dt>
+<dd class="dd"> <p class="p">This is a subscription type where each subscriber application
+receives a copy of every message that is published on a relevant topic.
+However, the subscription exists only while the subscriber is active.
+Any messages that are sent to the topic are added to the subscription
+only while the subscriber application remains connected to the <span class="ph">Eclipse Amlen</span> server.
+The subscription is not persisted and is deleted (together with any
+undelivered messages that are associated with it) when the subscriber
+is closed. This type of subscription does not have a subscription
+name.</p> </dd>
+<dd class="dd ddexpand">You can use unshared non-durable subscriptions with MQTT and JMS.</dd>
+</dl>
+<dl class="dl">
+<dt class="dt dlterm">Unshared durable subscriptions</dt>
+<dd class="dd"> <p class="p">This is a subscription type where each subscriber application
+receives a copy of every message that is published on a relevant topic.
+The subscriber application receives the messages that are published
+when the subscriber application is not connected. All messages from
+the publishers on that topic are retained until the messages are delivered
+to, and acknowledged by, a subscriber on the durable subscription
+or until a subscriber ends the subscription by unsubscribing. This
+continued receipt of messages can lead to a build-up of messages on
+the subscriber queue if the subscriber application is not connected. </p> </dd>
+<dd class="dd ddexpand">You can use unshared durable subscriptions with MQTT and JMS.
+To make a subscription durable in MQTT, set <code class="ph codeph">cleanSession=0</code>.</dd>
+</dl>
+<dl class="dl">
+<dt class="dt dlterm">Private-shared non-durable subscriptions</dt>
+<dd class="dd"> <p class="p">This is a subscription type where the work of receiving messages
+from a non-durable topic subscription is shared between multiple subscribers
+within the same connection. Each message from the subscription is
+delivered to only one of the subscribers on that subscription. Any
+shared non-durable subscription exists only while there are active
+subscribers on the subscription. The subscription is not persisted
+and is deleted, along with any undelivered messages that are associated
+with that subscription, when the last subscriber is closed. When all
+subscribers are closed, the subscription is closed.</p> <p class="p">A private-shared
+subscription is only shared within one client ID. Therefore, only
+a topic messaging policy is required to grant authority to subscribe
+to the topic.</p> </dd>
+<dd class="dd ddexpand">You can use private-shared non-durable subscriptions with JMS.</dd>
+</dl>
+<dl class="dl">
+<dt class="dt dlterm">Private-shared durable subscriptions</dt>
+<dd class="dd"> <p class="p">This is a subscription type where the work of receiving messages
+from a durable topic subscription is shared between multiple subscribers
+within the same connection. Each message from the subscription is
+delivered to only one of the subscribers on that subscription. The
+subscription is persisted and continues to accumulate messages until
+the subscription is explicitly closed by unsubscribing.</p> <p class="p">A private-shared
+subscription is only shared within one client ID. Therefore, only
+a topic messaging policy is required to grant authority to subscribe
+to the topic.</p>  </dd>
+<dd class="dd ddexpand">You can use private-shared durable subscriptions with JMS.</dd>
+</dl>
+<dl class="dl">
+<dt class="dt dlterm">Global-shared non-durable subscriptions</dt>
+<dd class="dd"> <p class="p">This is a subscription type where the work of receiving messages
+from a non-durable topic subscription is shared between multiple subscribers.
+JMS subscribers do not specify a client ID. Each message from the
+subscription is delivered to only one of the subscribers on that subscription.
+Any shared non-durable subscription exists only while there are active
+subscribers on the subscription. The subscription is not persisted
+and is deleted, along with any undelivered messages that are associated
+with that subscription, when the last subscriber is closed.</p> <p class="p">JMS
+clients end their use of a global-shared non-durable subscription
+by closing their consumers. MQTT clients end their use of a global-shared
+non-durable subscription by issuing an MQTT UNSUBSCRIBE request, or
+by disconnecting. For global-shared non-durable subscriptions, although
+the subscription is shared by multiple clients, it exists only while
+at least one subscriber is active. Therefore, only the topic messaging
+policy is required to grant authority to subscribe to the topic.</p> </dd>
+<dd class="dd ddexpand">You can use global-shared non-durable subscriptions with JMS and MQTT. However, do not allow clients that use different protocols to share global-shared subscriptions.</dd>
+<dd class="dd ddexpand">
+<p class="p">Use administrative subscriptions to ensure that a subscription persists when there are no clients
+with an interest in that subscription. For more information about administrative subscriptions, see
+<a class="xref" href="../Administering/ad02940_.html" target="_blank" rel="external noopener">Configuring administration subscriptions</a></p>
+</dd>
+</dl>
+<dl class="dl">
+<dt class="dt dlterm">Global-shared durable subscriptions</dt>
+<dd class="dd"><p class="p">This is a subscription type where the work of receiving messages
+from a durable topic subscription is shared between multiple subscribers.
+JMS subscribers do not specify a client ID. Each message from the
+subscription is delivered to only one of the subscribers on that subscription. </p><div class="p"> Global-shared
+durable subscriptions require two messaging policies:<ul class="ul">
+<li class="li">A topic messaging policy to authorize clients to subscribe to
+the topic.</li>
+<li class="li">A subscription messaging policy to authorize clients to use the
+global-shared durable subscription.</li>
+</ul> </div><div class="p">The subscription is persisted and continues to accumulate
+messages until the subscription is explicitly (in JMS) or implicitly
+(in MQTT) closed by unsubscribing or is deleted by a system administrator.
+However, a global-shared durable subscription cannot be deleted in
+either of the following situations:<ul class="ul">
+<li class="li">Active consumers are using it.</li>
+<li class="li">Messages are currently being processed or acknowledged by JMS
+or MQTT sessions that are using the subscription.</li>
+</ul></div><div class="p">System administrators can delete global-shared durable subscriptions by using the <span class="ph uicontrol">Monitoring</span> page in the <span class="ph">Amlen WebUI</span>, or the REST API DELETE method with the following <span class="ph">Eclipse Amlen</span> URI:<pre class="pre codeblock"><code>http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/service/Subscription/&lt;clientID&gt;/&lt;SubName&gt;</code></pre></div>
+<div class="p">where <dl class="dl">
+
+<dt class="dt dlterm">clientID</dt>
+<dd class="dd">Specifies the client ID associated with the subscription that you want to delete.</dd>
+
+
+<dt class="dt dlterm">SubName</dt>
+<dd class="dd">Specifies the name of the durable subscription that you want to delete. </dd>
+
+</dl></div> </dd>
+<dd class="dd ddexpand">You can use global-shared durable subscriptions with JMS and MQTT. However, do not allow clients that use different protocols to share global-shared subscriptions. To make a subscription durable in MQTT, set <code class="ph codeph">cleanSession</code> to <code class="ph codeph">0</code>. </dd>
+<dd class="dd ddexpand">
+<p class="p">Use administrative subscriptions to ensure that a subscription persists when there are no clients
+with an interest in that subscription. For more information about administrative subscriptions, see
+<a class="xref" href="../Administering/ad02940_.html" target="_blank" rel="external noopener">Configuring
+administration subscriptions</a></p>
+</dd>
+</dl>
+<p class="p">The following table summarizes the characteristics of the subscription
+types in <span class="ph">Eclipse Amlen</span>.</p>
+<table class="table"><caption><span class="table--title-label">Table 1. </span><span class="title"></span><span class="desc tabledesc">Summary of the characteristics of the
+subscription types in <span class="ph">Eclipse Amlen</span>.<p class="p summary">Characteristics of the subscription types in <span class="ph">Eclipse Amlen</span>.</p></span></caption><colgroup><col><col><col><col><col><col><col></colgroup><thead class="thead">
+<tr class="row valign-bottom">
+<th class="entry" id="ov300010__entry__1">Subscription type</th>
+<th class="entry" id="ov300010__entry__2">Multiple Subscribers supported?</th>
+<th class="entry" id="ov300010__entry__3">JMS clients use explicit client ID?</th>
+<th class="entry" id="ov300010__entry__4">Subscription exists and published messages are
+kept when no subscriber is active?</th>
+<th class="entry" id="ov300010__entry__5">Workload balancing supported?</th>
+<th class="entry" id="ov300010__entry__6">Sharing across multiple client applications
+supported?</th>
+<th class="entry" id="ov300010__entry__7">Messaging policy authorization required?</th>
+</tr>
+</thead><tbody class="tbody">
+<tr class="row">
+<td class="entry" headers="ov300010__entry__1">Unshared non-durable </td>
+<td class="entry" headers="ov300010__entry__2"><img class="image" src="../Planning/cross.gif" alt="False"></td>
+<td class="entry" headers="ov300010__entry__3">Optional</td>
+<td class="entry" headers="ov300010__entry__4"><img class="image" src="../Planning/cross.gif" alt="False"></td>
+<td class="entry" headers="ov300010__entry__5"><img class="image" src="../Planning/cross.gif" alt="False"></td>
+<td class="entry" headers="ov300010__entry__6"><img class="image" src="../Planning/cross.gif" alt="False"></td>
+<td class="entry" headers="ov300010__entry__7">Topic </td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ov300010__entry__1">Unshared durable </td>
+<td class="entry" headers="ov300010__entry__2"><img class="image" src="../Planning/cross.gif" alt="False"></td>
+<td class="entry" headers="ov300010__entry__3"><img class="image" src="../Planning/tick.gif" alt="True"></td>
+<td class="entry" headers="ov300010__entry__4"><img class="image" src="../Planning/tick.gif" alt="True"></td>
+<td class="entry" headers="ov300010__entry__5"><img class="image" src="../Planning/cross.gif" alt="False"></td>
+<td class="entry" headers="ov300010__entry__6"><img class="image" src="../Planning/cross.gif" alt="False"></td>
+<td class="entry" headers="ov300010__entry__7">Topic</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ov300010__entry__1">Private-shared non-durable  (JMS only)</td>
+<td class="entry" headers="ov300010__entry__2"><img class="image" src="../Planning/tick.gif" alt="True"></td>
+<td class="entry" headers="ov300010__entry__3"><img class="image" src="../Planning/tick.gif" alt="True"></td>
+<td class="entry" headers="ov300010__entry__4"><img class="image" src="../Planning/cross.gif" alt="False"></td>
+<td class="entry" headers="ov300010__entry__5"><img class="image" src="../Planning/tick.gif" alt="True"></td>
+<td class="entry" headers="ov300010__entry__6"><img class="image" src="../Planning/cross.gif" alt="False"></td>
+<td class="entry" headers="ov300010__entry__7">Topic</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ov300010__entry__1">Private-shared durable (JMS only)</td>
+<td class="entry" headers="ov300010__entry__2"><img class="image" src="../Planning/tick.gif" alt="True"></td>
+<td class="entry" headers="ov300010__entry__3"><img class="image" src="../Planning/tick.gif" alt="True"></td>
+<td class="entry" headers="ov300010__entry__4"><img class="image" src="../Planning/tick.gif" alt="True"></td>
+<td class="entry" headers="ov300010__entry__5"><img class="image" src="../Planning/tick.gif" alt="True"></td>
+<td class="entry" headers="ov300010__entry__6"><img class="image" src="../Planning/cross.gif" alt="False"></td>
+<td class="entry" headers="ov300010__entry__7">Topic</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ov300010__entry__1">Global-shared non-durable </td>
+<td class="entry" headers="ov300010__entry__2"><img class="image" src="../Planning/tick.gif" alt="True"></td>
+<td class="entry" headers="ov300010__entry__3"><img class="image" src="../Planning/cross.gif" alt="False"></td>
+<td class="entry" headers="ov300010__entry__4"><img class="image" src="../Planning/cross.gif" alt="False"></td>
+<td class="entry" headers="ov300010__entry__5"><img class="image" src="../Planning/tick.gif" alt="True"></td>
+<td class="entry" headers="ov300010__entry__6"><img class="image" src="../Planning/tick.gif" alt="True"></td>
+<td class="entry" headers="ov300010__entry__7">Topic</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ov300010__entry__1">Global-shared durable</td>
+<td class="entry" headers="ov300010__entry__2"><img class="image" src="../Planning/tick.gif" alt="True"></td>
+<td class="entry" headers="ov300010__entry__3"><img class="image" src="../Planning/cross.gif" alt="False"></td>
+<td class="entry" headers="ov300010__entry__4"><img class="image" src="../Planning/tick.gif" alt="True"></td>
+<td class="entry" headers="ov300010__entry__5"><img class="image" src="../Planning/tick.gif" alt="True"></td>
+<td class="entry" headers="ov300010__entry__6"><img class="image" src="../Planning/tick.gif" alt="True"></td>
+<td class="entry" headers="ov300010__entry__7">Topic and Subscription</td>
+</tr>
+</tbody></table>
+</div>
+</article></main></body></html>

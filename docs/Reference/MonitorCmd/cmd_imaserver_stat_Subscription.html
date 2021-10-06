@@ -1,0 +1,405 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="keywords" content="stat Subscription"><link rel="stylesheet" type="text/css" href="../../commonltr.css"><link rel="stylesheet" type="text/css" href="../../doc.css"><title>Show subscription related statistics by REST Monitoring APIs</title></head><body id="cmd_imaserver_stat_subscription"><nav role="toc"><ul><li><a href="../../welcome.html">Welcome</a></li><li><a href="../../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../../Overview/ov00000_.html">Product overview</a></li><li><a href="../../Planning/pl00001_.html">Planning</a></li><li><a href="../../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../../Administering/ad00000_.html">Administering</a></li><li><a href="../../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../../Security/se00000_.html">Security</a></li><li><a href="../../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../../Reference/re00000_.html">Reference</a><ul><li><a href="../../Reference/intro.html">REST API Reference</a><ul><li><a href="../../Reference/cmd_delete_config.html">Delete configuration objects</a></li><li><a href="../../Reference/cmd_show_config.html">Show configuration details of nameable configuration objects</a></li><li><a href="../../Reference/cmd_show_config_fix.html">Show configuration details of fixed-name configuration objects</a></li><li><a href="../../Reference/cmd_REST_file_put.html">Copy a file from the local machine to Eclipse Amlen  </a></li><li><a href="../../Reference/AdminEndpointCmd/adminendpoint.html">Admin endpoint REST Administration APIs</a></li><li><a href="../../Reference/ApplianceCmd/appliancesettingcommands.html">Server REST Administration APIs</a></li><li><a href="../../Reference/ClusterCmd/clustercommands.html">Cluster REST Administration APIs</a></li><li><a href="../../Reference/SecurityCmd/securitycommands.html">Security REST Administration APIs</a></li><li><a href="../../Reference/MsgHubCmd/messagehubcommands.html">Message hub REST Administration APIs</a></li><li><a href="../../Reference/QueueCmd/QueueCmd.html">Queue REST Administration APIs</a></li><li><a href="../../Reference/MQConnCmd/mqconnectivitycommands.html">MQ Connectivity  REST Administration APIs</a></li><li><a href="../../Reference/HACmd/HAcommands.html">High availability REST Administration APIs</a></li><li><a href="../../Reference/BackupCmd/backupandrestorecommands.html">Backup and restore commands</a></li><li><a href="../../Reference/MonitorCmd/monitoringandreportingcommands.html">REST Monitoring APIs</a><ul><li><a href="../../Reference/MonitorCmd/cmd_imaserver_delete_MQTT.html">Delete MQTTClient</a></li><li><a href="../../Reference/MonitorCmd/cmd_imaserver_delete_Subscription.html">Delete Subscription</a></li><li><a href="../../Reference/MonitorCmd/cmd_imaserver_delete_tmonitor.html">Delete TopicMonitor</a></li><li><a href="../../Reference/MonitorCmd/cmd_imaserver_list_tmonitor.html">Show TopicMonitor </a></li><li><a href="../../Reference/MonitorCmd/cmd_display_cluster.html">Show cluster statistics by using REST Monitoring APIs  </a></li><li><a href="../../Reference/MonitorCmd/cmd_imaserver_stat_Connection.html">Show connection level statistics by using REST Monitoring APIs</a></li><li><a href="../../Reference/MonitorCmd/cmd_imaserver_stat_dmr.html">Show destination mapping rule statistics by REST Monitoring APIs  </a></li><li><a href="../../Reference/MonitorCmd/cmd_imaserver_stat_Endpoint.html">Show endpoint level statistics by using REST Monitoring APIs</a></li><li><a href="../../Reference/MonitorCmd/cmd_imaserver_stat_Memory.html">Show memory statistics by using REST Monitoring APIs  </a></li><li><a href="../../Reference/MonitorCmd/cmd_imaserver_stat_MQTTClient.html">Show MQTT client monitoring statistics by REST Monitoring APIs</a></li><li><a href="../../Reference/MonitorCmd/cmd_imaserver_stat_Queue.html">Show queue related statistics by using REST Monitoring APIs  </a></li><li><a href="../../Reference/MonitorCmd/cmd_imaserver_stat_server.html">Show server statistics by using REST Monitoring APIs  </a></li><li><a href="../../Reference/MonitorCmd/cmd_imaserver_stat_Store.html">Show store statistics by using REST Monitoring APIs  </a></li><li class="active"><a href="../../Reference/MonitorCmd/cmd_imaserver_stat_Subscription.html">Show subscription related statistics by REST Monitoring APIs</a></li><li><a href="../../Reference/MonitorCmd/cmd_imaserver_stat_Topic.html">Show topic related statistics by using REST Monitoring APIs</a></li><li><a href="../../Reference/MonitorCmd/cmd_imaserver_stat_transaction.html">Show transaction data for XA transaction statistics by using REST Monitoring APIs  </a></li></ul></li><li><a href="../../Reference/XATranCmd/xatransactioncommands.html">XA transaction REST Administration APIs</a></li><li><a href="../../Reference/SNMPCmd/snmpcommands.html">SNMP REST Administration APIs</a></li><li><a href="../../Reference/ProtocolPluginCmd/ProtocolPluginCmd.html">Protocol plug-in REST Administration APIs</a></li><li><a href="../../Reference/SpecialCmd/spepcom.html">Special purpose REST Administration APIs</a></li></ul></li><li><a href="../../Reference/_Topics/sy10530_.html">Digital certificates</a></li><li><a href="../../Reference/_Topics/re00003_.html">Supported cipher lists</a></li><li><a href="../../Reference/_Topics/re00001_.html">Classless Inter-Domain Routing</a></li></ul></li><li><a href="../../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Show subscription related statistics by <span class="ph">REST Monitoring APIs</span></h1>
+
+
+<div class="body refbody">
+<section class="section"><h2 class="title sectiontitle">Purpose</h2>Reports subscription-related monitoring data. </section>
+<section class="section"><h2 class="title sectiontitle">URI</h2>
+   
+   <p class="p">Use the <span class="ph">Eclipse Amlen</span> REST API GET method with the
+    following <span class="ph">Eclipse Amlen</span> monitoring URI:</p>
+   <p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/monitor/Subscription</code></p>
+  </section>
+<section class="section"><h2 class="title sectiontitle">Object configuration data</h2><p class="p">Provide query parameters requesting the
+    statistics that you want returned in the JSON payload. The following example uses cURL to create
+    subscription-related statistics:</p><pre class="pre codeblock"><code>curl -X GET http://127.0.0.1:9089/ima/v1/monitor/
+Subscription?SubName=<var class="keyword varname">SubName</var>%26SubType=<var class="keyword varname">SubType</var>%26ClientID=<var class="keyword varname">ClientID</var>
+%26TopicString=<var class="keyword varname">TopicString</var>%26ResultCount=<var class="keyword varname">ResultCount</var>%26StatType=<var class="keyword varname">StatType</var>
+%26MessagingPolicy=<var class="keyword varname">MessagingPolicy</var></code></pre>where:<dl class="dl">
+    
+     <dt class="dt dlterm"><var class="keyword varname">SubName</var></dt>
+     <dd class="dd">Specifies the name of a subscription to collect data about.</dd>
+     <dd class="dd ddexpand">You can use an asterisk (*) to match 0 or more characters.</dd>
+     <dd class="dd ddexpand">The default value is *</dd>
+    
+    
+     <dt class="dt dlterm"><var class="keyword varname">TopicString</var></dt>
+     <dd class="dd">Specifies a topic to collect subscription data about.</dd>
+     <dd class="dd ddexpand">You can use an asterisk (*) to match 0 or more characters.</dd>
+     <dd class="dd ddexpand">The default value is *</dd>
+    
+    
+     <dt class="dt dlterm"><var class="keyword varname">ClientID</var></dt>
+     <dd class="dd">Specifies a client ID to collect subscription data about.</dd>
+     <dd class="dd ddexpand">You can use an asterisk (*) to match 0 or more characters.</dd>
+     <dd class="dd ddexpand">The default value is *</dd>
+    
+    
+     <dt class="dt dlterm"><var class="keyword varname">MessagingPolicy</var></dt>
+     <dd class="dd">Specifies a messaging policy to collect subscription data about.</dd>
+     <dd class="dd ddexpand">You can use an asterisk (*) to match 0 or more characters.</dd>
+     <dd class="dd ddexpand">The default value is *</dd>
+    
+    
+     <dt class="dt dlterm"><var class="keyword varname">ResultCount</var></dt>
+     <dd class="dd">Specifies the maximum number of results to return</dd>
+     <dd class="dd ddexpand">This value can be one of the following values: 10, 25, 50, 100.</dd>
+     <dd class="dd ddexpand">The default value is 25.</dd>
+    
+    
+     <dt class="dt dlterm"><var class="keyword varname">SubType</var></dt>
+     <dd class="dd">Specifies the type of subscription to collect monitoring data about.</dd>
+     <dd class="dd ddexpand">This value can be one of the following values:<ul class="ul">
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">Durable</dt>
+          <dd class="dd">Returns monitoring data only for durable subscriptions.</dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">Nondurable</dt>
+          <dd class="dd">Returns monitoring data only for non-durable subscriptions.</dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">All</dt>
+          <dd class="dd">Returns monitoring data for both durable and non-durable subscriptions.</dd>
+         
+        </dl>
+       </li>
+      </ul></dd>
+     <dd class="dd ddexpand">The default value is <code class="ph codeph">All</code>.</dd>
+    
+    
+     <dt class="dt dlterm"><var class="keyword varname">StatType</var></dt>
+     <dd class="dd">Specifies the type of data to order the results by.</dd>
+     <dd class="dd ddexpand">This value can be one of the following values:<ul class="ul">
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">PublishedMsgsHighest</dt>
+          <dd class="dd">Orders the monitoring data by the subscriptions receiving the highest number of
+           messages.</dd>
+          <dd class="dd ddexpand">This value is the default value.</dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">PublishedMsgsLowest</dt>
+          <dd class="dd">Orders the monitoring data by the subscriptions receiving the lowest number of
+           messages.</dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">BufferedMsgsHighest</dt>
+          <dd class="dd">Orders the monitoring data by the subscriptions with the highest number of buffered
+           messages.</dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">BufferedMsgsLowest</dt>
+          <dd class="dd">Orders the monitoring data by the subscriptions with the lowest number of buffered
+           messages.</dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">BufferedPercentHighest</dt>
+          <dd class="dd">Orders the monitoring data by the subscriptions with the highest relative number of
+           buffered messages as a percentage of the total number of messages that can be
+           buffered.</dd>
+          <dd class="dd ddexpand">The <code class="ph codeph">MaxMessages</code> value in the messaging policy for a subscription
+           defines the maximum number of messages that can be buffered. </dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">BufferedPercentLowest</dt>
+          <dd class="dd">Orders the monitoring data by the subscriptions with the lowest relative number of
+           buffered messages as a percentage of the total number of messages that can be
+           buffered.</dd>
+          <dd class="dd ddexpand">The <code class="ph codeph">MaxMessages</code> value in the messaging policy for a subscription
+           defines the maximum number of messages that can be buffered. </dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">BufferedHWMPercentHighest</dt>
+          <dd class="dd">Orders the monitoring data by the subscriptions with the highest peaks of buffered
+           messages as a percentage of the total number of messages that can be buffered. </dd>
+          <dd class="dd ddexpand">The <code class="ph codeph">MaxMessages</code> value in the messaging policy for a subscription
+           defines the maximum number of messages that can be buffered. </dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">BufferedHWMPercentLowest</dt>
+          <dd class="dd">Orders the monitoring data by the subscriptions with the lowest peaks of buffered
+           messages as a percentage of the total number of messages that can be buffered.</dd>
+          <dd class="dd ddexpand">The <code class="ph codeph">MaxMessages</code> value in the messaging policy for a subscription
+           defines the maximum number of messages that can be buffered. </dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">RejectedMsgsHighest</dt>
+          <dd class="dd">Orders the monitoring data by the subscriptions with the highest number of rejected
+           messages. </dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">RejectedMsgsLowest</dt>
+          <dd class="dd">Orders the monitoring data by the subscriptions with the lowest number of rejected
+           messages. </dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">DiscardedMsgsHighest</dt>
+          <dd class="dd">Orders the monitoring data by the subscriptions with the highest number of discarded
+           messages. Discarded messages are messages that could not be published to a subscription
+           because the buffer is full.</dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">DiscardedMsgsLowest</dt>
+          <dd class="dd">Orders the monitoring data by the subscriptions with the lowest number of discarded
+           messages. Discarded messages are messages that could not be published to a subscription
+           because the buffer is full.</dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">ExpiredMsgsHighest</dt>
+          <dd class="dd">Orders the monitoring data by the subscriptions with the highest number of expired
+           messages. </dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">ExpiredMsgsLowest</dt>
+          <dd class="dd">Orders the monitoring data by the subscriptions with the lowest number of expired
+           messages. </dd>
+         
+        </dl>
+       </li>
+      </ul></dd>
+    
+   </dl></section>
+<section class="section"><h2 class="title sectiontitle">Usage Notes®</h2><ul class="ul">
+<li class="li">The command must be capitalized as shown.</li>
+<li class="li">The command must use the double quotation marks as shown.</li>
+<li class="li">The statistics that are produced  can be up to 60 seconds out of date.</li>
+<li class="li"><div class="p">The following fields are returned: <ul class="ul">
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">SubName</dt>
+          <dd class="dd">String</dd>
+          <dd class="dd ddexpand">The name that is associated with the subscription. This value can be an empty string
+           for a non-durable subscription.</dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">TopicString</dt>
+          <dd class="dd">String</dd>
+          <dd class="dd ddexpand">The topic on which the subscription is subscribed.</dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">ClientID</dt>
+          <dd class="dd">String</dd>
+          <dd class="dd ddexpand">The Client ID of the client that owns the subscription.</dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">IsDurable</dt>
+          <dd class="dd">Boolean</dd>
+          <dd class="dd ddexpand">This value indicates whether the subscription is durable or non-durable. Durable
+           subscriptions survive server restarts unless the subscription is explicitly deleted.</dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">BufferedMsgs</dt>
+          <dd class="dd">Numeric</dd>
+          <dd class="dd ddexpand">The number of published messages that are waiting to be sent to the client.</dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">BufferedMsgsHWM</dt>
+          <dd class="dd">Numeric</dd>
+          <dd class="dd ddexpand">The highest number of published messages since the server was started or the
+           subscription was created, whichever is most recent.</dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">BufferedPercent</dt>
+          <dd class="dd">Numeric</dd>
+          <dd class="dd ddexpand">The percentage of the maximum buffered messages that the current buffered messages
+           represent.</dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">MaxMessages</dt>
+          <dd class="dd">Numeric</dd>
+          <dd class="dd ddexpand">The maximum number of buffered messages that are allowed for this subscription. This
+           value is a guideline, rather than an absolute limit. If the system is running under
+           stress, then the number of buffered messages on a subscription might be slightly higher
+           than the <code class="ph codeph">MaxMessages</code> value.</dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">PublishedMsgs</dt>
+          <dd class="dd">Numeric</dd>
+          <dd class="dd ddexpand">The number of messages that are published to this subscription since the server was
+           started or the subscription was created, whichever is most recent.</dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">RejectedMsgs</dt>
+          <dd class="dd">Numeric</dd>
+          <dd class="dd ddexpand">The number of messages that are rejected because the maximum number of buffered
+           messages was reached when the messages were published to the subscription. </dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">BufferedHWMPercent</dt>
+          <dd class="dd">Numeric</dd>
+          <dd class="dd ddexpand">The peak number of buffered messages, as a percentage of the maximum number of
+           messages that can be buffered.</dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">IsShared</dt>
+          <dd class="dd">Boolean</dd>
+          <dd class="dd ddexpand">This value indicates whether the subscription is shared.</dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">Consumers</dt>
+          <dd class="dd">Numeric</dd>
+          <dd class="dd ddexpand">The number of consumers that the subscription has.</dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">DiscardedMsgs</dt>
+          <dd class="dd">Numeric</dd>
+          <dd class="dd ddexpand">The number of messages that are not delivered because they were discarded when the
+           buffer became full.</dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">ExpiredMsgs</dt>
+          <dd class="dd">Numeric</dd>
+          <dd class="dd ddexpand">The number of messages that are not delivered because they expired.</dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">MessagingPolicy</dt>
+          <dd class="dd">String</dd>
+          <dd class="dd ddexpand">The messaging policy that is in use by the subscription.</dd>
+         
+        </dl>
+       </li>
+      </ul></div></li>
+</ul></section>
+<section class="section"><h2 class="title sectiontitle">Example</h2>
+   
+   <p class="p">The following example uses cURL to show how a GET method is used to create statistics about
+    subscriptions that are subscribed to a topic called DemoTopic:</p>
+   <pre class="pre codeblock"><code>curl -X GET http://127.0.0.1:9089/ima/v1/monitor/Subscription?TopicString=DemoTopic
+ 
+ </code></pre>
+   <p class="p">The following example shows a successful example response to the GET method that was used to
+    create statistics about subscriptions that are subscribed to a topic called DemoTopic:</p>
+   <pre class="pre codeblock"><code>{ "Version":"v1", "Subscription": [{"SubName":"DemoSubscription","TopicString":"DemoTopic","ClientID":"Demo ID","IsDurable":"True","BufferedMsgs":0,
+"BufferedMsgsHWM":0,"BufferedPercent":0.0,"MaxMessages":5123,"PublishedMsgs":0,"RejectedMsgs":0,"BufferedHWMPercent":0.0,
+"IsShared":"False","Consumers":1,"DiscardedMsgs":0,"ExpiredMsgs":0, "MessagingPolicy":"DemoTopicPolicy }] }</code></pre>
+  </section>
+</div>
+
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../../Reference/MonitorCmd/monitoringandreportingcommands.html" title="REST Monitoring APIs allow you to monitor Eclipse Amlen. You can monitor topics, subscriptions, connections, endpoints, destination mapping rules, MQTT clients, queues, transactions, memory usage, and store usage.">REST Monitoring APIs</a></div></div></nav></article></main></body></html>

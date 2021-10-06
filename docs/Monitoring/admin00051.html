@@ -1,0 +1,118 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="Eclipse Amlen tracks the memory that is in use. Different workloads use memory in different ways. You can view how much memory is being used in different categories by using the Eclipse Amlen memory monitoring tools."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Memory Monitoring</title></head><body id="admin00051"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a><ul><li><a href="../Monitoring/admin00080.html">Cluster monitoring</a></li><li><a href="../Monitoring/admin00009.html">Connection Monitoring</a></li><li><a href="../Monitoring/admin00010.html">Endpoint Monitoring</a></li><li><a href="../Monitoring/admin00016.html">Topic Monitoring</a></li><li><a href="../Monitoring/admin00019.html">Queue Monitoring</a></li><li><a href="../Monitoring/admin00022.html">Subscription Monitoring</a></li><li><a href="../Monitoring/admin00025.html">MQTT Client Monitoring</a></li><li><a href="../Monitoring/admin00031.html">MQ Connectivity monitoring</a></li><li><a href="../Monitoring/admin00070.html">Viewing protocol plug-in monitoring statistics by using an external application</a></li><li><a href="../Monitoring/admin00028.html">Server Monitoring</a><ul><li><a href="../Monitoring/admin00038.html">Viewing server statistics by using the Amlen WebUI</a></li><li><a href="../Monitoring/admin00037.html">Viewing server statistics by using REST Monitoring APIs</a></li><li><a href="../Monitoring/admin00034.html">Store Monitoring</a></li><li class="active"><a href="../Monitoring/admin00051.html">Memory Monitoring</a><ul><li><a href="../Monitoring/admin00029.html">Viewing memory statistics by using the Amlen WebUI</a></li><li><a href="../Monitoring/admin00030.html">Viewing memory statistics by using REST Monitoring APIs</a></li><li><a href="../Monitoring/admin00052.html">Viewing memory statistics by using an external application</a></li></ul></li></ul></li><li><a href="../Monitoring/admin00060.html">XA Transaction monitoring</a></li></ul></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Memory Monitoring</h1>
+
+<div class="body conbody"><p class="shortdesc"><span class="ph">Eclipse Amlen</span> tracks
+the memory that is in use. Different workloads use memory in different
+ways. You can view how much memory is being used in different categories
+by using the <span class="ph">Eclipse Amlen</span> memory
+monitoring tools.</p>
+<p class="p"><span class="ph">Eclipse Amlen</span> uses
+the following categories to track the memory usage:</p>
+<ul class="ul">
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Total Memory</dt>
+<dd class="dd">This category shows the total amount of physical memory on <span class="ph">Eclipse Amlen</span>.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Free Memory</dt>
+<dd class="dd">This category shows the amount of physical memory that is available.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Percentage Free Memory</dt>
+<dd class="dd">This category shows the amount of free memory as a percentage
+of total physical memory.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Virtual Memory</dt>
+<dd class="dd">This category shows the amount of virtual memory that is being
+used by <span class="ph">Eclipse Amlen</span>.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Resident Set</dt>
+<dd class="dd">This category shows the amount of physical memory that is being
+used by <span class="ph">Eclipse Amlen</span>.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Message Payloads</dt>
+<dd class="dd">This category shows the amount of memory that is being used by <span class="ph">Eclipse Amlen</span> for message payloads.
+That is, it shows the amount of memory that is used to store messages
+on <span class="ph">Eclipse Amlen</span>.</dd>
+<dd class="dd ddexpand">Messages are stored on  <span class="ph">Eclipse Amlen</span> in the following
+situations:</dd>
+<dd class="dd ddexpand"> <ul class="ul">
+<li class="li"> When a message is published to multiple subscribers, a single
+copy of the message is stored in memory.</li>
+<li class="li">When a message is sent as a retained message, a single copy of
+the retained message is stored in memory. If the message is both a
+retained message and is published to multiple subscribers, only a
+single copy of the message is stored on the server.</li>
+</ul> </dd>
+<dd class="dd ddexpand">Therefore, a large amount of message payload memory can be used
+when there are many messages stored on the server for disconnected
+or slow consumers. A large amount of message payload memory can also
+be used when there are many retained messages. </dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Publish Subscribe</dt>
+<dd class="dd">This category shows the amount of memory that is being used by <span class="ph">Eclipse Amlen</span> for  publish/subscribe
+messaging.</dd>
+<dd class="dd ddexpand">The server allocates memory in this category in the following
+situations: <ul class="ul">
+<li class="li">To track retained messages and subscriptions.</li>
+<li class="li">To cache publish/subscribe information for performance reasons.</li>
+</ul></dd>
+<dd class="dd ddexpand">Therefore, a large amount of publish/subscribe memory can be used
+when there are many subscriptions, or when there are many retained
+messages.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Destinations</dt>
+<dd class="dd">This category shows the amount of memory that is being used by <span class="ph">Eclipse Amlen</span> for destinations.
+That is, for queues and topics.</dd>
+<dd class="dd ddexpand">The memory that is allocated in this category is used to organize
+messages into the queues and subscriptions that are used by clients.</dd>
+<dd class="dd ddexpand">Therefore, a large amount of destinations memory can be used when
+there are many messages on the server, or when there are many subscriptions.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Current® Activity</dt>
+<dd class="dd">This category shows the amount of memory that is being used by <span class="ph">Eclipse Amlen</span> for current activity.</dd>
+<dd class="dd ddexpand">Memory that is allocated in this category includes sessions, transactions,
+message acknowledgments, and monitoring request information.</dd>
+<dd class="dd ddexpand">Therefore, a large amount of current activity memory can be used
+when there are large numbers of connected clients, or large numbers
+of unacknowledged messages. Large amounts of current activity memory
+can also be used by workloads that make extensive use of features
+such as transactions.</dd>
+</dl></li>
+<li class="li"> <dl class="dl">
+<dt class="dt dlterm">Client State</dt>
+<dd class="dd">This category shows the amount of memory that is being used by <span class="ph">Eclipse Amlen</span> for connected and
+disconnected clients.</dd>
+<dd class="dd ddexpand">The server allocates memory in this category for each client that
+is connected to the server. For MQTT clients that use <code class="ph codeph">cleanSession=0</code>,
+the memory allocation continues after the client disconnects. The
+server also allocates memory in this category to track message acknowledgments
+for MQTT.</dd>
+<dd class="dd ddexpand">Therefore, a large amount of client state memory can be used when
+there are many connected clients. A large amount of client state memory
+can also be used when many disconnected MQTT clients use <code class="ph codeph">cleanSession=0</code>.
+This memory usage can be higher when high quality of service messages
+are used.</dd>
+</dl> </li>
+</ul>
+<p class="p">Memory is also allocated to organize the memory information. For
+example, the client state information is organized in a table to ensure
+efficient searching. The memory for the table is stored in the client
+state category.</p>
+<p class="p">For efficiency, memory allocation occurs in chunks from which smaller
+allocations are then made. Therefore, the allocation of a small amount
+of memory can result in a larger than expected increase in the corresponding
+memory statistic. A subsequent allocation might fit into the same
+chunk, in which case there would be no increase in the corresponding
+memory statistic.</p>
+</div>
+
+<nav role="navigation" class="related-links"><ul class="ullinks"><li class="link ulchildlink"><strong><a href="../Monitoring/admin00029.html">Viewing memory statistics by using the Amlen WebUI</a></strong><br>Use the Server monitor to view statistics about <span class="ph">Eclipse Amlen</span> memory.</li><li class="link ulchildlink"><strong><a href="../Monitoring/admin00030.html">Viewing memory statistics by using REST Monitoring APIs</a></strong><br>System administrators can view statistics about <span class="ph">Eclipse Amlen</span> memory by using <span class="ph">REST Monitoring APIs</span>.</li><li class="link ulchildlink"><strong><a href="../Monitoring/admin00052.html">Viewing memory statistics by using an external application</a></strong><br> External monitoring applications can access memory data that is published by <span class="ph">Eclipse Amlen</span> by subscribing to the <span class="ph">Eclipse Amlen</span> topic <span class="ph filepath">$SYS/ResourceStatistics/Memory</span>.</li></ul><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Monitoring/admin00028.html" title="View information about Eclipse Amlen statistics for the memory, and store (persistent memory and disk).">Server Monitoring</a></div></div></nav></article></main></body></html>

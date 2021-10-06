@@ -1,0 +1,411 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="To send messages between Eclipse Amlen and IBM MQ, you must create destination mapping rules. Destination mapping rules are created by associating an Eclipse Amlen topic or queue with a IBM MQ topic or queue. You can create a maximum of 64 destination mapping rules."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Configuring destination mapping rules</title></head><body id="ad00110_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a><ul><li><a href="../Administering/ad00102_.html">MQ Connectivity</a><ul><li><a href="../Administering/ad00092_.html">MQ Connectivity throughput and message order</a></li><li><a href="../Administering/ad00101_.html">MQ Connectivity message persistence</a></li><li><a href="../Administering/ad00132_.html">MQ Connectivity retained messages</a></li><li><a href="../Administering/ad00103_.html">MQ Connectivity and high availability</a></li><li><a href="../Administering/ad00104_.html">MQ Connectivity security</a></li><li><a href="../Administering/ad00091_.html">Configuring the IBM MQ server connection channel</a></li><li><a href="../Administering/ad00105_.html">Configuring the MQ Connectivity SSL key repository</a></li><li><a href="../Administering/ad00113_.html">Configuring queue manager connections</a></li><li class="active"><a href="../Administering/ad00110_.html">Configuring destination mapping rules</a><ul><li><a href="../Administering/ad00114_.html">Configuring destination mapping rules by using the Amlen WebUI</a></li><li><a href="../Administering/ad00115_.html">Configuring destination mapping rules by using REST Administration APIs</a></li></ul></li><li><a href="../Administering/ad00129_.html">Starting, restarting, stopping, and viewing the status of MQ Connectivity</a></li><li><a href="../Administering/ad00111_.html">MQ Connectivity scenarios</a></li></ul></li><li><a href="../Administering/workingwithjmsra.html">Eclipse Amlen resource adapter</a></li><li><a href="../Administering/vm00001_.html">Using VMware vSphere to handle Eclipse Amlen failover</a></li></ul></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Configuring destination mapping rules</h1>
+
+<div class="body conbody"><p class="shortdesc">To send messages between <span class="ph">Eclipse Amlen</span> and <span class="ph">IBM® MQ</span>, you must create
+destination mapping rules. Destination mapping rules are created by
+associating an <span class="ph">Eclipse Amlen</span> topic
+or queue with a <span class="ph">IBM MQ</span> topic
+or queue. You can create a maximum of 64 destination mapping rules.</p>
+<p class="p">Destination mapping rules specify a source topic string or queue
+name, and define the target topic string or queue. Any message that
+is published to the source topic, or sent to the source queue, is
+republished to the target topic, or sent to the target queue. For
+rules that use topic subtrees, all messages that are published to
+the topic subtree are either routed to a single queue, are republished
+to a single topic, or are republished to a reprefixed topic.</p>
+<div class="p">You can create, update, view, or delete destination mapping rules by using either the <span class="ph">Amlen WebUI</span> or <span class="ph">REST Administration APIs</span>. <div class="note note note_note"><span class="note__title">Note:</span> You must disable a destination mapping rule before you can make any changes to that rule. After editing, you must enable the destination mapping rule in order for the changes that you made to take effect. To edit a queue manager connection, all destination mapping rules that use that queue manager connection must be disabled. You do not need to restart the mqconnectivity process in order for any changes to take effect.</div></div>
+<p class="p">Transitive rules are not supported. That is, you must not create a set of destination mapping
+            rules that route messages from <span class="ph">IBM MQ</span> to
+                <span class="ph">Eclipse Amlen</span> and then back to <span class="ph">IBM MQ</span>. You must not create a set of
+            destination mapping rules that route messages from <span class="ph">Eclipse Amlen</span> to <span class="ph">IBM MQ</span> and then back to <span class="ph">Eclipse Amlen</span>. Messages that are sent by using
+            transitive rules loop between the rules infinitely. Therefore, any messages that are
+            sent by using these rules never reach their destination.</p>
+<div class="p">When you create a destination mapping rule, you must specify the
+following components:<ul class="ul">
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Name</dt>
+<dd class="dd">Specifies a label that identifies the destination mapping rule.</dd>
+<dd class="dd ddexpand">The name must not have leading or trailing spaces and cannot contain
+control characters, commas, double quotation marks, backslashes, or
+equal signs. The first character must not be a number or any of the
+following special characters: <p class="p"><code class="ph codeph">! # $ % &amp; ' ( ) * + -
+. / : ; &lt; &gt; ? @</code></p></dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Queue manager connection</dt>
+<dd class="dd">Specifies one or more queue manager connections to apply the destination
+mapping rule to.</dd>
+<dd class="dd ddexpand"><div class="p">You have a choice when you create mapping rules:<ul class="ul">
+<li class="li">You can preserve the order of messages by using a single queue
+manager connection. This option limits the number of messages that
+can be processed at any time.</li>
+<li class="li">You can maximize throughput by using multiple queue manager connections.
+This option does not preserve the order of messages, as two consecutive
+messages can be sent to two different queue managers.</li>
+</ul></div></dd>
+                            <dd class="dd ddexpand">To edit a queue manager connection, all destination mapping rules
+                                that use that queue manager connection must be disabled. You do not
+                                need to restart the mqconnectivity process for any changes that you
+                                make to take effect.</dd>
+</dl></li>
+                <li class="li">
+                    <dl class="dl">
+                        
+                            <dt class="dt dlterm">Enabled</dt>
+                            <dd class="dd">Specifies whether the destination mapping rule is enabled (true) or
+                                disabled (false).</dd>
+                            <dd class="dd ddexpand">The default value is true.</dd>
+                            <dd class="dd ddexpand">To edit a destination mapping rule, the rule must first be disabled.
+                                Once all changes are complete, the rule must be enabled for any
+                                changes to take effect. </dd>
+                        
+                    </dl>
+                </li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Rule type</dt>
+<dd class="dd">Specifies the type of source and destination to be used in the rule.<p class="p">The rule type can be any
+value that is detailed in the following table:</p><div class="p">
+<table class="table" id="ad00110___datasimpletable_kcd_lrh_qfb"><caption><span class="table--title-label">Table 1. </span><span class="title">The first column details the valid rule types, the second column details the
+rule source, and the third column details the rule destination.</span></caption><colgroup><col><col><col></colgroup><thead class="thead">
+<tr class="row">
+<th class="entry" id="ad00110___datasimpletable_kcd_lrh_qfb__entry__1">Rule type</th>
+<th class="entry" id="ad00110___datasimpletable_kcd_lrh_qfb__entry__2">From:</th>
+<th class="entry" id="ad00110___datasimpletable_kcd_lrh_qfb__entry__3">To:</th>
+</tr>
+</thead><tbody class="tbody">
+<tr class="row">
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__1">1</td>
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__2"><span class="ph">Eclipse Amlen</span> topic</td>
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__3"><span class="ph">IBM MQ</span> queue</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__1">2</td>
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__2"><span class="ph">Eclipse Amlen</span> topic</td>
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__3"><span class="ph">IBM MQ</span> topic </td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__1">3</td>
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__2"><span class="ph">Eclipse Amlen</span> queue</td>
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__3"><span class="ph">IBM MQ</span> topic</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__1">4</td>
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__2"><span class="ph">Eclipse Amlen</span> topic</td>
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__3"><span class="ph">IBM MQ</span> topic</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__1">5</td>
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__2"><span class="ph">Eclipse Amlen</span> topic subtree</td>
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__3"><span class="ph">IBM MQ</span> queue </td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__1">6</td>
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__2"><span class="ph">Eclipse Amlen</span> topic subtree</td>
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__3"><span class="ph">IBM MQ</span> topic</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__1">7</td>
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__2"><span class="ph">IBM MQ</span> topic subtree</td>
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__3"><span class="ph">Eclipse Amlen</span> topic subtree</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__1">8</td>
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__2"><span class="ph">IBM MQ</span> topic subtree</td>
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__3"><span class="ph">Eclipse Amlen</span> topic</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__1">9</td>
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__2"><span class="ph">IBM MQ</span> topic subtree</td>
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__3"><span class="ph">Eclipse Amlen</span> topic subtree</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__1">10</td>
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__2"><span class="ph">Eclipse Amlen</span> queue </td>
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__3"><span class="ph">IBM MQ</span> queue</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__1">11</td>
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__2"><span class="ph">Eclipse Amlen</span> queue </td>
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__3"><span class="ph">IBM MQ</span> topic</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__1">12</td>
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__2"><span class="ph">Eclipse Amlen</span> queue </td>
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__3"><span class="ph">IBM MQ</span> queue</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__1">13</td>
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__2"><span class="ph">Eclipse Amlen</span> topic </td>
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__3"><span class="ph">IBM MQ</span> queue</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__1">14</td>
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__2"><span class="ph">Eclipse Amlen</span> topic subtree </td>
+<td class="entry" headers="ad00110___datasimpletable_kcd_lrh_qfb__entry__3"><span class="ph">IBM MQ</span> queue</td>
+</tr>
+</tbody></table>
+</div><div class="note note note_note"><span class="note__title">Note:</span>  With rule type 9, a mapping that results in an <span class="ph">Eclipse Amlen</span> topic string with more than 32 levels cannot be
+mapped correctly because <span class="ph">Eclipse Amlen</span> has a maximum topic
+level of 32. In cases where the level limit is exceeded, the messages are handled as follows: <ul class="ul">
+<li class="li">For non-persistent messages, the message is discarded. </li>
+<li class="li">For persistent messages, the message is retained in a loop between <span class="ph">IBM MQ</span> and <span class="ph">Eclipse Amlen</span>. In this instance, no further messages can be sent
+on the affected rule until the looped message is removed from the queue manager.</li>
+</ul>
+</div></dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Source</dt>
+<dd class="dd">Specifies the topic string, or queue name, that the destination
+mapping rule maps from.</dd>
+<dd class="dd ddexpand">With rule types 5, 6, 7, 8, and 9, the mapping is from a topic subtree. For these rules, the
+source topic string defines the root of the source tree. Any topic string that begins with that
+string is then mapped to the destination topic string. The topic subtree is equivalent to using a
+wildcard. For example, specifying the topic subtree of <code class="ph codeph">MQRoot/L1</code> is equivalent to
+specifying <code class="ph codeph">MQRoot/L1/+</code> or <code class="ph codeph">MQRoot/L1/#</code>. For further examples, see
+the table.</dd>
+<dd class="dd ddexpand">The source that is specified must follow the naming rules for
+the source type.</dd>
+<dd class="dd ddexpand">For <span class="ph">IBM MQ</span> queues,
+the value can contain characters in the ranges a-z, A-Z, and 0-9,
+and any of the following characters:<code class="ph codeph">% . /  _</code></dd>
+<dd class="dd ddexpand">For <span class="ph">Eclipse Amlen</span>,
+the value must not have leading or trailing spaces and cannot contain
+control characters, commas, double quotation marks, backslashes or
+equal signs. The first character must not be a number, quotation mark,
+or any of the following special characters: <code class="ph codeph">! # $ % &amp;
+( ) * + , - . / : ; &lt; = &gt; ? @"</code></dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Destination</dt>
+<dd class="dd">Specifies the topic string, or queue name, that the destination
+mapping rule maps to.</dd>
+<dd class="dd ddexpand">With rule types 7 and 9, where the mapping is to a topic subtree, the destination topic string
+defines the root of the destination tree. Messages sent to the subtree of the source topic string
+are reprefixed with the topic string specified in the destination topic string. The topic subtree is
+equivalent to using a wildcard. For example, specifying the topic subtree of
+<code class="ph codeph">MQRoot/L1</code> is equivalent to specifying <code class="ph codeph">MQRoot/L1/+</code> or
+<code class="ph codeph">MQRoot/L1/#</code>. For examples, see the table.</dd>
+<dd class="dd ddexpand">The destination that is specified must follow the naming rules
+for the destination type.</dd>
+<dd class="dd ddexpand">For <span class="ph">IBM MQ</span> queues,
+the value can contain characters in the ranges a-z, A-Z, and 0-9,
+and any of the following characters:<code class="ph codeph">% . /  _</code></dd>
+<dd class="dd ddexpand">For <span class="ph">Eclipse Amlen</span>,
+the value must not have leading or trailing spaces and cannot contain
+control characters, commas, double quotation marks, backslashes or
+equal signs. The first character must not be a number, quotation mark,
+or any of the following special characters: <code class="ph codeph">! # $ % &amp;
+( ) * + , - . / : ; &lt; = &gt; ? @"</code></dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Maximum Messages</dt>
+<dd class="dd">Specifies the maximum number of messages that can be buffered
+for a destination mapping rule. If the maximum number of messages
+is reached, messages cannot be published to the <span class="ph">Eclipse Amlen</span> topic in the
+destination mapping rule until the backlog of messages is reduced.</dd>
+<dd class="dd ddexpand">This option is valid only for destination mapping rules from <span class="ph">Eclipse Amlen</span> topics to <span class="ph">IBM MQ</span> topics and queues.
+That is, rule types 1, 2, 5, 6, and 7.</dd>
+<dd class="dd ddexpand">The value must be in the range 1-20000000. The default value is
+5000. </dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Retained Messages</dt>
+<dd class="dd">Specifies which messages are forwarded to a topic as retained
+messages. By default, after a message is published to a topic and
+is received by the subscribers, the message is discarded. Setting
+this parameter ensures that a copy of the message is retained, so
+that it is sent to future subscribers of the topic.</dd>
+<dd class="dd ddexpand">This parameter overrides the retained message setting of the original
+message publisher.</dd>
+<dd class="dd ddexpand">This option is only valid for destination mapping rules that forward
+messages to a topic or a topic subtree.</dd>
+</dl></li>
+</ul></div>
+<p class="p">For more information about configuring destination mapping rules
+by using the <span class="ph">Amlen WebUI</span>,
+see <a class="xref" href="ad00114_.html" title="System administrators and messaging administrators can configure destination mapping rules by using the MQ Connectivity page in the Amlen WebUI.">Configuring destination mapping rules by using the Amlen WebUI</a>.</p>
+<p class="p">For more information about configuring destination mapping rules by using REST Administration
+            APIs, see <a class="xref" href="ad00115_.html" title="System administrators can configure destination mapping rules by using REST Administration APIs.">Configuring destination mapping rules by using REST Administration APIs</a>.</p>
+<p class="p">The following table shows example mappings of source topic strings
+and queues to target topic strings and queues: </p>
+<table class="table" id="ad00110___datasimpletable_s3m_rsh_qfb"><caption><span class="table--title-label">Table 2. </span><span class="title">A source topic or queue can be mapped to a target topic or queue. Example
+mappings are shown in this table. The first column contains examples of source topics. The second
+column contains examples of target topics. The third column explains how such mappings function when
+messages are published.</span></caption><colgroup><col><col><col><col></colgroup><thead class="thead">
+<tr class="row">
+<th class="entry" id="ad00110___datasimpletable_s3m_rsh_qfb__entry__1">Rule type</th>
+<th class="entry" id="ad00110___datasimpletable_s3m_rsh_qfb__entry__2">Source</th>
+<th class="entry" id="ad00110___datasimpletable_s3m_rsh_qfb__entry__3">Destination</th>
+<th class="entry" id="ad00110___datasimpletable_s3m_rsh_qfb__entry__4">Explanation</th>
+</tr>
+</thead><tbody class="tbody">
+<tr class="row">
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__1">1</td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__2"><span class="ph">Eclipse Amlen</span>
+topic:<pre class="pre codeblock"><code>IMARoot/Level1</code></pre></td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__3"><span class="ph">IBM MQ</span>
+queue:<pre class="pre codeblock"><code>MQ.QUEUE1</code></pre></td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__4">A message that is published to the <span class="ph">Eclipse Amlen</span>
+topic <code class="ph codeph">IMARoot/Level1</code> is MQPUT to the <span class="ph">IBM MQ</span> queue <code class="ph codeph">MQ.QUEUE1</code></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__1">2</td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__2"><span class="ph">Eclipse Amlen</span>
+topic:<pre class="pre codeblock"><code>IMARoot/L1/Subject1</code></pre></td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__3"><span class="ph">IBM MQ</span>
+topic:<pre class="pre codeblock"><code>MQRoot/L1/Target</code></pre></td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__4">A message that is published to the <span class="ph">Eclipse Amlen</span>
+topic <code class="ph codeph">IMARoot/L1/Subject1</code> is republished to the <span class="ph">IBM MQ</span> topic <code class="ph codeph">MQRoot/L1/Target</code>
+</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__1">3</td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__2"><span class="ph">IBM MQ</span>
+queue:<pre class="pre codeblock"><code>MQ.QUEUE1</code></pre></td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__3"><span class="ph">Eclipse Amlen</span>
+topic:<pre class="pre codeblock"><code>IMARoot/L1</code></pre></td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__4">A message that is sent to the <span class="ph">IBM MQ</span> queue
+<code class="ph codeph">MQ.QUEUE1</code> is published to the <span class="ph">Eclipse Amlen</span>
+topic <code class="ph codeph">IMARoot/L1</code></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__1">4</td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__2"><span class="ph">IBM MQ</span>
+topic:<pre class="pre codeblock"><code>MQRoot/L1/Subject</code></pre></td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__3"><span class="ph">Eclipse Amlen</span>
+topic:<pre class="pre codeblock"><code>IMARoot/L1/Target</code></pre></td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__4">A message that is published to the <span class="ph">IBM MQ</span>
+topic <code class="ph codeph">MQRoot/L1/Subject</code> is republished to the <span class="ph">Eclipse Amlen</span> topic <code class="ph codeph">IMARoot/L1/Target</code>
+</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__1">5</td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__2"><span class="ph">Eclipse Amlen</span> topic subtree:
+<pre class="pre codeblock"><code>IMARoot/L1</code></pre></td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__3"><span class="ph">IBM MQ</span> queue:
+<pre class="pre codeblock"><code>MQ.QUEUE1</code></pre></td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__4">A message that is published to any <span class="ph">Eclipse Amlen</span>
+topic that starts with <code class="ph codeph">IMARoot/L1</code> is MQPUT to the <span class="ph">IBM MQ</span> queue <code class="ph codeph">MQ.QUEUE1</code>
+For example, a message that is published to the <span class="ph">Eclipse Amlen</span> topic <code class="ph codeph">IMARoot/L1/Subject</code> is MQPUT
+to the <span class="ph">IBM MQ</span> queue
+<code class="ph codeph">MQ.QUEUE1</code></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__1">6</td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__2"><span class="ph">Eclipse Amlen</span> topic subtree:
+<pre class="pre codeblock"><code>IMARoot/L1</code></pre></td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__3"><span class="ph">IBM MQ</span> topic:
+<pre class="pre codeblock"><code>MQRoot/L1/Target</code></pre></td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__4">Using a topic subtree is equivalent to using a wildcard. That is, the subtree of
+<code class="ph codeph">IMARoot/L1</code>, is the same as <code class="ph codeph">IMARoot/L1/+</code> or
+<code class="ph codeph">IMARoot/L1/#</code>. Therefore, any message that is published to any <span class="ph">Eclipse Amlen</span> topic that starts with <code class="ph codeph">IMARoot/L1</code>
+is republished to a <span class="ph">IBM MQ</span> topic
+<code class="ph codeph">MQRoot/L1/Target</code>For example, messages that are published to the <span class="ph">Eclipse Amlen</span> topics <code class="ph codeph">IMARoot/L1/Subject1</code>,
+and<code class="ph codeph">IMARoot/L1/Subject2</code> are sent to the <span class="ph">IBM MQ</span> topic<code class="ph codeph">MQRoot/L1/Target</code></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__1">7</td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__2"><span class="ph">Eclipse Amlen</span> topic subtree:
+<pre class="pre codeblock"><code>IMARoot/L1</code></pre></td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__3"><span class="ph">IBM MQ</span> topic subtree:
+<pre class="pre codeblock"><code>MQRoot/L1/L2</code></pre></td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__4">Using a topic subtree is equivalent to using a wildcard. That is, the subtree of
+<code class="ph codeph">IMARoot/L1</code>, is the same as <code class="ph codeph">IMARoot/L1/+</code> or
+<code class="ph codeph">IMARoot/L1/#</code>. Therefore, any message that is published to any <span class="ph">Eclipse Amlen</span> topic that starts with <code class="ph codeph">IMARoot/L1</code>
+is republished to a <span class="ph">IBM MQ</span> topic with the same basic
+topic string, but a different prefix. The prefix is defined by the destination topic string
+specified. For example, a message that is published to the <span class="ph">Eclipse Amlen</span> topic <code class="ph codeph">IMARoot/L1/Subject1</code> is
+republished to the <span class="ph">IBM MQ</span> topic
+<code class="ph codeph">MQRoot/L1/L2/Subject1</code>For example, a message that is published to the
+<span class="ph">Eclipse Amlen</span> topic <code class="ph codeph">IMARoot/L1/Subject2/A</code> is
+republished to the <span class="ph">IBM MQ</span> topic
+<code class="ph codeph">MQRoot/L1/L2/Subject2/A</code></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__1">8</td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__2"><span class="ph">IBM MQ</span> topic subtree:
+<pre class="pre codeblock"><code>MQRoot/L1</code></pre></td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__3"><span class="ph">Eclipse Amlen</span> topic:
+<pre class="pre codeblock"><code>IMARoot/L1/Target</code></pre></td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__4">Using a topic subtree is equivalent to using a wildcard. That is, the subtree of
+<code class="ph codeph">MQRoot/L1</code>, is the same as <code class="ph codeph">MQRoot/L1/+</code> or
+<code class="ph codeph">MQRoot/L1/#</code>. Therefore, any message that is published to any <span class="ph">IBM MQ</span> topic string that starts with
+<code class="ph codeph">MQRoot/L1</code> is republished to an<span class="ph">Eclipse Amlen</span>
+topic <code class="ph codeph">IMARoot/L1/Target</code>For example, messages that are published to the
+<span class="ph">IBM MQ</span> topics <code class="ph codeph">MQRoot/L1/Subject1</code>,
+and<code class="ph codeph">MQRoot/L1/Subject2</code>are sent to the <span class="ph">Eclipse Amlen</span> topic<code class="ph codeph">IMARoot/L1/Target</code></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__1">9</td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__2"><span class="ph">IBM MQ</span> topic
+subtree:<pre class="pre codeblock"><code>MQRoot/L1</code></pre></td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__3"><span class="ph">Eclipse Amlen</span> topic subtree:
+<pre class="pre codeblock"><code>IMARoot/L1</code></pre></td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__4">Using a topic subtree is equivalent to using a wildcard. That is, the subtree of
+<code class="ph codeph">MQRoot/L1</code>, is the same as <code class="ph codeph">MQRoot/L1/+</code> or
+<code class="ph codeph">MQRoot/L1/#</code>. Therefore, any message that is published to any <span class="ph">IBM MQ</span> topic that starts with <code class="ph codeph">MQRoot/L1</code>
+is republished to an <span class="ph">Eclipse Amlen</span> topic with the same basic
+topic string, but a different prefix. The prefix is defined by the destination topic string
+specified. For example, a message that is published to the <span class="ph">IBM MQ</span> topic <code class="ph codeph">MQRoot/L1/Subject1</code> is
+republished to the <span class="ph">Eclipse Amlen</span> topic
+<code class="ph codeph">IMARoot/L1/Subject1</code>A message that is published to the <span class="ph">IBM MQ</span> topic <code class="ph codeph">MQRoot/L1/Subject2/A</code> is
+republished to the <span class="ph">Eclipse Amlen</span> topic
+<code class="ph codeph">IMARoot/L1/Subject2/A</code></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__1">10</td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__2"><span class="ph">Eclipse Amlen</span>
+queue:<pre class="pre codeblock"><code>IMA.QUEUE1</code></pre></td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__3"><span class="ph">IBM MQ</span>
+queue:<pre class="pre codeblock"><code>MQ.QUEUE1</code></pre></td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__4">A message that is sent to the <span class="ph">Eclipse Amlen</span> queue
+<code class="ph codeph">IMA.QUEUE1</code> is MQPUT to the <span class="ph">IBM MQ</span>
+queue <code class="ph codeph">MQ.QUEUE1</code></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__1">11</td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__2"><span class="ph">Eclipse Amlen</span>
+queue:<pre class="pre codeblock"><code>IMA.QUEUE1</code></pre></td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__3"><span class="ph">IBM MQ</span>
+topic:<pre class="pre codeblock"><code>MQRoot/L1/Target</code></pre></td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__4">A message that is sent to the <span class="ph">Eclipse Amlen</span> queue
+<code class="ph codeph">IMA.QUEUE1</code> is published to the <span class="ph">IBM MQ</span>
+topic <code class="ph codeph">MQRoot/L1/Target</code></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__1">12</td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__2"><span class="ph">Eclipse Amlen</span>
+queue:<pre class="pre codeblock"><code>MQ.QUEUE1</code></pre></td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__3"><span class="ph">Eclipse Amlen</span>
+queue:<pre class="pre codeblock"><code>IMA.QUEUE1</code></pre></td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__4">A message that is sent to the <span class="ph">IBM MQ</span> queue
+<code class="ph codeph">MQ.QUEUE1</code> is forwarded to the <span class="ph">Eclipse Amlen</span>
+queue <code class="ph codeph">IMA.QUEUE1</code></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__1">13</td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__2"><span class="ph">IBM MQ</span>
+topic:<pre class="pre codeblock"><code>MQRoot/L1/Subject</code></pre></td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__3"><span class="ph">Eclipse Amlen</span>
+queue:<pre class="pre codeblock"><code>IMA.QUEUE1</code></pre></td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__4">A message that is published to the <span class="ph">IBM MQ</span>
+topic <code class="ph codeph">MQRoot/L1/Subject</code> is sent to the <span class="ph">Eclipse Amlen</span> queue <code class="ph codeph">IMA.QUEUE1</code></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__1">14</td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__2"><span class="ph">IBM MQ</span> topic
+subtree:<pre class="pre codeblock"><code>MQRoot/L1</code></pre></td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__3"><span class="ph">Eclipse Amlen</span>
+queue:<pre class="pre codeblock"><code>IMA.QUEUE1</code></pre></td>
+<td class="entry" headers="ad00110___datasimpletable_s3m_rsh_qfb__entry__4">A message that is published to any <span class="ph">IBM MQ</span>
+topic that starts with <code class="ph codeph">MQRoot/L1</code> is sent to the <span class="ph">Eclipse Amlen</span> queue <code class="ph codeph">IMA.QUEUE1</code>For
+example, messages that are published to the <span class="ph">IBM MQ</span>
+topics <code class="ph codeph">MQRoot/L1/Subject1</code>, and<code class="ph codeph">MQRoot/L1/Subject2</code>are sent to the
+<span class="ph">Eclipse Amlen</span> queue <code class="ph codeph">IMA.QUEUE1</code></td>
+</tr>
+</tbody></table>
+</div>
+<nav role="navigation" class="related-links"><div class="linklist relconcepts"><strong>Related concepts</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="ad00113_.html" title="To connect Eclipse Amlen to IBM MQ queue managers, you must create queue manager connections. Each queue manager connection specifies the connection details for one queue manager.">Configuring queue manager connections</a></li><li class="linklist"><a class="link" href="ad00101_.html" title="When MQTT or JMS messages are sent to IBM MQ, or IBM MQ messages are sent to MQTT or JMS applications, Eclipse Amlen maps the message persistence according to a set of rules.">MQ Connectivity message persistence</a></li></ul></div><div class="linklist reltasks"><strong>Related tasks</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="ad00091_.html" title="To send messages between IBM MQ and Eclipse Amlen, you must configure a server connection channel.">Configuring the IBM MQ server connection channel</a></li></ul></div></nav>
+</article></main></body></html>

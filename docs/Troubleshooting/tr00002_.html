@@ -1,0 +1,81 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="There are several common reasons why an application might fail to connect."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>The application fails to connect</title></head><body id="tr00002_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a><ul><li><a href="../Troubleshooting/tr00000_.html">Log files</a></li><li><a href="../Troubleshooting/tr00006_.html">Maintenance mode</a></li><li><a href="../Troubleshooting/tr00001_.html">Common problems</a><ul><li class="active"><a href="../Troubleshooting/tr00002_.html">The application fails to connect</a></li><li><a href="../Troubleshooting/tr00008_.html">The application disconnects</a></li><li><a href="../Troubleshooting/tr00010_.html">The application fails to publish</a></li><li><a href="../Troubleshooting/tr00009_.html">The application fails to subscribe</a></li><li><a href="../Troubleshooting/tr00003_.html">Messages are not sent</a></li><li><a href="../Troubleshooting/tr00004_.html">Messages do not arrive</a></li><li><a href="../Troubleshooting/tr00005_.html">  MQ Connectivity problems</a></li><li><a href="../Troubleshooting/raisnotworking.html">Eclipse Amlen resource adapter is not working</a></li><li><a href="../Troubleshooting/tr00020_.html">LTPA validation fails</a></li><li><a href="../Troubleshooting/tr00012_.html">The Amlen WebUI is not working</a></li><li><a href="../Troubleshooting/tr00015_.html">High availability problems</a></li><li><a href="../Troubleshooting/tr00026_.html">Cluster problems</a></li><li><a href="../Troubleshooting/tr00021_.html">Dynamic policy update problems</a></li><li><a href="../Troubleshooting/tr00023_.html">SNMP problems</a></li><li><a href="../Troubleshooting/tr00024_.html">LDAP is not working</a></li><li><a href="../Troubleshooting/tr00031_.html">Problems during upgrade from IBM MessageSight version 1.2</a></li></ul></li><li><a href="../Troubleshooting/tr00030.html">Platform must-gather</a></li><li><a href="../Troubleshooting/admin_messagecatalog.html">Message catalog</a></li></ul></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">The application fails to connect</h1>
+
+<div class="body conbody"><p class="shortdesc">There are several common reasons why an application might
+fail to connect.</p>
+<section class="section"><h2 class="title sectiontitle">Has the <span class="ph">Eclipse Amlen</span> server started?</h2> 			 			<p class="p">If
+the <span class="ph">Eclipse Amlen</span> server
+is not started, applications cannot connect to <span class="ph">Eclipse Amlen</span>.</p> 			<p class="p">Check the status of the server. </p> 			<p class="p">If the status returned is not <code class="ph codeph">Running</code>, you must start the server. For more
+    information about checking server status and starting the server, see <a class="xref" href="../Administering/ad00280_.html" title="You can restart, stop and view the status of the Eclipse Amlen server by using REST Administration APIs or by using the Amlen WebUI.">Starting, stopping, restarting and viewing the status of the Eclipse Amlen server</a>.</p> 		</section>
+<section class="section"><h2 class="title sectiontitle">Is the <span class="ph">Eclipse Amlen</span> server in
+maintenance mode?</h2> 			 			<p class="p">If the <span class="ph">Eclipse Amlen</span> server is
+in maintenance mode, applications cannot connect to <span class="ph">Eclipse Amlen</span>. </p> 			<p class="p">Check the status of the server. </p> 			<p class="p">If the status returned is <code class="ph codeph">Maintenance</code>, the <span class="ph">Eclipse Amlen</span> server is in maintenance mode. For more
+    information about maintenance mode, and how to return the server status to
+     <code class="ph codeph">running</code>, see <a class="xref" href="tr00006_.html" title="Maintenance mode is an Eclipse Amlen server state that allows a system administrator to complete a number of tasks. In maintenance mode, a system administrator can clean the server store, stop and start the server, and change the server state from Maintenance to Running.">Maintenance mode</a>.</p> 		</section>
+<section class="section"><h2 class="title sectiontitle">Is the endpoint enabled?</h2> 			 			<p class="p">Messages
+cannot be sent to <span class="ph">Eclipse Amlen</span> topics
+or queues if the endpoint that the application connects to is disabled.</p> 			<p class="p">Check
+the endpoint to ensure that it is enabled.</p> 		</section>
+<section class="section"><h2 class="title sectiontitle">Does the endpoint allow the application to connect?</h2> 			 			<p class="p">When
+you create an endpoint, you can restrict which protocols can be used
+to connect to that endpoint. If the application uses a protocol that
+is not allowed, the application cannot connect to that endpoint.</p> 			<p class="p">Check
+the default log for messages that indicate that the endpoint does
+not allow a connection of a particular type, such as message <a class="xref" href="../../com.ibm.ism.messages.doc/CWLNA1108.html">CWLNA1108</a>. To resolve the problem, either use
+another endpoint that allows the protocol to connect, or change the
+endpoint to allow the protocol to connect. For more information about
+configuring endpoints, see <a class="xref" href="../Administering/ad00360_.html" title="You can configure messaging hubs either by using the Amlen WebUI or by using REST Administration APIs.">Configuring message hubs</a>.</p> 		</section>
+<section class="section"><h2 class="title sectiontitle">If you are working in an HA environment with virtual
+IP addresses, do the IP addresses on both nodes match? </h2> 			 			<p class="p">The order of the IP addresses that are listed in your endpoint configuration can become out
+    of step in an HA environment. For example, you have an HA pair using virtual IP addresses with
+    an endpoint that is configured to restrict connections to a specific IP address. If you then
+    update the list of virtual IP addresses (for example you add an IP address), the new IP address
+    might change the order of the IP addresses that are listed in the endpoint configuration. If you
+    then synchronize your HA pair or if failover occurs, the IP address that is restricted on one
+    server might not be the same as the IP address that is restricted on the other server. To avoid
+    this problem, ensure that new virtual IP addresses are always added to the end of the list of
+    virtual IP addresses so that the list order is not affected. </p> 			 		</section>
+<section class="section"><h2 class="title sectiontitle">Does the connection policy allow the application
+to connect?</h2> 			 			<p class="p">When you create a connection policy, you
+can restrict the application connections. You can restrict access
+based on IP address, client ID, messaging user ID, messaging group
+name, or certificate common name. You can prevent MQTT clients from
+connecting if they have a <code class="ph codeph">cleanSession=0</code> setting.
+You can also prevent MQTT clients from publishing messages with a
+QoS of 1 or 2. MQTT clients fail to connect if the <span class="keyword parmname">AllowPersistentMessages</span> connection
+policy parameter is set to <code class="ph codeph">False</code> and they attempt
+to publish Will messages with a QoS of 1 or 2. If the application
+uses a restricted value, the application cannot connect to the endpoint
+associated with the connection policy.</p> 			<p class="p">Check the default
+log for messages that the connection policy does not allow the application
+to connect, such as <a class="xref" href="../../com.ibm.ism.messages.doc/CWLNA1111.html">CWLNA1111</a>.
+To resolve the problem, either use another endpoint that allows the
+application to connect, or change the connection policy to allow the
+application to connect. For more information about configuring connection
+policies, see <a class="xref" href="../Administering/ad00360_.html" title="You can configure messaging hubs either by using the Amlen WebUI or by using REST Administration APIs.">Configuring message hubs</a>.</p> 		</section>
+<section class="section"><h2 class="title sectiontitle">Does another JMS application have the same client
+ID?</h2> 			 			<p class="p">If more than one JMS application uses the same client
+ID, the first application connects successfully. When another application
+attempts to connect with the same client ID, the connection is refused
+until the first application disconnects.</p> 			<p class="p">To resolve the
+problem, ensure that each JMS application has a unique client ID.</p> 		</section>
+<section class="section"><h2 class="title sectiontitle">Has the messaging user group membership changed?</h2> 			 			<p class="p">If
+you use <span class="ph">Eclipse Amlen</span> messaging
+users and groups in your connection or messaging policies, and you
+update the group membership of the application user, applications
+might disconnect and fail to reconnect.</p> 			<p class="p">The user and group
+information is cached when the application connects. If an application
+is connected when the group membership of the application user is
+modified, the cache is used until the cache timeout is reached. When
+the timeout is reached, the new group membership information is used.
+If the connection policies and messaging policies do not allow the
+new group membership, the application disconnects and cannot reconnect.</p> 			<p class="p">To
+resolve the problem, check the group membership of the user against
+the groups that are allowed in the connection and messaging policies.
+Add the user to the appropriate groups, or update the connection policies
+and messaging policies to allow the group to connect.</p> 		</section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Troubleshooting/tr00001_.html" title="There are a number of common problems that you might encounter. Your application might fail to connect. Your application might disconnect unexpectedly. Your messages might not be published, or your messages might not arrive. MQ Connectivity might not work.">Common problems</a></div></div><div class="linklist relconcepts"><strong>Related concepts</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="tr10000_.html" title="Look for a troubleshooting task to help you solve a problem when using Eclipse Amlen.">Troubleshooting</a></li><li class="linklist"><a class="link" href="tr00001_.html" title="There are a number of common problems that you might encounter. Your application might fail to connect. Your application might disconnect unexpectedly. Your messages might not be published, or your messages might not arrive. MQ Connectivity might not work.">Common problems</a></li><li class="linklist"><a class="link" href="tr00008_.html" title="There are several common reasons why an application might disconnect unexpectedly.">The application disconnects</a></li><li class="linklist"><a class="link" href="tr00010_.html" title="There are several common reasons why an application might fail to publish to a topic.">The application fails to publish</a></li><li class="linklist"><a class="link" href="tr00009_.html" title="There are several common reasons why an application might fail to subscribe to a topic.">The application fails to subscribe</a></li><li class="linklist"><a class="link" href="tr00003_.html" title="There are several common reasons why messages might not be sent.">Messages are not sent</a></li><li class="linklist"><a class="link" href="tr00004_.html" title="There are several common reasons why messages might not arrive.">Messages do not arrive</a></li><li class="linklist"><a class="link" href="tr00005_.html" title="There are several reasons why you might experience problems when you use MQ Connectivity.">MQ Connectivity problems</a></li></ul></div><div class="linklist relref"><strong>Related reference</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="admin_messagecatalog.html" title="You can use the messages in this catalog to help you solve problems with Eclipse Amlen.">Message catalog</a></li></ul></div></nav>
+</article></main></body></html>

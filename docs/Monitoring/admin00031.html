@@ -1,0 +1,169 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="View destination mapping rule-related data based on predefined queries. MQ Connectivity monitoring helps you to understand the health of your enterprise by highlighting any destination mapping rules that are not operating normally."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>MQ Connectivity monitoring</title></head><body id="admin00031"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a><ul><li><a href="../Monitoring/admin00080.html">Cluster monitoring</a></li><li><a href="../Monitoring/admin00009.html">Connection Monitoring</a></li><li><a href="../Monitoring/admin00010.html">Endpoint Monitoring</a></li><li><a href="../Monitoring/admin00016.html">Topic Monitoring</a></li><li><a href="../Monitoring/admin00019.html">Queue Monitoring</a></li><li><a href="../Monitoring/admin00022.html">Subscription Monitoring</a></li><li><a href="../Monitoring/admin00025.html">MQTT Client Monitoring</a></li><li class="active"><a href="../Monitoring/admin00031.html">MQ Connectivity monitoring</a><ul><li><a href="../Monitoring/admin00032.html">Viewing MQ Connectivity statistics by using the Amlen WebUI</a></li><li><a href="../Monitoring/admin00033.html">Viewing MQ Connectivity statistics by using REST Monitoring APIs</a></li></ul></li><li><a href="../Monitoring/admin00070.html">Viewing protocol plug-in monitoring statistics by using an external application</a></li><li><a href="../Monitoring/admin00028.html">Server Monitoring</a></li><li><a href="../Monitoring/admin00060.html">XA Transaction monitoring</a></li></ul></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">MQ Connectivity monitoring</h1>
+
+<div class="body conbody"><p class="shortdesc">View destination mapping rule-related data based on predefined
+queries. MQ Connectivity monitoring helps you to understand the health
+of your enterprise by highlighting any destination mapping rules that
+are not operating normally.</p>
+<p class="p">MQ Connectivity monitoring can aid problem determination in an
+enterprise where <span class="ph">Eclipse Amlen</span> and <span class="ph">IBM® MQ</span> are used. </p>
+<p class="p">You can use MQ Connectivity monitoring to help you to understand
+the message flow between <span class="ph">Eclipse Amlen</span> and <span class="ph">IBM MQ</span>. MQ Connectivity
+monitoring can be used to highlight the health of message processing
+through provision of statistics about the numbers of messages that
+are sent by using a particular rule or rules. For example, you can
+check the number of rollback operations to understand if there might
+be a problem with sending or receiving messages because a queue is
+full, or because a queue manager is not available.</p>
+<p class="p"> If you know that there is an issue with a particular rule, then
+you can use the MQ Connectivity monitoring queries to find information
+about that rule. You can find this information by filtering on rule
+name and checking the associated information about status, number
+of committed messages, and number of rollbacks. If there is a problem
+with a particular queue manager, then you can filter on the <span class="keyword parmname">Queue
+manager connection</span> field to get statistics relating to
+that queue manager. These statistics can help you to diagnose a problem.
+For example, the information that is provided in the <span class="keyword parmname">Status</span> field
+might indicate that the queue manager must be restarted by an administrator.</p>
+<ul class="ul">
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Rule Name</dt>
+<dd class="dd">Specifies the name of the destination mapping rule to collect
+data about.</dd>
+<dd class="dd ddexpand">You can use an asterisk (*) as a wildcard to specify a group of
+destination mapping rules. For example, to view the status of all
+destination mapping rules that start with <code class="ph codeph">MQ</code>, use <code class="ph codeph">MQ*</code>. </dd>
+<dd class="dd ddexpand">The default value is <code class="ph codeph">*</code>.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Queue Manager Connection</dt>
+<dd class="dd">Specifies the queue manager connection that the destination mapping
+rule must be associated with.</dd>
+<dd class="dd ddexpand">You can use an asterisk (*) as a wildcard to specify a group of
+queue manager connections. For example, to view the status of all
+destination mapping rules that are associated with queue managers
+that start with <code class="ph codeph">MQ</code>, use <code class="ph codeph">MQ*</code></dd>
+<dd class="dd ddexpand">The default value is <code class="ph codeph">*</code>.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Rule Type</dt>
+<dd class="dd">Specifies the type of rule to return monitoring data for.</dd>
+<dd class="dd ddexpand">You can specify one of the following values:<ul class="ul">
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Any</dt>
+<dd class="dd">Returns destination mapping rules of all types.</dd>
+<dd class="dd ddexpand">This value is the default value.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Message Gateway topic to MQ queue</dt>
+<dd class="dd">Returns destination mapping rules of the type <span class="ph">Eclipse Amlen</span> topic to <span class="ph">IBM MQ</span> queue.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Message Gateway topic to MQ topic</dt>
+<dd class="dd">Returns destination mapping rules of the type <span class="ph">Eclipse Amlen</span> topic to <span class="ph">IBM MQ</span> topic.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">MQ queue to Message Gateway topic </dt>
+<dd class="dd">Returns destination mapping rules of the type <span class="ph">IBM MQ</span> queue to <span class="ph">Eclipse Amlen</span> topic.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">MQ topic to Message Gateway topic</dt>
+<dd class="dd">Returns destination mapping rules of the type <span class="ph">IBM MQ</span> topic to <span class="ph">Eclipse Amlen</span> topic.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Message Gateway topic subtree to MQ queue</dt>
+<dd class="dd">Returns destination mapping rules of the type <span class="ph">Eclipse Amlen</span> topic subtree
+to  <span class="ph">IBM MQ</span> queue.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Message Gateway topic subtree to MQ topic</dt>
+<dd class="dd">Returns destination mapping rules of the type <span class="ph">Eclipse Amlen</span> topic subtree
+to  <span class="ph">IBM MQ</span> topic.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Message Gateway topic subtree to MQ topic subtree</dt>
+<dd class="dd">Returns destination mapping rules of the type <span class="ph">Eclipse Amlen</span> topic subtree
+to <span class="ph">IBM MQ</span> topic
+subtree.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">MQ topic subtree to Message Gateway topic </dt>
+<dd class="dd">Returns destination mapping rules of the type <span class="ph">IBM MQ</span> topic subtree
+to <span class="ph">Eclipse Amlen</span> topic.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">MQ topic subtree to Message Gateway topic subtree</dt>
+<dd class="dd">Returns destination mapping rules of the type <span class="ph">IBM MQ</span> topic subtree
+to <span class="ph">Eclipse Amlen</span> topic
+subtree.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Message Gateway queue to MQ queue</dt>
+<dd class="dd">Returns destination mapping rules of the type <span class="ph">Eclipse Amlen</span> queue to <span class="ph">IBM MQ</span> queue.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Message Gateway queue to MQ topic</dt>
+<dd class="dd">Returns destination mapping rules of the type <span class="ph">Eclipse Amlen</span> queue to <span class="ph">IBM MQ</span> topic.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">MQ queue to Message Gateway queue</dt>
+<dd class="dd">Returns destination mapping rules of the type <span class="ph">IBM MQ</span> queue to <span class="ph">Eclipse Amlen</span> queue.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">MQ queue to Message Gateway topic</dt>
+<dd class="dd">Returns destination mapping rules of the type <span class="ph">IBM MQ</span> queue to <span class="ph">Eclipse Amlen</span> topic.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">MQ topic to Message Gateway queue</dt>
+<dd class="dd">Returns destination mapping rules of the type <span class="ph">IBM MQ</span> topic to <span class="ph">Eclipse Amlen</span> queue.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">MQ topic subtree to Message Gateway queue</dt>
+<dd class="dd">Returns destination mapping rules of the type <span class="ph">IBM MQ</span> topic subtree
+to <span class="ph">Eclipse Amlen</span> queue.</dd>
+</dl></li>
+</ul></dd>
+</dl></li>
+</ul>
+<p class="p">You can then run one of the following predefined queries:</p>
+<ul class="ul">
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Rules with most commit operations</dt>
+<dd class="dd">The destination mapping rule with the highest number of completed
+commit operations. The number of commit operations is increased when
+a batch of persistent messages is sent successfully. One commit operation
+can commit many messages. Nonpersistent messages with a QoS of 0 are
+not batched.</dd>
+<dd class="dd ddexpand">This rule is the default value.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Rules with most rollback operations</dt>
+<dd class="dd">The destination mapping rule with the highest number of completed
+rollback operations. An increase in the number of rollback operations
+might indicate a problem. For example, a queue might be full or a
+queue manager might not be running. However, the number of rollback
+operations can also increase if no subscribers are currently connected
+to the queue manager to receive the message, or if a rule is disabled.
+When a rule is disabled, any transaction that is in progress is rolled
+back. The messages are re-sent when the rule is re-enabled.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Rules with most persistent messages</dt>
+<dd class="dd">The destination mapping rule with the highest number of persistent
+messages that are sent by using that rule.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Rules with most nonpersistent messages</dt>
+<dd class="dd">The destination mapping rule with the highest number of nonpersistent
+messages that are sent by using that rule.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Rules with most committed messages</dt>
+<dd class="dd">The destination mapping rule with the highest number of committed
+messages. </dd>
+</dl></li>
+</ul>
+</div>
+<nav role="navigation" class="related-links"><ul class="ullinks"><li class="link ulchildlink"><strong><a href="../Monitoring/admin00032.html">Viewing MQ Connectivity statistics by using the Amlen WebUI</a></strong><br>System administrators can view destination mapping rule-related statistics by using the MQ Connectivity monitor in the <span class="ph">Amlen WebUI</span>. </li><li class="link ulchildlink"><strong><a href="../Monitoring/admin00033.html">Viewing MQ Connectivity statistics by using REST Monitoring APIs</a></strong><br>System administrators can view destination mapping rule-related statistics by using a <span class="ph">REST Monitoring API</span>. </li></ul><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Monitoring/admin00008_.html" title="Monitoring provides a picture of the health of Eclipse Amlen. You can monitor Eclipse Amlen to understand how it is being used, and watch for potential problems.">Monitoring and reporting</a></div></div></nav></article></main></body></html>

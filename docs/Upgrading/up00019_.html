@@ -1,0 +1,71 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="Before you migrate the IBM IoT MessageSight version 1.2 configuration file and store to a running Eclipse Amlen version 0.1 server, it is best practice to take a backup of the production server store and copy it to a test environment to test the upgrade process."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Upgrading to Eclipse Amlen version 0.1: taking a backup of the IBM IoT MessageSight version 1.2 configuration and store</title></head><body id="up00019_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a><ul><li><a href="../Upgrading/up00014_.html">Upgrading and rolling back the software level of Eclipse Amlen</a></li><li><a href="../Upgrading/up00021_.html">Upgrading from IBM Watson IoT Platform Message Gateway to Eclipse Amlen</a></li><li><a href="../Upgrading/up00020_.html">Upgrading from IBM IoT MessageSight v2 (or above) to Eclipse Amlen</a></li><li><a href="../Upgrading/up00015_.html">Upgrading from IBM IoT MessageSight version 1.2</a><ul><li><a href="../Upgrading/up00016_.html">Planning to upgrade to Eclipse Amlen version 0.1 from IBM IoT MessageSight version 1.2</a></li><li><a href="../Upgrading/up00017_.html">Upgrading to Eclipse Amlen version 0.1: server configuration only</a></li><li><a href="../Upgrading/up00018_.html">Upgrading to Eclipse Amlen version 0.1: server configuration and store</a></li><li class="active"><a href="../Upgrading/up00019_.html">Upgrading to Eclipse Amlen version 0.1: taking a backup of the IBM IoT MessageSight version 1.2 configuration and store</a></li></ul></li></ul></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Upgrading to <span class="ph">Eclipse Amlen</span> version <span class="ph">0.1</span>: taking a backup of the <span class="ph">IBM IoT MessageSight</span> version 1.2 configuration and store</h1>
+
+
+
+
+
+
+<div class="body taskbody"><p class="shortdesc">Before you migrate the <span class="ph">IBM® IoT MessageSight</span> version
+1.2 configuration file and store to a running
+<span class="ph">Eclipse Amlen</span> version <span class="ph">0.1</span> server, it is best practice to take a
+backup of the production server store and copy it to a test environment to test the upgrade
+process.</p>
+<section class="section prereq">
+<ul class="ul">
+<li class="li">You must have an <span class="ph">IBM IoT MessageSight</span> version 1.2  server that is not in production for
+restoring the backup and testing the upgrade process. Do not use a production system to test the
+upgrade process.</li>
+<li class="li">You must be prepared for a server outage and restart of your <span class="ph">IBM IoT MessageSight</span> version 1.2  server.</li>
+</ul>
+</section>
+<section><ol class="ol steps"><li class="li step stepexpand">
+<span class="ph cmd">Put your <span class="ph">IBM IoT MessageSight</span> version 1.2  server into maintenance mode by issuing the
+following commands:</span>
+<div class="itemgroup info">
+<pre class="pre codeblock"><code>imaserver runmode maintenance
+imaserver stop
+imaserver start</code></pre>
+</div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Back up the store by using the <span class="keyword cmdname">imaserver backup</span> command.</span>
+<div class="itemgroup info">For example:<pre class="pre codeblock"><code>imaserver backup "Password=backup_password"
+"StoreDestinationURL=scp://10.10.0.2:/data/backup/store_backup_201605091530"
+"StoreDestinationUserID=root" 'StoreDestinationPassword=mypassword'</code></pre>For more information about using the <span class="keyword cmdname">imaserver backup</span> command, see <a class="xref" href="http://www.ibm.com/support/knowledgecenter/SSCGGQ_1.2.0/com.ibm.ism.doc/Reference/BackupCmd/cmd_imaserver_backup.html" target="_blank" rel="external noopener">imaserver backup command</a>.</div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Put your <span class="ph">IBM IoT MessageSight</span> version 1.2 server into production mode by issuing the
+following commands:</span>
+<div class="itemgroup info">
+<pre class="pre codeblock"><code>imaserver runmode production
+imaserver stop
+imaserver start</code></pre>
+</div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Use the <span class="keyword cmdname">file put</span> command to copy the backup file that was created by the <span class="keyword cmdname">imaserver backup</span> to the same server that was used for the store backup. </span>
+<div class="itemgroup info">For example:<pre class="pre codeblock"><code>file put imaBackup.153121-05092016 scp://root@10.10.0.2:/data/backup</code></pre>For more information about using the <span class="keyword cmdname">file put</span> command, see <a class="xref" href="http://www.ibm.com/support/knowledgecenter/SSCGGQ_1.2.0/com.ibm.ism.doc/Reference/CommonCmd/fun_fileput.html" target="_blank" rel="external noopener">file put command</a>.</div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Use the <span class="keyword cmdname">file get</span> command to copy the backup file to the <span class="ph">IBM IoT MessageSight</span> version 1.2 server that is to be used for testing the
+backup and upgrade process. </span>
+<div class="itemgroup info">For
+example:<pre class="pre codeblock"><code>file get scp://root@10.10.0.2:/data/backup/imaBackup.153121-05092016 imaBackup.153121-05092016</code></pre>For
+more information about using the <span class="keyword cmdname">file get</span> command, see <a class="xref" href="http://www.ibm.com/support/knowledgecenter/SSCGGQ_1.2.0/com.ibm.ism.doc/Reference/CommonCmd/fun_fileget.html" target="_blank" rel="external noopener">file get command</a>.</div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Put your <span class="ph">IBM IoT MessageSight</span> version 1.2 test server into maintenance mode by issuing
+the following commands:</span>
+<div class="itemgroup info">
+<pre class="pre codeblock"><code>imaserver runmode maintenance
+imaserver stop
+imaserver start</code></pre>
+</div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Restore the store backup file and configuration backup file on the test server by using the <span class="keyword cmdname">imaserver restore</span> command.</span>
+<div class="itemgroup info">For example:<pre class="pre codeblock"><code>imaserver restore "Name=imaBackup.153121-05092016"  "Password=backup_password"
+"Appliance=False"  "StoreSourceURL=scp://10.10.0.2:/data/backup/store_backup_20160509"
+"StoreSourceUserID=root" "StoreSourcePassword=mypassword"</code></pre>For more information about using the <span class="keyword cmdname">imaserver restore</span> command, see <a class="xref" href="http://www.ibm.com/support/knowledgecenter/SSCGGQ_1.2.0/com.ibm.ism.doc/Reference/BackupCmd/cmd_imaserver_restore.html" target="_blank" rel="external noopener">imaserver backup command</a></div>
+</li></ol></section>
+<section class="section postreq">The <span class="ph">IBM IoT MessageSight</span> version 1.2 test server is ready to use to test the
+upgrade process. Follow the instructions in <a class="xref" href="up00018_.html" title="System administrators can upgrade their IBM IoT MessageSight version 1.2 systems to an Eclipse Amlen version 0.1 environment by migrating the configuration and store from an IBM IoT MessageSight version 1.2 physical or virtual appliance to a running Eclipse Amlen version 0.1 environment. The upgrade process requires the use of high availability (HA) servers.">Upgrading to Eclipse Amlen version 0.1: server configuration and store</a>.</section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Upgrading/up00015_.html" title="System administrators can upgrade to Eclipse Amlen version 0.1 from IBM IoT MessageSight version 1.2.">Upgrading from IBM IoT MessageSight version 1.2</a></div></div></nav></article></main></body></html>

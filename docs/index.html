@@ -1,0 +1,1094 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <meta charset="UTF-8">
+      <meta name="copyright" content="(C) Copyright 2021">
+      <meta name="generator" content="DITA-OT">
+      <link rel="stylesheet" type="text/css" href="commonltr.css">
+      <link rel="stylesheet" type="text/css" href="doc.css">
+      <title>Eclipse Amlen</title>
+   </head>
+   <body>
+      <h1 class="title topictitle1"><span class="ph">Eclipse Amlen</span></h1>
+      <nav>
+         <ul lang="en-us" class="map">
+            <li class="topicref"><a href="welcome.html">Welcome</a></li>
+            <li class="topicref"><a href="Overview/ov00000_.html">Eclipse Amlen</a><ul>
+                  <li class="topicref"><a href="Overview/ov00000_.html">Product overview</a><ul>
+                        <li class="topicref"><a href="Overview/ov00002_.html">Architecture Overview</a></li>
+                        <li class="topicref"><a href="Overview/ov60000_.html">Eclipse Amlen in Containers</a></li>
+                        <li class="topicref"><a href="Overview/ov00050.html">Supported protocols</a><ul>
+                              <li class="topicref"><a href="Overview/ov00051.html">WebSockets</a></li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Bridge/br00000.html">   Amlen Bridge</a></li>
+                        <li class="topicref"><a href="Overview/ov00003_.html">Key Concepts</a><ul>
+                              <li class="topicref"><a href="Overview/ov20000.html">Point-to-point messaging</a><ul>
+                                    <li class="topicref"><a href="Overview/ov30000.html">Queues</a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Overview/ov00030.html">Publish/Subscribe</a><ul>
+                                    <li class="topicref"><a href="Overview/ov30010.html">Subscribers and Subscriptions</a></li>
+                                    <li class="topicref"><a href="Overview/ov00031.html">Topic Strings</a></li>
+                                    <li class="topicref"><a href="Overview/ov00032.html">Wildcards</a></li>
+                                    <li class="topicref"><a href="Overview/ov00033.html">Retained messages</a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Planning/ov00102_.html">Message delivery</a></li>
+                              <li class="topicref"><a href="Planning/ov00101_.html">Messaging patterns</a></li>
+                              <li class="topicref"><a href="Overview/ov00060.html">Message hubs, endpoints, and policies</a><ul>
+                                    <li class="topicref"><a href="Overview/ov00100_.html">Message hubs</a></li>
+                                    <li class="topicref"><a href="Overview/ov00110_.html">Endpoints</a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Overview/ov00150_.html">Clustering in Eclipse Amlen</a></li>
+                              <li class="topicref"><a href="Overview/ov00140_.html">Disconnected client notifications</a></li>
+                              <li class="topicref"><a href="Overview/ov00070.html">MQ Connectivity</a></li>
+                              <li class="topicref"><a href="Overview/ov40000.html">High availability</a></li>
+                              <li class="topicref"><a href="Bridge/br00001.html">   Amlen Bridge concepts</a><ul>
+                                    <li class="topicref"><a href="Bridge/br00003.html">MQTT version support</a></li>
+                                    <li class="topicref"><a href="Bridge/br00004.html">Transport security</a></li>
+                                    <li class="topicref"><a href="Bridge/br00005.html">Subscriptions</a></li>
+                                    <li class="topicref"><a href="Bridge/br00006.html">Topic mapping</a></li>
+                                    <li class="topicref"><a href="Bridge/br00007.html">Password obfuscation</a></li>
+                                 </ul>
+                              </li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Overview/accessibility_topic.html">Accessibility features for Eclipse Amlen</a></li>
+                        <li class="topicref"><a href="Overview/notices.html">Notices</a></li>
+                     </ul>
+                  </li>
+                  <li class="topicref"><a href="Planning/pl00001_.html">Planning</a><ul>
+                        <li class="topicref"><a href="Planning/pl00030.html">Installation planning</a><ul>
+                              <li class="topicref"><a href="Planning/pl00040.html">Planning the installation of Eclipse Amlen  </a></li>
+                              <li class="topicref"><a href="Planning/pl00070.html">Core file redirection</a></li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Planning/ov00101_.html">Messaging patterns</a></li>
+                        <li class="topicref"><a href="Planning/pl00010.html">Messaging planning</a><ul>
+                              <li class="topicref"><a href="Planning/ov00102_.html">Message delivery</a></li>
+                              <li class="topicref"><a href="Planning/pl00005.html">Conversion between MQTT and JMS</a></li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Planning/clusteringconsiderations.html">Clustering considerations</a><ul>
+                              <li class="topicref"><a href="Planning/clusteringsubscriptionvis.html">Clustering: In a request-response model</a></li>
+                              <li class="topicref"><a href="Planning/clusteringretainedmsgs.html">Clustering: Retained messages</a></li>
+                              <li class="topicref"><a href="Planning/clusteringtimeserversynch.html">Clustering: Time server synchronization</a></li>
+                              <li class="topicref"><a href="Planning/clusteringmsgsbetweenservers.html">Clustering: Sending messages between cluster servers</a></li>
+                              <li class="topicref"><a href="Planning/clusteringmessageorder.html">Clustering: Message ordering</a></li>
+                              <li class="topicref"><a href="Planning/clusteringmsgpolicyconsiderations.html">Clustering: Max Messages Behavior</a></li>
+                              <li class="topicref"><a href="Planning/clusteringclientstate.html">Clustering: Client state</a></li>
+                              <li class="topicref"><a href="Planning/clusteringomping.html">Clustering: Testing multicast connectivity between servers in a cluster</a></li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Planning/pl00002_.html">Capacity planning</a></li>
+                        <li class="topicref"><a href="Planning/pl00004.html">Performance planning</a></li>
+                        <li class="topicref"><a href="Planning/ov40001.html">High availability planning</a></li>
+                        <li class="topicref"><a href="Planning/pl00020.html">Connecting to an existing infrastructure</a></li>
+                     </ul>
+                  </li>
+                  <li class="topicref"><a href="QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a><ul>
+                        <li class="topicref"><a href="QuickStartGuide/qs00030_.html">Provisioning your operating system </a></li>
+                        <li class="topicref"><a href="QuickStartGuide/qs00040_.html">Installing Docker on your operating system</a></li>
+                        <li class="topicref"><a href="QuickStartGuide/qs00054_.html">Preparing the Eclipse Amlen .tz packages for installation</a></li>
+                        <li class="topicref"><a href="QuickStartGuide/qs00059_.html">Installing Eclipse Amlen  </a><ul>
+                              <li class="topicref"><a href="QuickStartGuide/qs00055_.html">Installing Eclipse Amlen in Docker containers</a><ul>
+                                    <li class="topicref"><a href="QuickStartGuide/qs00051_.html">Building and running the Eclipse Amlen messaging server Docker image </a></li>
+                                    <li class="topicref"><a href="QuickStartGuide/qs00052_.html">Building and running the Amlen WebUI Docker image</a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="QuickStartGuide/qs00056_.html">Installing the Eclipse Amlen RPM on a host OS</a><ul>
+                                    <li class="topicref"><a href="QuickStartGuide/qs00057_.html">Installing the Eclipse Amlen messaging server RPM</a></li>
+                                    <li class="topicref"><a href="QuickStartGuide/qs00058_.html">Installing the Amlen WebUI RPM</a></li>
+                                 </ul>
+                              </li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="QuickStartGuide/qs00053_.html">Logging in to the Amlen WebUI</a></li>
+                        <li class="topicref"><a href="QuickStartGuide/qs00002_.html">Verifying the installation of Eclipse Amlen</a></li>
+                     </ul>
+                  </li>
+                  <li class="topicref"><a href="Upgrading/up00001_.html">Upgrading</a><ul>
+                        <li class="topicref"><a href="Upgrading/up00014_.html">Upgrading and rolling back the software level of Eclipse Amlen</a><ul>
+                              <li class="topicref"><a href="Upgrading/up00006_.html">Upgrading Eclipse Amlen in a Docker environment</a></li>
+                              <li class="topicref"><a href="Upgrading/up00004_.html">Rolling back the level of Eclipse Amlen in a Docker environment</a></li>
+                              <li class="topicref"><a href="Upgrading/up00003_.html">Upgrading the Eclipse Amlen RPM</a></li>
+                              <li class="topicref"><a href="Upgrading/up00007_.html">Rolling back the Eclipse Amlen RPM</a></li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Upgrading/up00021_.html">Upgrading from IBM Watson IoT Platform Message Gateway to Eclipse Amlen</a><ul>
+                              <li class="topicref"><a href="Upgrading/up00022_.html">TLS in IBM Watson IoT Platform Message Gateway and Eclipse Amlen</a></li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Upgrading/up00020_.html">Upgrading from IBM IoT MessageSight v2 (or above) to Eclipse Amlen</a></li>
+                        <li class="topicref"><a href="Upgrading/up00015_.html">Upgrading from IBM IoT MessageSight version 1.2</a><ul>
+                              <li class="topicref"><a href="Upgrading/up00016_.html">Planning to upgrade to Eclipse Amlen version 0.1 from IBM IoT MessageSight version
+                                    1.2</a></li>
+                              <li class="topicref"><a href="Upgrading/up00017_.html">Upgrading to Eclipse Amlen version 0.1: server configuration only</a></li>
+                              <li class="topicref"><a href="Upgrading/up00018_.html">Upgrading to Eclipse Amlen version 0.1: server configuration and store</a></li>
+                              <li class="topicref"><a href="Upgrading/up00019_.html">Upgrading to Eclipse Amlen version 0.1: taking a backup of the IBM IoT MessageSight
+                                    version 1.2 configuration and store</a></li>
+                           </ul>
+                        </li>
+                     </ul>
+                  </li>
+                  <li class="topicref"><a href="Scenarios/sc00000_.html">End-to-end scenarios</a><ul>
+                        <li class="topicref"><a href="Scenarios/sc00008_.html">Configuring your environment for the cluster scenarios</a><ul>
+                              <li class="topicref"><a href="Scenarios/sc00007_.html">Scenario 1: Using smart phones to control air conditioning remotely</a></li>
+                              <li class="topicref"><a href="Scenarios/sc00009_.html">Scenario 2: Viewing message flow across a cluster </a></li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Scenarios/sc00006_.html">Scenario: Fan-out broadcast</a></li>
+                        <li class="topicref"><a href="Scenarios/sc00002_.html">Scenario: Fan-in per device notification</a></li>
+                        <li class="topicref"><a href="Scenarios/sc00003_.html">Scenario: Fan-out per device notification</a></li>
+                        <li class="topicref"><a href="Scenarios/sc00004_.html">Scenario: Fan-out per device request-reply</a></li>
+                        <li class="topicref"><a href="Scenarios/sc00005_.html">Scenario: Fan-in per device request-reply</a></li>
+                     </ul>
+                  </li>
+                  <li class="topicref"><a href="Administering/ad00000_.html">Administering</a><ul>
+                        <li class="topicref"><a href="Administering/ad00390_.html">Configuring the administration endpoint</a><ul>
+                              <li class="topicref"><a href="Administering/ad00391_.html">Configuring the admin endpoint by using the Amlen WebUI</a></li>
+                              <li class="topicref"><a href="Administering/ad00394_.html">Configuring the admin endpoint by using REST Administration APIs</a><ul>
+                                    <li class="topicref"><a href="Administering/ad00392_.html">Configuring the admin endpoint by using a REST Administration API</a></li>
+                                    <li class="topicref"><a href="Administering/ad00056_.html">Configuring the administration endpoint to accept connections over TLS</a></li>
+                                    <li class="topicref"><a href="Administering/ad00393_.html">Creating and updating a configuration policy by using REST Administration APIs</a></li>
+                                    <li class="topicref"><a href="Administering/ad00397_.html">Setting and viewing the admin superuser ID by using REST Administration APIs</a><ul>
+                                          <li class="topicref"><a href="Administering/ad00395_.html">Setting the admin superuser ID by using REST Administration APIs</a></li>
+                                          <li class="topicref"><a href="Administering/ad00398_.html">Viewing the admin superuser ID by using REST Administration APIs</a></li>
+                                       </ul>
+                                    </li>
+                                    <li class="topicref"><a href="Administering/ad00396_.html">Setting the admin superuser password by using REST Administration APIs</a></li>
+                                 </ul>
+                              </li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Administering/ad00200_.html">Server administration</a><ul>
+                              <li class="topicref"><a href="Administering/ad00210_.html">Network interface controllers</a></li>
+                              <li class="topicref"><a href="Administering/ad00380_.html">Configuring the server name</a><ul>
+                                    <li class="topicref"><a href="Administering/ad00381_.html">Configuring the server name by using the Amlen WebUI</a></li>
+                                    <li class="topicref"><a href="Administering/ad00382_.html">Configuring the server name by using REST Administration APIs</a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Administering/ad00290_.html">Configuring log files</a><ul>
+                                    <li class="topicref"><a href="Administering/ad00293_.html">Setting the logging level</a><ul>
+                                          <li class="topicref"><a href="Administering/ad00291_.html">Setting the logging level by using the GUI</a></li>
+                                          <li class="topicref"><a href="Administering/ad00292_.html">Setting the logging level by using REST Administration APIs</a></li>
+                                       </ul>
+                                    </li>
+                                    <li class="topicref"><a href="Administering/ad01295_.html">Viewing the logging level by using REST Administration APIs</a></li>
+                                    <li class="topicref"><a href="Administering/ad01291.html">Changing and viewing log location information by using REST Administration APIs</a></li>
+                                    <li class="topicref"><a href="Administering/ad01292.html">Configuring and viewing syslog server information by using REST Administration APIs</a></li>
+                                    <li class="topicref"><a href="Administering/ad01293.html">Store and forward syslog messages by using rsyslog </a></li>
+                                    <li class="topicref"><a href="Administering/ad01294.html">Logging in a high availability environment</a></li>
+                                    <li class="topicref"><a href="Administering/ad01297_.html">Configuring log rotation for Eclipse Amlen in a Docker environment</a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Administering/ad00400_.html">Configuring your system for high availability</a><ul>
+                                    <li class="topicref"><a href="Administering/ad00909_.html">Configuring HA </a><ul>
+                                          <li class="topicref"><a href="Administering/ad01001_.html">Configuring high availability by using the Amlen WebUI</a><ul>
+                                                <li class="topicref"><a href="Administering/ad00401_.html">Configuring Eclipse Amlen servers as an HA pair by using the Amlen WebUI</a></li>
+                                                <li class="topicref"><a href="Administering/ad01002_.html">Configuring high availability in an Eclipse Amlen cluster by using the Amlen WebUI</a><ul>
+                                                      <li class="topicref"><a href="Administering/ad00999_.html">Enabling high availability on cluster members by using the Amlen WebUI</a></li>
+                                                      <li class="topicref"><a href="Administering/ad01000_.html">Disabling high availability on cluster members by using the Amlen WebUI</a></li>
+                                                   </ul>
+                                                </li>
+                                             </ul>
+                                          </li>
+                                          <li class="topicref"><a href="Administering/ad00993_.html">Configuring high availability by using REST Administration APIs</a><ul>
+                                                <li class="topicref"><a href="Administering/ad00992_.html">Configuring Eclipse Amlen servers as an HA pair by using REST Administration APIs</a></li>
+                                                <li class="topicref"><a href="Administering/ad00996_.html">Configuring high availability in an Eclipse Amlen cluster by using REST Administration
+                                                      APIs</a><ul>
+                                                      <li class="topicref"><a href="Administering/ad00997_.html">Enabling high availability on a member of a cluster by using REST Administration APIs</a></li>
+                                                      <li class="topicref"><a href="Administering/ad00998_.html">Disabling high availability on cluster members by using REST Administration APIs</a></li>
+                                                   </ul>
+                                                </li>
+                                                <li class="topicref"><a href="Administering/ad00995_.html">Viewing high availability configuration details by using a REST Administration API</a></li>
+                                                <li class="topicref"><a href="Administering/ad00994_.html">Viewing the status of the high availability service by using a REST Administration
+                                                      API</a></li>
+                                             </ul>
+                                          </li>
+                                       </ul>
+                                    </li>
+                                    <li class="topicref"><a href="Administering/ad00416_.html">High availability scenarios</a><ul>
+                                          <li class="topicref"><a href="Administering/ad00902_.html">Add a new standby node after the primary node failed</a><ul>
+                                                <li class="topicref"><a href="Administering/ad00403_.html">Add a new standby node after the primary node failed by using the GUI</a></li>
+                                                <li class="topicref"><a href="Administering/ad00404_.html">Add a new standby node after the primary node failed by using the command line</a></li>
+                                             </ul>
+                                          </li>
+                                          <li class="topicref"><a href="Administering/ad00903_.html">Add a new standby node after the original standby node failed</a><ul>
+                                                <li class="topicref"><a href="Administering/ad00405_.html">Add a new standby node after the original standby node failed by using the GUI</a></li>
+                                                <li class="topicref"><a href="Administering/ad00406_.html">Add a new standby node after the original standby node failed by using the command
+                                                      line</a></li>
+                                             </ul>
+                                          </li>
+                                          <li class="topicref"><a href="Administering/ad00904_.html">Bring back a standby node after it failed</a><ul>
+                                                <li class="topicref"><a href="Administering/ad00407_.html">Bring back a standby node after it failed by using the GUI</a></li>
+                                                <li class="topicref"><a href="Administering/ad00408_.html">Bring back a standby node after it failed by using the command line</a></li>
+                                             </ul>
+                                          </li>
+                                          <li class="topicref"><a href="Administering/ad00905_.html">Bring back primary and standby nodes after both nodes fail</a><ul>
+                                                <li class="topicref"><a href="Administering/ad00409_.html">Bring back primary and standby nodes after both nodes fail by using the GUI</a></li>
+                                                <li class="topicref"><a href="Administering/ad00410_.html">Bring back primary and standby nodes after both nodes fail by using the command line</a></li>
+                                             </ul>
+                                          </li>
+                                          <li class="topicref"><a href="Administering/ad00906_.html">Bring back the last primary node after the primary and then the standby node fails</a><ul>
+                                                <li class="topicref"><a href="Administering/ad00411_.html">Bring back the last primary node after the primary and then the standby node fails
+                                                      by using the GUI</a></li>
+                                                <li class="topicref"><a href="Administering/ad00412_.html">Bring back the last primary node after the primary and then the standby node fails
+                                                      by using the command line</a></li>
+                                             </ul>
+                                          </li>
+                                          <li class="topicref"><a href="Administering/ad00907_.html">Bring back both appliances after both appliances fail simultaneously</a><ul>
+                                                <li class="topicref"><a href="Administering/ad00413_.html">Bring back both appliances after both appliances fail simultaneously by using the
+                                                      GUI</a></li>
+                                                <li class="topicref"><a href="Administering/ad00414_.html">Bring back both appliances after both appliances fail simultaneously by using the
+                                                      command line</a></li>
+                                             </ul>
+                                          </li>
+                                       </ul>
+                                    </li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Administering/ad00790_.html">Configuring licensed usage and accepting the license for Eclipse Amlen  </a><ul>
+                                    <li class="topicref"><a href="Administering/ad00791_.html">Viewing the licensed usage for Eclipse Amlen by using the Amlen WebUI</a></li>
+                                    <li class="topicref"><a href="Administering/ad00795_.html">Configuring licensed usage and accepting the license for Eclipse Amlen  </a><ul>
+                                          <li class="topicref"><a href="Administering/ad00793_.html">Configuring the licensed usage for Eclipse Amlen and accepting the license by using
+                                                REST Administration APIs</a></li>
+                                          <li class="topicref"><a href="Administering/ad00797.html">Viewing the licensed usage for Eclipse Amlen by using REST Administration APIs</a></li>
+                                       </ul>
+                                    </li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Administering/ad00280_.html">Starting, stopping, restarting and viewing the status of the Eclipse Amlen server</a><ul>
+                                    <li class="topicref"><a href="Administering/ad00281_.html">Restarting, stopping, and viewing the status of the Eclipse Amlen server by using
+                                          the Amlen WebUI</a></li>
+                                    <li class="topicref"><a href="Administering/ad00283_.html">Starting, stopping, restarting, and viewing the status of the Eclipse Amlen server
+                                          by using REST Administration APIs</a><ul>
+                                          <li class="topicref"><a href="Administering/ad00921_.html">Viewing the status of an Eclipse Amlen server and services by using REST Administration
+                                                APIs</a></li>
+                                          <li class="topicref"><a href="Administering/ad00282_.html">Starting, restarting and stopping the Eclipse Amlen server by using REST Administration
+                                                APIs</a></li>
+                                       </ul>
+                                    </li>
+                                 </ul>
+                              </li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Administering/ad00370_.html">Configuring LDAP for user authentication</a><ul>
+                              <li class="topicref"><a href="Administering/ad00372_.html">Configuring an LDAP server by using the Amlen WebUI</a></li>
+                              <li class="topicref"><a href="Administering/ad00373_.html">Configuring an LDAP server by using REST Administration APIs</a><ul>
+                                    <li class="topicref"><a href="Administering/ad00378_.html">Importing and applying a certificate for an LDAP connection by using REST Administration
+                                          APIs</a></li>
+                                    <li class="topicref"><a href="Administering/ad00379_.html">Updating an LDAP certificate in a High Availability environment by using REST Administration
+                                          APIs</a></li>
+                                    <li class="topicref"><a href="Administering/ad00374_.html">Configuring an LDAP connection by using REST Administration APIs</a></li>
+                                    <li class="topicref"><a href="Administering/ad00376_.html">Viewing the LDAP connection by using a REST Administration API</a></li>
+                                 </ul>
+                              </li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Administering/ad00700_.html">Configuring security</a><ul>
+                              <li class="topicref"><a href="Administering/ad00710_.html">Configuring certificate profiles</a><ul>
+                                    <li class="topicref"><a href="Administering/ad00711_.html">Configuring certificate profiles by using the Amlen WebUI</a></li>
+                                    <li class="topicref"><a href="Administering/ad00713_.html">Creating and updating a certificate profile by using REST Administration APIs</a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Administering/ad00730_.html">Configuring Lightweight Third Party Authentication</a><ul>
+                                    <li class="topicref"><a href="Administering/ad00731_.html">Configuring LTPA profiles by using the Amlen WebUI</a></li>
+                                    <li class="topicref"><a href="Administering/ad00733_.html">Creating and updating an LTPA profile by using REST Administration APIs</a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Administering/ad00760_.html">Configuring OAuth</a><ul>
+                                    <li class="topicref"><a href="Administering/ad00761_.html">Configuring OAuth profiles by using the Amlen WebUI</a></li>
+                                    <li class="topicref"><a href="Administering/ad00763_.html">Creating and updating an OAuth profile by using REST Administration APIs</a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Administering/ad00740_.html">Configuring security profiles</a><ul>
+                                    <li class="topicref"><a href="Administering/ad00741_.html">Configuring security profiles by using the Amlen WebUI</a></li>
+                                    <li class="topicref"><a href="Administering/ad00743_.html">Creating and updating a security profile by using REST Administration APIs</a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Administering/ad00720_.html">Configuring client certificates</a><ul>
+                                    <li class="topicref"><a href="Administering/ad00721_.html">Configuring client certificates by using the Amlen WebUI</a></li>
+                                    <li class="topicref"><a href="Administering/ad00722_.html">Creating and updating a client certificate by using REST Administration APIs</a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Administering/ad00728_.html">Configuring trusted certificates</a><ul>
+                                    <li class="topicref"><a href="Administering/ad00729_.html">Configuring trusted certificates by using the Amlen WebUI</a></li>
+                                    <li class="topicref"><a href="Administering/ad00727_.html">Creating and updating a trusted certificate by using REST Administration APIs</a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Administering/dv00022.html">Configuring a pre-shared key file</a><ul>
+                                    <li class="topicref"><a href="Administering/dv00023.html">Configuring a pre-shared key file by using REST Administration APIs</a><ul>
+                                          <li class="topicref"><a href="Administering/dv00019_.html">Uploading and applying a pre-shared key file by using REST Administration APIs</a></li>
+                                          <li class="topicref"><a href="Administering/dv00020.html">Viewing configuration details of a pre-shared key file by using REST Administration
+                                                APIs</a></li>
+                                          <li class="topicref"><a href="Administering/dv00021.html">Removing the configuration of a pre-shared key by using REST Administration APIs</a></li>
+                                       </ul>
+                                    </li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Administering/ad00750_.html">Configuring Federal Information Processing Standards (FIPS)</a><ul>
+                                    <li class="topicref"><a href="Administering/ad00751_.html">Configuring FIPS compliant security by using the Amlen WebUI</a></li>
+                                    <li class="topicref"><a href="Administering/ad00752_.html">Configuring FIPS-compliant security by using REST Administration APIs</a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Administering/ad00753_.html">Closing client connections</a></li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Administering/dv00010.html">Configuring protocol plug-ins</a><ul>
+                              <li class="topicref"><a href="Administering/dv00011.html">Configuring a protocol plug-in </a><ul>
+                                    <li class="topicref"><a href="Administering/dv00001.html">Creating and updating a protocol plug-in </a></li>
+                                    <li class="topicref"><a href="Administering/dv00012.html">Deleting a protocol plug-in</a></li>
+                                    <li class="topicref"><a href="Administering/dv00004_.html">Updating a protocol plug-in properties file</a></li>
+                                    <li class="topicref"><a href="Administering/dv00039.html">Viewing protocol plug-ins and the contents of plug-in properties files</a></li>
+                                    <li class="topicref"><a href="Administering/dv00038.html">Viewing the protocols and their allowed actions</a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Administering/dv00029.html">Setting and viewing the host IP address or host name of the plug-in server</a><ul>
+                                    <li class="topicref"><a href="Administering/dv00030.html">Setting the host IP address or host name of the plug-in server</a></li>
+                                    <li class="topicref"><a href="Administering/dv00031.html">Viewing the host IP address or host name of the plug-in server </a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Administering/dv00032.html">Setting and viewing the port number of the plug-in server</a><ul>
+                                    <li class="topicref"><a href="Administering/dv00033.html">Setting the port number of the plug-in server</a></li>
+                                    <li class="topicref"><a href="Administering/dv00034.html">Viewing the port number of the plug-in server </a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Administering/dv00035.html">Setting and viewing the runtime parameters of the plug-in server JVM</a><ul>
+                                    <li class="topicref"><a href="Administering/dv00036.html">Setting the runtime parameters of the plug-in server JVM</a></li>
+                                    <li class="topicref"><a href="Administering/dv00037.html">Viewing the runtime parameters of the plug-in server JVM</a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Administering/dv00025.html">Setting and viewing the host IP address or host name of the JVM remote debugger of
+                                    the protocol plug-in server</a><ul>
+                                    <li class="topicref"><a href="Administering/dv00006_.html">Setting the host IP address or host name of the JVM remote debugger of the plug-in
+                                          server</a></li>
+                                    <li class="topicref"><a href="Administering/dv00014.html">Viewing the host IP address or host name of the JVM remote debugger of the plug-in
+                                          server </a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Administering/dv00026.html">Setting and viewing the port number of the JVM remote debugger of the protocol plug-in
+                                    server</a><ul>
+                                    <li class="topicref"><a href="Administering/dv00008_.html">Setting the port number of the JVM remote debugger of the plug-in server</a></li>
+                                    <li class="topicref"><a href="Administering/dv00015.html">Viewing the port number of the JVM remote debugger of the plug-in server</a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Administering/dv00027.html">Setting and viewing the maximum JVM heap size of the protocol plug-in server</a><ul>
+                                    <li class="topicref"><a href="Administering/dv00007_.html">Setting the JVM maximum heap size of the plug-in server</a></li>
+                                    <li class="topicref"><a href="Administering/dv00016.html">Viewing the JVM maximum heap size of the plug-in server</a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Administering/dv00028.html">Starting, stopping, and viewing the status of the protocol plug-in server process</a><ul>
+                                    <li class="topicref"><a href="Administering/dv00013.html">Viewing the status of the protocol plug-in server process</a></li>
+                                    <li class="topicref"><a href="Administering/dv00005.html">Starting and stopping the protocol plug-in server process</a></li>
+                                 </ul>
+                              </li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Administering/ad00360_.html">Configuring message hubs</a><ul>
+                              <li class="topicref"><a href="Administering/ad00361_.html">Configuring message hubs by using the Amlen WebUI</a></li>
+                              <li class="topicref"><a href="Administering/ad00322_.html">Configuring message hubs by using REST Administration APIs</a><ul>
+                                    <li class="topicref"><a href="Administering/ad00323_.html">Creating and updating a message hub by using REST Administration APIs</a><ul>
+                                          <li class="topicref"><a href="Administering/ad00327_.html">Creating and updating a connection policy by using REST Administration APIs</a></li>
+                                          <li class="topicref"><a href="Administering/ad00450_.html">Creating and updating a messaging policy type by using REST Administration APIs</a><ul>
+                                                <li class="topicref"><a href="Administering/ad00451_.html">Creating and updating a topic policy by using REST Administration APIs</a></li>
+                                                <li class="topicref"><a href="Administering/ad00452_.html">Creating and updating a subscription policy by using REST Administration APIs</a></li>
+                                                <li class="topicref"><a href="Administering/ad00453_.html">Creating and updating a queue policy by using REST Administration APIs</a></li>
+                                             </ul>
+                                          </li>
+                                          <li class="topicref"><a href="Administering/ad00369_.html">Creating and updating an endpoint by using REST Administration APIs</a></li>
+                                       </ul>
+                                    </li>
+                                 </ul>
+                              </li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Administering/ad00350_.html">Configuring message queues</a><ul>
+                              <li class="topicref"><a href="Administering/ad00351_.html">Configuring queues by using the Amlen WebUI</a></li>
+                              <li class="topicref"><a href="Administering/ad00352_.html">Configuring queues by using REST Administration APIs</a><ul>
+                                    <li class="topicref"><a href="Administering/ad00470_.html">Creating and updating a queue by using REST Administration APIs</a></li>
+                                    <li class="topicref"><a href="Administering/ad00356_.html">Deleting a queue by using a REST Administration API</a></li>
+                                 </ul>
+                              </li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a><ul>
+                              <li class="topicref"><a href="Administering/ad01003_.html">Configuring cluster membership in a high availability pair by using the Amlen WebUI</a><ul>
+                                    <li class="topicref"><a href="Administering/ad00941_.html">Configuring cluster membership by using the Amlen WebUI  </a></li>
+                                    <li class="topicref"><a href="Administering/ad01004_.html">Configuring cluster membership in a high availability pair by using the Amlen WebUI</a><ul>
+                                          <li class="topicref"><a href="Administering/ad00949_.html">Enabling cluster membership of Eclipse Amlen servers in a high availability pair</a></li>
+                                          <li class="topicref"><a href="Administering/ad00950_.html">Disabling cluster membership of Eclipse Amlen servers in a high availability pair</a></li>
+                                       </ul>
+                                    </li>
+                                    <li class="topicref"><a href="Administering/ad00951.html">Removing an inactive cluster member by using the Amlen WebUI  </a></li>
+                                    <li class="topicref"><a href="Administering/ad00952.html">Viewing message flow by using the Amlen WebUI  </a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Administering/ad00944_.html">Configuring cluster membership by using REST Administration APIs</a><ul>
+                                    <li class="topicref"><a href="Administering/ad00942_.html">Configuring cluster membership by using REST Administration APIs</a></li>
+                                    <li class="topicref"><a href="Administering/ad00946_.html">Configuring cluster membership of Eclipse Amlen servers in a high availability pair
+                                          by using REST Administration APIs</a><ul>
+                                          <li class="topicref"><a href="Administering/ad00947_.html">Enabling cluster membership of Eclipse Amlen servers in a high availability pair by
+                                                using REST Administration APIs</a></li>
+                                          <li class="topicref"><a href="Administering/ad00948_.html">Disabling cluster membership of Eclipse Amlen servers in a high availability pair
+                                                by using REST Administration APIs</a></li>
+                                       </ul>
+                                    </li>
+                                    <li class="topicref"><a href="Administering/ad00945_.html">Viewing the cluster status of an Eclipse Amlen server by using a REST Administration
+                                          API</a></li>
+                                    <li class="topicref"><a href="Administering/ad01111.html">Removing an inactive cluster member by using a REST Administration API</a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Administering/ad00943_.html">Using omping to test multicast connectivity in clusters</a></li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Administering/ad00850_.html">Configuring disconnected client notifications</a></li>
+                        <li class="topicref"><a href="Administering/ad02940_.html">Configuring administrative subscriptions </a></li>
+                        <li class="topicref"><a href="Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li>
+                        <li class="topicref"><a href="Administering/ad00510_.html">Configuring SNMP</a><ul>
+                              <li class="topicref"><a href="Administering/ad00511_.html">Configuring SNMP by using the Amlen WebUI</a></li>
+                              <li class="topicref"><a href="Administering/ad00512_.html">Configuring SNMP by using REST Administration APIs</a><ul>
+                                    <li class="topicref"><a href="Administering/ad00513_.html">Viewing SNMP status by using REST Administration APIs</a></li>
+                                    <li class="topicref"><a href="Administering/ad00514_.html">Enabling and disabling SNMP by using REST Administration APIs</a></li>
+                                    <li class="topicref"><a href="Administering/ad00514a_.html">Starting, stopping and restarting SNMP by using REST Administration APIs</a></li>
+                                    <li class="topicref"><a href="Administering/ad00515_.html">Configuring the SNMP agent address</a></li>
+                                 </ul>
+                              </li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Administering/ad01326_.html">Configuring certificate revocation lists</a><ul>
+                              <li class="topicref"><a href="Administering/ad01325_.html">Configuring certificate revocation lists by using REST Administration APIs </a><ul>
+                                    <li class="topicref"><a href="Administering/ad01327_.html">Creating and updating a CRL profile by using REST Administration APIs</a></li>
+                                    <li class="topicref"><a href="Administering/ad001329_.html">Viewing configuration details of a CRL profile by using REST Administration APIs</a></li>
+                                    <li class="topicref"><a href="Administering/ad001328_.html">Deleting a CRL profile by using a REST Administration API</a></li>
+                                 </ul>
+                              </li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a><ul>
+                              <li class="topicref"><a href="Administering/ad00365_.html">Viewing configuration details of objects that cannot be named by using REST Administration
+                                    APIs  </a></li>
+                              <li class="topicref"><a href="Administering/ad00366_.html">Viewing configuration details of objects that can be named by using REST Administration
+                                    APIs</a></li>
+                              <li class="topicref"><a href="Administering/ad00326_.html">Deleting a configuration object by using REST Administration APIs</a></li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a><ul>
+                              <li class="topicref"><a href="Administering/ad00930.html">Configuring your first Eclipse Amlen server to manage by using the Amlen WebUI</a></li>
+                              <li class="topicref"><a href="Administering/ad00931.html">Managing a list of Eclipse Amlen servers by using the Amlen WebUI</a></li>
+                              <li class="topicref"><a href="Administering/ad00932.html">Selecting an Eclipse Amlen server to manage by using the Amlen WebUI</a></li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Administering/ad00100_.html">Working with external resources</a><ul>
+                              <li class="topicref"><a href="Administering/ad00102_.html">MQ Connectivity</a><ul>
+                                    <li class="topicref"><a href="Administering/ad00092_.html">MQ Connectivity throughput and message order</a></li>
+                                    <li class="topicref"><a href="Administering/ad00101_.html">MQ Connectivity message persistence</a></li>
+                                    <li class="topicref"><a href="Administering/ad00132_.html">MQ Connectivity retained messages</a></li>
+                                    <li class="topicref"><a href="Administering/ad00103_.html">MQ Connectivity and high availability</a></li>
+                                    <li class="topicref"><a href="Administering/ad00104_.html">MQ Connectivity security</a></li>
+                                    <li class="topicref"><a href="Administering/ad00091_.html">Configuring the IBM MQ server connection channel</a><ul>
+                                          <li class="topicref"><a href="Administering/ad00093_.html">Configuring the IBM MQ server connection channel on z/OS</a></li>
+                                          <li class="topicref"><a href="Administering/ad00108_.html">Configuring MQ Connectivity security by using self-signed certificates</a></li>
+                                          <li class="topicref"><a href="Administering/ad00109_.html">Configuring MQ Connectivity security by using CA certificates</a></li>
+                                       </ul>
+                                    </li>
+                                    <li class="topicref"><a href="Administering/ad00105_.html">Configuring the MQ Connectivity SSL key repository</a><ul>
+                                          <li class="topicref"><a href="Administering/ad00106_.html">Configuring the MQ Connectivity key repository by using the Amlen WebUI</a></li>
+                                          <li class="topicref"><a href="Administering/ad00702_.html">Configuring the MQ Connectivity key repository by using REST Administration APIs</a></li>
+                                          <li class="topicref"><a href="Administering/dv00040.html">Viewing configuration details of an MQ SSL certificate by using a REST Administration
+                                                API</a></li>
+                                       </ul>
+                                    </li>
+                                    <li class="topicref"><a href="Administering/ad00113_.html">Configuring queue manager connections</a><ul>
+                                          <li class="topicref"><a href="Administering/ad00117_.html">Configuring queue manager connections by using the Amlen WebUI</a></li>
+                                          <li class="topicref"><a href="Administering/ad00119_.html">Configuring queue manager connections by using REST Administration APIs  </a><ul>
+                                                <li class="topicref"><a href="Administering/ad00120_.html">Creating and updating a queue manager connection by using REST Administration APIs</a></li>
+                                                <li class="topicref"><a href="Administering/ad00127_.html">Viewing a queue manager connection by using REST Administration APIs</a></li>
+                                             </ul>
+                                          </li>
+                                       </ul>
+                                    </li>
+                                    <li class="topicref"><a href="Administering/ad00110_.html">Configuring destination mapping rules</a><ul>
+                                          <li class="topicref"><a href="Administering/ad00114_.html">Configuring destination mapping rules by using the Amlen WebUI</a></li>
+                                          <li class="topicref"><a href="Administering/ad00115_.html">Configuring destination mapping rules by using REST Administration APIs</a><ul>
+                                                <li class="topicref"><a href="Administering/ad00123_.html">Creating and updating a destination mapping rule by using REST Administration APIs</a></li>
+                                                <li class="topicref"><a href="Administering/ad00128_.html">Viewing a destination mapping rule by using REST Administration APIs</a></li>
+                                                <li class="topicref"><a href="Administering/ad00099_.html">Viewing the status of destination mapping rules by using REST Administration APIs</a></li>
+                                             </ul>
+                                          </li>
+                                       </ul>
+                                    </li>
+                                    <li class="topicref"><a href="Administering/ad00129_.html">Starting, restarting, stopping, and viewing the status of MQ Connectivity</a><ul>
+                                          <li class="topicref"><a href="Administering/ad00130_.html">Restarting, stopping, and viewing the status of MQ Connectivity by using the Amlen
+                                                WebUI  </a></li>
+                                          <li class="topicref"><a href="Administering/ad00135_.html">Starting, restarting, stopping, and viewing the status of the MQ Connectivity process
+                                                by using REST Administration APIs</a><ul>
+                                                <li class="topicref"><a href="Administering/ad00134_.html">Viewing the status of the MQ Connectivity process by using a REST Administration API</a></li>
+                                                <li class="topicref"><a href="Administering/ad00131_.html">Starting, restarting and stopping the MQ Connectivity process by using REST Administration
+                                                      APIs</a></li>
+                                             </ul>
+                                          </li>
+                                       </ul>
+                                    </li>
+                                    <li class="topicref"><a href="Administering/ad00111_.html">MQ Connectivity scenarios</a><ul>
+                                          <li class="topicref"><a href="Administering/ad00050_.html">MQ Connectivity scenario 1: Fan out broadcast</a></li>
+                                          <li class="topicref"><a href="Administering/ad00051_.html">MQ Connectivity scenario 2: Fan in per device notification</a></li>
+                                          <li class="topicref"><a href="Administering/ad00052_.html">MQ Connectivity scenario 3: Fan out per device notification</a></li>
+                                          <li class="topicref"><a href="Administering/ad00053_.html">MQ Connectivity scenario 4: Fan out per device request-reply</a></li>
+                                          <li class="topicref"><a href="Administering/ad00054_.html">MQ Connectivity scenario 5: Fan in per device request-reply</a></li>
+                                       </ul>
+                                    </li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Administering/workingwithjmsra.html">Eclipse Amlen resource adapter</a><ul>
+                                    <li class="topicref"><a href="Administering/installingra.html">Installing Eclipse Amlen resource adapter on WebSphere Application Server</a></li>
+                                    <li class="topicref"><a href="Administering/upgradingra.html">Updating the Eclipse Amlen resource adapter on WebSphere Application Server</a></li>
+                                    <li class="topicref"><a href="Administering/configuringra.html">Configuring Eclipse Amlen resource adapter for WebSphere Application Server</a><ul>
+                                          <li class="topicref"><a href="Administering/configurationoftheraobject.html">Configuring the Eclipse Amlen ResourceAdapter object</a></li>
+                                          <li class="topicref"><a href="Administering/configuringinboundcomms.html">Configuring the Eclipse Amlen resource adapter for inbound communication</a></li>
+                                          <li class="topicref"><a href="Administering/ad00800_.html">Programmatically configuring the Eclipse Amlen resource adapter for inbound communication</a></li>
+                                          <li class="topicref"><a href="Administering/configuringoutboundcomms.html">Configuring the Eclipse Amlen resource adapter for outbound communication</a></li>
+                                          <li class="topicref"><a href="Administering/configuringadminobjs.html">Configuring the Eclipse Amlen resource adapter for administered objects</a></li>
+                                          <li class="topicref"><a href="Administering/ratransactionoptions.html">Configuring transactions in the Eclipse Amlen resource adapter</a></li>
+                                          <li class="topicref"><a href="Administering/ad00820.html">Tuning messaging performance for the Eclipse Amlen resource adapter in WebSphere Application
+                                                Server</a></li>
+                                       </ul>
+                                    </li>
+                                    <li class="topicref"><a href="Administering/tlssecurityforjmsra.html">Transport Layer Security for the Eclipse Amlen resource adapter</a><ul>
+                                          <li class="topicref"><a href="Administering/tlsusingdefaultsettings.html">Configuring Transport Layer Security for Eclipse Amlen resource adapter by using default
+                                                security configuration </a></li>
+                                          <li class="topicref"><a href="Administering/tlsusingnondefaultsettings.html">Configuring Transport Layer Security for Eclipse Amlen resource adapter by using customized
+                                                security configuration options </a></li>
+                                          <li class="topicref"><a href="Administering/updatingthedefaulttruststorefortls.html">Updating the WebSphere Application Server default truststore for TLS connections with
+                                                Eclipse Amlen</a></li>
+                                          <li class="topicref"><a href="Administering/updatewaskeystore.html">Updating the WebSphere Application Server default keystore for client certificate
+                                                authentication</a></li>
+                                       </ul>
+                                    </li>
+                                    <li class="topicref"><a href="Administering/xaconsiderations.html">Working with XA transactions</a><ul>
+                                          <li class="topicref"><a href="Administering/changestatexatrans.html">Changing the state of an XA transaction branch</a><ul>
+                                                <li class="topicref"><a href="Administering/ad00780.html">Changing the state of an XA transaction branch by using the Amlen WebUI</a></li>
+                                                <li class="topicref"><a href="Administering/ad00781.html">Changing the state of an XA transaction branch by using REST Administration APIs</a><ul>
+                                                      <li class="topicref"><a href="Administering/ad00782.html">Committing an XA transaction branch by using REST Administration APIs</a></li>
+                                                      <li class="topicref"><a href="Administering/ad00784.html">Rolling back an XA transaction branch by using REST Administration APIs</a></li>
+                                                      <li class="topicref"><a href="Administering/ad00783.html">Forgetting an XA transaction branch by using REST Administration APIs</a></li>
+                                                   </ul>
+                                                </li>
+                                             </ul>
+                                          </li>
+                                       </ul>
+                                    </li>
+                                    <li class="topicref"><a href="Administering/adscenarios.html">Scenarios</a><ul>
+                                          <li class="topicref"><a href="Administering/scenarios.html">Scenarios for configuring the Eclipse Amlen resource adapter for inbound communication</a><ul>
+                                                <li class="topicref"><a href="Administering/considerationsforclustering.html">Configuring Eclipse Amlen resource adapter in a WebSphere Application Server cluster</a><ul>
+                                                      <li class="topicref"><a href="Administering/jmstopicconfig.html">Configuring the Eclipse Amlen resource adapter for inbound communication when you
+                                                            use topics in a WebSphere Application Server cluster</a></li>
+                                                      <li class="topicref"><a href="Administering/jmsqconfig.html">Configuring the Eclipse Amlen resource adapter for inbound communication when you
+                                                            use queues in a WebSphere Application Server cluster </a></li>
+                                                   </ul>
+                                                </li>
+                                                <li class="topicref"><a href="Administering/considerationsformsgorder.html">Configuring the Eclipse Amlen resource adapter to preserve message order</a><ul>
+                                                      <li class="topicref"><a href="Administering/ad00777.html">Message order limitations with the Eclipse Amlen resource adapter</a></li>
+                                                      <li class="topicref"><a href="Administering/jmstopicconfigmsgordering.html">Configuring the Eclipse Amlen resource adapter to preserve message order for inbound
+                                                            communication</a></li>
+                                                   </ul>
+                                                </li>
+                                                <li class="topicref"><a href="Administering/considerationsscalinginserver.html">Configuring Eclipse Amlen resource adapter for scaling within a single WebSphere Application
+                                                      Server</a><ul>
+                                                      <li class="topicref"><a href="Administering/jmstopicconfigsingleserver.html">Configuring inbound communication for topics </a></li>
+                                                      <li class="topicref"><a href="Administering/jmsqconfigsingleserver.html">Configuring inbound communication for queues</a></li>
+                                                   </ul>
+                                                </li>
+                                                <li class="topicref"><a href="Administering/considerationsHA.html">Configuring Eclipse Amlen resource adapter for high availability</a><ul>
+                                                      <li class="topicref"><a href="Administering/jmstopicconfigHA.html">Configuring the Eclipse Amlen resource adapter for high availability when you use
+                                                            topics</a></li>
+                                                      <li class="topicref"><a href="Administering/jmsqconfigHA.html">Configuring the Eclipse Amlen resource adapter for high availability when you use
+                                                            queues</a></li>
+                                                   </ul>
+                                                </li>
+                                             </ul>
+                                          </li>
+                                          <li class="topicref"><a href="Administering/jmssecurityconfig.html">Security and the Eclipse Amlen resource adapter </a></li>
+                                          <li class="topicref"><a href="Administering/sc10000.html">Scenarios to connect WebSphere Application Server and Eclipse Amlen</a></li>
+                                       </ul>
+                                    </li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Administering/vm00001_.html">Using VMware vSphere to handle Eclipse Amlen failover</a></li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Administering/ad00920.html">HTTP status codes</a></li>
+                     </ul>
+                  </li>
+                  <li class="topicref"><a href="AdministeringWebUI/ad00002_.html">Administering the Web UI</a><ul>
+                        <li class="topicref"><a href="AdministeringWebUI/se00001_.html">Eclipse Amlen Web UI users and roles</a></li>
+                        <li class="topicref"><a href="AdministeringWebUI/ad00300_.html">Configuring Eclipse Amlen Web UI users</a><ul>
+                              <li class="topicref"><a href="AdministeringWebUI/ad00301_.html">Configuring Web UI users by using the Amlen WebUI</a></li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="AdministeringWebUI/ad00199_.html">The Amlen WebUI</a><ul>
+                              <li class="topicref"><a href="AdministeringWebUI/ad00197_.html">Changing the Amlen WebUI address</a></li>
+                              <li class="topicref"><a href="AdministeringWebUI/ad00198_.html">Changing the Amlen WebUI timeout</a></li>
+                              <li class="topicref"><a href="AdministeringWebUI/ad00193_.html">Changing the HTTP read timeout</a></li>
+                              <li class="topicref"><a href="AdministeringWebUI/ad00195_.html">Changing the Amlen WebUI authentication cache timeout</a></li>
+                              <li class="topicref"><a href="AdministeringWebUI/ad00196_.html">Changing the Amlen WebUI security certificate</a></li>
+                              <li class="topicref"><a href="AdministeringWebUI/ad00194_.html">Starting and stopping the Amlen WebUI process in a Docker environment</a></li>
+                              <li class="topicref"><a href="AdministeringWebUI/ad00294_.html">Starting and stopping the Amlen WebUI process on a host OS</a></li>
+                           </ul>
+                        </li>
+                     </ul>
+                  </li>
+                  <li class="topicref"><a href="Bridge/br00010.html">Configuring the Bridge</a><ul>
+                        <li class="topicref"><a href="Bridge/br00026.html">Installing  Amlen Bridge  </a><ul>
+                              <li class="topicref"><a href="Bridge/br00011.html">Installing the Bridge by using Docker containers</a></li>
+                              <li class="topicref"><a href="Bridge/br00024.html">Installing the  Amlen BridgeRPM</a></li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Bridge/br00012.html">Post installation user actions</a><ul>
+                              <li class="topicref"><a href="Bridge/br00018.html">Using the Bridge configuration file to configure the administration endpoint</a></li>
+                              <li class="topicref"><a href="Bridge/br00025.html">Accepting the  Amlen Bridge license</a></li>
+                              <li class="topicref"><a href="Bridge/br00014.html">Changing the core pattern</a></li>
+                              <li class="topicref"><a href="Bridge/br00015.html">Configuring the log file rotation</a></li>
+                              <li class="topicref"><a href="Bridge/br00019.html">Configuring connections and forwarders</a></li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Bridge/br00020.html">File paths</a></li>
+                        <li class="topicref"><a href="Bridge/br00021.html">Updating the Bridge configuration</a></li>
+                        <li class="topicref"><a href="Bridge/br00022.html">Monitoring</a></li>
+                        <li class="topicref"><a href="Bridge/br00023.html">Administrative REST interfaces</a></li>
+                     </ul>
+                  </li>
+                  <li class="topicref"><a href="Security/se00000_.html">Security</a><ul>
+                        <li class="topicref"><a href="Security/se00010.html">Authentication</a><ul>
+                              <li class="topicref"><a href="Security/se00002_.html">Messaging users and groups</a></li>
+                              <li class="topicref"><a href="Security/se00013_.html">Lightweight Third Party Authentication (LTPA)</a></li>
+                              <li class="topicref"><a href="Security/se00008_.html">OAuth</a></li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Security/se00011.html">Authorization</a><ul>
+                              <li class="topicref"><a href="Security/se00003_.html">Authorizing client connections</a></li>
+                              <li class="topicref"><a href="Security/se00004_.html">Authorizing client messaging</a><ul>
+                                    <li class="topicref"><a href="Security/se00015_.html">Topic policy</a><ul>
+                                          <li class="topicref"><a href="Security/se00019_.html">Topic filters for MQTT global-shared subscriptions</a></li>
+                                       </ul>
+                                    </li>
+                                    <li class="topicref"><a href="Security/se00016_.html">Queue policy</a></li>
+                                    <li class="topicref"><a href="Security/se00014_.html">Subscription policy</a></li>
+                                    <li class="topicref"><a href="Security/se00018.html">Variable substitution in messaging policies</a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Security/se00008_.html">OAuth</a></li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Security/se00005_.html">Transport Layer Security</a><ul>
+                              <li class="topicref"><a href="Security/se00007.html">Client certificate authentication</a></li>
+                              <li class="topicref"><a href="Security/se00012_.html">Federal Information Processing Standards (FIPS)</a></li>
+                              <li class="topicref"><a href="Security/se00017_.html">NIST 800-131a</a></li>
+                           </ul>
+                        </li>
+                     </ul>
+                  </li>
+                  <li class="topicref"><a href="Monitoring/admin00008_.html">Monitoring and reporting</a><ul>
+                        <li class="topicref"><a href="Monitoring/admin00080.html">Cluster monitoring</a><ul>
+                              <li class="topicref"><a href="Monitoring/admin00081.html">Viewing cluster information by using the Amlen WebUI</a></li>
+                              <li class="topicref"><a href="Monitoring/admin00082.html">Viewing cluster information by using REST Monitoring APIs</a></li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Monitoring/admin00009.html">Connection Monitoring</a><ul>
+                              <li class="topicref"><a href="Monitoring/admin00014.html">Viewing connection level statistics by using the Amlen WebUI</a></li>
+                              <li class="topicref"><a href="Monitoring/admin00012.html">Viewing connection level statistics by REST Monitoring APIs</a></li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Monitoring/admin00010.html">Endpoint Monitoring</a><ul>
+                              <li class="topicref"><a href="Monitoring/admin00015.html">Viewing endpoint level statistics by using the Amlen WebUI</a></li>
+                              <li class="topicref"><a href="Monitoring/admin00013.html">Viewing endpoint level statistics by using REST Monitoring APIs</a></li>
+                              <li class="topicref"><a href="Monitoring/admin00040.html">Viewing endpoint level statistics by using an external application</a></li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Monitoring/admin00016.html">Topic Monitoring</a><ul>
+                              <li class="topicref"><a href="Monitoring/admin00017.html">Viewing topic monitoring statistics by using the Amlen WebUI</a></li>
+                              <li class="topicref"><a href="Monitoring/admin00018.html">Viewing topic monitoring statistics by using REST Monitoring APIs</a></li>
+                              <li class="topicref"><a href="Monitoring/admin00041.html">Viewing topic monitoring statistics by using an external application</a></li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Monitoring/admin00019.html">Queue Monitoring</a><ul>
+                              <li class="topicref"><a href="Monitoring/admin00020.html">Viewing queue related statistics by using the Amlen WebUI</a></li>
+                              <li class="topicref"><a href="Monitoring/admin00021.html">Viewing queue-related statistics by using REST Monitoring APIs</a></li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Monitoring/admin00022.html">Subscription Monitoring</a><ul>
+                              <li class="topicref"><a href="Monitoring/admin00023.html">Viewing subscription-related statistics by using the Amlen WebUI</a></li>
+                              <li class="topicref"><a href="Monitoring/admin00024.html">Viewing subscription-related statistics by using REST Monitoring APIs</a></li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Monitoring/admin00025.html">MQTT Client Monitoring</a><ul>
+                              <li class="topicref"><a href="Monitoring/admin00026.html">Viewing disconnected MQTT client-related statistics by using the Amlen WebUI</a></li>
+                              <li class="topicref"><a href="Monitoring/admin00027.html">Viewing disconnected MQTT client-related statistics by using REST Monitoring APIs</a></li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Monitoring/admin00031.html">MQ Connectivity monitoring</a><ul>
+                              <li class="topicref"><a href="Monitoring/admin00032.html">Viewing MQ Connectivity statistics by using the Amlen WebUI</a></li>
+                              <li class="topicref"><a href="Monitoring/admin00033.html">Viewing MQ Connectivity statistics by using REST Monitoring APIs</a></li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Monitoring/admin00070.html">Viewing protocol plug-in monitoring statistics by using an external application</a></li>
+                        <li class="topicref"><a href="Monitoring/admin00028.html">Server Monitoring</a><ul>
+                              <li class="topicref"><a href="Monitoring/admin00038.html">Viewing server statistics by using the Amlen WebUI</a></li>
+                              <li class="topicref"><a href="Monitoring/admin00037.html">Viewing server statistics by using REST Monitoring APIs</a></li>
+                              <li class="topicref"><a href="Monitoring/admin00034.html">Store Monitoring</a><ul>
+                                    <li class="topicref"><a href="Monitoring/admin00035.html">Viewing store statistics by using the Amlen WebUI</a></li>
+                                    <li class="topicref"><a href="Monitoring/admin00036.html">Viewing store statistics by using REST Monitoring APIs</a></li>
+                                    <li class="topicref"><a href="Monitoring/admin00050.html">Viewing store statistics by using an external application</a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Monitoring/admin00051.html">Memory Monitoring</a><ul>
+                                    <li class="topicref"><a href="Monitoring/admin00029.html">Viewing memory statistics by using the Amlen WebUI</a></li>
+                                    <li class="topicref"><a href="Monitoring/admin00030.html">Viewing memory statistics by using REST Monitoring APIs</a></li>
+                                    <li class="topicref"><a href="Monitoring/admin00052.html">Viewing memory statistics by using an external application</a></li>
+                                 </ul>
+                              </li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Monitoring/admin00060.html">XA Transaction monitoring</a><ul>
+                              <li class="topicref"><a href="Monitoring/admin00061.html">Viewing XA transaction information by using the Amlen WebUI</a></li>
+                              <li class="topicref"><a href="Monitoring/admin00062.html">Viewing XA transaction information by using REST Monitoring APIs</a></li>
+                           </ul>
+                        </li>
+                     </ul>
+                  </li>
+                  <li class="topicref"><a href="Backup/ba00000_.html">Backup and restore</a><ul>
+                        <li class="topicref"><a href="Backup/ba00001_.html">Creating a backup of the Eclipse Amlen messaging server</a></li>
+                        <li class="topicref"><a href="Backup/ba00002_.html">Restoring the Eclipse Amlen server from a backup in the same environment</a></li>
+                        <li class="topicref"><a href="Backup/ba00012_.html">Creating a backup of the Amlen WebUI</a></li>
+                        <li class="topicref"><a href="Backup/ba00013_.html">Restoring the Amlen WebUI from a backup</a></li>
+                        <li class="topicref"><a href="Backup/ba00004_.html">Backup and restore in a high availability environment</a><ul>
+                              <li class="topicref"><a href="Backup/ba00007_.html">Creating a backup of the Eclipse Amlen server in a high availability environment</a></li>
+                              <li class="topicref"><a href="Backup/ba00008_.html">Restoring the high availability environment</a></li>
+                           </ul>
+                        </li>
+                     </ul>
+                  </li>
+                  <li class="topicref"><a href="Troubleshooting/tr10000_.html">Troubleshooting</a><ul>
+                        <li class="topicref"><a href="Troubleshooting/tr00000_.html">Log files</a></li>
+                        <li class="topicref"><a href="Troubleshooting/tr00006_.html">Maintenance mode</a><ul>
+                              <li class="topicref"><a href="Troubleshooting/tr00007_.html">Changing the server state</a><ul>
+                                    <li class="topicref"><a href="Troubleshooting/tr00017_.html">Changing the server state by using the Amlen WebUI</a></li>
+                                    <li class="topicref"><a href="Troubleshooting/tr00016_.html">Changing the server state by using REST Administration APIs</a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Troubleshooting/tr00013_.html">Cleaning the store</a><ul>
+                                    <li class="topicref"><a href="Troubleshooting/tr00018_.html">Cleaning the store by using the Amlen WebUI</a></li>
+                                    <li class="topicref"><a href="Troubleshooting/tr00019_.html">Cleaning the store by using REST Administration APIs</a></li>
+                                 </ul>
+                              </li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Troubleshooting/tr00001_.html">Common problems</a><ul>
+                              <li class="topicref"><a href="Troubleshooting/tr00002_.html">The application fails to connect</a></li>
+                              <li class="topicref"><a href="Troubleshooting/tr00008_.html">The application disconnects</a></li>
+                              <li class="topicref"><a href="Troubleshooting/tr00010_.html">The application fails to publish</a></li>
+                              <li class="topicref"><a href="Troubleshooting/tr00009_.html">The application fails to subscribe</a></li>
+                              <li class="topicref"><a href="Troubleshooting/tr00003_.html">Messages are not sent</a></li>
+                              <li class="topicref"><a href="Troubleshooting/tr00004_.html">Messages do not arrive</a></li>
+                              <li class="topicref"><a href="Troubleshooting/tr00005_.html">  MQ Connectivity problems</a></li>
+                              <li class="topicref"><a href="Troubleshooting/raisnotworking.html">Eclipse Amlen resource adapter is not working</a></li>
+                              <li class="topicref"><a href="Troubleshooting/tr00020_.html">LTPA validation fails</a></li>
+                              <li class="topicref"><a href="Troubleshooting/tr00012_.html">The Amlen WebUI is not working</a></li>
+                              <li class="topicref"><a href="Troubleshooting/tr00015_.html">High availability problems</a></li>
+                              <li class="topicref"><a href="Troubleshooting/tr00026_.html">Cluster problems</a><ul>
+                                    <li class="topicref"><a href="Troubleshooting/tr00027_.html">High availability problems in clusters</a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Troubleshooting/tr00021_.html">Dynamic policy update problems</a></li>
+                              <li class="topicref"><a href="Troubleshooting/tr00023_.html">SNMP problems</a></li>
+                              <li class="topicref"><a href="Troubleshooting/tr00024_.html">LDAP is not working</a></li>
+                              <li class="topicref"><a href="Troubleshooting/tr00031_.html">Problems during upgrade from IBM MessageSight version 1.2</a></li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Troubleshooting/tr00030.html">Platform must-gather</a></li>
+                        <li class="topicref"><a href="Troubleshooting/admin_messagecatalog.html">Message catalog</a></li>
+                     </ul>
+                  </li>
+                  <li class="topicref"><a href="Developing/develop_guide.html">Developing client applications</a><ul>
+                        <li class="topicref"><a href="Developing/devconcepts.html">Messaging concepts</a></li>
+                        <li class="topicref"><a href="Developing/devmsgtypes.html">Natively supported message types</a></li>
+                        <li class="topicref"><a href="Developing/devmsgsize.html">Message size</a></li>
+                        <li class="topicref"><a href="Developing/devclientids.html">Client IDs</a></li>
+                        <li class="topicref"><a href="Developing/devclientservercert.html">Server certificates</a></li>
+                        <li class="topicref"><a href="Developing/devretainmsg.html">Developing retained message applications</a></li>
+                        <li class="topicref"><a href="Developing/devexpiredmsg.html">Expired messages</a></li>
+                        <li class="topicref"><a href="Developing/devsharedsubscriptions.html">Shared subscriptions</a></li>
+                        <li class="topicref"><a href="Developing/devmqttapp.html">Developing MQTT applications</a><ul>
+                              <li class="topicref"><a href="Developing/sharedsubscriptionsinmqtt.html">Global-shared subscriptions in MQTT</a></li>
+                              <li class="topicref"><a href="Developing/sessiontakeoverinmqtt.html">MQTT considerations for large-scale public subscription deployments</a></li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Developing/devjmsapp.html">Developing JMS applications</a><ul>
+                              <li class="topicref"><a href="Developing/devjms_working.html">Working with Eclipse Amlen JMS</a><ul>
+                                    <li class="topicref"><a href="Developing/devjms_creatingadministeredobjects.html">Creating administered objects</a><ul>
+                                          <li class="topicref"><a href="Developing/devjms_connectionfactoryproperties.html">ConnectionFactory properties</a></li>
+                                          <li class="topicref"><a href="Developing/devjms_destinationproperties.html">Destination properties</a></li>
+                                       </ul>
+                                    </li>
+                                    <li class="topicref"><a href="Developing/sharedsubscriptionsinjms.html">Shared subscriptions in JMS</a></li>
+                                    <li class="topicref"><a href="Developing/devjms_poisonmessages.html">Poison messages</a></li>
+                                    <li class="topicref"><a href="Developing/securingjmsconnections.html">Securing Eclipse Amlen JMS client by using Java runtime environment global properties</a></li>
+                                    <li class="topicref"><a href="Developing/devjms_underjavasecuritymanager.html">Running Eclipse Amlen JMS client applications under the Java Security Manager</a></li>
+                                    <li class="topicref"><a href="Developing/exceptionhandling.html">Exception Handling</a></li>
+                                    <li class="topicref"><a href="Developing/devjms_usingjmsclienttracetacilities.html">Using client trace facilities</a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Developing/devjms_sampleapplications.html">Sample applications</a><ul>
+                                    <li class="topicref"><a href="Developing/devjms_jmssampleadmin.html">The JMSSampleAdmin application</a></li>
+                                    <li class="topicref"><a href="Developing/devjms_jmssample.html">The JMSSample application</a></li>
+                                    <li class="topicref"><a href="Developing/devjms_hasamples.html">The HATopicPublisher and HADurableSubscriber applications</a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Developing/devjms_writingjmsapplications.html">Writing JMS Applications</a><ul>
+                                    <li class="topicref"><a href="Developing/devjmslements.html">Elements of a JMS application</a></li>
+                                    <li class="topicref"><a href="Developing/devjms_producerapplicationbasics.html">Producer application basics</a></li>
+                                    <li class="topicref"><a href="Developing/devjms_consumerapplicationbasics.html">Consumer application basics</a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Developing/javadoc/com/ibm/ima/jms/package-summary.html" target="_blank" rel="external noopener">JMS API reference</a></li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Developing/devplug-in.html">Developing a protocol plug-in</a><ul>
+                              <li class="topicref"><a href="Developing/devplug-indebug.html">Debug environments for the Eclipse Amlen protocol plug-in SDK</a><ul>
+                                    <li class="topicref"><a href="Developing/devplug-ineclipse.html">Debugging a protocol plug-in by running the plug-in server in Eclipse</a></li>
+                                    <li class="topicref"><a href="Developing/devplug-invirtual.html">Debugging a protocol plug-in by running the plug-in server and the plug-in on the
+                                          Eclipse Amlen server</a></li>
+                                 </ul>
+                              </li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Bridge/br00010.html">Configuring the Bridge</a><ul>
+                              <li class="topicref"><a href="Bridge/br00011.html">Installing the Bridge by using Docker containers</a><ul>
+                                    <li class="topicref"><a href="Developing/devplug-ineclipse.html">Debugging a protocol plug-in by running the plug-in server in Eclipse</a></li>
+                                    <li class="topicref"><a href="Bridge/br00012.html">Post installation user actions</a><ul>
+                                          <li class="topicref"><a href="Bridge/br00014.html">Changing the core pattern</a></li>
+                                          <li class="topicref"><a href="Bridge/br00015.html">Configuring the log file rotation</a></li>
+                                          <li class="topicref"><a href="Bridge/br00016.html">Configuring an administrative endpoint</a></li>
+                                          <li class="topicref"><a href="Bridge/br00017.html">Using environment variables to configure the administration endpoint</a></li>
+                                          <li class="topicref"><a href="Bridge/br00018.html">Using the Bridge configuration file to configure the administration endpoint</a></li>
+                                       </ul>
+                                    </li>
+                                 </ul>
+                              </li>
+                           </ul>
+                        </li>
+                     </ul>
+                  </li>
+                  <li class="topicref"><a href="Reference/re00000_.html">Reference</a><ul>
+                        <li class="topicref"><a href="Reference/intro.html">REST API Reference</a><ul>
+                              <li class="topicref"><a href="Reference/cmd_delete_config.html">Delete configuration objects</a></li>
+                              <li class="topicref"><a href="Reference/cmd_show_config.html">Show configuration details of nameable configuration objects</a></li>
+                              <li class="topicref"><a href="Reference/cmd_show_config_fix.html">Show configuration details of fixed-name configuration objects</a></li>
+                              <li class="topicref"><a href="Reference/cmd_REST_file_put.html">Copy a file from the local machine to Eclipse Amlen  </a></li>
+                              <li class="topicref"><a href="Reference/AdminEndpointCmd/adminendpoint.html">Admin endpoint REST Administration APIs</a><ul>
+                                    <li class="topicref"><a href="Reference/AdminEndpointCmd/cmd_update_adminendpoint.html">Update the admin endpoint</a></li>
+                                    <li class="topicref"><a href="Reference/AdminEndpointCmd/cmd_create_update_configpol.html">Create or update a configuration policy</a></li>
+                                    <li class="topicref"><a href="Reference/AdminEndpointCmd/cmd_set_superuserid.html">Set the admin superuser ID</a></li>
+                                    <li class="topicref"><a href="Reference/AdminEndpointCmd/cmd_set_superuserpw.html">Set the admin superuser password</a></li>
+                                    <li class="topicref"><a href="Reference/AdminEndpointCmd/cmd_show_superuserid.html">Show the admin superuser ID</a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Reference/ApplianceCmd/appliancesettingcommands.html">Server REST Administration APIs</a><ul>
+                                    <li class="topicref"><a href="Reference/ApplianceCmd/ServerCmd.html">Server REST Administration APIs</a><ul>
+                                          <li class="topicref"><a href="Reference/ApplianceCmd/cmd_status_server.html">Show the status of an Eclipse Amlen server and services</a></li>
+                                          <li class="topicref"><a href="Reference/ApplianceCmd/cmd_imaserver_stop.html">Stop the Eclipse Amlen server </a></li>
+                                          <li class="topicref"><a href="Reference/ApplianceCmd/fun_derestart.html">Restart the Eclipse Amlen server</a></li>
+                                       </ul>
+                                    </li>
+                                    <li class="topicref"><a href="Reference/ApplianceCmd/LogCmd.html">Log REST Administration APIs</a><ul>
+                                          <li class="topicref"><a href="Reference/ApplianceCmd/cmd_imaserver_set_admLog.html">Configure logging levels</a></li>
+                                          <li class="topicref"><a href="Reference/ApplianceCmd/fun_showlog.html">Show configuration details of a log file </a></li>
+                                          <li class="topicref"><a href="Reference/ApplianceCmd/cmd_imaserver_show_remotelogserver.html">Show syslog server information </a></li>
+                                          <li class="topicref"><a href="Reference/ApplianceCmd/cmd_imaserver_update_remotelogserver.html">Create or update syslog server information</a></li>
+                                       </ul>
+                                    </li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Reference/ClusterCmd/clustercommands.html">Cluster REST Administration APIs</a><ul>
+                                    <li class="topicref"><a href="Reference/ClusterCmd/cmd_configure_cluster.html">Configure Eclipse Amlen server cluster membership </a></li>
+                                    <li class="topicref"><a href="Reference/ClusterCmd/cmd_delete_clustermember.html">Remove an inactive remote Eclipse Amlen server cluster member </a></li>
+                                    <li class="topicref"><a href="Reference/ClusterCmd/cmd_status_cluster.html">Show cluster status</a></li>
+                                    <li class="topicref"><a href="Reference/ClusterCmd/cmd_show_cluster.html">Show configuration details of Eclipse Amlen server cluster membership </a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Reference/SecurityCmd/securitycommands.html">Security REST Administration APIs</a><ul>
+                                    <li class="topicref"><a href="Reference/SecurityCmd/cmd_imaserver_close_connection.html">Close a client connection</a></li>
+                                    <li class="topicref"><a href="Reference/SecurityCmd/cmd_create_update_cprofile.html">Create or update a certificate profile</a></li>
+                                    <li class="topicref"><a href="Reference/SecurityCmd/cmd_create_update_clientcert.html">Create or update a client certificate</a></li>
+                                    <li class="topicref"><a href="Reference/SecurityCmd/cmd_create_update_ltpa.html">Create or update an LTPA profile</a></li>
+                                    <li class="topicref"><a href="Reference/SecurityCmd/cmd_create_update_LDAP.html">Create or update an LDAP server connection</a></li>
+                                    <li class="topicref"><a href="Reference/SecurityCmd/cmd_imaserver_show_LDAP.html">Show configuration details of an LDAP object</a></li>
+                                    <li class="topicref"><a href="Reference/SecurityCmd/cmd_create_update_oauth.html">Create or update an OAuth profile</a></li>
+                                    <li class="topicref"><a href="Reference/SecurityCmd/cmd_create_update_sprofile.html">Create or update a security profile</a></li>
+                                    <li class="topicref"><a href="Reference/SecurityCmd/cmd_create_update_tcert.html">Create or update a trusted certificate</a></li>
+                                    <li class="topicref"><a href="Reference/SecurityCmd/cmd_apply_psk.html">Upload a pre-shared key file</a></li>
+                                    <li class="topicref"><a href="Reference/SecurityCmd/cmd_create_update_psk.html">Apply a pre-shared key file</a></li>
+                                    <li class="topicref"><a href="Reference/SecurityCmd/cmd_view_psk.html">Show a pre-shared key file configuration</a></li>
+                                    <li class="topicref"><a href="Reference/SecurityCmd/cmd_delete_psk.html">Removing the configuration of a pre-shared key </a></li>
+                                    <li class="topicref"><a href="Reference/SecurityCmd/cmd_enable_disable_FIPS.html">Enable and disable FIPS</a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Reference/MsgHubCmd/messagehubcommands.html">Message hub REST Administration APIs</a><ul>
+                                    <li class="topicref"><a href="Reference/MsgHubCmd/cmd_create_update_conpol.html">Create or update a connection policy</a></li>
+                                    <li class="topicref"><a href="Reference/MsgHubCmd/cmd_create_update_endpoint.html">Create or update an endpoint</a></li>
+                                    <li class="topicref"><a href="Reference/MsgHubCmd/cmd_create_update_msghub.html">Create or update a message hub</a></li>
+                                    <li class="topicref"><a href="Reference/MsgHubCmd/cmd_create_update_topicpol.html">Create or update a topic policy</a></li>
+                                    <li class="topicref"><a href="Reference/MsgHubCmd/cmd_create_update_subscriptionpol.html">Create or update a subscription policy</a></li>
+                                    <li class="topicref"><a href="Reference/MsgHubCmd/cmd_create_update_queuepol.html">Create or update a queue policy</a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Reference/QueueCmd/QueueCmd.html">Queue REST Administration APIs</a><ul>
+                                    <li class="topicref"><a href="Reference/QueueCmd/cmd_create_update_queue.html">Create or update a message queue</a></li>
+                                    <li class="topicref"><a href="Reference/QueueCmd/cmd_delete_queue.html">Delete a message queue</a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Reference/MQConnCmd/mqconnectivitycommands.html">MQ Connectivity  REST Administration APIs</a><ul>
+                                    <li class="topicref"><a href="Reference/MQConnCmd/cmd_create_update_dmr.html">Create or update a destination mapping rule</a></li>
+                                    <li class="topicref"><a href="Reference/MQConnCmd/cmd_create_update_qmc.html">Create or update a queue manager connection</a></li>
+                                    <li class="topicref"><a href="Reference/MQConnCmd/cmd_imaserver_apply_cert_MQConn.html">Create or update an MQ SSL Certificate</a></li>
+                                    <li class="topicref"><a href="Reference/MQConnCmd/cmd_imaserver_show_dmr.html">Show configuration details of a destination mapping rule</a></li>
+                                    <li class="topicref"><a href="Reference/MQConnCmd/cmd_show_mqsslcert.html">Show configuration details of an MQ SSL certificate</a></li>
+                                    <li class="topicref"><a href="Reference/MQConnCmd/cmd_imaserver_show_qmc.html">Show configuration details of a queue manager connection</a></li>
+                                    <li class="topicref"><a href="Reference/MQConnCmd/cmd_imaserver_enable_mqconn.html">Enable MQ connectivity </a></li>
+                                    <li class="topicref"><a href="Reference/MQConnCmd/cmd_imaserver_disable_mqconn.html">Disable MQ connectivity </a></li>
+                                    <li class="topicref"><a href="Reference/MQConnCmd/cmd_imaserver_start_mqconn.html">Start MQ connectivity </a></li>
+                                    <li class="topicref"><a href="Reference/MQConnCmd/cmd_imaserver_restart_mqconn.html">Restart MQ connectivity </a></li>
+                                    <li class="topicref"><a href="Reference/MQConnCmd/cmd_imaserver_stop_mqconn.html">Stop MQ connectivity</a></li>
+                                    <li class="topicref"><a href="Reference/MQConnCmd/cmd_status_mqconnectivity.html">Show MQConnectivity status</a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Reference/HACmd/HAcommands.html">High availability REST Administration APIs</a><ul>
+                                    <li class="topicref"><a href="Reference/HACmd/cmd_show_HAconfig.html">Show high availability configuration</a></li>
+                                    <li class="topicref"><a href="Reference/HACmd/cmd_status_HA.html">Show high availability status</a></li>
+                                    <li class="topicref"><a href="Reference/HACmd/cmd_update_highavailability.html">Configure high availability </a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Reference/BackupCmd/backupandrestorecommands.html">Backup and restore commands</a><ul>
+                                    <li class="topicref"><a href="Reference/BackupCmd/cmd_export_serverconfig.html">Export Eclipse Amlen server configuration</a></li>
+                                    <li class="topicref"><a href="Reference/BackupCmd/cmd_import_serverconfig.html">Import Eclipse Amlen server configuration</a></li>
+                                    <li class="topicref"><a href="Reference/BackupCmd/fun_dereset.html">Server reset in a RPM or Docker environment</a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Reference/MonitorCmd/monitoringandreportingcommands.html">REST Monitoring APIs</a><ul>
+                                    <li class="topicref"><a href="Reference/MonitorCmd/cmd_imaserver_delete_MQTT.html">Delete MQTTClient</a></li>
+                                    <li class="topicref"><a href="Reference/MonitorCmd/cmd_imaserver_delete_Subscription.html">Delete Subscription</a></li>
+                                    <li class="topicref"><a href="Reference/MonitorCmd/cmd_imaserver_delete_tmonitor.html">Delete TopicMonitor</a></li>
+                                    <li class="topicref"><a href="Reference/MonitorCmd/cmd_imaserver_list_tmonitor.html">Show TopicMonitor </a></li>
+                                    <li class="topicref"><a href="Reference/MonitorCmd/cmd_display_cluster.html">Show cluster statistics by using REST Monitoring APIs  </a></li>
+                                    <li class="topicref"><a href="Reference/MonitorCmd/cmd_imaserver_stat_Connection.html">Show connection level statistics by using REST Monitoring APIs</a></li>
+                                    <li class="topicref"><a href="Reference/MonitorCmd/cmd_imaserver_stat_dmr.html">Show destination mapping rule statistics by REST Monitoring APIs  </a></li>
+                                    <li class="topicref"><a href="Reference/MonitorCmd/cmd_imaserver_stat_Endpoint.html">Show endpoint level statistics by using REST Monitoring APIs</a></li>
+                                    <li class="topicref"><a href="Reference/MonitorCmd/cmd_imaserver_stat_Memory.html">Show memory statistics by using REST Monitoring APIs  </a></li>
+                                    <li class="topicref"><a href="Reference/MonitorCmd/cmd_imaserver_stat_MQTTClient.html">Show MQTT client monitoring statistics by REST Monitoring APIs</a></li>
+                                    <li class="topicref"><a href="Reference/MonitorCmd/cmd_imaserver_stat_Queue.html">Show queue related statistics by using REST Monitoring APIs  </a></li>
+                                    <li class="topicref"><a href="Reference/MonitorCmd/cmd_imaserver_stat_server.html">Show server statistics by using REST Monitoring APIs  </a></li>
+                                    <li class="topicref"><a href="Reference/MonitorCmd/cmd_imaserver_stat_Store.html">Show store statistics by using REST Monitoring APIs  </a></li>
+                                    <li class="topicref"><a href="Reference/MonitorCmd/cmd_imaserver_stat_Subscription.html">Show subscription related statistics by REST Monitoring APIs</a></li>
+                                    <li class="topicref"><a href="Reference/MonitorCmd/cmd_imaserver_stat_Topic.html">Show topic related statistics by using REST Monitoring APIs</a></li>
+                                    <li class="topicref"><a href="Reference/MonitorCmd/cmd_imaserver_stat_transaction.html">Show transaction data for XA transaction statistics by using REST Monitoring APIs
+                                          </a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Reference/XATranCmd/xatransactioncommands.html">XA transaction REST Administration APIs</a><ul>
+                                    <li class="topicref"><a href="Reference/XATranCmd/cmd_imaserver_commit_transaction.html">Commit Transaction</a></li>
+                                    <li class="topicref"><a href="Reference/XATranCmd/cmd_imaserver_rollback_transaction.html">Rollback Transaction</a></li>
+                                    <li class="topicref"><a href="Reference/XATranCmd/cmd_imaserver_forget_transaction.html">Forget Transaction</a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Reference/SNMPCmd/snmpcommands.html">SNMP REST Administration APIs</a><ul>
+                                    <li class="topicref"><a href="Reference/SNMPCmd/cmd_imaserver_set_snmpenabled.html">Enable or disable SNMP</a></li>
+                                    <li class="topicref"><a href="Reference/SNMPCmd/cmd_status_snmp.html">Show SNMP status</a></li>
+                                    <li class="topicref"><a href="Reference/SNMPCmd/cmd_imaserver_start_snmp.html">Start SNMP</a></li>
+                                    <li class="topicref"><a href="Reference/SNMPCmd/cmd_imaserver_stop_snmp.html">Stop SNMP</a></li>
+                                    <li class="topicref"><a href="Reference/SNMPCmd/cmd_imaserver_restart_snmp.html">Restart SNMP</a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Reference/ProtocolPluginCmd/ProtocolPluginCmd.html">Protocol plug-in REST Administration APIs</a><ul>
+                                    <li class="topicref"><a href="Reference/ProtocolPluginCmd/cmd_create_update_plugin.html">Create or update a protocol plug-in</a></li>
+                                    <li class="topicref"><a href="Reference/ProtocolPluginCmd/cmd_delete_plugin.html">Delete a protocol plug-in</a></li>
+                                    <li class="topicref"><a href="Reference/ProtocolPluginCmd/cmd_restart_plugin.html">Restart the protocol plug-in server process</a></li>
+                                    <li class="topicref"><a href="Reference/ProtocolPluginCmd/cmd_set_plugindebugserver.html">Set the host IP address or host name of the remote JVM debugger of the debug plug-in
+                                          server </a></li>
+                                    <li class="topicref"><a href="Reference/ProtocolPluginCmd/cmd_set_pluginserver.html">Set the host IP address or host name of the plug-in server </a></li>
+                                    <li class="topicref"><a href="Reference/ProtocolPluginCmd/cmd_set_plugindebugport.html">Set the port number of the JVM remote debugger of the plug-in server </a></li>
+                                    <li class="topicref"><a href="Reference/ProtocolPluginCmd/cmd_set_pluginport.html">Set the port number of the plug-in server </a></li>
+                                    <li class="topicref"><a href="Reference/ProtocolPluginCmd/cmd_set_pluginmaxheapsize.html">Set the JVM maximum heap size of the plug-in server</a></li>
+                                    <li class="topicref"><a href="Reference/ProtocolPluginCmd/cmd_set_pluginvmargs.html">Set the runtime parameters of the plug-in server JVM</a></li>
+                                    <li class="topicref"><a href="Reference/ProtocolPluginCmd/cmd_show_plugindebugserver.html">Show the host IP address or host name of the JVM remote debugger of the plug-in server
+                                          </a></li>
+                                    <li class="topicref"><a href="Reference/ProtocolPluginCmd/cmd_show_pluginserver.html">Show the host IP address or host name of the plug-in server </a></li>
+                                    <li class="topicref"><a href="Reference/ProtocolPluginCmd/cmd_show_plugindebugport.html">Show the port number of the JVM remote debugger of the plug-in server </a></li>
+                                    <li class="topicref"><a href="Reference/ProtocolPluginCmd/cmd_show_pluginport.html">Show the port number of the plug-in server </a></li>
+                                    <li class="topicref"><a href="Reference/ProtocolPluginCmd/cmd_show_pluginmaxheapsize.html">Show the JVM maximum heap size of the plug-in server </a></li>
+                                    <li class="topicref"><a href="Reference/ProtocolPluginCmd/cmd_show_pluginvmargs.html">Show the runtime parameters of the plug-in server JVM</a></li>
+                                    <li class="topicref"><a href="Reference/ProtocolPluginCmd/cmd_show_plugins.html">Show protocol plug-in </a></li>
+                                    <li class="topicref"><a href="Reference/ProtocolPluginCmd/cmd_show_protocols.html">Show protocols and their allowed actions</a></li>
+                                    <li class="topicref"><a href="Reference/ProtocolPluginCmd/cmd_status_plugin.html">Show the status of the protocol plug-in server process</a></li>
+                                    <li class="topicref"><a href="Reference/ProtocolPluginCmd/cmd_start_plugin.html">Start the protocol plug-in server process</a></li>
+                                    <li class="topicref"><a href="Reference/ProtocolPluginCmd/cmd_stop_plugin.html">Stop the protocol plug-in server process</a></li>
+                                    <li class="topicref"><a href="Reference/ProtocolPluginCmd/cmd_update_propertiesfile.html">Update a protocol plug-in properties file</a></li>
+                                 </ul>
+                              </li>
+                              <li class="topicref"><a href="Reference/SpecialCmd/spepcom.html">Special purpose REST Administration APIs</a><ul>
+                                    <li class="topicref"><a href="Reference/SpecialCmd/set_licensedusage_acceptlicense.html">Set licensed usage and accept the license</a></li>
+                                    <li class="topicref"><a href="Reference/SpecialCmd/cmd_imaserver_get_licensedusage.html">Show LicensedUsage</a></li>
+                                    <li class="topicref"><a href="Reference/SpecialCmd/cmd_imaserver_get_trace_level.html">Show TraceLevel</a></li>
+                                    <li class="topicref"><a href="Reference/SpecialCmd/cmd_imaserver_set_trace_level.html">Set TraceLevel</a></li>
+                                    <li class="topicref"><a href="Reference/SpecialCmd/cmd_get_tolerate.html">Show TolerateRecoveryInconsistencies</a></li>
+                                    <li class="topicref"><a href="Reference/SpecialCmd/cmd_set_tolerate.html">Set TolerateRecoveryInconsistencies</a></li>
+                                 </ul>
+                              </li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Reference/_Topics/sy10530_.html">Digital certificates</a><ul>
+                              <li class="topicref"><a href="Reference/_Topics/sy10540_.html">What is in a digital certificate</a></li>
+                              <li class="topicref"><a href="Reference/_Topics/sy10560_.html">Certificate Authorities</a></li>
+                              <li class="topicref"><a href="Reference/_Topics/sy10570_.html">Distinguished Names</a></li>
+                              <li class="topicref"><a href="Reference/_Topics/sy10590_.html">Obtaining personal certificates from a certificate authority</a></li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Reference/_Topics/re00003_.html">Supported cipher lists</a><ul>
+                              <li class="topicref"><a href="Reference/_Topics/re00004_.html">Cipher list for Fast or Medium quality ciphers</a></li>
+                              <li class="topicref"><a href="Reference/_Topics/re00005_.html">Cipher list for Best quality ciphers</a></li>
+                           </ul>
+                        </li>
+                        <li class="topicref"><a href="Reference/_Topics/re00001_.html">Classless Inter-Domain Routing</a></li>
+                     </ul>
+                  </li>
+                  <li class="topicref"><a href="glossary/glossary.html">Glossary</a><ul>
+                        <li class="topicref"><a href="glossary/glossary.html#gloss_A">A</a></li>
+                        <li class="topicref"><a href="glossary/glossary.html#gloss_C">C</a></li>
+                        <li class="topicref"><a href="glossary/glossary.html#gloss_D">D</a></li>
+                        <li class="topicref"><a href="glossary/glossary.html#gloss_E">E</a></li>
+                        <li class="topicref"><a href="glossary/glossary.html#gloss_F">F</a></li>
+                        <li class="topicref"><a href="glossary/glossary.html#gloss_H">H</a></li>
+                        <li class="topicref"><a href="glossary/glossary.html#gloss_I">I</a></li>
+                        <li class="topicref"><a href="glossary/glossary.html#gloss_J">J</a></li>
+                        <li class="topicref"><a href="glossary/glossary.html#gloss_K">K</a></li>
+                        <li class="topicref"><a href="glossary/glossary.html#gloss_L">L</a></li>
+                        <li class="topicref"><a href="glossary/glossary.html#gloss_M">M</a></li>
+                        <li class="topicref"><a href="glossary/glossary.html#gloss_N">N</a></li>
+                        <li class="topicref"><a href="glossary/glossary.html#gloss_P">P</a></li>
+                        <li class="topicref"><a href="glossary/glossary.html#gloss_Q">Q</a></li>
+                        <li class="topicref"><a href="glossary/glossary.html#gloss_R">R</a></li>
+                        <li class="topicref"><a href="glossary/glossary.html#gloss_S">S</a></li>
+                        <li class="topicref"><a href="glossary/glossary.html#gloss_T">T</a></li>
+                        <li class="topicref"><a href="glossary/glossary.html#gloss_U">U</a></li>
+                        <li class="topicref"><a href="glossary/glossary.html#gloss_W">W</a></li>
+                     </ul>
+                  </li>
+               </ul>
+            </li>
+         </ul>
+      </nav>
+   </body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content=""><link rel="stylesheet" type="text/css" href="../../commonltr.css"><link rel="stylesheet" type="text/css" href="../../doc.css"><title>Create or update a queue manager connection</title></head><body id="cmd_create_update_qmc"><nav role="toc"><ul><li><a href="../../welcome.html">Welcome</a></li><li><a href="../../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../../Overview/ov00000_.html">Product overview</a></li><li><a href="../../Planning/pl00001_.html">Planning</a></li><li><a href="../../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../../Administering/ad00000_.html">Administering</a></li><li><a href="../../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../../Security/se00000_.html">Security</a></li><li><a href="../../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../../Reference/re00000_.html">Reference</a><ul><li><a href="../../Reference/intro.html">REST API Reference</a><ul><li><a href="../../Reference/cmd_delete_config.html">Delete configuration objects</a></li><li><a href="../../Reference/cmd_show_config.html">Show configuration details of nameable configuration objects</a></li><li><a href="../../Reference/cmd_show_config_fix.html">Show configuration details of fixed-name configuration objects</a></li><li><a href="../../Reference/cmd_REST_file_put.html">Copy a file from the local machine to Eclipse Amlen  </a></li><li><a href="../../Reference/AdminEndpointCmd/adminendpoint.html">Admin endpoint REST Administration APIs</a></li><li><a href="../../Reference/ApplianceCmd/appliancesettingcommands.html">Server REST Administration APIs</a></li><li><a href="../../Reference/ClusterCmd/clustercommands.html">Cluster REST Administration APIs</a></li><li><a href="../../Reference/SecurityCmd/securitycommands.html">Security REST Administration APIs</a></li><li><a href="../../Reference/MsgHubCmd/messagehubcommands.html">Message hub REST Administration APIs</a></li><li><a href="../../Reference/QueueCmd/QueueCmd.html">Queue REST Administration APIs</a></li><li><a href="../../Reference/MQConnCmd/mqconnectivitycommands.html">MQ Connectivity  REST Administration APIs</a><ul><li><a href="../../Reference/MQConnCmd/cmd_create_update_dmr.html">Create or update a destination mapping rule</a></li><li class="active"><a href="../../Reference/MQConnCmd/cmd_create_update_qmc.html">Create or update a queue manager connection</a></li><li><a href="../../Reference/MQConnCmd/cmd_imaserver_apply_cert_MQConn.html">Create or update an MQ SSL Certificate</a></li><li><a href="../../Reference/MQConnCmd/cmd_imaserver_show_dmr.html">Show configuration details of a destination mapping rule</a></li><li><a href="../../Reference/MQConnCmd/cmd_show_mqsslcert.html">Show configuration details of an MQ SSL certificate</a></li><li><a href="../../Reference/MQConnCmd/cmd_imaserver_show_qmc.html">Show configuration details of a queue manager connection</a></li><li><a href="../../Reference/MQConnCmd/cmd_imaserver_enable_mqconn.html">Enable MQ connectivity </a></li><li><a href="../../Reference/MQConnCmd/cmd_imaserver_disable_mqconn.html">Disable MQ connectivity </a></li><li><a href="../../Reference/MQConnCmd/cmd_imaserver_start_mqconn.html">Start MQ connectivity </a></li><li><a href="../../Reference/MQConnCmd/cmd_imaserver_restart_mqconn.html">Restart MQ connectivity </a></li><li><a href="../../Reference/MQConnCmd/cmd_imaserver_stop_mqconn.html">Stop MQ connectivity</a></li><li><a href="../../Reference/MQConnCmd/cmd_status_mqconnectivity.html">Show MQConnectivity status</a></li></ul></li><li><a href="../../Reference/HACmd/HAcommands.html">High availability REST Administration APIs</a></li><li><a href="../../Reference/BackupCmd/backupandrestorecommands.html">Backup and restore commands</a></li><li><a href="../../Reference/MonitorCmd/monitoringandreportingcommands.html">REST Monitoring APIs</a></li><li><a href="../../Reference/XATranCmd/xatransactioncommands.html">XA transaction REST Administration APIs</a></li><li><a href="../../Reference/SNMPCmd/snmpcommands.html">SNMP REST Administration APIs</a></li><li><a href="../../Reference/ProtocolPluginCmd/ProtocolPluginCmd.html">Protocol plug-in REST Administration APIs</a></li><li><a href="../../Reference/SpecialCmd/spepcom.html">Special purpose REST Administration APIs</a></li></ul></li><li><a href="../../Reference/_Topics/sy10530_.html">Digital certificates</a></li><li><a href="../../Reference/_Topics/re00003_.html">Supported cipher lists</a></li><li><a href="../../Reference/_Topics/re00001_.html">Classless Inter-Domain Routing</a></li></ul></li><li><a href="../../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Create or update a queue manager connection</h1>
+
+
+
+
+
+
+
+<div class="body refbody"><p class="shortdesc"></p>
+<section class="section"><h2 class="title sectiontitle">Purpose</h2>Creates or updates a queue manager connection. A queue manager connection specifies the connection details for one queue manager.</section>
+<section class="section"><h2 class="title sectiontitle">URI</h2>
+
+<p class="p">Use the <span class="ph">Eclipse Amlen</span> REST API POST method with the
+        following <span class="ph">Eclipse Amlen</span> configuration URI:</p>
+<p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/configuration/</code></p>
+</section>
+<section class="section"><h2 class="title sectiontitle">Object configuration data</h2><p class="p">Provide QueueManagerConnection object
+        configuration data in the payload of the POST method by using the following schema.
+          <span class="keyword parmname">Content-type</span> is set to <kbd class="ph userinput">application/json</kbd>: </p><pre class="pre codeblock"><code>
+{    
+  "QueueManagerConnection": {
+    "&lt;NameOfQueueManagerConnection&gt;": {
+      "QueueManagerName": "string",
+      "ConnectionName": "string",
+      "ChannelName": "string",
+      "SSLCipherSpec": "string",  
+      "ChannelUserName": "string",
+      "ChannelUserPassword": "string",  
+      "MQSSLKey": "string",
+      "MQStashPassword": "string",
+      "Verify": true|false,
+      "Force": true|false,
+      "Overwrite": true|false           
+     }
+   }
+}</code></pre>Where:<dl class="dl">
+        
+          <dt class="dt dlterm"><var class="keyword varname">NameOfQueueManagerConnection</var></dt>
+          <dd class="dd">Required.</dd>
+          <dd class="dd ddexpand">Specifies the name of the queue manager connection. After the queue manager connection
+            is created, you cannot change this name.</dd>
+          <dd class="dd ddexpand">The name must not have leading or trailing spaces and cannot contain control
+            characters, commas, double quotation marks, backslashes, or equal signs. The first
+            character must not be a number or any of the following special characters: </dd>
+          <dd class="dd ddexpand"><code class="ph codeph">! # $ % &amp; ' ( ) * + - . / : ; &lt; &gt; ? @</code></dd>
+          <dd class="dd ddexpand">The maximum length of the name is 256 characters.</dd>
+        
+        
+          <dt class="dt dlterm">QueueManagerName</dt>
+          <dd class="dd">Required if you are creating a queue manager connection.</dd>
+          <dd class="dd ddexpand">Specifies the name of the queue manager to connect to.</dd>
+        
+        
+          <dt class="dt dlterm">ConnectionName</dt>
+          <dd class="dd">Required if you are creating a queue manager connection.</dd>
+          <dd class="dd ddexpand">Specifies the connection name of the queue manager to connect to.</dd>
+          <dd class="dd ddexpand">The connection name consists of the IP address or host name of the queue manager, and
+            optionally, the port number. If a port number is not specified, the default value of
+            1414 is used. For multi-instance queue managers, you can specify more than one
+            connection by entering the connection names in a comma-separated list.</dd>
+          <dd class="dd ddexpand">For a connection name with a port number, you must specify the port number in
+            parentheses. For example: 192.0.2.0(1414) For a connection name without a port number,
+            do not use parentheses. For example: 192.0.2.0</dd>
+        
+        
+          <dt class="dt dlterm">ChannelName</dt>
+          <dd class="dd">Required if you are creating a queue manager connection.</dd>
+          <dd class="dd ddexpand">Specifies the channel name for the queue manager.</dd>
+          <dd class="dd ddexpand">The name that you specify must match the name of the server-connection channel that
+            you defined in <span class="ph">IBM® MQ</span>.</dd>
+        
+        
+          <dt class="dt dlterm">SSLCipherSpec</dt>
+          <dd class="dd">Optional.</dd>
+          <dd class="dd ddexpand">Specifies the SSL cipher specification that is used in the connection between <span class="ph">Eclipse Amlen</span> and <span class="ph">IBM MQ</span>.</dd>
+          <dd class="dd ddexpand">The cipher that is specified must match the cipher that is defined in <span class="ph">IBM MQ</span> for the queue manager that is used
+            in the queue manager connection.</dd>
+        
+        
+          <dt class="dt dlterm">ChannelUserName</dt>
+          <dd class="dd">Optional.</dd>
+          <dd class="dd ddexpand">Specifies the user name to provide to <span class="ph">IBM MQ</span> Connectivity channel
+            authentication.</dd>
+          <dd class="dd ddexpand">The maximum length of the name is 1024 characters.</dd>
+          <dd class="dd ddexpand">If you specify a channel user name, you must also specify a channel user
+            password.</dd>
+        
+        
+          <dt class="dt dlterm">ChannelUserPassword</dt>
+          <dd class="dd">Optional.</dd>
+          <dd class="dd ddexpand">Specifies the password to provide to <span class="ph">IBM MQ</span> Connectivity channel
+            authentication</dd>
+          <dd class="dd ddexpand">The maximum length of the password is 256 characters.</dd>
+          <dd class="dd ddexpand">You must specify a channel user password if you specify a channel user name.</dd>
+        
+        
+          <dt class="dt dlterm">MQSSLKey</dt>
+          <dd class="dd">Specifies the name of the key database file.</dd>
+        
+        
+          <dt class="dt dlterm">MQStashPassword</dt>
+          <dd class="dd">Specifies the name of the password stash file.</dd>
+        
+        
+          <dt class="dt dlterm">Verify: true|false</dt>
+          <dd class="dd">Specifies whether the queue manager connection is tested with the configuration change
+            without committing the configuration change. </dd>
+          <dd class="dd ddexpand">Set this value to true to verify that the configuration that you have entered is
+            valid.</dd>
+          <dd class="dd ddexpand">The default value is false which means that the configuration change is committed
+            without first testing the queue manager connection.</dd>
+        
+        
+          <dt class="dt dlterm">Force: true|false</dt>
+          <dd class="dd">Specifies a forced delete or update of the Queue Manager Connection. This action might
+            cause XA transaction IDs to be orphaned.</dd>
+        
+        
+          <dt class="dt dlterm">Overwrite: true|false</dt>
+          <dd class="dd">Specifies whether an existing certificate and key are overwritten if they have the
+            same name.</dd>
+          <dd class="dd ddexpand">The default value is false which means that an existing certificate and key are not
+            overwritten if they have the same name.</dd>
+        
+      </dl></section>
+<section class="section"><h2 class="title sectiontitle">Usage Notes®</h2>
+
+<ul class="ul">
+<li class="li">You must copy the key database file and stash password file to the server before you can apply
+          them to <span class="ph">Eclipse Amlen</span>. <a class="xref" href="../cmd_REST_file_put.html">Copy a file from the local machine to Eclipse Amlen</a> to copy the key
+          database file and stash password file.</li>
+<li class="li">You can copy only one key database file and one stash password file. If you want to use another
+          file, you must overwrite the existing file.</li>
+        <li class="li">You can edit a queue manager connection only if all the destination mapping rules that are using the queue manager connection are disabled. You can disable a destination mapping rule by using the REST API POST method described in <a class="xref" href="cmd_create_update_dmr.html">Create or update a destination mapping rule</a>.</li>
+        <li class="li">Ensure that capitalization and double quotation marks are used as shown.</li>
+</ul>
+</section>
+<section class="section"><h2 class="title sectiontitle">Related <span class="ph">REST Administration APIs</span></h2>
+      
+<ul class="ul">
+        <li class="li"><a class="xref" href="../cmd_REST_file_put.html">Copy a file from the local machine to Eclipse Amlen</a></li>
+<li class="li"><a class="xref" href="cmd_create_update_dmr.html">Create or update a destination mapping rule</a></li>
+        <li class="li"><a class="xref" href="../cmd_show_config.html">Show configuration details of nameable configuration objects</a></li>
+        <li class="li"><a class="xref" href="../cmd_delete_config.html">Delete configuration objects</a></li>
+</ul>
+</section>
+<section class="section"><h2 class="title sectiontitle">Example</h2>Creates a queue manager connection called "MyQMC" by using cURL:<pre class="pre codeblock"><code>
+curl -X POST \
+   -H 'Content-Type: application/json'  \
+   -d  '{ 
+         "QueueManagerConnection": {   
+           "MyQMC": {
+             "QueueManagerName": "QM1",
+             "ConnectionName": "192.0.2.0(1415)",
+             "ChannelName": "SYSTEM.IMA.SVRCONN",
+             "MQSSLKey": "my.kdb",
+             "MQStashPassword": "mq.sth"                        
+          }
+        }
+     }
+ '  \
+http://127.0.0.1:9089/ima/v1/configuration/</code></pre><div class="p">An example response to the POST method:<pre class="pre codeblock"><code>
+{        
+  "Version": "v1",
+  "Code": "CWLNA6011",
+  "Message": "The requested configuration change has completed successfully."
+}
+</code></pre></div></section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../../Reference/MQConnCmd/mqconnectivitycommands.html" title="The MQ Connectivity REST Administration APIs allow you to configure MQ Connectivity. You can create, edit, view, and delete destination mapping rules and queue manager connections. You can enable and disable MQ Connectivity. You can start, restart and stop the MQ Connectivity process.">MQ Connectivity REST Administration APIs</a></div></div></nav></article></main></body></html>

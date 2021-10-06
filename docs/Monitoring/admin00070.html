@@ -1,0 +1,126 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="External monitoring applications can access protocol plug-in process data that is published by Eclipse Amlen by subscribing to the Eclipse Amlen topic $SYS/ResourceStatistics/Plugin."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Viewing protocol plug-in monitoring statistics by using an external application</title></head><body id="admin00070"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a><ul><li><a href="../Monitoring/admin00080.html">Cluster monitoring</a></li><li><a href="../Monitoring/admin00009.html">Connection Monitoring</a></li><li><a href="../Monitoring/admin00010.html">Endpoint Monitoring</a></li><li><a href="../Monitoring/admin00016.html">Topic Monitoring</a></li><li><a href="../Monitoring/admin00019.html">Queue Monitoring</a></li><li><a href="../Monitoring/admin00022.html">Subscription Monitoring</a></li><li><a href="../Monitoring/admin00025.html">MQTT Client Monitoring</a></li><li><a href="../Monitoring/admin00031.html">MQ Connectivity monitoring</a></li><li class="active"><a href="../Monitoring/admin00070.html">Viewing protocol plug-in monitoring statistics by using an external application</a></li><li><a href="../Monitoring/admin00028.html">Server Monitoring</a></li><li><a href="../Monitoring/admin00060.html">XA Transaction monitoring</a></li></ul></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Viewing protocol plug-in monitoring statistics by using an external application</h1>
+
+
+
+
+
+
+<div class="body taskbody"><p class="shortdesc"> External monitoring applications can access protocol plug-in process data that is published by <span class="ph">Eclipse Amlen</span> by subscribing to the <span class="ph">Eclipse Amlen</span> topic <span class="ph filepath">$SYS/ResourceStatistics/Plugin</span>.</p>
+<section class="section prereq">
+<p class="p" id="admin00070__ToPublishMonitoringDataOnATopicTheS">To publish monitoring data on the protocol plug-in process, the <span class="ph">Eclipse Amlen</span> server must be running.</p>
+<p class="p">The published data is in JSON format. The published data
+				always includes <span class="keyword parmname">Version</span>, <span class="keyword parmname">NodeName</span>,
+					<span class="keyword parmname">Timestamp</span>, and <span class="keyword parmname">ObjectType</span>.
+					<span class="keyword parmname">NodeName</span> is the name of the server and
+					<span class="keyword parmname">ObjectType</span> is the name of the object that you are
+				monitoring.</p>
+<p class="p" id="admin00070__ForMoreInformationAboutMonitoringBy">For more information about monitoring by using an external application, see <a class="xref" href="admin00008_.html" title="Monitoring provides a picture of the health of Eclipse Amlen. You can monitor Eclipse Amlen to understand how it is being used, and watch for potential problems.">Monitoring and reporting</a>.</p>
+</section>
+<section class="section context">
+<p class="p">Monitoring data is automatically published every 60 seconds to the topic string <span class="ph filepath">$SYS/ResourceStatistics/Plugin</span>. </p>
+<p class="p" id="admin00070__InMQTTYouCannotSubscribeToASYSTopic">In MQTT, you cannot subscribe to a <span class="ph filepath">$SYS</span> topic if you specify <span class="keyword parmname">cleanSession</span>=<kbd class="ph userinput">0</kbd>. In JMS, you cannot subscribe to a <span class="ph filepath">$SYS</span> topic if you use a durable subscription.</p>
+</section>
+<section><ol class="ol steps"><li class="li step stepexpand">
+<span class="ph cmd" id="admin00070__CreateAnEndpoint.YouCanUseThisEndpo">Create an endpoint. You can use this endpoint to connect your external monitoring application to <span class="ph">Eclipse Amlen</span> and create a monitoring subscription. For more information about configuring an endpoint, see <a class="xref" href="../Administering/ad00360_.html">Configuring message hubs</a>.</span>
+</li><li class="li step stepexpand">
+<span class="ph cmd" id="admin00070__StrengthenYourSecurityByConfiguring">Strengthen your security by configuring this endpoint specifically for monitoring, with connection and messaging policies to restrict access to monitoring data that is published on the topic root <span class="ph filepath">$SYS</span>.</span>
+<div class="itemgroup info" id="admin00070__ForMoreInformationAboutConfiguringC">For more information about configuring connection and messaging policies, see <a class="xref" href="../Administering/ad00360_.html">Configuring message hubs</a>.</div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Connect your external application to the endpoint that you created in step 1, and subscribe to the topic string <span class="ph filepath">$SYS/ResourceStatistics/Plugin</span>. </span>
+</li></ol></section>
+<section class="section result">
+<p class="p" id="admin00070__TheFollowingInformationIsMadeAvaila">The following information is made available to the monitoring application:</p>
+<ul class="ul">
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">Version</dt>
+<dd class="dd">String</dd>
+<dd class="dd ddexpand">Specifies the version of server.</dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">NodeName</dt>
+<dd class="dd">String</dd>
+<dd class="dd ddexpand">Specifies the name of the server.</dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl" id="admin00070__TimestampDateTimeSpecifiesTheDateAn">
+
+<dt class="dt dlterm">TimeStamp</dt>
+<dd class="dd">Date/Time</dd>
+<dd class="dd ddexpand">Specifies the date and time in ISO8601 format.</dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">ObjectType</dt>
+<dd class="dd">String</dd>
+<dd class="dd ddexpand">Specifies the type of object that you are monitoring.</dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">HeapSizeMB</dt>
+<dd class="dd">Numeric</dd>
+<dd class="dd ddexpand">The size, in megabytes, of  the Java™ heap.</dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">HeapUsedPercent</dt>
+<dd class="dd">Numeric</dd>
+<dd class="dd ddexpand">The amount of the heap, expressed as a percentage, that is currently in use.</dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">GCRate</dt>
+<dd class="dd">Numeric</dd>
+<dd class="dd ddexpand">The rate of garbage collection activity expressed as the number of garbage collections per minute.</dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">CPU</dt>
+<dd class="dd">Numeric</dd>
+<dd class="dd ddexpand">CPU usage by the plug-in process expressed as a percentage of a single processor.</dd>
+
+</dl>
+</li>
+</ul>
+</section>
+<section class="example">
+<p class="p" id="admin00070__TheFollowingExampleShowsAMonitoring">The following example shows a monitoring message that contains monitoring data about the protocol plug-in process. </p>
+<pre class="pre codeblock"><code>{
+"Version":"1.2.0.3",
+"NodeName":"myserver",
+"TimeStamp":"2015-09-22 14:32:02+04:00",
+"ObjectType":"Plugin",
+"HeapSizeMB":512,
+"HeapUsedPercent":12,
+"GCRate":3,
+"CPU":1
+}</code></pre>
+
+</section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Monitoring/admin00008_.html" title="Monitoring provides a picture of the health of Eclipse Amlen. You can monitor Eclipse Amlen to understand how it is being used, and watch for potential problems.">Monitoring and reporting</a></div></div></nav></article></main></body></html>

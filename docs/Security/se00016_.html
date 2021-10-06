@@ -1,0 +1,112 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="You can use a queue policy to specify which clients can send messages, receive messages, or browse a queue for messages."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Queue policy</title></head><body id="queuemessagingpolicy"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a><ul><li><a href="../Security/se00010.html">Authentication</a></li><li><a href="../Security/se00011.html">Authorization</a><ul><li><a href="../Security/se00003_.html">Authorizing client connections</a></li><li><a href="../Security/se00004_.html">Authorizing client messaging</a><ul><li><a href="../Security/se00015_.html">Topic policy</a></li><li class="active"><a href="../Security/se00016_.html">Queue policy</a></li><li><a href="../Security/se00014_.html">Subscription policy</a></li><li><a href="../Security/se00018.html">Variable substitution in messaging policies</a></li></ul></li><li><a href="../Security/se00008_.html">OAuth</a></li></ul></li><li><a href="../Security/se00005_.html">Transport Layer Security</a></li></ul></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Queue policy</h1>
+
+<div class="body conbody"><p class="shortdesc">You can use a queue policy to specify which clients can send messages, receive messages, or browse a queue for messages.</p>
+<div class="p">In a queue policy, the <span class="keyword parmname">Queue</span> parameter specifies the queue or queues that the policy applies to.  When you create a queue policy, you can specify which messaging actions can be used by which of the clients that connect to the endpoints associated with the queue policy. You can choose from a combination of the following actions:<ul class="ul">
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">Send</dt>
+<dd class="dd">Allows clients to send messages to the queue that is specified in the queue policy.</dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">Receive</dt>
+<dd class="dd">Allows clients to receive messages from the queue that is specified in the queue policy.</dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">Browse</dt>
+<dd class="dd">Allows clients to browse the queue that is specified in the queue policy.</dd>
+
+</dl>
+</li>
+</ul></div>
+<div class="p">You can use the following filter attributes to restrict which clients
+can use the messaging actions:<ul class="ul">
+<li class="li"> <dl class="dl" id="queuemessagingpolicy__ClientIPAddressSpecifiesTheClientIP">
+<dt class="dt dlterm">Client IP address</dt>
+<dd class="dd">Specifies the client IP addresses that are allowed to connect
+to <span class="ph">Eclipse Amlen</span>.</dd>
+<dd class="dd ddexpand">The IP address can contain an asterisk (*), or a comma-separated list of IPv4 or IPv6 addresses or ranges. For example, 192.0.2.32, 192.0.0.0, 192.0.2.0-192.0.2.100. The range must be specified from low to high.</dd>
+<dd class="dd ddexpand">IPv6 addresses must be enclosed in brackets <code class="ph codeph">[ ]</code>.</dd>
+</dl> </li>
+<li class="li"> <dl class="dl">
+<dt class="dt dlterm">Client ID</dt>
+<dd class="dd">Specifies the Client ID that is allowed to connect to <span class="ph">Eclipse Amlen</span> by using the
+specified endpoint.</dd>
+<dd class="dd ddexpand">You can use an asterisk (*) as a wildcard to specify multiple
+client IDs.</dd>
+</dl> </li>
+<li class="li"> <dl class="dl">
+<dt class="dt dlterm">User ID</dt>
+<dd class="dd">Specifies the messaging user ID that is allowed to connect to <span class="ph">Eclipse Amlen</span> by using the
+specified endpoint.</dd>
+<dd class="dd ddexpand">You can use an asterisk (*) as a wildcard to specify multiple
+user IDs.</dd>
+</dl> </li>
+<li class="li"> <dl class="dl">
+<dt class="dt dlterm">Group Name</dt>
+<dd class="dd">Specifies the messaging group that is allowed to connect to <span class="ph">Eclipse Amlen</span> by using the
+specified endpoint.</dd>
+<dd class="dd ddexpand">You can use an asterisk (*) as a wildcard to specify multiple
+group names.</dd>
+</dl> </li>
+<li class="li"> <dl class="dl">
+<dt class="dt dlterm">Certificate Common Name</dt>
+<dd class="dd">Specifies the client certificate common name that must be used
+to connect to <span class="ph">Eclipse Amlen</span> by
+using the specified endpoint.</dd>
+<dd class="dd ddexpand">You can use an asterisk (*) as a wildcard to specify multiple
+certificate common names.</dd>
+</dl> </li>
+<li class="li"> <dl class="dl">
+<dt class="dt dlterm">Protocol</dt>
+<dd class="dd">Specifies which protocols are allowed to connect to <span class="ph">Eclipse Amlen</span>.</dd>
+</dl> </li>
+</ul></div>
+<div class="p">For example, for a queue <code class="ph codeph">exampleQueue</code>: <ul class="ul">
+            <li class="li">One queue policy specifies that only clients with a client ID that starts with <code class="ph codeph">example</code> can send messages to the queue.</li>
+            <li class="li">Another queue policy specifies that only clients that connect from the IP address range of <code class="ph codeph">192.0.2.51-192.0.2.100</code> can receive messages from the queue. The clients must also have a user ID beginning with <code class="ph codeph">user</code>.</li>
+            </ul>The queue policy configuration looks like the following examples:<pre class="pre codeblock"><code>
+curl -X POST  \
+   -H 'Content-Type: application/json'  \
+   -d  '{                          
+           "QueuePolicy": {   
+               "exampleQueuePolicy1": {
+                "Description": "Queue policy that restricts based on client ID.",
+                "Queue": "exampleQueue", 
+                "ActionList": "Send",
+                "ClientID": "example*"
+              }
+          }
+      }
+  '   \
+http://127.0.0.1:9089/ima/v1/configuration/</code></pre><pre class="pre codeblock"><code>
+curl -X POST  \
+   -H 'Content-Type: application/json'  \
+   -d  '{                          
+           "QueuePolicy": {   
+               "exampleQueuePolicy2": {
+                "Description": "Queue policy that restricts based on IP address and user ID.",
+                "Queue": "exampleQueue", 
+                "ActionList": "Receive",
+                "ClientAddress": "192.0.2.51-192.0.2.100",
+                "UserID": "user*"
+              }
+          }
+      }
+  '   \
+http://127.0.0.1:9089/ima/v1/configuration/</code></pre></div>
+<p class="p">You can use variable substitution in queue policies to avoid configuring large numbers of messaging policies. For more information about using variable substitution, see <a class="xref" href="se00018.html" title="You can use variable substitution in messaging policies to avoid configuring large numbers of messaging policies. You can set up a topic policy or queue policy so that the topic or queue parameter in the policy includes a user ID, group ID, client ID, or client certificate common name variable. The user ID, group ID, client ID, or common name is matched to the topic string or queue name, and access is granted to that topic tree or queue only.">Variable substitution in messaging policies</a>.</p>
+<p class="p">For more information about configuring messaging policies, see <a class="xref" href="../Administering/ad00360_.html">Configuring message hubs</a>.</p>
+</div>
+</article></main></body></html>

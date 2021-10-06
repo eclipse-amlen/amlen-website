@@ -1,0 +1,112 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="You can configure a publish/subscribe mechanism to verify the flow of messages across yourEclipse Amlen cluster by using the Messaging Tester Sample Application and a demonstration MQTT endpoint called DemoMqttEndpoint. DemoMqttEndpoint allows applications to connect to Eclipse Amlen on port 1883, and from any configured IP address."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Scenario 2: Viewing message flow across a cluster</title></head><body id="pdf_sc00009_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a><ul><li><a href="../Scenarios/sc00008_.html">Configuring your environment for the cluster scenarios</a><ul><li><a href="../Scenarios/sc00007_.html">Scenario 1: Using smart phones to control air conditioning remotely</a></li><li class="active"><a href="../Scenarios/sc00009_.html">Scenario 2: Viewing message flow across a cluster </a></li></ul></li><li><a href="../Scenarios/sc00006_.html">Scenario: Fan-out broadcast</a></li><li><a href="../Scenarios/sc00002_.html">Scenario: Fan-in per device notification</a></li><li><a href="../Scenarios/sc00003_.html">Scenario: Fan-out per device notification</a></li><li><a href="../Scenarios/sc00004_.html">Scenario: Fan-out per device request-reply</a></li><li><a href="../Scenarios/sc00005_.html">Scenario: Fan-in per device request-reply</a></li></ul></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+    <h1 class="title topictitle1" id="ariaid-title1">Scenario 2: Viewing message flow across a cluster </h1>
+    
+    
+    
+    
+    <div class="body conbody"><p class="shortdesc">You can configure a publish/subscribe mechanism to verify the flow of messages across your<span class="ph">Eclipse Amlen</span> cluster by using the <span class="ph uicontrol">Messaging Tester Sample Application</span> and a demonstration MQTT endpoint called DemoMqttEndpoint. DemoMqttEndpoint allows applications to connect to <span class="ph">Eclipse Amlen</span> on port 1883, and from any configured IP address. </p>
+        <section class="section"><h2 class="title sectiontitle">Background to this scenario</h2>
+            
+            <p class="p">This scenario uses a sample application and a demonstration endpoint to verify the
+                flow of messages across a cluster. You can add publishers and subscribers to
+                generate publications on and subscriptions to one or more topics. Use this
+                publish/subscribe method to watch messages flow across your cluster.</p>
+            <p class="p">For cluster environments, all servers need to publish and subscribe on the same
+                topics. To configure this scenario, you must provide a
+                    <span class="keyword parmname">TopicRoot</span>, and use the same <span class="keyword parmname">TopicRoot</span>
+                for each of your three browser instances. For example,
+                    <code class="ph codeph">MarkSmith/TopicA</code>. If another person wants to use the
+                    <span class="ph uicontrol">Messaging Tester Sample Application</span> with the same cluster
+                members, they must use a different <span class="keyword parmname">TopicRoot</span> so that their
+                messages are published to a different topic tree. For example,
+                    <code class="ph codeph">JoeBrown/TopicA</code>.</p>
+        </section>
+        <section class="section"><h2 class="title sectiontitle">Planning and implementing the scenario</h2>
+            
+            <p class="p">Use the following information to help you plan and implement your <span class="ph">Eclipse Amlen</span> cluster by
+                using <span class="ph">REST Administration APIs</span>.</p>
+            <dl class="dl">
+                
+                    <dt class="dt dlterm">Understanding the clustering architecture</dt>
+                    <dd class="dd">
+                        <p class="p">In this scenario, three servers are configured as a cluster. You can use
+                            the same configuration that is described in <a class="xref" href="sc00007_.html" title="Customers in Austin, Texas, have smart thermostats that enable them to use their phones to set their air conditioning and receive notifications from their thermostats.">
+                                Scenario 1</a>. This scenario tests that the cluster can deliver
+                            directives and responses and have them display correctly on other nodes
+                            of the cluster.</p>
+                    </dd>
+                
+                
+                    <dt class="dt dlterm">Setting up your cluster for this scenario</dt>
+                    <dd class="dd">
+                        <p class="p">You can configure your <span class="ph">Eclipse Amlen</span>
+                            cluster by using <span class="ph">REST Administration APIs</span>. For information about setting up your cluster for this scenario, see
+                                <a class="xref" href="sc00008_.html" title="You can set up your environment so that you can test cluster scenarios 1 and 2. Use these scenarios to help you to understand clustering and message flow, and to get up and running quickly.">Configuring your environment for the cluster scenarios</a>.</p>
+                    </dd>
+                
+            </dl>
+        </section>
+        <section class="section"><h2 class="title sectiontitle">Testing the scenario</h2>
+            
+            <div class="p">
+                <ol class="ol">
+                    <li class="li">Open an Internet Explorer 11, Firefox, or Chrome browser and connect to the
+                            <span class="ph">Eclipse Amlen</span> Web UI by
+                        entering the following URL: <code class="ph codeph">https://{Server IP}:9087</code>.</li>
+                    <li class="li">Click the <span class="keyword wintitle">Messaging</span> tab and select <span class="ph uicontrol">Sample
+                            Application</span> from the menu. The <span class="keyword wintitle">Messaging Tester
+                            Sample Application</span> page is displayed. </li>
+                    <li class="li">Follow the instructions on the <span class="keyword wintitle">Messaging Tester Sample
+                            Application</span> page to download  and set up the latest version
+                        of the <span class="ph uicontrol">Messaging Tester Sample Application</span>. This
+                        version of the <span class="ph uicontrol">Messaging Tester Sample Application</span>
+                        supports clustering.</li>
+                    <li class="li">Enable the <span class="ph uicontrol">DemoMqttEndpoint</span> on port <kbd class="ph userinput">1883</kbd> on all three servers.</li>
+                    <li class="li">Launch an instance of the <span class="ph uicontrol">Messaging Tester Sample
+                            Application</span> in a separate browser instance for each member
+                        of the cluster. For each cluster member complete the following steps:<ol class="ol" type="a">
+                            <li class="li">Enter the server IP address, port number, and a <span class="keyword parmname">TopicRoot</span>.<div class="note note note_note"><span class="note__title">Note:</span> Use the same <span class="keyword parmname">TopicRoot</span> for all three instances of the application. The <span class="keyword parmname">TopicRoot</span> is prepended to the <span class="keyword parmname">TopicName</span> to create a unique topic for each user of the messaging tester application. For example, <code class="ph codeph">MarkSmith/TopicA</code>. The <span class="keyword parmname">TopicRoot</span> is required so that multiple instances of the messaging tester application that are running against the same server or servers, do not interfere with each other. If <span class="keyword parmname">TopicRoot</span> is not specified, a unique <span class="keyword parmname">TopicRoot</span> is automatically generated for each browser instance. Automatic generation of a unique <span class="keyword parmname">TopicRoot</span> means that the scenario runs successfully if your application is running against a single server.</div><div class="p">For example specify the following values:<ul class="ul">
+                            <li class="li">On browser instance 1:<p class="lines">IP: 10.10.33.10<br>Port: 1883<br>TopicRoot: MyTopic</p><p class="p"></p></li>
+                            <li class="li">On browser instance 2:<p class="lines">IP: 10.10.33.11<br>Port: 1883<br>TopicRoot: MyTopic</p><p class="p"></p></li>
+                            <li class="li">On browser instance 3:<p class="lines">IP: 10.10.33.12<br>Port: 1883<br>TopicRoot: MyTopic</p><p class="p"></p></li>
+                            </ul></div></li>
+                            <li class="li">Click <span class="ph uicontrol">Connect</span>. The Web Client is now
+                                connected to your server.</li>
+                        </ol></li>
+                </ol>
+            </div>
+        </section>
+        <section class="section"><h2 class="title sectiontitle">Next steps</h2>
+            
+            <p class="p">After you have successfully connected each of your three Web Clients to your
+                configured servers, you can set up publishers and subscribers on one or more a
+                topics and watch  messages flow across the cluster.</p>
+            <ol class="ol">
+                <li class="li">Scenario A:  <ol class="ol" type="a">
+                        <li class="li">Add a publisher on Topic A on Web Client 1. </li>
+                        <li class="li">Add subscribers to Topic A on Web Client 2 and 3. </li>
+                        <li class="li">View the flow of messages that are published by Web Client 1 to <span class="ph">Eclipse Amlen</span>
+                            Server 1. These messages are received by Web Client 2 and 3, even though
+                            these Web Clients are connected to the different <span class="ph">Eclipse Amlen</span>
+                            servers. </li>
+                    </ol></li>
+                <li class="li">Scenario B:  <ol class="ol" type="a">
+                        <li class="li">Add a publisher on Topic A on Web Client 2. </li>
+                        <li class="li">View that the number of messages being received by Web Client 2 and Web
+                            Client 3 doubles. This is because messages from two different servers
+                            are being sent to subscribers on two different servers. Messages that
+                            are published by Web Client 2 to <span class="ph">Eclipse Amlen</span>
+                            Server 2 go directly to the local subscriber on Web Client 2.</li>
+                    </ol></li>
+                <li class="li">Scenario C:  <ol class="ol" type="a">
+                        <li class="li">Add and remove publishers and subscribers on other topics for each Web
+                            Client. </li>
+                        <li class="li">View the flow of messages across the cluster, verifying that you see the
+                            messages flow as you expect them to.</li>
+                    </ol></li>
+            </ol>
+        </section>
+    </div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Scenarios/sc00008_.html" title="You can set up your environment so that you can test cluster scenarios 1 and 2. Use these scenarios to help you to understand clustering and message flow, and to get up and running quickly.">Configuring your environment for the cluster scenarios</a></div></div></nav></article></main></body></html>

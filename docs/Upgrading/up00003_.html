@@ -1,0 +1,34 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can upgrade the Eclipse Amlen server or Web UI running as RPMs on the host OS."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Upgrading the Eclipse Amlen RPM</title></head><body id="up00003_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a><ul><li><a href="../Upgrading/up00014_.html">Upgrading and rolling back the software level of Eclipse Amlen</a><ul><li><a href="../Upgrading/up00006_.html">Upgrading Eclipse Amlen in a Docker environment</a></li><li><a href="../Upgrading/up00004_.html">Rolling back the level of Eclipse Amlen in a Docker environment</a></li><li class="active"><a href="../Upgrading/up00003_.html">Upgrading the Eclipse Amlen RPM</a></li><li><a href="../Upgrading/up00007_.html">Rolling back the Eclipse Amlen RPM</a></li></ul></li><li><a href="../Upgrading/up00021_.html">Upgrading from IBM Watson IoT Platform Message Gateway to Eclipse Amlen</a></li><li><a href="../Upgrading/up00020_.html">Upgrading from IBM IoT MessageSight v2 (or above) to Eclipse Amlen</a></li><li><a href="../Upgrading/up00015_.html">Upgrading from IBM IoT MessageSight version 1.2</a></li></ul></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Upgrading the <span class="ph">Eclipse Amlen</span> RPM</h1>
+
+<div class="body taskbody"><p class="shortdesc">System administrators can upgrade the <span class="ph">Eclipse Amlen</span> server or Web UI running as RPMs on the host OS.</p>
+<section><ol class="ol steps"><li class="li step stepexpand">
+<span class="ph cmd">Extract the fix image that you require by issuing the following commands:</span>
+<div class="itemgroup info">
+<pre class="pre codeblock"><code>mkdir imaserver imawebui
+tar xzf EclipseAmlenServer*.tz -C imaserver
+tar xzf EclipseAmlenWebUI*.tz -C imawebui</code></pre>
+<div class="note note note_note"><span class="note__title">Note:</span> The<span class="ph filepath"> imaserver</span> and <span class="ph filepath">imawebui</span> directories contain the server and Web UI RPM files.</div>
+</div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Update the <span class="ph">Eclipse Amlen</span> RPMs. </span>
+<ul class="ul choices">
+<li class="li choice">Update the <span class="ph">Eclipse Amlen</span> server RPM by issuing one of the following pairs of commands:<pre class="pre codeblock"><code>cd imaserver
+rpm -Uvh EclipseAmlenServer*.rpm </code></pre>or <pre class="pre codeblock"><code>cd imaserver
+yum --nogpgcheck install EclipseAmlenServer*.rpm</code></pre></li>
+<li class="li choice">Update the <span class="ph">Eclipse Amlen</span> Web UI RPM by issuing one of the following pairs of commands:<pre class="pre codeblock"><code>cd imawebui
+rpm -Uvh EclipseAmlenWebUI*.rpm</code></pre>or <pre class="pre codeblock"><code>cd imawebui
+yum --nogpgcheck install EclipseAmlenWebUI*.rpm</code></pre></li>
+</ul>
+</li><li class="li step stepexpand">
+<span class="ph cmd"> Restart the <span class="ph">Eclipse Amlen</span> server and Web UI. The commands to update the RPMs cause the server and Web UI  to stop after the RPM installation is complete.</span>
+<ul class="ul choices">
+<li class="li choice">Restart the <span class="ph">Eclipse Amlen</span> server by issuing the following command:<pre class="pre codeblock"><code>systemctl start imaserver</code></pre></li>
+<li class="li choice">Restart the <span class="ph">Eclipse Amlen</span> Web UI by issuing the following command:<pre class="pre codeblock"><code>systemctl start imawebui</code></pre></li>
+</ul>
+</li></ol></section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Upgrading/up00014_.html" title="System administrators can upgrade the software level of the Eclipse Amlen by applying interim fixes. The software level can also be rolled back by removing interim fixes.">Upgrading and rolling back the software level of Eclipse Amlen</a></div></div><div class="linklist reltasks"><strong>Related tasks</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="up00007_.html" title="If, after an upgrade of the software level of the Eclipse Amlen RPMs, a rollback to a prior level is required, system administrators can perform the rollback operation.">Rolling back the Eclipse Amlen RPM</a></li><li class="linklist"><a class="link" href="../QuickStartGuide/qs00056_.html" title="Install the Eclipse Amlen RPM directly on your host operating system (OS).">Installing the Eclipse Amlen RPM on a host OS</a></li></ul></div></nav>
+</article></main></body></html>

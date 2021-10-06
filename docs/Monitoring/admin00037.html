@@ -1,0 +1,141 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can view server-related statistics by using a REST Monitoring API"><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Viewing server statistics by using REST Monitoring APIs</title></head><body id="admin00037"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a><ul><li><a href="../Monitoring/admin00080.html">Cluster monitoring</a></li><li><a href="../Monitoring/admin00009.html">Connection Monitoring</a></li><li><a href="../Monitoring/admin00010.html">Endpoint Monitoring</a></li><li><a href="../Monitoring/admin00016.html">Topic Monitoring</a></li><li><a href="../Monitoring/admin00019.html">Queue Monitoring</a></li><li><a href="../Monitoring/admin00022.html">Subscription Monitoring</a></li><li><a href="../Monitoring/admin00025.html">MQTT Client Monitoring</a></li><li><a href="../Monitoring/admin00031.html">MQ Connectivity monitoring</a></li><li><a href="../Monitoring/admin00070.html">Viewing protocol plug-in monitoring statistics by using an external application</a></li><li><a href="../Monitoring/admin00028.html">Server Monitoring</a><ul><li><a href="../Monitoring/admin00038.html">Viewing server statistics by using the Amlen WebUI</a></li><li class="active"><a href="../Monitoring/admin00037.html">Viewing server statistics by using REST Monitoring APIs</a></li><li><a href="../Monitoring/admin00034.html">Store Monitoring</a></li><li><a href="../Monitoring/admin00051.html">Memory Monitoring</a></li></ul></li><li><a href="../Monitoring/admin00060.html">XA Transaction monitoring</a></li></ul></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+ <h1 class="title topictitle1" id="ariaid-title1">Viewing server statistics by using <span class="ph">REST Monitoring APIs</span></h1>
+ 
+ 
+ <div class="body taskbody"><p class="shortdesc">System administrators can view server-related statistics by using a <span class="ph">REST Monitoring API</span></p>
+  <section class="section context">
+   <p class="p">System administrators can view statistics about the <span class="ph">Eclipse Amlen</span> server by using a <span class="ph">REST Monitoring API</span> or by using the <span class="ph">Amlen WebUI</span>.  For more information about using the <span class="ph">Amlen WebUI</span> to view statistics about the <span class="ph">Eclipse Amlen</span> server, see <a class="xref" href="admin00038.html" title="Use the Server Dashboard to view statistics about Eclipse Amlen server.">Viewing memory statistics by using the <span class="ph">Amlen WebUI</span></a>. </p>
+  </section>
+  <section><div class="li stepsection">Server-related monitoring statistics can be viewed by using a <span class="ph">REST Monitoring API</span>. To view
+    server-related monitoring statistics, complete the following steps:</div><div class="ol steps"><div class="li step p">
+    <span class="ph cmd">Use the <span class="ph">Eclipse Amlen</span> REST API
+     GET method with the following <span class="ph">Eclipse Amlen</span> monitoring URI:</span>
+    <div class="itemgroup info">
+     <p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/monitor/Server</code></p>
+    </div>
+   </div></div></section>
+  <section class="example">
+<p class="p">The following example uses cURL to show how a GET method is used to view information about the
+<span class="ph">Eclipse Amlen</span> server:</p>
+<pre class="pre codeblock"><code>curl -X GET http://127.0.0.1:9089/ima/v1/monitor/Server 
+ 
+ </code></pre>
+<p class="p">The following example shows a successful example response to the GET method:</p>
+<pre class="pre codeblock"><code>{ "Version":"v1", "Server": {"ActiveConnections":0,"TotalConnections":0,"MsgRead":0,
+"MsgWrite":0,"BytesRead":0,"BytesWrite":0, "BadConnCount":0, "TotalEndpoints":3,
+"BufferedMessages":0,"RetainedMessages":0,"ExpiredMessages":0,
+"ClientSessions":13,"ExpiredClientSessions":0,"Subscriptions":2}}</code></pre>
+<p class="p">where:</p>
+<dl class="dl">
+
+<dt class="dt dlterm"> ActiveConnections</dt>
+<dd class="dd">Currently active connections.</dd>
+
+
+<dt class="dt dlterm">TotalConnections </dt>
+<dd class="dd">Count of connections since <span class="ph">Eclipse Amlen</span> was
+last reset.</dd>
+
+
+<dt class="dt dlterm">MsgRead</dt>
+<dd class="dd">Count of messages read since reset.</dd>
+
+
+<dt class="dt dlterm">MsgWrite</dt>
+<dd class="dd"> Count of messages written since reset.</dd>
+
+
+<dt class="dt dlterm">BytesRead</dt>
+<dd class="dd">Count of bytes read since reset.</dd>
+
+
+<dt class="dt dlterm">BytesWrite</dt>
+<dd class="dd">Count of bytes written since reset.</dd>
+
+
+<dt class="dt dlterm">BadConnCount</dt>
+<dd class="dd">Count of connections that failed to connect since reset.</dd>
+
+</dl>
+<dl class="dl">
+
+<dt class="dt dlterm">TotalEndpoints</dt>
+<dd class="dd">The number of active endpoints.</dd>
+
+</dl>
+<dl class="dl">
+
+<dt class="dt dlterm">BufferedMessages</dt>
+<dd class="dd">This statistic provides an approximate count of the number of messages (including inflight
+messages) that are currently buffered on queues and subscriptions on the <span class="ph">Eclipse Amlen</span> server.</dd>
+<dd class="dd ddexpand">You can use this information to understand: <ul class="ul">
+<li class="li">If the number of buffered messages is growing, shrinking, or is constant over time.</li>
+<li class="li">If the number of buffered messages is higher than expected for your system at a point in time. </li>
+<li class="li">If your system is able to process the number of messages that are passing through it.</li>
+</ul>
+</dd>
+<dd class="dd ddexpand">You can also use this statistic in conjunction with the server memory usage statistics on the
+<span class="ph">Amlen WebUI</span> dashboard to help with your capacity
+planning. Use this information to understand how many messages can be buffered on your server. For
+example, server memory usage might be at 50% with 4 million buffered messages, and at 60% with 8
+million buffered messages. </dd>
+
+</dl>
+<dl class="dl">
+
+<dt class="dt dlterm">RetainedMessages</dt>
+<dd class="dd">This statistic provides an approximate count of the number of retained messages (including
+inflight messages) that are currently waiting on topics on the <span class="ph">Eclipse Amlen</span> server. The messages are waiting to be delivered to
+new subscribers on those topics when their subscription is created for the first time.</dd>
+<dd class="dd ddexpand">The RetainedMessages statistic does not represent the number of topics with a retained message,
+as a single topic might have multiple retained messages that are inflight.</dd>
+<dd class="dd ddexpand">You can use this information to understand: <ul class="ul">
+<li class="li">If the number of retained messages is growing, shrinking, or is constant over time.</li>
+<li class="li">If the number of retained messages is higher than expected for your system at a point in time. </li>
+<li class="li">If your system is able to process the number of messages that are passing through.</li>
+</ul>
+</dd>
+<dd class="dd ddexpand">You can also use this statistic in conjunction with the server memory usage statistics on the
+<span class="ph">Amlen WebUI</span> dashboard to help with your capacity
+planning. Use this information to understand how many messages can be retained on the server. For
+example, the server memory usage might be at 50% with 4 million retained messages, and at 60% with 8
+million retained messages. </dd>
+
+</dl>
+<dl class="dl">
+
+<dt class="dt dlterm">ExpiredMessages</dt>
+<dd class="dd">This statistic provides a count of the number of expired messages on queues and subscriptions on
+the <span class="ph">Eclipse Amlen</span> server.</dd>
+<dd class="dd ddexpand">You can use this information to understand: <ul class="ul">
+<li class="li">If the number of expired messages is growing, shrinking, or is constant over time.</li>
+<li class="li">If the number of expired messages is higher than expected for your system at a point in time. </li>
+<li class="li">If your system is able to process the number of messages that are passing through it.</li>
+</ul>
+</dd>
+<dd class="dd ddexpand">You can also use this statistic in conjunction with the server memory usage statistics on the
+<span class="ph">Amlen WebUI</span> dashboard to help with your capacity
+planning. </dd>
+
+
+<dt class="dt dlterm"> ClientSessions</dt>
+<dd class="dd">The number of clients for which the server has state. Includes all connected clients and
+disconnected clients that have a session which is not ended.</dd>
+
+
+<dt class="dt dlterm"> ExpiredClientSessions</dt>
+<dd class="dd">The number of client sessions that have been removed since the <span class="ph">Eclipse Amlen</span> server restarted.  Sessions are expired because of
+the <span class="keyword parmname">SessionExpiry</span> interval that is set by an MQTTv5 client, or because of the
+<span class="keyword parmname">MaxSessionExpiryInterval</span> of a connection policy.</dd>
+
+
+<dt class="dt dlterm"> Subscriptions</dt>
+<dd class="dd">Total number of subscriptions that are in the system.</dd>
+
+</dl>
+</section>
+ </div>
+ 
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Monitoring/admin00028.html" title="View information about Eclipse Amlen statistics for the memory, and store (persistent memory and disk).">Server Monitoring</a></div></div></nav></article></main></body></html>

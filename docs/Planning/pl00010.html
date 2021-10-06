@@ -1,0 +1,198 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="Key points to consider when you plan the messaging aspects of your Eclipse Amlen solution."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Messaging planning</title></head><body id="messageplanning"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a><ul><li><a href="../Planning/pl00030.html">Installation planning</a></li><li><a href="../Planning/ov00101_.html">Messaging patterns</a></li><li class="active"><a href="../Planning/pl00010.html">Messaging planning</a><ul><li><a href="../Planning/ov00102_.html">Message delivery</a></li><li><a href="../Planning/pl00005.html">Conversion between MQTT and JMS</a></li></ul></li><li><a href="../Planning/clusteringconsiderations.html">Clustering considerations</a></li><li><a href="../Planning/pl00002_.html">Capacity planning</a></li><li><a href="../Planning/pl00004.html">Performance planning</a></li><li><a href="../Planning/ov40001.html">High availability planning</a></li><li><a href="../Planning/pl00020.html">Connecting to an existing infrastructure</a></li></ul></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Messaging planning</h1>
+
+<div class="body refbody"><p class="shortdesc">Key points to consider when you plan the messaging aspects
+of your <span class="ph">Eclipse Amlen</span> solution.</p>
+<section class="section"><h2 class="title sectiontitle">Protocols</h2><p class="p"><span class="ph">Eclipse Amlen</span> natively provides support for
+MQTT and JMS, and can convert between the two protocols. You
+must consider which protocols are appropriate for your business needs.
+For more information about the supported protocols, see <a class="xref" href="../Overview/ov00050.html" title="Protocols that are supported by Eclipse Amlen.">Supported protocols</a>. For more information about
+converting between the protocols, see <a class="xref" href="pl00005.html" title="When messages are converted between MQTT and JMS, there is a set of rules that are applied to the conversion.">Conversion between
+MQTT and JMS</a>. </p><p class="p">MQTT and JMS support different qualities
+of service. In general, higher qualities of service are slower than
+lower qualities of service. For more information about the way MQTT
+and JMS handle the delivery of messages, see <a class="xref" href="ov00102_.html" title="Eclipse Amlen natively supports MQTT and JMS protocols.">Message delivery</a>.</p></section>
+<section class="section"><h2 class="title sectiontitle">Message size</h2><p class="p">If you send large messages
+with a high quality of service level, the <span class="ph">Eclipse Amlen</span> server cannot
+store many messages before the available storage is filled. Consider
+the volume and size of the messages you want to send, and whether
+the messages must be persistent. These decisions affect the number
+of messages that <span class="ph">Eclipse Amlen</span> can
+handle.</p><p class="p">You can limit the message size that is allowed to be
+sent through the <span class="ph">Eclipse Amlen</span> by
+using the <code class="ph codeph">maximum message size</code> attribute of an endpoint.
+For more information about endpoints, see <a class="xref" href="../Overview/ov00060.html" title="Message hubs are an organizational configuration object that collects endpoints, connection policies, and messaging policies that are associated with a specific goal into a single place. You can create a message hub per application to organize the endpoints and policies each application uses.">Message hubs, endpoints, and policies</a>.</p></section>
+<section class="section"><h2 class="title sectiontitle">Message count</h2><p class="p">For publish/subscribe messaging,
+you can configure how many messages the <span class="ph">Eclipse Amlen</span> server stores,
+by setting the <code class="ph codeph">Max Messages</code> attribute of a messaging
+policy. The server stores the messages until the messages are received
+by subscribers at the reliability level required. If a subscriber
+that requires an exactly once level of reliability cannot be reached,
+the message is stored.</p><p class="p">You can choose what happens when the
+maximum message count is reached by using the <code class="ph codeph">Max Messages
+Behavior</code> attribute of a messaging policy. You can either
+reject new messages, or you can discard a percentage of old messages
+that are stored on the server. If you choose to reject new messages,
+and the maximum message count is reached, messages cannot be sent.
+If you choose to discard old messages, and the maximum message count
+is reached, old messages are removed from the server. Any messages
+that are being delivered, that is, messages that are sent but not
+yet acknowledged, are not removed. If a retained message is one of
+the old messages, it is removed. The quality of service, persistence,
+and priority of the messages does not prevent the messages from being
+removed. Therefore, if all messages must be received in order for
+your applications to function correctly, you cannot set the max messages
+behavior to discard old messages. You must consider which behavior
+to use, based on your messaging requirements.</p><p class="p">For more information
+about messaging policies, see <a class="xref" href="../Security/se00004_.html" title="You can use messaging policies to authorize client messaging. There are three types of messaging policies: Topic policies, queue policies, and subscription policies.">Authorizing client messaging</a>.</p></section>
+<section class="section"><h2 class="title sectiontitle">Max Messages Behavior </h2><p class="p">You can choose what
+happens when the maximum message count is reached by using the <code class="ph codeph">Max
+Messages Behavior</code> attribute of a messaging policy. You can
+either reject new messages, or you can discard a percentage of old
+messages that are stored on the server. If you choose to reject new
+messages, and the maximum message count is reached, messages cannot
+be sent. If you choose to discard old messages, and the maximum message
+count is reached, old messages are removed from the server. Any messages
+that are being delivered, that is, messages that are sent but not
+yet acknowledged, are not removed. If a retained message is one of
+the old messages, it is removed. The quality of service, persistence,
+and priority of the messages does not prevent the messages from being
+removed. Therefore, if all messages must be received in order for
+your applications to function correctly, you cannot set the max messages
+behavior to discard old messages. You must consider which behavior
+to use, based on your messaging requirements.</p><div class="p">The value of Max Messages Behavior is determined by the messaging policy that is associated with the subscription. To determine the messaging policy that is associated with the subscription, you can either use the <span class="ph uicontrol">Monitoring</span> page in the <span class="ph">Amlen WebUI</span>, or the REST API GET method with the following <span class="ph">Eclipse Amlen</span> URI:<pre class="pre codeblock"><code>http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/monitor/Subscription</code></pre><ul class="ul">
+<li class="li">For non-durable shared subscriptions, <code class="ph codeph">Max Messages Behavior</code> is determined by the value set for the subscriber that created the shared subscription. The setting applies to all subsequent subscribers, regardless of their own setting of <code class="ph codeph">Max Messages Behavior</code>. If the subscription is deleted, perhaps because all subscribers disconnected, and then is re-created by a different subscriber, the subscription might have a different setting for <code class="ph codeph">Max Messages Behavior</code>.</li>
+<li class="li">For durable shared subscriptions, <code class="ph codeph">Max Messages Behavior</code> is determined by the value set for the subscriber that created the durable shared subscription. </li>
+<li class="li">For global-shared durable subscriptions, <code class="ph codeph">Max Messages Behavior</code> is determined by the value set on the messaging policy with a type of <code class="ph codeph">Subscription</code> for the subscriber that created the global-shared durable subscription. </li>
+<li class="li">For all types of subscriptions, you can update <code class="ph codeph">Max Messages Behavior</code> on the associated messaging policy; all subscriptions that are associated with that messaging policy are then updated to use the new value.</li>
+</ul></div><p class="p">The use of wildcard characters is significant. A number
+of different subscriptions that are using different messaging policies
+with different values of <code class="ph codeph">Max Messages Behavior</code> can
+subscribe to the same topic at the same time; they are part of the
+same topic community. It is the value of the <code class="ph codeph">Max Messages
+Behavior</code> attribute of the subscription the buffer of which
+is full at the time of a publish that dictates the behavior for the
+entire topic community. A subscription that is using a messaging policy
+with a value of <code class="ph codeph">Reject New Messages</code> in the <code class="ph codeph">Max
+Messages Behavior</code> attribute causes publish requests to fail
+when its buffer becomes full. Even if other subscriptions in the topic
+community are using messaging policies with a value of <code class="ph codeph">Discard
+Old Messages</code> in the <code class="ph codeph">Max Messages Behavior</code> attribute,
+their publish requests fail.</p><div class="p">Consider the following example
+scenarios:<ol class="ol">
+<li class="li"><p class="p">There are a number of subscriptions to the topic <code class="ph codeph">/RiverGauges/*</code>;
+note the use of the wildcard. The buffer of one of these subscriptions
+becomes full. It is using a messaging policy with a <code class="ph codeph">Max Messages
+Behavior</code> attribute set to <code class="ph codeph">Reject New Messages</code>.
+All publish requests to any topic in the <code class="ph codeph">/RiverGauges/*</code> topic
+community fail. Even if other subscriptions are using messaging policies
+with a <code class="ph codeph">Max Messages Behavior</code> attribute set to <code class="ph codeph">Discard
+Old Messages</code>, publish requests fail. Publish requests continue
+to fail until the subscriber with the full buffer starts to receive
+messages and space is created in its buffer.</p><p class="p">If, however, the
+setting of the <code class="ph codeph">Max Messages Behavior</code> attribute of
+the subscription to the topic <code class="ph codeph">/RiverGauges/*</code> is set
+to <code class="ph codeph">Discard Old Messages</code>, and its buffer becomes full,
+other subscriptions are not affected. Messages are deleted from the
+buffer of the subscriber with the full buffer. Gaps in the incoming
+message stream might be experienced as a result of messages being
+deleted from its buffer.</p></li>
+<li class="li"><p class="p">There are a number of subscriptions to the <code class="ph codeph">/RiverGauges/Mississippi</code> topic.
+The buffer of one of these subscriptions becomes full. It is using
+a messaging policy with a <code class="ph codeph">Max Messages Behavior</code> attribute
+set to <code class="ph codeph">Reject New Messages</code>. All publish requests
+to the <code class="ph codeph">/RiverGauges/Mississippi</code> topic fail. Even
+if subscriptions are using messaging policies with a <code class="ph codeph">Max Messages
+Behavior</code> attribute set to <code class="ph codeph">Discard Old Messages</code>,
+publish requests fail. All subscriptions to the <code class="ph codeph">/RiverGauges/Mississippi</code> topic
+cannot receive any new messages. Subscriptions to the <code class="ph codeph">/RiverGauges/*</code> topic
+community continue to receive messages for all topics except for messages
+for the <code class="ph codeph">/RiverGauges/Mississippi</code> topic. Publish requests
+continue to fail until the subscriber with the full buffer starts
+to receive messages and space is created in its buffer.</p><p class="p">If,
+however, the setting of the <code class="ph codeph">Max Messages Behavior</code> attribute
+of the subscriber to the topic <code class="ph codeph">/RiverGauges/Mississippi</code> is
+set to <code class="ph codeph">Discard Old Messages</code>, and its buffer becomes
+full, other subscriptions are not affected. Messages are deleted from
+the buffer of the subscriber with the full buffer. Gaps in the incoming
+message stream might be experienced as a result of messages being
+deleted from its buffer.</p></li>
+</ol> </div><p class="p">If you choose to discard old messages, the quality of
+service, persistence, priority, expiry status, and reliability of
+the messages are not considered and do not prevent the messages from
+being removed.</p><p class="p">To be published successfully, MQTT messages with
+QoS of 1 or 2, or JMS messages with the equivalent qualities of service,
+must be sent to all subscriptions in the topic community. If a subscription
+has a full buffer and a <code class="ph codeph">Max Messages Behavior</code> attribute
+set to <code class="ph codeph">Discard Old Messages</code>, the message is always
+accepted and then, if necessary, messages in the buffer are discarded.
+If the <code class="ph codeph">Max Messages Behavior</code> attribute is set to <code class="ph codeph">Reject
+New Messages</code>, the publish request fails for all subscriptions
+in the topic community.</p><p class="p">If MQTT messages with QoS of 0, or JMS
+messages with the equivalent quality of service, are sent to a subscription
+that has a full buffer and a <code class="ph codeph">Max Messages Behavior</code> attribute
+set to <code class="ph codeph">Discard Old Messages</code>, the publish request
+succeeds but some existing messages are discarded from the buffer. If
+the <code class="ph codeph">Max Messages Behavior</code> attribute is set to <code class="ph codeph">Reject
+New Messages</code>, the publish request succeeds but other incoming
+messages are rejected.</p></section>
+<section class="section"><h2 class="title sectiontitle">Message order</h2><div class="p">If the message arrival order
+is important to your solution, you must configure your solution to
+ensure that message order is preserved. To preserve the message order,
+your solution must meet the following requirements:<ul class="ul">
+<li class="li">The producer or publisher must be single threaded.</li>
+<li class="li">Messages must be exchanged with the same quality of service.</li>
+<li class="li">If you are using <span class="ph">MQ Connectivity</span>, you must
+map to a single queue manager.</li>
+<li class="li">For publish/subscribe systems, the messages must be published
+to a single topic.</li>
+</ul></div></section>
+<section class="section"><h2 class="title sectiontitle">Topic Namespace</h2><p class="p"></p><dl class="dl">
+<dt class="dt dlterm">Maximum number of topic levels</dt>
+<dd class="dd"><span class="ph">Eclipse Amlen</span> limits
+topic strings to 32 levels. Therefore, you must consider your publish/subscribe
+topology to ensure that the number of topic levels does not exceed
+32.</dd>
+
+<dt class="dt dlterm">Topic string name restrictions</dt>
+<dd class="dd"><code class="ph codeph">${UserID}</code>, <code class="ph codeph">${GroupID}</code>, <code class="ph codeph">${ClientID}</code>,
+and <code class="ph codeph">${CommonName}</code> are reserved for variable substitution
+in messaging policies and cannot be used in a topic string.</dd>
+</dl></section>
+<section class="section"><h2 class="title sectiontitle">Retained messages</h2><p class="p">You can use retained messages
+to send the most recent message to subscribers that subscribe after
+that message was published.</p><p class="p">Only one message is retained for
+each topic, so existing retained messages are deleted when a new retained
+message is published to the topic. The deletion of the existing message
+might not occur synchronously with the arrival of the new retained
+message. In the case where more than one publisher publishes retained
+messages to a single topic, it is not possible to know which message
+is stored. It is possible that an earlier message sent by one publisher
+is stored as the retained message, rather than a later message sent
+by another publisher. Therefore, where possible, have no more than
+one publisher sending retained messages to a topic.</p><p class="p">Messages
+are not retained after <span class="ph">Eclipse Amlen</span> is
+restarted if the messages are not sent as persistent retained messages.
+Consider sending retained messages as persistent messages so that
+the messages continue to be available to new subscribers even if <span class="ph">Eclipse Amlen</span> is restarted.</p></section>
+<section class="section"><h2 class="title sectiontitle">Messaging users and groups</h2><p class="p">When you create messaging policies and connection policies, you can restrict access based on messaging user ID and messaging group membership. You can use an LDAP server connection to provide the details of the users and groups. You can connect only one LDAP server to <span class="ph">Eclipse Amlen</span>. Therefore, you must consider how your existing infrastructure might be used for messaging users and groups.</p><p class="p">When you use the <code class="ph codeph">${GroupID}</code> variable
+in your messaging policies, ensure that, where the same user ID is
+being used in more than one group with the same group ID and the user
+ID is referring to different users, you consider having unique group IDs.
+Unique group IDs help to ensure that access is restricted to only
+those users that are intended to have access. For more information
+about using variable substitution, see <a class="xref" href="../Security/se00018.html" title="You can use variable substitution in messaging policies to avoid configuring large numbers of messaging policies. You can set up a topic policy or queue policy so that the topic or queue parameter in the policy includes a user ID, group ID, client ID, or client certificate common name variable. The user ID, group ID, client ID, or common name is matched to the topic string or queue name, and access is granted to that topic tree or queue only.">Variable substitution in messaging policies</a>.</p></section>
+<section class="section"><h2 class="title sectiontitle">Expired messages</h2><p class="p">If it is important that subscribing client applications do not process expired messages, it is
+    good practice for the subscribing client application to check the expiry time of messages that
+    they receive from the client. The subscribing client application can then discard those messages
+    that have expired. If the subscribing client application needs to perform this check of expiry
+    time, it is important that the subscriber host clock is synchronized with the <span class="ph">Eclipse Amlen</span> server host clock. Synchronization of the
+    clocks is required for the expiration check to work correctly. Use a network time protocol (NTP)
+    server to keep the clocks synchronized. </p></section>
+<section class="section"><h2 class="title sectiontitle">LTPA or OAuth authentication</h2><p class="p">For clients that depend on LTPA or OAuth authentication, it is important that <span class="ph">Eclipse Amlen</span> server time is synchronized with the LTPA
+    token provider or OAuth token provider. The authentication request from the <span class="ph">Eclipse Amlen</span> client might fail because of the expiry of the
+    LTPA token or OAuth token if the clocks are not synchronized. </p></section>
+</div>
+<nav role="navigation" class="related-links"><ul class="ullinks"><li class="link ulchildlink"><strong><a href="../Planning/ov00102_.html">Message delivery</a></strong><br><span class="ph">Eclipse Amlen</span> natively supports MQTT and JMS protocols. </li><li class="link ulchildlink"><strong><a href="../Planning/pl00005.html">Conversion between MQTT and JMS</a></strong><br>When messages are converted between MQTT and JMS, there is a set of rules that are applied to the conversion.</li></ul><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Planning/pl00001_.html" title="When you plan your Eclipse Amlen solution, you must make a number of decisions to ensure your solution works effectively.">Planning</a></div></div></nav></article></main></body></html>

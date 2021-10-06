@@ -1,0 +1,38 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="An overview of components and connections within an Eclipse Amlen solution."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Architecture Overview</title></head><body id="ov00002_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a><ul><li class="active"><a href="../Overview/ov00002_.html">Architecture Overview</a></li><li><a href="../Overview/ov60000_.html">Eclipse Amlen in Containers</a></li><li><a href="../Overview/ov00050.html">Supported protocols</a></li><li><a href="../Bridge/br00000.html">   Amlen Bridge</a></li><li><a href="../Overview/ov00003_.html">Key Concepts</a></li><li><a href="../Overview/accessibility_topic.html">Accessibility features for Eclipse Amlen</a></li><li><a href="../Overview/notices.html">Notices</a></li></ul></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Architecture Overview</h1>
+
+<div class="body conbody"><p class="shortdesc">An overview of components and connections within an <span class="ph">Eclipse Amlen</span> solution. </p>
+<p class="p"><a class="xref" href="#ov00002___f1">Figure 1</a> is a deployment diagram that
+is typical of <span class="ph">Eclipse Amlen</span> applications.
+ In the diagram, <span class="ph">Eclipse Amlen</span> connects
+many users and devices on the internet to services that are deployed
+on an intranet. The users, devices, and services interact with each
+other by exchanging messages through <span class="ph">Eclipse Amlen</span>. </p>
+<figure class="fig figtopbot" id="ov00002___f1"><figcaption><span class="fig--title-label">Figure 1. </span>Connections to <span class="ph">Eclipse Amlen</span></figcaption>
+<br><img class="image" src="ISM_context2_v2.gif" alt="IBM Watson IoT Platform - Message Gateway shown between internet and intranet, with attached devices, protocols, and user roles."><br>
+</figure>
+<p class="p"><span class="ph">Eclipse Amlen</span> connects
+large numbers of clients and routes large volumes of messages. <span class="ph">Eclipse Amlen</span> supports both
+publish/subscribe and point-to-point messaging. Like <span class="ph">IBM® MQ</span>, it is a subject-based
+publish subscribe broker, not a content-based broker. Unlike a content-based
+broker, message-content is not queried or altered by <span class="ph">Eclipse Amlen</span>. No user-based
+applications can run on <span class="ph">Eclipse Amlen</span>. <span class="ph">Eclipse Amlen</span> typically sits
+alongside other edge-of-network devices with the same objectives of
+forwarding large volumes of internet traffic from many different clients. </p>
+<div class="note note note_note"><span class="note__title">Note:</span> Subject-based publish subscribe is also known as topic-based
+publish subscribe.</div>
+<section class="section"><h2 class="title sectiontitle">Connectivity</h2><p class="p">Connect clients to <span class="ph">Eclipse Amlen</span> by using MQTT,
+or JMS protocols, which are natively supported. </p>
+   <p class="p">Connect clients to <span class="ph">Eclipse Amlen</span> over a custom protocol
+    by using the protocol plug-in. For more information about installing your own protocol, see
+     <a class="xref" href="ov00050.html" title="Protocols that are supported by Eclipse Amlen.">Supported protocols</a>.</p><p class="p">Connect <span class="ph">Eclipse Amlen</span> to a <span class="ph">IBM MQ</span> network by using <span class="ph">MQ Connectivity</span>. For more
+information about <span class="ph">MQ Connectivity</span>,
+see <a class="xref" href="../Administering/ad00102_.html" title="Eclipse Amlen can receive messages that are published to Eclipse Amlen topics, or sent to Eclipse Amlen queues and can forward the messages to IBM MQ queues or topics. Eclipse Amlen can also receive messages that are published to IBM MQ topics, or sent to IBM MQ queues, and can forward the messages to Eclipse Amlen topics or queues.">MQ Connectivity</a>.</p><p class="p">Connect <span class="ph">Eclipse Amlen</span> to a Java™ Platform, Enterprise Edition application server by using <span class="ph">Eclipse Amlen</span> resource adapter. Connecting in this way allows application server-based JMS messaging, such as asynchronous message driven beans, to be used with <span class="ph">Eclipse Amlen</span>. For more information, see <a class="xref" href="../Administering/workingwithjmsra.html"><span class="ph">Eclipse Amlen</span> resource adapter</a>.</p><p class="p">Connect your standby <span class="ph">Eclipse Amlen</span> server to your
+primary <span class="ph">Eclipse Amlen</span> server
+to set up a high availability (HA) pair. For more information, see <a class="xref" href="ov40000.html" title="Eclipse Amlen might experience outages both planned and unplanned. High availability (HA) pertains to the ability of messaging services to withstand outages and continue providing processing capability.">High
+availability</a>.</p><p class="p"></p></section>
+</div>
+
+</article></main></body></html>

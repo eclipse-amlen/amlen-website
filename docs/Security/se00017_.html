@@ -1,0 +1,37 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="Special Publication 800-131a of the US National Institute of Standards and Technology (NIST) has new requirements for cryptography certificates, keys, and ciphers. Eclipse Amlen supports this new standard, and provides enhanced support for TLSv1.2."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>NIST 800-131a</title></head><body id="se00017_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a><ul><li><a href="../Security/se00010.html">Authentication</a></li><li><a href="../Security/se00011.html">Authorization</a></li><li><a href="../Security/se00005_.html">Transport Layer Security</a><ul><li><a href="../Security/se00007.html">Client certificate authentication</a></li><li><a href="../Security/se00012_.html">Federal Information Processing Standards (FIPS)</a></li><li class="active"><a href="../Security/se00017_.html">NIST 800-131a</a></li></ul></li></ul></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">NIST 800-131a</h1>
+
+<div class="body conbody"><p class="shortdesc">Special Publication 800-131a of the US National Institute
+of Standards and Technology (NIST) has new requirements for cryptography
+certificates, keys, and ciphers. <span class="ph">Eclipse Amlen</span> supports this
+new standard, and provides enhanced support for TLSv1.2.</p>
+<p class="p">You can configure <span class="ph">Eclipse Amlen</span> to
+comply to the NIST 800-131a requirements, and enforce minimum cipher
+strengths. <span class="ph">Eclipse Amlen</span> does
+not enforce minimum certificate and key strength. You must control
+which certificates are accepted by ensuring that weak certificates
+and keys are not installed on <span class="ph">Eclipse Amlen</span>.</p>
+<p class="p">The <span class="ph">Eclipse Amlen</span> JMS
+client uses only ciphers and protocols that conform to NIST 800-131a.</p>
+<div class="note note note_note"><span class="note__title">Note:</span> Based on the NIST recommendation on use of SP 800-90A Dual Elliptic
+Curve Deterministic Random Bit Generation, <span class="keyword parmname">Dual_EC_DRBG</span> is
+not enabled on <span class="ph">Eclipse Amlen</span>.
+For more information about the NIST recommendation, see the <cite class="cite">Supplemental
+ITL bulletin for September 2013</cite> on the <a class="xref" href="http://csrc.nist.gov/publications/PubsITLSB.html" target="_blank" rel="external noopener">NIST
+website</a>.</div>
+<div class="p">To configure <span class="ph">Eclipse Amlen</span> to
+enforce the minimum cipher strength, configure the security profile
+of each endpoint as follows:<ul class="ul">
+<li class="li">Set the minimum security protocol to TLSv1.2, TLSv1.1, or TLSv1.
+All levels of TLS are NIST 800-131a compliant, but use the highest
+version that is supported by all clients.</li>
+<li class="li">Set the ciphers to <code class="ph codeph">Fast</code> or <code class="ph codeph">Best</code>.
+Typically, the cipher lists are the same. However, <code class="ph codeph">Fast</code> chooses
+the faster ciphers first, and <code class="ph codeph">Best</code> chooses the stronger
+ciphers first.</li>
+</ul>For more information about configuring security profiles, see <a class="xref" href="../Administering/ad00740_.html" title="A security profile is used by an endpoint to define authentication and Transport Layer Security (TLS) settings for that endpoint. To enable TLS for the endpoint, you must enable TLS in the security profile and the security profile must have an associated certificate profile that defines the server certificate that is used to control TLS. To create a security profile with TLS enabled, you must create the certificate profile before you create the security profile. You can configure security profiles either by using the Amlen WebUI or by using REST Administration APIs.">Configuring security profiles</a>.</div>
+</div>
+
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Security/se00005_.html" title="As an administrator, you can use certificate profiles and security profiles to configure Transport Layer Security (TLS) for Eclipse Amlen endpoints.">Transport Layer Security</a></div></div></nav></article></main></body></html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="The publisher of a message can specify that a copy of the message must be kept on Eclipse Amlen as a retained message. This retained message is sent to any subscribers that subscribe after the message was published. Eclipse Amlen supports both MQTT and JMS retained messages."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Developing retained message applications</title></head><body id="devretainmsg"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a><ul><li><a href="../Developing/devconcepts.html">Messaging concepts</a></li><li><a href="../Developing/devmsgtypes.html">Natively supported message types</a></li><li><a href="../Developing/devmsgsize.html">Message size</a></li><li><a href="../Developing/devclientids.html">Client IDs</a></li><li><a href="../Developing/devclientservercert.html">Server certificates</a></li><li class="active"><a href="../Developing/devretainmsg.html">Developing retained message applications</a></li><li><a href="../Developing/devexpiredmsg.html">Expired messages</a></li><li><a href="../Developing/devsharedsubscriptions.html">Shared subscriptions</a></li><li><a href="../Developing/devmqttapp.html">Developing MQTT applications</a></li><li><a href="../Developing/devjmsapp.html">Developing JMS applications</a></li><li><a href="../Developing/devplug-in.html">Developing a protocol plug-in</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li></ul></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Developing retained message applications</h1>
+
+<div class="body conbody"><p class="shortdesc">The publisher of a message can specify that a copy of the
+message must be kept on <span class="ph">Eclipse Amlen</span> as a retained
+message. This retained message is sent to any subscribers that subscribe
+after the message was published. <span class="ph">Eclipse Amlen</span> supports both
+MQTT and JMS retained messages.</p>
+<p class="p">Only one message is retained for each topic, so existing retained
+messages are deleted when a new retained message is published to the
+topic. The deletion of the existing message might not occur synchronously
+with the arrival of the new retained message. In the case where more
+than one publisher publishes retained messages to a single topic,
+it is not possible to know which message is stored. It is possible
+that an earlier message sent by one publisher is stored as the retained
+message, rather than a later message sent by another publisher. Therefore,
+where possible, have no more than one publisher sending retained messages
+to a topic.</p>
+<p class="p">Messages are not retained after <span class="ph">Eclipse Amlen</span> is restarted
+if the retained messages are not sent as persistent messages. Consider
+sending retained messages as persistent messages so that the messages
+continue to be available to new subscribers even if <span class="ph">Eclipse Amlen</span> is restarted.
+For more information about persistent messages, see <a class="xref" href="../Planning/ov00102_.html" title="Eclipse Amlen natively supports MQTT and JMS protocols.">Message delivery</a>.</p>
+<div class="p">When you develop applications that use retained messages, consider
+whether to use durable or non-durable subscriptions: <ul class="ul">
+<li class="li">For non-durable subscriptions, if a client disconnects and reconnects
+to a topic, reconnecting creates a new subscription. Therefore, the
+retained message on the topic that is subscribed to is sent to the
+client, even if the client received the message before it disconnected.</li>
+<li class="li">For durable subscriptions, if a client disconnects and reconnects,
+reconnecting uses the same durable subscription. Messages that were
+published after the client disconnected are delivered as normal, not
+as retained messages. The only instance in which an application with
+a durable subscription receives retained messages is when the subscription
+is first created. If the application disconnects before it receives
+the initial retained messages, the messages are delivered as retained
+messages when the application reconnects.</li>
+</ul>You can create a durable subscription in MQTT by using the <code class="ph codeph">cleanSession=0</code> flag.</div>
+<section class="section"><h2 class="title sectiontitle">MQTT retained messages</h2><p class="p">MQTT applications
+can be configured to use retained messages by setting the <code class="ph codeph">RETAIN</code> flag.
+When a subscriber receives a message with the <code class="ph codeph">RETAIN</code> flag
+set, it indicates that the message is not being delivered at the time
+of publication. Retained messages that are delivered at the time of
+publication are delivered without the <code class="ph codeph">RETAIN</code> flag
+set.</p><p class="p">With <span class="ph">Eclipse Amlen</span>,
+you can clear an MQTT retained message from a topic by sending a retained
+message with a zero length payload. The message is delivered normally,
+and the current retained message is cleared.</p></section>
+<section class="section"><h2 class="title sectiontitle">JMS retained messages</h2><p class="p">JMS applications that
+are developed for <span class="ph">Eclipse Amlen</span> can
+be configured to use retained messages by setting the integer property <code class="ph codeph">JMS_IBM_Retain</code> to
+the value <code class="ph codeph">1</code>. When a subscriber receives a message
+with the <code class="ph codeph">JMS_IBM_Retain</code> property set to the value <code class="ph codeph">1</code>,
+it indicates that the message was published and marked as retained
+before the subscription was made. Retained messages that are delivered
+at the time of publication are delivered with the value set to <code class="ph codeph">0</code>. </p><p class="p">If
+retained messages are published to a queue, the retained flag is ignored.
+Retained messages cannot be cleared. Publishing a zero-length, empty,
+or null JMS message does not clear a retained message. However, as
+the mechanism for retained messages is the same for JMS and MQTT,
+you can send a zero-length MQTT retained message to delete the JMS
+retained message.</p><p class="p">If a JMS retained message is sent with a message
+expiry, the retained message is deleted after the expiration time. </p><p class="p">If
+a JMS subscription uses the <code class="ph codeph">noLocal=True</code> setting,
+any retained messages that were previously published by the same connection
+are delivered to the subscriber. Only messages that are delivered
+at the time of publication are filtered out by the <code class="ph codeph">noLocal=True</code> setting.</p></section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Developing/develop_guide.html" title="You can develop your own client applications to use with Eclipse Amlen.">Developing client applications</a></div></div><div class="linklist relconcepts"><strong>Related concepts</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="../Overview/ov00033.html">Retained messages</a></li><li class="linklist"><a class="link" href="../Administering/ad00132_.html">MQ Connectivity retained messages</a></li></ul></div></nav>
+
+</article></main></body></html>

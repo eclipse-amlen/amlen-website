@@ -1,0 +1,196 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can view the status of a destination mapping rule, along with other statistics, by using a REST Administration API."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Viewing the status of destination mapping rules by using REST Administration APIs</title></head><body id="ad00099_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a><ul><li><a href="../Administering/ad00102_.html">MQ Connectivity</a><ul><li><a href="../Administering/ad00092_.html">MQ Connectivity throughput and message order</a></li><li><a href="../Administering/ad00101_.html">MQ Connectivity message persistence</a></li><li><a href="../Administering/ad00132_.html">MQ Connectivity retained messages</a></li><li><a href="../Administering/ad00103_.html">MQ Connectivity and high availability</a></li><li><a href="../Administering/ad00104_.html">MQ Connectivity security</a></li><li><a href="../Administering/ad00091_.html">Configuring the IBM MQ server connection channel</a></li><li><a href="../Administering/ad00105_.html">Configuring the MQ Connectivity SSL key repository</a></li><li><a href="../Administering/ad00113_.html">Configuring queue manager connections</a></li><li><a href="../Administering/ad00110_.html">Configuring destination mapping rules</a><ul><li><a href="../Administering/ad00114_.html">Configuring destination mapping rules by using the Amlen WebUI</a></li><li><a href="../Administering/ad00115_.html">Configuring destination mapping rules by using REST Administration APIs</a><ul><li><a href="../Administering/ad00123_.html">Creating and updating a destination mapping rule by using REST Administration APIs</a></li><li><a href="../Administering/ad00128_.html">Viewing a destination mapping rule by using REST Administration APIs</a></li><li class="active"><a href="../Administering/ad00099_.html">Viewing the status of destination mapping rules by using REST Administration APIs</a></li></ul></li></ul></li><li><a href="../Administering/ad00129_.html">Starting, restarting, stopping, and viewing the status of MQ Connectivity</a></li><li><a href="../Administering/ad00111_.html">MQ Connectivity scenarios</a></li></ul></li><li><a href="../Administering/workingwithjmsra.html">Eclipse Amlen resource adapter</a></li><li><a href="../Administering/vm00001_.html">Using VMware vSphere to handle Eclipse Amlen failover</a></li></ul></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Viewing the status of destination mapping rules by using <span class="ph">REST Administration APIs</span></h1>
+
+<div class="body taskbody"><p class="shortdesc">System administrators can view the status of a destination mapping rule, along with other statistics, by using a <span class="ph">REST Administration API</span>.</p>
+<section class="section context"><p class="p">You can use the REST API GET method to view monitoring statistics about destination mapping rules in a monitoring domain. You can also use the REST API GET method to view configuration information about destination mapping rules in configuration domain.</p><p class="p">The information that is returned in a monitoring domain is not the same as the information that is returned when in a configuration domain. The monitoring domain returns statistical information, including the status of one or more destination mapping rules. The configuration domain returns the configuration information for the rule. </p><p class="p">For more information about the configuring URI command, see <a class="xref" href="ad00128_.html" title="System administrators can view a destination mapping rule by using REST Administration APIs.">Viewing a destination mapping rule by using REST Administration APIs</a>.</p>You can view the status of a destination mapping rule by using a <span class="ph">REST Administration API</span>, or by using the <span class="ph">Amlen WebUI</span>. For more information about using the <span class="ph">Amlen WebUI</span> to view the status of destination mapping rules, see <a class="xref" href="ad00114_.html" title="System administrators and messaging administrators can configure destination mapping rules by using the MQ Connectivity page in the Amlen WebUI.">Configuring destination mapping rules by using the Amlen WebUI</a>.</section>
+<section><ol class="ol steps"><li class="li step stepexpand">
+    <span class="ph cmd">To view the status of one or more destination mapping rules, use the <span class="ph">Eclipse Amlen</span> REST API GET method with the following <span class="ph">Eclipse Amlen</span> monitoring URI:</span>
+    <div class="itemgroup info">
+     <p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/monitoring/DestinationMappingRule</code></p>
+    </div>
+   </li><li class="li step stepexpand">
+    <span class="ph cmd">Provide query parameters requesting the statistics that you want returned in the JSON
+     payload. The following example uses cURL to create queue-related statistics:</span>
+    <div class="itemgroup info">
+     <pre class="pre codeblock"><code>curl -X GET http://10.10.2.149:9087/ima/v1/monitor/DestinationMappingRule?Name=<var class="keyword varname">Name</var>%26RuleType=<var class="keyword varname">RuleType</var>
+%26Association=<var class="keyword varname">queueManagerConnection</var>%26ResultCount=<var class="keyword varname">ResultCount</var></code></pre>
+     <p class="p">where</p>
+     <ul class="ul">
+      <li class="li">
+       <dl class="dl">
+        
+         <dt class="dt dlterm">Name</dt>
+         <dd class="dd">Optional.</dd>
+         <dd class="dd ddexpand">Specifies the name of the destination mapping rule that you want to view the status
+          of.</dd>
+         <dd class="dd ddexpand">You can use an asterisk (*) as a wildcard to specify a group of destination mapping
+          rules. For example, to view the status of all destination mapping rules that start with
+           <code class="ph codeph">MQ</code>, use <code class="ph codeph">MQ*</code></dd>
+         <dd class="dd ddexpand">The default value is <span class="keyword parmname">*</span></dd>
+        
+       </dl>
+      </li>
+      <li class="li">
+       <dl class="dl">
+        
+         <dt class="dt dlterm">RuleType</dt>
+         <dd class="dd">Optional.</dd>
+         <dd class="dd ddexpand">Specifies the type of rule to return the status of.</dd>
+         <dd class="dd ddexpand">You can specify one of the following values:<dl class="dl">
+           
+            <dt class="dt dlterm">IMATopicToMQQueue</dt>
+            <dd class="dd">Returns destination mapping rules of the type <span class="ph">Eclipse Amlen</span> topic to <span class="ph">IBM® MQ</span> queue.</dd>
+           
+           
+            <dt class="dt dlterm">IMATopicToMQTopic</dt>
+            <dd class="dd">Returns destination mapping rules of the type <span class="ph">Eclipse Amlen</span> topic to <span class="ph">IBM MQ</span> topic.</dd>
+           
+           
+            <dt class="dt dlterm">MQQueueToIMATopic</dt>
+            <dd class="dd">Returns destination mapping rules of the type <span class="ph">IBM MQ</span> queue to <span class="ph">Eclipse Amlen</span> topic.</dd>
+           
+           
+            <dt class="dt dlterm">MQTopicToIMATopic</dt>
+            <dd class="dd">Returns destination mapping rules of the type <span class="ph">IBM MQ</span> topic to <span class="ph">Eclipse Amlen</span> topic.</dd>
+           
+           
+            <dt class="dt dlterm">IMATopicSubtreeToMQQueue</dt>
+            <dd class="dd">Returns destination mapping rules of the type <span class="ph">Eclipse Amlen</span> topic subtree to <span class="ph">IBM MQ</span> queue.</dd>
+           
+           
+            <dt class="dt dlterm">IMATopicSubtreeToMQTopic</dt>
+            <dd class="dd">Returns destination mapping rules of the type <span class="ph">Eclipse Amlen</span> topic subtree to <span class="ph">IBM MQ</span> topic.</dd>
+           
+           
+            <dt class="dt dlterm">IMATopicSubtreeToMQTopicSubtree</dt>
+            <dd class="dd">Returns destination mapping rules of the type <span class="ph">Eclipse Amlen</span> topic subtree to <span class="ph">IBM MQ</span> topic subtree.</dd>
+           
+           
+            <dt class="dt dlterm">MQTopicSubtreeToIMATopic</dt>
+            <dd class="dd">Returns destination mapping rules of the type <span class="ph">IBM MQ</span> topic subtree to <span class="ph">Eclipse Amlen</span> topic.</dd>
+           
+           
+            <dt class="dt dlterm">MQTopicSubtreeToIMATopicSubtree</dt>
+            <dd class="dd">Returns destination mapping rules of the type <span class="ph">IBM MQ</span> topic subtree to <span class="ph">Eclipse Amlen</span> topic subtree.</dd>
+           
+           
+            <dt class="dt dlterm">IMAQueueToMQQueue</dt>
+            <dd class="dd">Returns destination mapping rules of the type <span class="ph">Eclipse Amlen</span> queue to <span class="ph">IBM MQ</span> queue.</dd>
+           
+           
+            <dt class="dt dlterm">IMAQueueToMQTopic</dt>
+            <dd class="dd">Returns destination mapping rules of the type <span class="ph">Eclipse Amlen</span> queue to <span class="ph">IBM MQ</span> topic.</dd>
+           
+           
+            <dt class="dt dlterm">MQQueueToIMAQueue</dt>
+            <dd class="dd">Returns destination mapping rules of the type <span class="ph">IBM MQ</span> queue to <span class="ph">Eclipse Amlen</span> queue.</dd>
+           
+           
+            <dt class="dt dlterm">MQTopicToIMAQueue</dt>
+            <dd class="dd">Returns destination mapping rules of the type <span class="ph">IBM MQ</span> topic to <span class="ph">Eclipse Amlen</span> queue.</dd>
+           
+           
+            <dt class="dt dlterm">MQTopicSubtreeToIMAQueue</dt>
+            <dd class="dd">Returns destination mapping rules of the type <span class="ph">IBM MQ</span> topic subtree to <span class="ph">Eclipse Amlen</span> queue.</dd>
+           
+           
+            <dt class="dt dlterm">Any</dt>
+            <dd class="dd">Returns destination mapping rules of all types.</dd>
+           
+          </dl></dd>
+         <dd class="dd ddexpand">The default value is <span class="keyword parmname">any</span>.</dd>
+        
+       </dl>
+      </li>
+      <li class="li">
+       <dl class="dl">
+        
+         <dt class="dt dlterm">queueManagerConnection</dt>
+         <dd class="dd">Optional.</dd>
+         <dd class="dd ddexpand">Specifies the queue manager connection that the destination mapping rule must be
+          associated with to have the rule status returned.</dd>
+         <dd class="dd ddexpand">You can use an asterisk (*) as a wildcard to specify a group of queue manager
+          connections. For example, to view the status of all destination mapping rules that are
+          associated with queue managers that start with <code class="ph codeph">MQ</code>, use
+           <code class="ph codeph">MQ*</code></dd>
+         <dd class="dd ddexpand">The default value is <span class="keyword parmname">*</span></dd>
+        
+       </dl>
+      </li>
+      <li class="li">
+       <dl class="dl">
+        
+         <dt class="dt dlterm">ResultCount</dt>
+         <dd class="dd">Optional.</dd>
+         <dd class="dd ddexpand">Specifies how many results to return.</dd>
+         <dd class="dd ddexpand">This value can be one of the following values: 10, 25, 50, 100.</dd>
+         <dd class="dd ddexpand">The default value is 25.</dd>
+        
+       </dl>
+      </li>
+     </ul>
+    </div>
+   </li></ol></section>
+<section class="section result">The following fields are returned: <ul class="ul">
+    <li class="li">
+     <dl class="dl">
+      
+       <dt class="dt dlterm">0</dt>
+       <dd class="dd">Enabled.</dd>
+       <dd class="dd ddexpand">The rule is operating normally.</dd>
+      
+     </dl>
+    </li>
+    <li class="li">
+     <dl class="dl">
+      
+       <dt class="dt dlterm">1</dt>
+       <dd class="dd">Disabled.</dd>
+       <dd class="dd ddexpand">The rule is not operating. The rule must be restarted by an administrator.</dd>
+      
+     </dl>
+    </li>
+    <li class="li">
+     <dl class="dl">
+      
+       <dt class="dt dlterm">2</dt>
+       <dd class="dd">Reconnecting.</dd>
+       <dd class="dd ddexpand">The rule encountered a problem. <span class="ph">Eclipse Amlen</span> is
+        attempting to restart the rule.</dd>
+      
+     </dl>
+    </li>
+    <li class="li">
+     <dl class="dl">
+      
+       <dt class="dt dlterm">3</dt>
+       <dd class="dd">Starting.</dd>
+       <dd class="dd ddexpand">The rule is being activated.</dd>
+      
+     </dl>
+    </li>
+   </ul></section>
+<section class="example">
+   <p class="p">The following example uses cURL to show how a GET method is used to create the most recent
+    statistics about a destination mapping rule called MyDestinationMappingRule:</p>
+   <pre class="pre codeblock"><code>curl -X GET http://127.0.0.1:9089/ima/v1/monitor/DestinationMappingRule?Name=MyDestinationMappingRule 
+ 
+ </code></pre>
+   <p class="p">The following example shows a successful example response to the GET method that was used to
+    create the most recent statistics about a destination mapping rule called
+    MyDestinationMappingRule:</p>
+   <pre class="pre codeblock"><code>{ "Version":"v1", "DestinationMappingRule": [ { "Name":"MyDestinationMappingRule " }
+ ] }
+
+</code></pre>
+   <p class="p">The following example shows an unsuccessful example response to the GET method that was used
+    to create the most recent statistics about a destination mapping rule called
+    MyDestinationMappingRule:</p>
+   <pre class="pre codeblock"><code>{ "Version":"v1","Code":"CWLNA0113","Message":"The requested item is not found." }
+</code></pre>
+  </section>
+</div>
+
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Administering/ad00115_.html" title="System administrators can configure destination mapping rules by using REST Administration APIs.">Configuring destination mapping rules by using REST Administration APIs</a></div></div></nav></article></main></body></html>

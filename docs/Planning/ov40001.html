@@ -1,0 +1,51 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="High availability (HA) enables messaging services to continue over the outage of a server. In an HA environment, two servers are connected and configured as an HA pair so that, if one of the servers (the primary) fails due to a planned or unplanned outage, the other server (the standby) can take over as the primary and messages can continue to be processed. When the original primary becomes available again after the outage, it acts as the standby in the HA pair."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>High availability planning</title></head><body id="ov40001"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a><ul><li><a href="../Planning/pl00030.html">Installation planning</a></li><li><a href="../Planning/ov00101_.html">Messaging patterns</a></li><li><a href="../Planning/pl00010.html">Messaging planning</a></li><li><a href="../Planning/clusteringconsiderations.html">Clustering considerations</a></li><li><a href="../Planning/pl00002_.html">Capacity planning</a></li><li><a href="../Planning/pl00004.html">Performance planning</a></li><li class="active"><a href="../Planning/ov40001.html">High availability planning</a></li><li><a href="../Planning/pl00020.html">Connecting to an existing infrastructure</a></li></ul></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">High availability planning</h1>
+
+<div class="body conbody"><p class="shortdesc">High availability (HA) enables messaging services to continue over the outage of a
+    server. In an HA environment, two servers are connected and configured as an HA pair so that, if
+    one of the servers (the primary) fails due to a planned or unplanned outage, the other server
+    (the standby) can take over as the primary and messages can continue to be processed. When the
+    original primary becomes available again after the outage, it acts as the standby in the HA
+    pair.</p>
+<section class="section"><h2 class="title sectiontitle">Application requirements</h2><div class="p">Your applications
+can benefit from HA. They can connect to the standby node in the event
+of a failure of the primary node in the HA pair. They must:<ul class="ul">
+<li class="li">Specify a list of endpoints for the <span class="ph">Eclipse Amlen</span> servers
+            that make up the HA pair. <ul class="ul">
+              <li class="li">In MQTT, you can specify a list of server URIs. </li>
+              <li class="li">In JMS, you can specify a list of servers by using the <span class="keyword parmname">Server</span>
+                ConnectionFactory property.</li>
+            </ul></li>
+<li class="li">Attempt to connect again after a failure.</li>
+</ul>.</div><div class="p">For more information about configuring HA applications,
+see the following topics:<ul class="ul">
+<li class="li"><a class="xref" href="../Developing/devmqttapp.html" title="The MQ Telemetry Transport (MQTT) is a lightweight publish/subscribe protocol that uses TCP/IP to connect large numbers of remote sensors and control devices. MQTT is used by specialized applications on small footprint devices that must tolerate low bandwidth and unreliable communication.">Developing MQTT applications</a></li>
+<li class="li"><a class="xref" href="../Developing/devjms_hasamples.html" title="The HATopicPublisher and HADurableSubscriber applications demonstrate how to enable JMS client applications to use Eclipse Amlen high availability features.">The HATopicPublisher and HADurableSubscriber applications</a></li>
+</ul></div><div class="p">For more information about configuring HA with external
+resources, see the following topics:<ul class="ul">
+<li class="li"><a class="xref" href="../Administering/ad00103_.html" title="When Eclipse Amlen is set up in a highly available configuration, no further setup is required for connections to IBM MQ. When IBM MQ is set up in a highly available configuration with multi-instance queue managers, you must configure Eclipse Amlen to use the queue managers.">MQ Connectivity and high availability</a></li>
+<li class="li"><a class="xref" href="../Administering/considerationsHA.html" title="Eclipse Amlen might experience planned and unplanned outages. High availability (HA) provides the ability for messaging services to withstand outages and continue providing processing capability. Consider the following property settings when you configure the Eclipse Amlen resource adapter for HA.">Configuring Eclipse Amlen resource adapter for high availability</a></li>
+</ul></div></section>
+<section class="section"><h2 class="title sectiontitle">Virtual Edition</h2>
+   
+   <div class="p">On a SoftLayer® virtual server instance (VSI) and a SoftLayer bare metal instance (BMI), the     following two network interfaces are available:<ul class="ul">
+     <li class="li">a private interface on a network in the IP address range 10.0.0.0 - 10.255.255.255</li>
+     <li class="li">a public interface</li>
+    </ul>
+   </div>
+   <div class="p">On an Amazon EC2 instance, the following network interfaces are available:<ul class="ul">
+     <li class="li">a private interface where you must attach an Amazon elastic public IP address to serve as a
+            public interface</li>
+     <li class="li">a private interface</li>
+    </ul>
+   </div>
+   <p class="p">In an HA environment, there are two network interfaces for each server - a replication
+    interface and a discovery interface. When you are planning your configuration, use the private
+    interface for the replication network interface controller (NIC) and use the public interface
+    for the discovery NIC.</p>
+   <p class="p"> For more information about high availability, see <a class="xref" href="../Administering/ad00400_.html" title="To recover from outages that might include planned events (such as maintenance and backups) and unplanned events (such as software failures, hardware failures, power failures, and disasters) you can configure an Eclipse Amlen server to serve as a backup.">Configuring your system for high availability</a>. </p>
+  </section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Planning/pl00001_.html" title="When you plan your Eclipse Amlen solution, you must make a number of decisions to ensure your solution works effectively.">Planning</a></div></div></nav></article></main></body></html>

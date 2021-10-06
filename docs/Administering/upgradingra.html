@@ -1,0 +1,57 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="Update the Eclipse Amlen resource adapter on WebSphere Application Server when you upgrade Eclipse Amlen from a previous version."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Updating the Eclipse Amlen resource adapter on WebSphere Application Server</title></head><body id="upgradingra"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a><ul><li><a href="../Administering/ad00102_.html">MQ Connectivity</a></li><li><a href="../Administering/workingwithjmsra.html">Eclipse Amlen resource adapter</a><ul><li><a href="../Administering/installingra.html">Installing Eclipse Amlen resource adapter on WebSphere Application Server</a></li><li class="active"><a href="../Administering/upgradingra.html">Updating the Eclipse Amlen resource adapter on WebSphere Application Server</a></li><li><a href="../Administering/configuringra.html">Configuring Eclipse Amlen resource adapter for WebSphere Application Server</a></li><li><a href="../Administering/tlssecurityforjmsra.html">Transport Layer Security for the Eclipse Amlen resource adapter</a></li><li><a href="../Administering/xaconsiderations.html">Working with XA transactions</a></li><li><a href="../Administering/adscenarios.html">Scenarios</a></li></ul></li><li><a href="../Administering/vm00001_.html">Using VMware vSphere to handle Eclipse Amlen failover</a></li></ul></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Updating the <span class="ph">Eclipse Amlen</span> resource adapter on <span class="ph">WebSphere Application
+Server</span></h1>
+
+<div class="body taskbody"><p class="shortdesc">Update the <span class="ph">Eclipse Amlen</span> resource adapter on <span class="ph">WebSphere® Application
+Server</span> when you upgrade <span class="ph">Eclipse Amlen</span> from a previous version.</p>
+  <section class="section prereq">The <span class="ph">Eclipse Amlen</span> resource adapter is available as part of the JMS client download. The JMS client can be obtained from the <a class="xref" href="https://www.ibm.com/developerworks/downloads/iot/messagesight/index.html" target="_blank" rel="external noopener"><span class="ph">Eclipse Amlen</span> page</a> on developerWorks®.</section>
+<section class="section context">Complete the following steps to update the <span class="ph">Eclipse Amlen</span> resource adapter
+on <span class="ph">WebSphere Application
+Server</span>.</section>
+<section><ol class="ol steps"><li class="li step stepexpand">
+    <span class="ph cmd">Save all configuration changes.</span>
+   </li><li class="li step stepexpand">
+<span class="ph cmd">Back up your configuration settings by using the backupConfig command. </span>
+<div class="itemgroup info">For more information about how to use the backupConfig command, see <a class="xref" href="http://www-01.ibm.com/support/knowledgecenter/SSEQTP_8.5.5/////com.ibm.websphere.base.iseries.doc/ae/rxml_backupconfig.html" target="_blank" rel="external noopener">backupConfig command</a> in the <span class="ph">WebSphere Application
+Server</span> documentation.</div>
+</li><li class="li step stepexpand">
+    <span class="ph cmd">Synchronize any of the nodes to update.</span>
+   </li><li class="li step stepexpand">
+    <span class="ph cmd">Ensure that the node agents are running if they are associated with the <span class="ph">Eclipse Amlen</span> resource adapter.</span>
+   </li><li class="li step stepexpand">
+<span class="ph cmd">Stop any servers that contain the <span class="ph">Eclipse Amlen</span> resource
+adapter RAR file.</span>
+<div class="itemgroup info">You must stop all the servers in the node or cluster with which the RAR file is associated.
+Refer to the <a class="xref" href="http://www-01.ibm.com/support/knowledgecenter/SSEQTP_8.5.5/as_ditamaps/was855_welcome_base_dist_iseries.html" target="_blank" rel="external noopener">WebSphere Application
+Server documentation </a> for information about how to stop or start an application
+server.</div>
+</li><li class="li step stepexpand">
+        <span class="ph cmd">From the <span class="ph">WebSphere Application
+Server</span> administrative console, select <span class="ph uicontrol">Resources</span> &gt; <span class="ph uicontrol">Resource Adapters</span> &gt; <span class="ph uicontrol">Resource Adapters</span>, and select the appropriate scope for your configuration.</span>
+        <div class="itemgroup info">Scope specifies the level at which the resource definition is visible. </div>
+      </li><li class="li step stepexpand">
+<span class="ph cmd">Select the check box next to <span class="ph uicontrol">IBM Watson IoT Platform - Message Gateway Resource
+Adapter</span> for each node in the scope, and click <span class="ph uicontrol">Update RAR</span>.</span>
+</li><li class="li step stepexpand">
+        <span class="ph cmd">Specify the path to the new <span class="ph filepath">ima.jmsra.rar</span> file, and click <span class="ph uicontrol">Next</span>. You can either update the <span class="ph filepath">ima.jmsra.rar</span> file from the local file system or specify an existing copy of the new <span class="ph filepath">ima.jmsra.rar</span> file on any of the nodes in your cell context. </span>
+      </li><li class="li step stepexpand"><span class="ph cmd">Review the information that is provided for the RAR file.
+The following information is provided for the RAR file:</span><div class="itemgroup info"><ul class="ul">
+<li class="li">Name</li>
+<li class="li">Current® RAR version</li>
+<li class="li">New RAR version</li>
+<li class="li">Scope</li>
+<li class="li">Any existing copies of the resource adapter. Resource adapters
+marked with an asterisk (*) are copies of the resource adapter and
+must also be updated at the same time.</li>
+</ul><p class="p">Click <span class="ph uicontrol">Next</span> when you are finished.</p></div>
+</li><li class="li step stepexpand"><strong>Optional: </strong>
+        <span class="ph cmd">Edit any properties that were added by the new version of the resource adapter, then click <span class="ph uicontrol">Next</span>.</span>
+      </li><li class="li step stepexpand"><span class="ph cmd">Review the summary panel, and click <span class="ph uicontrol">Finish</span> when
+you are satisfied with the configuration settings.</span></li><li class="li step stepexpand">
+        <span class="ph cmd">Back up your configuration settings by using the backupConfig command. </span>
+      </li><li class="li step stepexpand"><span class="ph cmd">Restart the servers that contain the updated RAR file.</span>
+</li></ol></section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Administering/workingwithjmsra.html" title="The Eclipse Amlen resource adapter allows applications that run on WebSphere Application Server to connect to Eclipse Amlen directly. The Eclipse Amlen resource adapter supports inbound and outbound communication.">Eclipse Amlen resource adapter</a></div></div></nav></article></main></body></html>

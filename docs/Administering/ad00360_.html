@@ -1,0 +1,423 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="You can configure messaging hubs either by using the Amlen WebUI or by using REST Administration APIs."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Configuring message hubs</title></head><body id="ad00360_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li class="active"><a href="../Administering/ad00360_.html">Configuring message hubs</a><ul><li><a href="../Administering/ad00361_.html">Configuring message hubs by using the Amlen WebUI</a></li><li><a href="../Administering/ad00322_.html">Configuring message hubs by using REST Administration APIs</a></li></ul></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Configuring message hubs</h1>
+
+<div class="body conbody"><p class="shortdesc">You can configure messaging hubs either by using the <span class="ph">Amlen WebUI</span> or by using <span class="ph">REST Administration APIs</span>.</p>
+<div class="p">A message hub is an organizational object which groups endpoints, connection policies, and messaging policies that are associated with a specific goal.<div class="note note note_note"><span class="note__title">Note:</span> Special character input for a particular policy field does not apply to other fields or policy types unless explicitly stated otherwise.</div></div>
+<div class="p">You create message hubs, and the message hub components, in the following order:<ol class="ol">
+<li class="li">Message hubs</li>
+<li class="li">Connection Policies</li>
+<li class="li">At least one type of messaging policy - topic policy, queue policy, or subscription policy.</li>
+<li class="li">Endpoints</li>
+</ol></div>
+<section class="section" id="ad00360___msghub"><h2 class="title sectiontitle">Message hubs</h2><p class="p">Each message hub must have at least one <a class="xref" href="ad00360_.html#ad00360___endpoint">endpoint</a>.</p><div class="p">When you create and edit a message hub, you must specify the following component:<dl class="dl">
+
+<dt class="dt dlterm">Name</dt>
+<dd class="dd">Specifies the name of the message hub. </dd>
+<dd class="dd ddexpand">The name must not have leading or trailing spaces and cannot contain control characters, commas,
+double quotation marks, backslashes, or equal signs. The first character must not be a number or any
+of the following special characters: <p class="p"><code class="ph codeph">! # $ % &amp; ' ( ) * + - . / : ; &lt; &gt; ?
+@</code></p></dd>
+
+</dl></div></section>
+<section class="section" id="ad00360___connpolicy"><h2 class="title sectiontitle">Connection policies</h2><p class="p">A connection policy is used to authorize a connection to <span class="ph">Eclipse Amlen</span> based on one or more connection level attributes. </p><div class="p">When you create a connection policy, you must specify the following component:<dl class="dl">
+
+<dt class="dt dlterm">Name</dt>
+<dd class="dd">Specifies the name of the connection policy. </dd>
+<dd class="dd ddexpand">The name must not have leading or trailing spaces and cannot contain control characters, commas,
+double quotation marks, backslashes, or equal signs. The first character must not be a number or any
+of the following special characters: <p class="p"><code class="ph codeph">! # $ % &amp; ' ( ) * + - . / : ; &lt; &gt; ?
+@</code></p></dd>
+
+</dl></div><div class="p">You can also specify the following components:<dl class="dl">
+
+<dt class="dt dlterm">Allow Durable</dt>
+<dd class="dd">Specifies whether MQTT clients can connect using a setting of
+<code class="ph codeph">cleanSession=0</code>.</dd>
+
+</dl><dl class="dl">
+
+<dt class="dt dlterm">Allow Persistent Messages</dt>
+<dd class="dd">Specifies whether MQTT clients can publish messages with a QoS of 1 or 2 .</dd>
+
+</dl></div><div class="p" id="ad00360___YouMustSpecifyAtLeastOneOfTheFollow">You must specify at least one of the following filters:<dl class="dl">
+
+<dt class="dt dlterm">Client IP address</dt>
+<dd class="dd">Specifies the client IP addresses that are allowed to connect to <span class="ph">Eclipse Amlen</span>.</dd>
+<dd class="dd ddexpand">The IP address can contain an asterisk (*), or a comma-separated list of IPv4 or IPv6 addresses
+or ranges. For example, 192.0.2.32, 192.0.0.0, 192.0.2.0-192.0.2.100. The range must be specified
+from low to high.</dd>
+<dd class="dd ddexpand">However, each IPv6 address must be enclosed in brackets <code class="ph codeph">[ ]</code> either when
+expressed singly or in a range of addresses. IPv6 addresses cannot contain asterisks.</dd>
+<dd class="dd ddexpand">The maximum number of client addresses that you can specify is 20.</dd>
+
+
+<dt class="dt dlterm">Client ID</dt>
+<dd class="dd">Specifies the client ID that is allowed to connect to <span class="ph">Eclipse Amlen</span> by using the specified endpoint.</dd>
+<dd class="dd ddexpand">You can use an asterisk (*) at the end of the value to match 0 or more characters.</dd>
+<dd class="dd ddexpand">You can use variable substitution in the client ID to ensure that only clients with a client ID
+that matches the user ID or the certificate common name, can connect. The variable for user IDs is
+<code class="ph codeph">${UserID}</code>. The variable for certificate common name is
+<code class="ph codeph">${CommonName}</code>. You can specify extra characters along with the variable. For
+example, you can specify that the client ID must match <code class="ph codeph">myClient/${UserID}</code>. In this
+case, a client with the user ID <code class="ph codeph">userA</code> and the client ID
+<code class="ph codeph">myClient/userA</code> can connect. A client with the user ID <code class="ph codeph">userB</code> and
+the client ID <code class="ph codeph">myClient/userB</code> can connect. However, a client with the user ID
+<code class="ph codeph">userB</code> and the client ID <code class="ph codeph">notMyClient</code> cannot connect.</dd>
+
+
+<dt class="dt dlterm">User ID</dt>
+<dd class="dd">Specifies the messaging user ID that is allowed to connect to <span class="ph">Eclipse Amlen</span> by using the specified endpoint.</dd>
+<dd class="dd ddexpand">You can use an asterisk (*) at the end of the value to match 0 or more characters.</dd>
+
+
+<dt class="dt dlterm">Group Name</dt>
+<dd class="dd">Specifies the messaging group that is allowed to connect to <span class="ph">Eclipse Amlen</span> by using the specified endpoint.</dd>
+<dd class="dd ddexpand">You can use an asterisk (*) at the end of the value to match 0 or more characters.</dd>
+
+
+<dt class="dt dlterm">Certificate Common Name</dt>
+<dd class="dd">Specifies the client certificate common name that must be used to connect to <span class="ph">Eclipse Amlen</span> by using the specified endpoint.</dd>
+<dd class="dd ddexpand">You can use an asterisk (*) at the end of the value to match 0 or more characters.</dd>
+
+
+<dt class="dt dlterm">Protocol</dt>
+<dd class="dd">Specifies which protocols are allowed to connect to <span class="ph">Eclipse Amlen</span>.</dd>
+<dd class="dd ddexpand">You can choose from JMS and MQTT protocols. If there are any protocol plug-ins installed on the
+<span class="ph">Eclipse Amlen</span> server, you can specify these as well. To
+specify more than one value, separate each value with a comma. To select all protocols, specify a
+null value for Protocol or omit the parameter from the command.</dd>
+<dd class="dd ddexpand">To specify more than one value, separate each value with a comma.</dd>
+
+
+<dt class="dt dlterm">MaximumSessionExpiryInterval</dt>
+<dd class="dd">Specifies the maximum time, in seconds, that a session is kept alive before expiring.</dd>
+<dd class="dd ddexpand">The value must be either <code class="ph codeph">unlimited</code>, or in the range 1-2147483647.</dd>
+<dd class="dd ddexpand">The default value is <code class="ph codeph">unlimited</code> and means that a session will not expire.</dd>
+
+
+<dt class="dt dlterm">ExpectedMsgRate</dt>
+<dd class="dd">Specifies the expected throughput of messages.</dd>
+<dd class="dd ddexpand">Valid values are <code class="ph codeph">Low</code>, <code class="ph codeph">Default</code>, <code class="ph codeph">High</code>,
+<code class="ph codeph">Max</code>.</dd>
+<dd class="dd ddexpand">The default value is <code class="ph codeph">Default</code>.</dd>
+<dd class="dd ddexpand">A value of <code class="ph codeph">Low</code> might be used for a throughput of less than 10 messages per
+second, a value of <code class="ph codeph">Max</code> might be used for a throughput of more than a few thousand
+messages per second.</dd>
+<dd class="dd ddexpand">When selecting the value, consider factors such as the latency of the connection, and the size
+and number of devices. If you have many devices, you might want to use a lower setting in order to
+save memory. </dd>
+
+</dl></div><p class="p">Each filter is applied in combination. If you specify
+several filters, each condition must be met in order for the connection
+to be allowed. For each filter that you do not specify, all values
+for that filter are allowed.</p><p class="p">For example, a connection policy
+is created that specifies:</p><p class="p"><code class="ph codeph">group name must be <code class="ph codeph">GOLD</code> AND
+client IP address must be <code class="ph codeph">192.0.2.0-192.0.2.50</code> AND
+the protocol must be MQTT</code></p><p class="p">A client is allowed to connect
+with any client ID, any user ID, and any certificate common name.
+However, if the client does not have a group name of <code class="ph codeph">GOLD</code>,
+or if the IP address of the client is not in the range <code class="ph codeph">192.0.2.0-192.0.2.50</code>,
+or if the client is not using MQTT, the connection is not allowed.</p></section>
+<section class="section" id="ad00360___msgpolicy"><h2 class="title sectiontitle">Messaging policies</h2> <p class="p">There are three types of messaging policies: <a class="xref" href="ad00451_.html" title="System administrators can create and update topic policies by using REST Administration APIs.">topic policies</a>, <a class="xref" href="ad00452_.html" title="System administrators can create and update subscription policies by using REST Administration APIs.">subscription policies</a>, and <a class="xref" href="ad00453_.html" title="System administrators can create and update queue policies by using REST Administration APIs.">queue policies</a>.</p> <p class="p">Topic policies are used to control which clients can publish or subscribe to a specified topic. Queue  policies are used to control which clients can send to, receive from, or browse a specified queue. Subscription policies are used to control which clients can receive messages from a specified global-shared durable subscription. Subscription policies are also used to control which clients can control the creation and deletion of global-shared durable subscriptions on a specified subscription name. </p> <div class="note note note_note"><span class="note__title">Note:</span> All messaging policies for an endpoint are checked for authorization, either until authorization is granted, or all messaging policies are checked. Therefore, you cannot create a messaging policy that restricts the authority of particular clients if another messaging policy grants more authority to those clients. For example, a subscription policy is created where all clients with a user ID that starts with <code class="ph codeph">example</code> are allowed to control and receive messages. Another subscription policy is created such that the client with the user ID <code class="ph codeph">exampleUser</code> is only allowed to receive messages from the subscription. The client with the user ID <code class="ph codeph">exampleUser</code> is able to both control and receive messages, because of the first subscription policy.</div><div class="p" id="ad00360___WhenYouCreateAMessagingPolicyYouMus">When you create a messaging policy, you must specify the
+following components:<dl class="dl">
+
+<dt class="dt dlterm">Name</dt>
+<dd class="dd">Specifies the name that identifies the messaging policy.</dd>
+<dd class="dd ddexpand">The name must not have leading or trailing spaces and cannot contain control characters, commas,
+double quotation marks, backslashes, or equal signs. The first character must not be a number or any
+of the following special characters: <p class="p"><code class="ph codeph">! # $ % &amp; ' ( ) * + - . / : ; &lt; &gt; ?
+@</code></p></dd>
+
+
+<dt class="dt dlterm">Topic</dt>
+<dd class="dd">Applies to topic policies only. </dd>
+<dd class="dd ddexpand">Specifies the topic string that the topic policy applies to.</dd>
+
+
+<dt class="dt dlterm">Subscription</dt>
+<dd class="dd">Applies to subscription policies only. </dd>
+<dd class="dd ddexpand">Specifies the subscription name that the subscription policy applies to.</dd>
+
+
+<dt class="dt dlterm">Queue</dt>
+<dd class="dd">Applies to queue policies only. </dd>
+<dd class="dd ddexpand">Specifies the queue name that the queue policy applies to.</dd>
+
+
+<dt class="dt dlterm">Actions</dt>
+<dd class="dd">Specifies which messaging actions can be used by clients that connect to the endpoints
+associated with this messaging policy.</dd>
+<dd class="dd ddexpand">For topic policies, you can choose between publish and subscribe, or you can enable both.</dd>
+<dd class="dd ddexpand">For subscription policies, you can choose between control and receive, or you can enable both.
+Control allows a client to create or delete the global-shared durable subscription. To create or
+delete a global-shared durable subscription, a client must also be allowed to receive messages.
+Therefore, if you select control, you must also select receive within the same subscription
+policy.</dd>
+<dd class="dd ddexpand">For queue policies, you can choose between send, receive, and browse, or a combination of the
+three options.</dd>
+<dd class="dd ddexpand">When you use the <span class="ph">Amlen WebUI</span>, this component is
+called <span class="keyword parmname">Authority</span>. When you use the <span class="ph">REST Administration APIs</span>, this component is called
+<span class="keyword parmname">ActionList</span>.</dd>
+
+</dl></div><div class="p">You can also specify the following components:<dl class="dl">
+
+<dt class="dt dlterm">Max Messages</dt>
+<dd class="dd">Applies to topic policies and subscription policies only.</dd>
+<dd class="dd ddexpand">Specifies the maximum number of messages that are kept for a subscription. This value is a
+guideline, rather than an absolute limit. If the system is running under stress, then the number of
+buffered messages on a subscription might be slightly higher than the <code class="ph codeph">MaxMessages</code>
+value.</dd>
+<dd class="dd ddexpand">This value must be in the range 1 - 20,000,000.</dd>
+<dd class="dd ddexpand">The Max Messages value for a global-shared durable subscription must be specified in the
+subscription policy. If a Max Messages value is also specified in the associated topic policy, the
+value from the subscription policy is used. </dd>
+<dd class="dd ddexpand">If you change the Max Messages value, the change is applied to all subscriptions that are using
+the policy.</dd>
+<dd class="dd ddexpand">If you lower the Max Messages value, existing subscriptions that have more messages in their
+buffer than the new Max Messages value cannot accept further messages until the number of messages
+in the buffer falls below the new value. The setting of Max Messages Behavior specifies the action
+that is to be taken when this situation arises.</dd>
+
+
+<dt class="dt dlterm">Max Messages Behavior</dt>
+<dd class="dd">Applies to topic policies and subscription policies only.</dd>
+<dd class="dd ddexpand">Specifies the behavior that is applied when the number of messages in the buffer for a
+subscription reaches the max messages value. That is, when the buffer for a subscription is full.
+The behavior is applied to both durable and non-durable subscriptions.</dd>
+<dd class="dd ddexpand">The behavior can be one of the following options:<ul class="ul">
+<li class="li"><strong class="ph b">Reject new messages</strong><p class="p">New messages are not accepted on the buffer for the
+subscription.</p></li>
+<li class="li"><strong class="ph b">Discard old messages</strong><p class="p">A percentage of the old messages on the buffer for the
+subscription are discarded. If a retained message is one of the old messages, it is discarded. The
+quality of service, persistence, and priority of the message does not prevent a message from being
+discarded. Therefore, if all messages must be received in order for your applications to function
+correctly, you cannot set Max Messages Behavior to discard old messages.</p></li>
+</ul></dd>
+<dd class="dd ddexpand">The default behavior is to reject new messages.</dd>
+<dd class="dd ddexpand">If you change the Max Messages Behavior setting, the change is applied to all subscriptions that
+are using the policy.</dd>
+
+
+<dt class="dt dlterm">Max Message Time To Live</dt>
+<dd class="dd">Applies to topic policies and queue policies only.</dd>
+<dd class="dd ddexpand">Specifies the maximum time, in seconds, that a sent message that is associated with the
+messaging policy can exist for in <span class="ph">Eclipse Amlen</span>.</dd>
+<dd class="dd ddexpand">The value must be either <code class="ph codeph">unlimited</code> or in the range 1-2147483647.</dd>
+<dd class="dd ddexpand">The default value is <code class="ph codeph">unlimited</code> and means that messages will not expire unless
+the publishing application specifies a time for messages to exist for.</dd>
+<dd class="dd ddexpand">This value is applied only when the messaging policy is either: <ul class="ul">
+<li class="li">A topic policy with an action of publish, or </li>
+<li class="li">A queue policy with an action of send.</li>
+</ul></dd>
+<dd class="dd ddexpand">If you change the Max Message Time To Live value, the change is applied to all publishers and
+senders that are using the policy but is effective only on messages that are sent after the change
+has been made.</dd>
+
+
+<dt class="dt dlterm">Disconnected client notification</dt>
+<dd class="dd">Applies to topic policies only.</dd>
+<dd class="dd ddexpand">Specifies whether notification messages are published for disconnected MQTT clients on arrival
+of a message.</dd>
+<dd class="dd ddexpand">This value is only applied when the protocol that is used is MQTT.</dd>
+<dd class="dd ddexpand">The notification messages are published to the reserved system topic
+<code class="ph codeph">$SYS/DisconnectedClientNotification</code>.</dd>
+<dd class="dd ddexpand">If you change the Disconnected client notification setting, the change is applied to all
+subscriptions that are using the policy.</dd>
+
+</dl>You must specify at least one of the following filters:<dl class="dl">
+
+<dt class="dt dlterm">Client IP address</dt>
+<dd class="dd">Specifies the client IP addresses that are allowed to use the messaging actions that are
+specified in the messaging policy. </dd>
+<dd class="dd ddexpand">The IP address can contain an asterisk (*), or a comma-separated list of IPv4 or IPv6 addresses
+or ranges. For example, 192.0.2.32, 192.0.0.0, 192.0.2.0-192.0.2.100. The range must be specified
+from low to high.</dd>
+<dd class="dd ddexpand">IPv6 addresses must be enclosed in brackets <code class="ph codeph">[ ]</code>.</dd>
+<dd class="dd ddexpand">The maximum number of client addresses that you can specify is 20.</dd>
+
+
+<dt class="dt dlterm">Client ID</dt>
+<dd class="dd">Specifies the client ID that is allowed to use the messaging actions that are specified in the
+messaging policy. The client ID is allowed to use the messaging actions only on the subscriptions
+that are specified in the policy.</dd>
+<dd class="dd ddexpand">You can use an asterisk (*) at the end of the value to match 0 or more characters.</dd>
+
+
+<dt class="dt dlterm">User ID</dt>
+<dd class="dd">Specifies the messaging user ID that is allowed to use the messaging actions that are specified
+in the messaging policy. </dd>
+<dd class="dd ddexpand">You can use an asterisk (*) at the end of the value to match 0 or more characters.</dd>
+
+
+<dt class="dt dlterm">Group Name</dt>
+<dd class="dd">Specifies the messaging group that is allowed to use the messaging actions that are specified in
+the messaging policy. </dd>
+<dd class="dd ddexpand">You can use an asterisk (*) at the end of the value to match 0 or more characters.</dd>
+
+
+<dt class="dt dlterm">Common Names</dt>
+<dd class="dd">Specifies the client certificate common name that must be used for a client to be allowed to use
+the actions that are specified in the messaging policy. </dd>
+<dd class="dd ddexpand">You can use an asterisk (*) at the end of the value to match 0 or more characters.</dd>
+
+
+<dt class="dt dlterm">Protocol</dt>
+<dd class="dd">Specifies which protocols are allowed to use the actions that are specified in the messaging
+policy on the topics or queues that are specified in the policy.</dd>
+<dd class="dd ddexpand">You must specify at least one protocol in order for clients to connect.</dd>
+
+</dl></div><p class="p">Each filter is applied in combination. If you specify
+several filters, each condition must be met in order for the actions
+that are specified in the messaging policy to be allowed. For each
+filter that you do not specify, all values for that filter are allowed.</p><p class="p">For
+example, a messaging policy is created that specifies:</p><p class="p"><code class="ph codeph">group
+name must be <code class="ph codeph">SILVER</code> AND user ID must be <code class="ph codeph">*.com</code> AND
+protocol must be JMS</code></p><p class="p"> A client is allowed to perform
+messaging actions from any IP address, with any client ID, and any
+certificate common name. However, if the client does not have a group
+name of <code class="ph codeph">SILVER</code>, or if the user ID does not end with <code class="ph codeph">.com</code>,
+or if the client is not using JMS, the messaging actions are not allowed.</p></section>
+<section class="section" id="ad00360___dynamicpolicy"><h2 class="title sectiontitle">Dynamic updates to messaging policies</h2><div class="p">When
+you update the following messaging policy parameters, the updates
+are applied dynamically to all the subscriptions and publishers that
+are using the messaging policy:<ul class="ul">
+<li class="li"><span class="keyword parmname">Max Messages</span></li>
+<li class="li"><span class="keyword parmname">Max Messages Behavior</span></li>
+<li class="li"><span class="keyword parmname">Max Message Time to Live</span></li>
+<li class="li"><span class="keyword parmname">Disconnected client notification</span></li>
+</ul></div><p class="p">Dynamic policy updates for the <span class="keyword parmname">Max Messages</span>, <span class="keyword parmname">Max
+Messages Behavior</span>, and <span class="keyword parmname">Disconnected client notification</span> parameters
+are immediately applied to all subscriptions that are using the messaging
+policy. Updates to the <span class="keyword parmname">Max Message Time to Live</span> parameter,
+which is a parameter on the publisher, apply to all messages that
+the publisher sends after the update.</p><div class="p">The messaging policy that is associated with a subscription is determined when a subscription
+        connects and can vary from connection to connection. <ul class="ul">
+          <li class="li">For durable subscriptions, the applicable messaging policy is always the last policy
+            with which the client connected.</li>
+          <li class="li">For non-durable subscriptions, the applicable messaging policy is the policy used by
+            the client for the active connection.</li>
+          <li class="li">For global-shared durable subscriptions, the applicable messaging policy is the subscription policy that was used by the client that originally created the global-shared durable subscription. Unlike other types of subscriptions, the messaging policy associated with a global-shared durable subscription does not change when a client reconnects.</li>
+        </ul></div><div class="p">When a client reconnects to <span class="ph">Eclipse Amlen</span>, the values of these parameters in the messaging policy that authorizes the client on re-connection are applied dynamically to the subscriptions being used by the client. The client might experience unexpected behavior if these values are different than the values that were in use the last time that the client was connected. There are a number of reasons for the values of these parameters to be different when a client reconnects:<ul class="ul" id="ad00360___diffpolicylist">
+        <li class="li">If the client is authorized by the same messaging policy, the value of any of these parameters might have changed since the last time that the client application connected.</li>
+        <li class="li">The client application might reconnect by using a different endpoint to the one it used the last time that it connected. The endpoint that the client now uses might have different messaging policies, or it might have the same messaging policies but specified in a different order.</li>
+        <li class="li">There might have been a change to the order in which the messaging policies are listed in the policy list on the endpoint. For example, you might have added a messaging policy at a position which precedes   the messaging policy that was being used when the client last connected. The new policy is then used to authorize the client.</li>
+        <li class="li">The filters in the policy in the policy list might have changed and the changed policy is being used to authorize the client.</li>
+        <li class="li">Changing the value of the <span class="keyword parmname">Topic</span>, <span class="keyword parmname">Queue</span>, or <span class="keyword parmname">Subscription</span> parameter of a policy can cause the client to be authorized by a different policy than on previous connections. For example, you might have changed the value of <span class="keyword parmname">Topic</span> in a topic policy and the changed topic policy is then used to authorize the client.</li>
+        <li class="li">The messaging policy that was being used when the client was last connected might have been removed from the endpoint.</li>
+        <li class="li">The client application might reconnect by using a different IP address to the one it was using when it was last connected, and the value of the <span class="keyword parmname">ClientAddress</span> filter results in the selection of a different messaging policy.</li>
+        </ul></div></section>
+<section class="section" id="ad00360___endpoint"><h2 class="title sectiontitle">Endpoints</h2><p class="p">An endpoint allows a client to connect to <span class="ph">Eclipse Amlen</span>. </p><p class="p">Each
+endpoint must have at least one <a class="xref" href="ad00360_.html#ad00360___connpolicy">connection
+policy</a>, and at least one <a class="xref" href="ad00360_.html#ad00360___msgpolicy">messaging
+policy</a>.</p><div class="p">When you create an endpoint, you can specify the following components:<dl class="dl">
+
+<dt class="dt dlterm">Name</dt>
+<dd class="dd">Specifies the name that identifies the endpoint.</dd>
+<dd class="dd ddexpand">The name must not have leading or trailing spaces and cannot contain control characters, commas,
+double quotation marks, backslashes, or equal signs. The first character must not be a number or any
+of the following special characters: ! # $ % &amp; ' ( ) * + - . / : ; &lt; &gt; ? @</dd>
+
+
+<dt class="dt dlterm">Port</dt>
+<dd class="dd">Specifies the port that clients connect to.</dd>
+<dd class="dd ddexpand">The port number must be in the range 1 - 32767, 61001 - 65535.</dd>
+
+
+<dt class="dt dlterm">Interface</dt>
+<dd class="dd">Specifies one, or all, of the available IP addresses for the client to connect to.</dd>
+
+
+<dt class="dt dlterm">Protocol</dt>
+<dd class="dd">Specifies the protocols that the clients can use to connect to <span class="ph">Eclipse Amlen</span>.</dd>
+
+
+<dt class="dt dlterm">Enabled</dt>
+<dd class="dd">Specifies whether the endpoint is enabled.</dd>
+
+
+<dt class="dt dlterm">Max Message Size</dt>
+<dd class="dd">Specifies the maximum size that a message can be when sent to <span class="ph">Eclipse Amlen</span> through this endpoint.</dd>
+<dd class="dd ddexpand">The size is specified in KB, and must be in the range 1 - 262,144. </dd>
+
+
+<dt class="dt dlterm">Security Profile</dt>
+<dd class="dd">Specifies the security profile to apply to the endpoint. The security profile defines the
+Transport Layer Security for the endpoint. The security profile must exist before it can be applied
+to the endpoint.</dd>
+
+
+<dt class="dt dlterm">Connection Policies</dt>
+<dd class="dd">Specifies one or more connection policies to apply to the endpoint.</dd>
+<dd class="dd ddexpand">You can use the same connection policy with more than one endpoint within a message hub.</dd>
+<dd class="dd ddexpand">When <span class="ph">Eclipse Amlen</span> checks whether a client is authorized
+to connect, each connection policy is checked in the order that the policies are specified on the
+endpoint. The policies are checked until either authorization is granted, or all connection policies
+on the endpoint are checked. You can view the order that connection policies are specified on an
+endpoint by using the <span class="ph">Amlen WebUI</span>, or by using the
+<span class="keyword cmdname">REST API GET</span> method. You can change the order by using the <span class="ph">Amlen WebUI</span>, or by using the <span class="keyword cmdname">REST API
+POST</span> method.</dd>
+
+
+<dt class="dt dlterm">Topic Policies</dt>
+<dd class="dd">Specifies the topic policies to apply to this endpoint. The policies must exist. These policies
+must be specified in a comma-separated list.</dd>
+<dd class="dd ddexpand">When <span class="ph">Eclipse Amlen</span> checks whether a client is authorized
+to perform topic messaging actions, each topic policy is checked in the order that the policies are
+specified on the endpoint. The policies are checked until either authorization is granted, or all
+topic policies on the endpoint are checked. Therefore, the order of the comma-separated list is
+important.</dd>
+
+
+<dt class="dt dlterm">Subscription Policies</dt>
+<dd class="dd">Specifies the subscription policies to apply to this endpoint. The policies must exist. These
+policies must be specified in a comma-separated list.</dd>
+<dd class="dd ddexpand">When <span class="ph">Eclipse Amlen</span> checks whether a client is authorized
+to perform subscription messaging actions, each subscription policy is checked in the order that the
+policies are specified on the endpoint. The policies are checked until either authorization is
+granted, or all subscription policies on the endpoint are checked. Therefore, the order of the
+comma-separated list is important.</dd>
+
+
+<dt class="dt dlterm">Queue Policies</dt>
+<dd class="dd">Specifies the queue policies to apply to this endpoint. The policies must exist. These policies
+must be specified in a comma-separated list.</dd>
+<dd class="dd ddexpand">When <span class="ph">Eclipse Amlen</span> checks whether a client is authorized
+to perform queue messaging actions, each queue policy is checked in the order that the policies are
+specified on the endpoint. The policies are checked until either authorization is granted, or all
+queue policies on the endpoint are checked. Therefore, the order of the comma-separated list is
+important.</dd>
+
+
+<dt class="dt dlterm">Max Send Size</dt>
+<dd class="dd">Specifies the maximum size that part of a message can be when it is sent. </dd>
+<dd class="dd ddexpand">The size is specified in bytes, and must be in the range 128 - 65536.</dd>
+<dd class="dd ddexpand">You might want to use this option in environments where resource-constrained devices are used;
+set a low value for <span class="keyword parmname">Max Send Size</span>, for example 256 bytes, and disable the
+batching of messages by setting <span class="keyword parmname">Batch Messages</span> to False. </dd>
+<dd class="dd ddexpand">The default value is 16384 bytes.</dd>
+
+
+<dt class="dt dlterm">Batch Messages</dt>
+<dd class="dd">Specifies whether messages can be sent in batches or must be sent singly.</dd>
+<dd class="dd ddexpand">You might want to set this option to False in environments where resource-constrained devices
+are used to ensure that single messages are sent; ensure that you also set a low value for
+<span class="keyword parmname">Max Send Size</span>, for example 256 bytes.</dd>
+<dd class="dd ddexpand">The default value is true.</dd>
+
+
+<dt class="dt dlterm">Enable About <span class="ph">Eclipse Amlen</span> panel</dt>
+<dd class="dd">Specifies whether the About <span class="ph">Eclipse Amlen</span> panel for this
+endpoint can be reached.</dd>
+<dd class="dd ddexpand">The default value is false which means that the panel for this endpoint cannot be reached. </dd>
+<dd class="dd ddexpand">In production environments, it is best practice to specify a value of false.</dd>
+
+</dl></div><div class="p">When you configure an endpoint by using the <span class="ph">REST Administration APIs</span>, you must also specify the following component:<dl class="dl">
+
+<dt class="dt dlterm">MessageHubName</dt>
+<dd class="dd">Specifies the name of the message hub that the endpoint belongs to.</dd>
+
+</dl></div><p class="p">For more information about configuring message hubs by using the <span class="ph">Amlen WebUI</span>, see <a class="xref" href="ad00361_.html" title="System administrators and messaging administrators can configure message hubs by using the Message Hubs page in the Amlen WebUI.">Configuring message hubs by using the Amlen WebUI</a>.</p><p class="p">For more information about configuring message hubs by using <span class="ph">REST Administration APIs</span>, see <a class="xref" href="ad00323_.html" title="System administrators can create and update endpoints, connection policies, messaging policy types, and message hubs by using REST Administration APIs.">Creating and updating a message hub by using REST Administration APIs</a>.</p></section>
+</div>
+</article></main></body></html>

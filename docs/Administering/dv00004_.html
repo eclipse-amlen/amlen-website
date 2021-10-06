@@ -1,0 +1,102 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="Update an installed protocol plug-in properties file by using the Eclipse Amlen REST API POST method."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Updating a protocol plug-in properties file</title></head><body id="dv00004_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a><ul><li><a href="../Administering/dv00011.html">Configuring a protocol plug-in </a><ul><li><a href="../Administering/dv00001.html">Creating and updating a protocol plug-in </a></li><li><a href="../Administering/dv00012.html">Deleting a protocol plug-in</a></li><li class="active"><a href="../Administering/dv00004_.html">Updating a protocol plug-in properties file</a></li><li><a href="../Administering/dv00039.html">Viewing protocol plug-ins and the contents of plug-in properties files</a></li><li><a href="../Administering/dv00038.html">Viewing the protocols and their allowed actions</a></li></ul></li><li><a href="../Administering/dv00029.html">Setting and viewing the host IP address or host name of the plug-in server</a></li><li><a href="../Administering/dv00032.html">Setting and viewing the port number of the plug-in server</a></li><li><a href="../Administering/dv00035.html">Setting and viewing the runtime parameters of the plug-in server JVM</a></li><li><a href="../Administering/dv00025.html">Setting and viewing the host IP address or host name of the JVM remote debugger of the protocol plug-in server</a></li><li><a href="../Administering/dv00026.html">Setting and viewing the port number of the JVM remote debugger of the protocol plug-in server</a></li><li><a href="../Administering/dv00027.html">Setting and viewing the maximum JVM heap size of the protocol plug-in server</a></li><li><a href="../Administering/dv00028.html">Starting, stopping, and viewing the status of the protocol plug-in server process</a></li></ul></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Updating a protocol plug-in properties file</h1>
+
+
+
+
+
+
+<div class="body taskbody"><p class="shortdesc">Update an installed protocol plug-in properties file by using the <span class="ph">Eclipse Amlen</span> REST API POST method. </p>
+<section class="section prereq">To update a protocol plug-in properties file, the plug-in with which it is associated must previously have been deployed in <span class="ph">Eclipse Amlen</span>. The plug-in must be archived in a .zip file. This .zip file must contain the JAR file (or files) that implement the plug-in for the target protocol. The .zip file must also contain a JSON descriptor file that describes the plug-in content. This descriptor file is required in the .zip archive that is used to deploy a protocol plug-in. For more information about developing a protocol plug-in, see <a class="xref" href="../Developing/devplug-in.html" title="You can use protocol plug-ins to add industry-specific messaging protocols to Eclipse Amlen in a controlled way that does not compromise the security of the server environment. The protocol plug-in can also support existing sensors that are not able to change to MQTT. You can write your own protocol plug-ins to use with Eclipse Amlen by using the Eclipse Amlen protocol plug-in SDK. The protocol plug-in facility is not available in high availability environments.">Developing a protocol plug-in</a>.</section>
+<section><ol class="ol steps"><li class="li step stepexpand">
+<span class="ph cmd">To update the protocol plug-in properties file, use the <span class="ph">Eclipse Amlen</span> REST API POST method. </span>
+<ol type="a" class="ol substeps">
+<li class="li substep substepexpand">
+<span class="ph cmd">Use the following <span class="ph">Eclipse Amlen</span> configuration URI:</span>
+<div class="itemgroup info">
+<p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/configuration/</code></p>
+</div>
+</li>
+<li class="li substep substepexpand">
+<span class="ph cmd">Provide ProtocolPlugin object configuration data in the payload of the POST method by using the following schema. <span class="keyword parmname">Content-type</span> is set to <kbd class="ph userinput">application/json</kbd>. Ensure that capitalization and double quotation marks are used as shown. </span>
+<div class="itemgroup info"><pre class="pre codeblock"><code>
+{    
+  "Plugin": {
+    "&lt;NameOfPlugin&gt;": {
+      "PropertiesFile": "string",
+      "Overwrite": true|false
+      }
+   }
+}</code></pre>Where:<dl class="dl">
+
+<dt class="dt dlterm"><var class="keyword varname">NameOfPlugin</var></dt>
+<dd class="dd">Required.</dd>
+<dd class="dd ddexpand">Specifies the name of the protocol plug-in that is associated with the properties file. This can be found in the <span class="ph filepath">plugin.json</span> configuration file if it exists. </dd>
+<dd class="dd ddexpand">The maximum length of the name is 256 characters. </dd>
+
+
+<dt class="dt dlterm">PropertiesFile</dt>
+<dd class="dd">Required.</dd>
+<dd class="dd ddexpand">Specifies the protocol plug-in properties file name that you want to update. You can develop a properties file in JSON format and the properties that it contains override any properties in the plug-in configuration file.</dd>
+<dd class="dd ddexpand">The maximum length of the protocol plug-in properties file name is 255 characters. </dd>
+
+
+<dt class="dt dlterm">Overwrite: true|false</dt>
+<dd class="dd">Required if the protocol plug-in is already installed.</dd>
+<dd class="dd ddexpand">Specifies whether any existing protocol properties file with the same name is overwritten.</dd>
+<dd class="dd ddexpand">The default value is false.</dd>
+
+</dl></div>
+</li>
+</ol>
+</li><li class="li step stepexpand">
+        <span class="ph cmd">Restart the <span class="ph">Eclipse Amlen</span> plug-in server process. Use the <span class="ph">Eclipse Amlen</span> REST API POST method with the following URI: </span>
+        <div class="itemgroup info">
+          <pre class="pre codeblock"><code>http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/service/restart</code></pre>
+          <p class="p">The plug-in properties file can be updated at any time, but the update is not effective until the <span class="ph">Eclipse Amlen</span> plug-in server process is restarted.</p>
+          <div class="note note note_note"><span class="note__title">Note:</span> If you need to remove the plug-in properties file from your system, you can either upload an empty properties file and overwrite the existing properties file, or delete and reinstall the protocol plug-in but do not specify a plug-in properties file on the protocol plug-in configuration.</div>
+        </div>
+      </li></ol></section>
+<section class="example">
+<div class="p">The following example shows the POST method to update the plug-in properties file called <code class="ph codeph">pluginprops.json</code>:<pre class="pre codeblock"><code>  
+curl -X POST \
+   -H 'Content-Type: application/json'  \
+   -d  '{ 
+           "Plugin": {
+            "json_msg": {
+             "PropertiesFile": "pluginprops.json"
+             "Overwrite": true
+            }
+         }
+       }
+ '  \
+http://127.0.0.1:9089/ima/v1/configuration/</code></pre></div>
+<div class="p">The following shows an example response to the POST method.<pre class="pre codeblock"><code>
+{        
+  "Version": "v1",
+  "Code": "CWLNA6011",
+  "Message": "The requested configuration change has completed successfully."
+}
+</code></pre></div>
+      <p class="p">The following example shows restarting the protocol plug-in server:</p>
+      <pre class="pre codeblock"><code>  
+curl -X POST \
+   -H 'Content-Type: application/json'  \
+   -d  '{ 
+           "Service": "Plugin"
+        }
+ '  \
+http://127.0.0.1:9089/ima/v1/service/restart</code></pre>
+      <p class="p">The following example shows an example response to the POST method to restart the protocol plug-in server:</p>
+      <pre class="pre codeblock"><code>
+{        
+  "Version": "v1",
+  "Code": "CWLNA6011",
+  "Message": "The requested configuration change has completed successfully."
+}
+</code></pre>
+</section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Administering/dv00011.html" title="System administrators can configure protocol plug-ins by using REST Administration APIs.">Configuring a protocol plug-in</a></div></div></nav></article></main></body></html>

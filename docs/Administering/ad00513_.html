@@ -1,0 +1,55 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can view the status of SNMP on Eclipse Amlen by using REST Administration APIs."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Viewing SNMP status by using REST Administration APIs</title></head><body id="ad00513_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a><ul><li><a href="../Administering/ad00511_.html">Configuring SNMP by using the Amlen WebUI</a></li><li><a href="../Administering/ad00512_.html">Configuring SNMP by using REST Administration APIs</a><ul><li class="active"><a href="../Administering/ad00513_.html">Viewing SNMP status by using REST Administration APIs</a></li><li><a href="../Administering/ad00514_.html">Enabling and disabling SNMP by using REST Administration APIs</a></li><li><a href="../Administering/ad00514a_.html">Starting, stopping and restarting SNMP by using REST Administration APIs</a></li><li><a href="../Administering/ad00515_.html">Configuring the SNMP agent address</a></li></ul></li></ul></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Viewing SNMP status by using <span class="ph">REST Administration APIs</span></h1>
+
+<div class="body taskbody"><p class="shortdesc">System administrators can view the status of SNMP on <span class="ph">Eclipse Amlen</span> by using <span class="ph">REST Administration APIs</span>.</p>
+<section class="section context"><p class="p">You can view SNMP status by using <span class="ph">REST Administration APIs</span>, or by using the <span class="ph">Amlen WebUI</span>. For more information about using the <span class="ph">Amlen WebUI</span> to view SNMP status, see <a class="xref" href="ad00511_.html" title="System administrators and messaging administrators can configure SNMP by using the SNMP Service panel in the Amlen WebUI.">Configuring SNMP by using the Amlen WebUI</a>.</p></section>
+<section><div class="ul steps-unordered"><div class="li step p">
+    <span class="ph cmd">Choose an action to perform:</span>
+    <ul class="ul choices">
+     <li class="li choice">To check the status of the SNMP service, use the <span class="ph">Eclipse Amlen</span> REST API GET method with the following <span class="ph">Eclipse Amlen</span> service URI: <p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/service/status/SNMP</code></p><div class="note note note_note"><span class="note__title">Note:</span> The status of the SNMP service is also returned as part of the data that is returned from the <span class="ph">Eclipse Amlen</span> REST API GET method with the following URI:</div><p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/service/status</code></p></li>
+    </ul>
+   </div></div></section>
+<section class="section result">
+      <div class="p">The following SNMP status information is returned:<dl class="dl">
+        
+          <dt class="dt dlterm">Status</dt>
+          <dd class="dd">The status of the SNMP service. Possible values, and their meanings, are:<dl class="dl">
+            
+              <dt class="dt dlterm">Active</dt>
+              <dd class="dd">SNMP is running.</dd>
+            
+            
+              <dt class="dt dlterm">Inactive</dt>
+              <dd class="dd">SNMP is not running.</dd>
+            
+            </dl></dd>
+        
+        
+          <dt class="dt dlterm">Enabled</dt>
+          <dd class="dd">Whether SNMP is enabled. You can enable and disable SNMP by setting the SNMPEnabled configuration object. For more information, see <a class="xref" href="ad00510_.html" title="System administrators can configure Eclipse Amlen to use the Simple Network Management Protocol (SNMP) by using the Amlen WebUI, or by using REST Administration APIs.">Configuring SNMP</a>. Possible values, and their meanings, are:<dl class="dl">
+            
+              <dt class="dt dlterm">true</dt>
+              <dd class="dd">SNMP is enabled.</dd>
+            
+            
+              <dt class="dt dlterm">false</dt>
+              <dd class="dd">SNMP is not enabled.</dd>
+            
+            </dl></dd>
+        
+        </dl></div>
+      <p class="p">If the status is <code class="ph codeph">Inactive</code> but SNMP is enabled, there might be a problem that is preventing SNMP from running. After you have resolved the problem, you can enable SNMP. For more information about enabling SNMP, see <a class="xref" href="ad00514_.html" title="System administrators can enable and disable SNMP on Eclipse Amlen by using REST Administration APIs.">Enabling and disabling SNMP by using REST Administration APIs</a>.</p>
+    </section>
+<section class="example">The following example shows the status of SNMP by using cURL:<pre class="pre codeblock"><code>curl -X GET http://127.0.0.1:9089/ima/v1/service/status/SNMP</code></pre>An example response to the GET method:<pre class="pre codeblock"><code>
+{      
+  "Version": "v1",
+    "SNMP": {
+        "Status": "Active",
+        "Enabled": true
+         }
+}</code></pre></section>
+</div>
+<nav role="navigation" class="related-links"><div class="linklist relconcepts"><strong>Related concepts</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="ad00510_.html" title="System administrators can configure Eclipse Amlen to use the Simple Network Management Protocol (SNMP) by using the Amlen WebUI, or by using REST Administration APIs.">Configuring SNMP</a></li></ul></div></nav>
+</article></main></body></html>

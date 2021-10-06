@@ -1,0 +1,50 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="When you plan your Eclipse Amlen solution, you must make a number of decisions to ensure your solution works effectively."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Planning</title></head><body id="pl00001_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li class="active"><a href="../Planning/pl00001_.html">Planning</a><ul><li><a href="../Planning/pl00030.html">Installation planning</a></li><li><a href="../Planning/ov00101_.html">Messaging patterns</a></li><li><a href="../Planning/pl00010.html">Messaging planning</a></li><li><a href="../Planning/clusteringconsiderations.html">Clustering considerations</a></li><li><a href="../Planning/pl00002_.html">Capacity planning</a></li><li><a href="../Planning/pl00004.html">Performance planning</a></li><li><a href="../Planning/ov40001.html">High availability planning</a></li><li><a href="../Planning/pl00020.html">Connecting to an existing infrastructure</a></li></ul></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Planning</h1>
+
+<div class="body conbody"><p class="shortdesc">When you plan your <span class="ph">Eclipse Amlen</span> solution, you
+must make a number of decisions to ensure your solution works effectively.</p>
+<dl class="dl">
+<dt class="dt dlterm">Messaging patterns</dt>
+<dd class="dd">Messaging patterns identify common message flows used in messaging
+solutions. You can use the messaging patterns to identify your messaging
+needs, and use the associated scenarios to get started quickly. For
+more information about the messaging patterns, see <a class="xref" href="ov00101_.html" title="The messaging patterns identify common message flows that are used in messaging solutions. There are five messaging patterns: fan out broadcast, fan in per device notification, fan out per device notification, fan out per device request-reply, and fan in per device request-reply.">Messaging patterns</a>.</dd>
+</dl>
+<dl class="dl">
+<dt class="dt dlterm">Supported protocols</dt>
+<dd class="dd"><span class="ph">Eclipse Amlen</span> supports
+MQTT and JMS. You must consider which protocol is appropriate for
+your business needs. For more information about MQTT and JMS, see <a class="xref" href="ov00102_.html" title="Eclipse Amlen natively supports MQTT and JMS protocols.">Message delivery</a> and <a class="xref" href="../Developing/develop_guide.html" title="You can develop your own client applications to use with Eclipse Amlen.">Developing client applications</a>.</dd>
+
+<dt class="dt dlterm">Performance</dt>
+<dd class="dd">A number of factors can affect the message throughput of the <span class="ph">Eclipse Amlen</span> appliance.<dl class="dl">
+
+<dt class="dt dlterm">Publishers</dt>
+<dd class="dd">An increase in the number of incoming connections from application
+clients that are publishing messages might result in a decrease in
+the rate of message throughput.</dd>
+
+<dt class="dt dlterm">Number of topics</dt>
+<dd class="dd">Using a small number of topics might limit throughput.</dd>
+
+<dt class="dt dlterm">Network interface card</dt>
+<dd class="dd">To improve message throughput, you might want publishers and subscribers
+to connect to the <span class="ph">Eclipse Amlen</span> appliance
+on different network interface cards. For example, you might configure
+your solution so that publishers connect to an endpoint defined on
+the eth6 interface, and subscribers connect to an endpoint defined
+on the eth7 interface.</dd>
+</dl></dd>
+
+<dt class="dt dlterm">High availability</dt>
+<dd class="dd">High availability (HA) is the ability of messaging services to
+withstand an outage of an appliance and continue to provide messaging
+services. Two appliances can be connected and configured as an HA
+pair to provide this high availability in the event of a power outage
+or system failure affecting one of the appliances. See <a class="xref" href="ov40001.html" title="High availability (HA) enables messaging services to continue over the outage of a server. In an HA environment, two servers are connected and configured as an HA pair so that, if one of the servers (the primary) fails due to a planned or unplanned outage, the other server (the standby) can take over as the primary and messages can continue to be processed. When the original primary becomes available again after the outage, it acts as the standby in the HA pair.">High availability planning</a></dd>
+</dl>
+</div>
+
+<nav role="navigation" class="related-links"><ul class="ullinks"><li class="link ulchildlink"><strong><a href="../Planning/pl00030.html">Installation planning</a></strong><br>Before you install <span class="ph">Eclipse Amlen</span>, you must consider the hardware and software requirements.</li><li class="link ulchildlink"><strong><a href="../Planning/ov00101_.html">Messaging patterns</a></strong><br>The messaging patterns identify common message flows that are used in messaging solutions. There are five messaging patterns: fan out broadcast, fan in per device notification, fan out per device notification, fan out per device request-reply, and fan in per device request-reply.</li><li class="link ulchildlink"><strong><a href="../Planning/pl00010.html">Messaging planning</a></strong><br>Key points to consider when you plan the messaging aspects of your <span class="ph">Eclipse Amlen</span> solution.</li><li class="link ulchildlink"><strong><a href="../Planning/clusteringconsiderations.html">Clustering considerations</a></strong><br>Key points to consider if you are planning to use clustering in your <span class="ph">Eclipse Amlen</span> solution.</li><li class="link ulchildlink"><strong><a href="../Planning/pl00002_.html">Capacity planning</a></strong><br><span class="ph">Eclipse Amlen</span> can store messages to assure   delivery to clients and devices that might not be connected. The amount of storage is limited, and   if it fills, the server rejects new messages.</li><li class="link ulchildlink"><strong><a href="../Planning/pl00004.html">Performance planning</a></strong><br>To optimize performance, review the guidelines in this section and plan your solution accordingly.</li><li class="link ulchildlink"><strong><a href="../Planning/ov40001.html">High availability planning</a></strong><br>High availability (HA) enables messaging services to continue over the outage of a     server. In an HA environment, two servers are connected and configured as an HA pair so that, if     one of the servers (the primary) fails due to a planned or unplanned outage, the other server     (the standby) can take over as the primary and messages can continue to be processed. When the     original primary becomes available again after the outage, it acts as the standby in the HA     pair.</li><li class="link ulchildlink"><strong><a href="../Planning/pl00020.html">Connecting to an existing infrastructure</a></strong><br>You can connect <span class="ph">Eclipse Amlen</span> to <span class="ph">IBM® MQ</span> by using <span class="ph">MQ Connectivity</span>. You can connect <span class="ph">Eclipse Amlen</span> to <span class="ph">WebSphere® Application Server</span> by using the <span class="ph">Eclipse Amlen</span> resource adapter.</li></ul><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Overview/ov00000_.html" title="Eclipse AmlenTM delivers scalable connectivity for the Internet of Things, providing a solution to help you to connect all your devices, sensors and systems to the enterprise.">Product overview</a></div></div></nav></article></main></body></html>

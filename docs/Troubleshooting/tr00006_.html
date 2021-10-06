@@ -1,0 +1,40 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="Maintenance mode is an Eclipse Amlen server state that allows a system administrator to complete a number of tasks. In maintenance mode, a system administrator can clean the server store, stop and start the server, and change the server state from Maintenance to Running."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Maintenance mode</title></head><body id="tr00006_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a><ul><li><a href="../Troubleshooting/tr00000_.html">Log files</a></li><li class="active"><a href="../Troubleshooting/tr00006_.html">Maintenance mode</a><ul><li><a href="../Troubleshooting/tr00007_.html">Changing the server state</a></li><li><a href="../Troubleshooting/tr00013_.html">Cleaning the store</a></li></ul></li><li><a href="../Troubleshooting/tr00001_.html">Common problems</a></li><li><a href="../Troubleshooting/tr00030.html">Platform must-gather</a></li><li><a href="../Troubleshooting/admin_messagecatalog.html">Message catalog</a></li></ul></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Maintenance mode</h1>
+
+<div class="body conbody"><p class="shortdesc">Maintenance mode is an <span class="ph">Eclipse Amlen</span> server state
+  that allows a system administrator to complete a number of tasks. In maintenance mode, a system
+  administrator can clean the server store, stop and start the server, and change the server state
+  from <code class="ph codeph">Maintenance</code> to <code class="ph codeph">Running</code>.</p>
+<div class="p">There are several reasons that the <span class="ph">Eclipse Amlen</span> server state
+changes to maintenance mode:<ul class="ul">
+<li class="li">There is a configuration error. For example:<ul class="ul">
+<li class="li">High Availability might be configured with the wrong IP address
+for the local replication NIC.</li>
+<li class="li">The LDAP Bind DN password might be changed on the LDAP server,
+and therefore the <span class="ph">Eclipse Amlen</span> server
+cannot connect.</li>
+<li class="li">A certificate might be invalid or corrupted.</li>
+</ul></li>
+<li class="li">The system administrator sets the server state to <code class="ph codeph">Maintenance</code> by using <span class="ph">REST Administration APIs</span>, or by using the <span class="ph">Amlen WebUI</span>. For more information changing the server
+     state, see <a class="xref" href="tr00007_.html" title="System administrators can change the server state from Maintenance to Running, or from Running to Maintenance. The server state can be changed by using either REST Administration APIs or the Amlen WebUI.">Changing the server state</a>.</li>
+<li class="li">The store is corrupted and unrecoverable, or there are insufficient system resources to start
+     the store. When any of these issues occur, the <span class="ph">Eclipse Amlen</span> server automatically changes the server state
+     to <code class="ph codeph">Maintenance</code>.</li>
+      <li class="li">A pair of <span class="ph">Eclipse Amlen</span> servers in a high availability (HA) pair is incorrectly configured for cluster membership. One server in the HA pair might be configured for cluster membership but the other server in the HA pair might not be configured for cluster membership. For more information about configuring HA on cluster members, see <a class="xref" href="../Administering/ad00909_.html" title="System administrators can configure systems to operate in high availability (HA) pairs.">Configuring HA</a>. </li>
+</ul></div>
+<p class="p">To diagnose why the server is in maintenance mode, check the status of the server, and check the
+   log files for possible causes. After you resolve the issue, you can change the server state from
+    <code class="ph codeph">Maintenance</code>. For more information about checking the status of the server and
+   changing the server state, see <a class="xref" href="tr00007_.html" title="System administrators can change the server state from Maintenance to Running, or from Running to Maintenance. The server state can be changed by using either REST Administration APIs or the Amlen WebUI.">Changing the server state</a>.</p>
+<p class="p">If the store is corrupted and unrecoverable, or if there are insufficient
+system resources to start the store, you might need to clean the store.
+Cleaning the store deletes all persistent data, including messages,
+subscriptions, and client states. Do not clean the store unless you
+want to delete all persistent data on the system. For more information
+about cleaning the store, see <a class="xref" href="tr00013_.html" title="System administrators can clean the store by using a REST Administration API or by using the Amlen WebUI. Cleaning the store deletes all persistent data.">Cleaning the store</a>. </p>
+  <p class="p">As an alternative to cleaning the store, consider setting the <code class="ph codeph">"TolerateRecoveryInconsistencies":</code> object to <code class="ph codeph">true</code> by using an <span class="ph">Eclipse Amlen</span> REST API POST method. Setting <code class="ph codeph">"TolerateRecoveryInconsistencies": true</code>, and then restarting the server, allows <span class="ph">Eclipse Amlen</span> to continue and try to recover as much data as possible if it encounters problems with persisted data during restart. Any data that cannot be reconstructed correctly is deleted; this setting results in partial, possibly complete, data loss. Cleaning the store, however, always deletes all persistent data. For more information about setting <code class="ph codeph">"TolerateRecoveryInconsistencies": true</code>, see <a class="xref" href="../Reference/SpecialCmd/cmd_set_tolerate.html">Set TolerateRecoveryInconsistencies</a>.</p>
+</div>
+<nav role="navigation" class="related-links"><div class="linklist relconcepts"><strong>Related concepts</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="tr10000_.html" title="Look for a troubleshooting task to help you solve a problem when using Eclipse Amlen.">Troubleshooting</a></li></ul></div></nav>
+</article></main></body></html>

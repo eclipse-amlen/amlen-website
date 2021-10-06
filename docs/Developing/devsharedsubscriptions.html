@@ -1,0 +1,77 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="Eclipse Amlen supports JMS version 1.1, MQTT version 3.1.1, and MQTT version 5.0. JMS version 1.1 and MQTT version 3.1.1 are extended to support shared subscriptions. MQTT version 5.0 supports shared subscriptions as part of the design."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Shared subscriptions</title></head><body id="devsharedsubscriptions"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a><ul><li><a href="../Developing/devconcepts.html">Messaging concepts</a></li><li><a href="../Developing/devmsgtypes.html">Natively supported message types</a></li><li><a href="../Developing/devmsgsize.html">Message size</a></li><li><a href="../Developing/devclientids.html">Client IDs</a></li><li><a href="../Developing/devclientservercert.html">Server certificates</a></li><li><a href="../Developing/devretainmsg.html">Developing retained message applications</a></li><li><a href="../Developing/devexpiredmsg.html">Expired messages</a></li><li class="active"><a href="../Developing/devsharedsubscriptions.html">Shared subscriptions</a></li><li><a href="../Developing/devmqttapp.html">Developing MQTT applications</a></li><li><a href="../Developing/devjmsapp.html">Developing JMS applications</a></li><li><a href="../Developing/devplug-in.html">Developing a protocol plug-in</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li></ul></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Shared subscriptions</h1>
+
+<div class="body conbody"><p class="shortdesc"><span class="ph">Eclipse Amlen</span> supports JMS version 1.1, MQTT
+version 3.1.1, and MQTT version 5.0. JMS version 1.1 and MQTT version 3.1.1 are extended to support
+shared subscriptions. MQTT version 5.0 supports shared subscriptions as part of the design. </p>
+<div class="p">Shared subscriptions allow messages to be processed at a faster rate than a single client can accommodate. Messages on a shared subscription are processed even if a client application fails. There are four types of shared subscriptions:<ul class="ul">
+<li class="li">Global-shared non-durable subscriptions</li>
+<li class="li">Global-shared durable subscriptions</li>
+<li class="li">Private-shared non-durable subscriptions</li>
+<li class="li">Private-shared durable subscriptions</li>
+</ul><div class="note note note_note"><span class="note__title">Note:</span> The order of delivery of messages on shared subscriptions cannot be guaranteed. If you need to preserve message order, either include message order information for use by the client in the content of the message or do not use shared subscriptions.</div>For more information about the types of subscriptions that are supported in <span class="ph">Eclipse Amlen</span>, see <a class="xref" href="../Overview/ov30010.html">Subscribers and Subscriptions</a>.</div>
+<p class="p">To enable client applications to receive messages from shared subscriptions, you must ensure that the appropriate messaging policies are configured. All types of shared subscriptions require a topic policy. For information about how to configure topic policies, see <a class="xref" href="../Security/se00015_.html">Topic policy</a>. To enable client applications to receive messages from a global-shared durable subscription, a subscription policy must also be configured. For information about how to configure subscription messaging policies, see <a class="xref" href="../Security/se00014_.html">Subscription policy</a>.</p>
+<p class="p">When you use <span class="ph">Eclipse Amlen</span> administering
+and monitoring, global-shared durable subscriptions in the shared
+namespace are shown with the client ID of <code class="ph codeph">__Shared</code> (two
+leading underscores). Global-shared non-durable subscriptions in the
+shared namespace are shown with the client ID of <code class="ph codeph">__SharedND</code>. </p>
+<p class="p">You can use global-shared subscriptions with JMS and MQTT. However, do not allow clients that use different protocols to share global-shared subscriptions. </p>
+<section class="section"><h2 class="title sectiontitle">JMS shared subscriptions</h2><div class="p">Factors to consider
+when you use JMS shared subscriptions:<ul class="ul">
+<li class="li">The default value for the <code class="ph codeph">ClientMessageCache</code> property
+of a shared subscription is set to <kbd class="ph userinput">0</kbd>. A value
+of <kbd class="ph userinput">0</kbd> maximizes the fairness of message distribution,
+but does not maximize throughput. If you change the setting of the <code class="ph codeph">ClientMessageCache</code> property
+to a higher value, you can increase throughput. However, a higher
+setting results in uneven message distribution. </li>
+<li class="li">When a shared subscription is created, all consumers must use
+the same value for topic and selector. The <code class="ph codeph">noLocal</code> setting
+is ignored for shared subscriptions.</li>
+<li class="li">Shared non-durable subscriptions with a specified client ID can
+exist within the same connection with the same name as a shared durable
+subscription. To allow this, shared non-durable subscriptions with
+a specified client ID have an underscore added at the start of the
+subscription name within the <span class="ph">Eclipse Amlen</span> server.  Therefore,
+avoid naming shared durable subscriptions with an underscore to prevent
+conflicts. </li>
+</ul></div><p class="p">JMS client applications must use the <span class="ph">Eclipse Amlen</span>
+<code class="ph codeph">ImaSubscription</code> interface if they are to use shared subscriptions. The methods in this interface allow a topic and a subscription name to be specified when creating or joining a shared subscription. To enable JMS clients to receive messages from a shared subscription, there must exist a topic policy that has a <span class="keyword parmname">Topic</span> parameter that allows access to the topic that is specified on the subscription. To enable JMS clients to receive messages from a global-shared durable subscription, there must also exist a subscription policy that has a <span class="keyword parmname">Subscription</span> parameter that matches that matches the <span class="keyword parmname">DurableName</span> value that was used to create the subscription.</p><p class="p">Unshared durable subscriptions must have a client ID
+specified. The client ID specifies the namespace for the subscription
+name. Unshared non-durable subscriptions do not require a client ID
+to be specified. </p><p class="p">For details about developing JMS shared subscription
+applications for use with <span class="ph">Eclipse Amlen</span>, see <a class="xref" href="sharedsubscriptionsinjms.html" title="The Eclipse Amlen JMS client provides support for shared subscriptions as an extension of the JMS 1.1 specification. JMS applications that use this extension to the JMS 1.1 specification can be compiled and run only with Eclipse Amlen JMS client implementations. You can use the client to configure durable and non-durable topic subscriptions to be shared. In a non-shared subscription, each consumer to a particular topic receives a copy of all of the messages that are published to that topic string. In a shared subscription, each message is delivered to only one of the consumers for that subscription. This is similar to message sharing on a multi-consumer queue.">Shared subscriptions in JMS</a>.</p></section>
+<section class="section"><h2 class="title sectiontitle">MQTT shared subscriptions</h2><div class="p">For MQTT, <span class="ph">Eclipse Amlen</span> provides support only for
+global-shared subscriptions. To enable MQTT client applications to use global-shared subscriptions,
+a particular <span class="ph">Eclipse Amlen</span> topic filter is required. This
+topic filter signals to <span class="ph">Eclipse Amlen</span> that the subscription
+is a global-shared subscription. It has the following
+form:<pre class="pre codeblock"><code>$SharedSubscription/<var class="keyword varname">subName</var>/<var class="keyword varname">topicFilter</var></code></pre> where:<dl class="dl">
+
+<dt class="dt dlterm">$SharedSubscription</dt>
+<dd class="dd">Indicates that the target of the SUBSCRIBE request is a global-shared subscription. This literal
+string is case-sensitive. </dd>
+<dd class="dd ddexpand">Clients that connect with the clean session flag set to <kbd class="ph userinput">false</kbd> in MQTTv3,
+or with the clean session flag set to <kbd class="ph userinput">true</kbd> , cannot share a subscription.
+Trying to share a subscription results in the creation of two subscriptions with the same
+<var class="keyword varname">subName</var>.</dd>
+
+</dl><dl class="dl">
+
+<dt class="dt dlterm"><var class="keyword varname">subName</var></dt>
+<dd class="dd">Is the name of the shared subscription.</dd>
+<dd class="dd ddexpand">This value must not include any forward slashes ( / ).</dd>
+
+</dl><dl class="dl">
+
+<dt class="dt dlterm"><var class="keyword varname">topicFilter</var></dt>
+<dd class="dd">Is a standard MQTT topic filter for any type of topic subscription. It can contain a single
+topic name, or it can contain a topic filter that includes wildcards. For information about
+wildcards in subscriptions, see <a class="xref" href="../Overview/ov00032.html">Wildcards</a>.</dd>
+
+</dl></div><p class="p">To enable MQTT clients to receive messages from a global-shared durable subscription, two messaging policies are required: a topic policy with a <span class="keyword parmname">Topic</span> parameter that allows access to the topic specified on the subscription and a subscription policy with a <span class="keyword parmname">Subscription</span> parameter that matches the subName.</p><p class="p">For details about developing MQTT shared subscription
+applications for use with <span class="ph">Eclipse Amlen</span>, see <a class="xref" href="sharedsubscriptionsinmqtt.html" title="You can configure global-shared durable and global-shared non-durable topic subscriptions to be shared by Eclipse Amlen MQTT client applications. Shared subscriptions are an Eclipse Amlen extension of MQTT and, as such, are not part of the MQTT specification. Applications that depend on Eclipse Amlen global-shared subscriptions are not portable to other MQTT servers.">Global-shared subscriptions in MQTT</a>.</p></section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Developing/develop_guide.html" title="You can develop your own client applications to use with Eclipse Amlen.">Developing client applications</a></div></div></nav></article></main></body></html>

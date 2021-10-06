@@ -1,0 +1,121 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="Build and deploy the Amlen WebUI Docker image and then start the Amlen WebUI Docker container. You can then use the Amlen WebUI to administer one or more Eclipse Amlen messaging servers."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Building and running the Amlen WebUI Docker image</title></head><body id="qs00052_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a><ul><li><a href="../QuickStartGuide/qs00030_.html">Provisioning your operating system </a></li><li><a href="../QuickStartGuide/qs00040_.html">Installing Docker on your operating system</a></li><li><a href="../QuickStartGuide/qs00054_.html">Preparing the Eclipse Amlen .tz packages for installation</a></li><li><a href="../QuickStartGuide/qs00059_.html">Installing Eclipse Amlen  </a><ul><li><a href="../QuickStartGuide/qs00055_.html">Installing Eclipse Amlen in Docker containers</a><ul><li><a href="../QuickStartGuide/qs00051_.html">Building and running the Eclipse Amlen messaging server Docker image </a></li><li class="active"><a href="../QuickStartGuide/qs00052_.html">Building and running the Amlen WebUI Docker image</a></li></ul></li><li><a href="../QuickStartGuide/qs00056_.html">Installing the Eclipse Amlen RPM on a host OS</a></li></ul></li><li><a href="../QuickStartGuide/qs00053_.html">Logging in to the Amlen WebUI</a></li><li><a href="../QuickStartGuide/qs00002_.html">Verifying the installation of Eclipse Amlen</a></li></ul></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Building and running the <span class="ph">Amlen WebUI</span>  Docker image</h1>
+
+
+
+
+
+
+<div class="body taskbody"><p class="shortdesc">Build and deploy the <span class="ph">Amlen WebUI</span> Docker image and then start the <span class="ph">Amlen WebUI</span> Docker container. You can then use the <span class="ph">Amlen WebUI</span> to administer one or more <span class="ph">Eclipse Amlen</span> messaging servers. </p>
+<section class="section prereq">Ensure that you have access to a yum repository so that you can use the Dockerfile in the .tz file to build a Docker image.</section>
+<section><ol class="ol steps"><li class="li step stepexpand">
+<span class="ph cmd">Build the <span class="ph">Amlen WebUI</span> Docker image.</span>
+<ol type="a" class="ol substeps">
+<li class="li substep substepexpand">
+<span class="ph cmd">In the imawebui subdirectory, rename the <span class="ph filepath">EclipseAmlenWebUI-&lt;<var class="keyword varname">build_info</var>&gt;.rpm</span> file to <span class="ph filepath">imawebui.rpm</span> by entering the following command:</span>
+                        <div class="itemgroup info">
+                            <pre class="pre codeblock"><code>mv EclipseAmlenWebUI-&lt;<var class="keyword varname">build_info</var>&gt;.rpm imawebui.rpm</code></pre>
+                        </div>
+                    </li>
+<li class="li substep substepexpand" id="qs00052___sudostep">
+<span class="ph cmd">If you are not logged in as the root user, enter the following command:</span>
+<div class="itemgroup info"><pre class="pre codeblock"><code>sudo sh</code></pre>Issuing this command enables you to run subsequent commands without having to specify <code class="ph codeph">sudo</code>.</div>
+</li>
+                    <li class="li substep substepexpand">
+                        <span class="ph cmd">If your host OS is Red Hat, you need to modify the Dockerfile.</span>
+                        <div class="itemgroup info">Change "<span class="ph filepath">FROM centos:latest</span>" to "<span class="ph filepath">FROM rhel:latest</span>".</div>
+                    </li>
+<li class="li substep substepexpand">
+<span class="ph cmd">Build the <span class="ph">Amlen WebUI</span> Docker image by entering the following command:</span>
+<div class="itemgroup info"><pre class="pre codeblock"><code>docker build --force-rm=true -t imawebui:5.0 .</code></pre>Ensure that you include
+the period at the end of the command.</div>
+</li>
+<li class="li substep substepexpand">
+<span class="ph cmd">Confirm that the <span class="ph">Amlen WebUI</span> Docker image has been built successfully by entering the following command:</span>
+<div class="itemgroup info"><pre class="pre codeblock"><code>docker images</code></pre>and look for output that is similar to the following
+line:<pre class="pre codeblock"><code>imawebui     5.0    83b255b5a4b8    3 seconds ago</code></pre></div>
+</li>
+</ol>
+</li><li class="li step stepexpand">
+                <span class="ph cmd">Create a .tar file of the image so that you can deploy the <span class="ph">Amlen WebUI</span> on other hosts by
+                    entering the following command:</span>
+                <div class="itemgroup info">
+                    <pre class="pre codeblock"><code>docker save -o ./imawebui-5.0-dockerimage.tar imawebui:5.0</code></pre>
+                </div>
+            </li><li class="li step stepexpand">
+<span class="ph cmd">Start the <span class="ph">Amlen WebUI</span> by entering the following command:</span>
+<div class="itemgroup info">
+<pre class="pre codeblock"><code>docker run --cap-add SYS_ADMIN --net=host -P -it --name imawebui --env-file=imawebui-docker.env -m 2g -d imawebui:5.0</code></pre>This
+command creates and starts the <span class="ph">Amlen WebUI</span> Docker
+container. <div class="p">The following table shows the environment variables that are in the
+<span class="ph filepath">imawebui-docker.env</span> file. You can set the environment variables and include
+them in the <span class="ph filepath">imawebui-docker.env</span> file and include the file in the <code class="ph codeph">docker
+run</code> command or you can specify them separately in the command by using the
+<code class="ph codeph">-e</code> argument on the command.<table class="table frame-all" id="qs00052___table_acx_2s1_3s"><caption><span class="table--title-label">Table 1. </span><span class="title"><span class="ph">Amlen WebUI</span> container environment variables</span></caption><colgroup><col style="width:49.30555555555555%"><col style="width:17.36111111111111%"><col style="width:33.33333333333333%"></colgroup><thead class="thead">
+<tr class="row">
+<th class="entry" id="qs00052___table_acx_2s1_3s__entry__1">Environment variable name</th>
+<th class="entry" id="qs00052___table_acx_2s1_3s__entry__2">Required?</th>
+<th class="entry" id="qs00052___table_acx_2s1_3s__entry__3">Description</th>
+</tr>
+</thead><tbody class="tbody">
+<tr class="row">
+<td class="entry" headers="qs00052___table_acx_2s1_3s__entry__1">WEBUI_CONTAINER_NAME</td>
+<td class="entry" headers="qs00052___table_acx_2s1_3s__entry__2">Required</td>
+<td class="entry" headers="qs00052___table_acx_2s1_3s__entry__3"><span class="ph">Amlen WebUI</span> Docker container name. </td>
+</tr>
+<tr class="row">
+<td class="entry" headers="qs00052___table_acx_2s1_3s__entry__1">WEBUI_MEMORY_SIZE </td>
+<td class="entry" headers="qs00052___table_acx_2s1_3s__entry__2">Required</td>
+<td class="entry" headers="qs00052___table_acx_2s1_3s__entry__3">Amount of memory, in GB, for use by the <span class="ph">Amlen WebUI</span>. The minimum value is 1 GB.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="qs00052___table_acx_2s1_3s__entry__1">WEBUI_PORT</td>
+<td class="entry" headers="qs00052___table_acx_2s1_3s__entry__2">Optional</td>
+<td class="entry" headers="qs00052___table_acx_2s1_3s__entry__3">Port number for the <span class="ph">Amlen WebUI</span> endpoint. The
+default is 9087.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="qs00052___table_acx_2s1_3s__entry__1">WEBUI_HOST</td>
+<td class="entry" headers="qs00052___table_acx_2s1_3s__entry__2">Optional</td>
+<td class="entry" headers="qs00052___table_acx_2s1_3s__entry__3">Host interface for the <span class="ph">Amlen WebUI</span> endpoint. The
+default is *</td>
+</tr>
+</tbody></table></div><div class="note note note_note"><span class="note__title">Note:</span> 
+<div class="p">The default value for WEBUI_HOST is <kbd class="ph userinput">*</kbd>, which means that all interfaces can
+access the Web UI. On systems with multiple interfaces, you might want to use a specific interface
+rather than allowing all interfaces to access the Web UI. For example, if a host is configured with
+the following interfaces:<ul class="ul">
+<li class="li">10.10.1.2</li>
+<li class="li">10.2.1.10</li>
+<li class="li">10.1.10.2</li>
+</ul>you might want to specify WEBUI_HOST as 10.10.1.2 to limit Web UI access to that particular
+interface. If you use the default WEBUI_HOST value of <kbd class="ph userinput">*</kbd>, then all three
+interfaces can access the Web UI.</div>
+</div></div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Verify that the <span class="ph">Amlen WebUI</span> container is running by entering the following command:</span>
+<div class="itemgroup info">
+<pre class="pre codeblock"><code>docker ps</code></pre>
+</div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">If you are not logged in as the root user, enter the following command to exit from the sudo shell that you created at step <a class="xref" href="qs00052_.html#qs00052___sudostep">1.b</a>:</span>
+<div class="itemgroup info">
+<pre class="pre codeblock"><code>exit</code></pre>
+</div>
+</li></ol></section>
+<section class="section postreq">
+<div class="p">After you start the <span class="ph">Eclipse Amlen</span> messaging server and <span class="ph">Amlen WebUI</span> Docker containers, you can
+                log in to the <span class="ph">Amlen WebUI</span> and verify the
+                installation by using a demonstration application. For more information about
+                logging in to the <span class="ph">Amlen WebUI</span>, see <a class="xref" href="qs00053_.html" title="Log in to the Amlen WebUI to verify the installation of Eclipse Amlen and to administer the Eclipse Amlen messaging server.">Logging in to the Amlen WebUI</a>. For more information about verifying the installation,
+                see <a class="xref" href="qs00002_.html" title="You can verify the installation of Eclipse Amlen by using the Messaging Tester sample application.">Verifying the installation of Eclipse Amlen</a>.<div class="note note note_note"><span class="note__title">Note:</span> The <span class="ph">Amlen WebUI</span> can administer the
+                    messaging server only after the license has been accepted on the messaging
+                    server. Use the <span class="ph">Eclipse Amlen</span> REST API
+                    POST method to accept the license on the messaging server. For more information
+                    about accepting the license by using the <span class="ph">Eclipse Amlen</span> REST API POST method, see
+                        <a class="xref" href="../Administering/ad00793_.html" title="System administrators can change the configured licensed usage for Eclipse Amlen and accept the license by using a single REST Administration API.">Configuring the licensed usage for Eclipse Amlen and accepting the license by using REST Administration APIs</a>.</div></div>
+</section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../QuickStartGuide/qs00055_.html" title="Install Eclipse Amlen in Docker containers by building and deploying the Docker images that you need to run Eclipse Amlen.">Installing Eclipse Amlen in Docker containers</a></div></div></nav></article></main></body></html>

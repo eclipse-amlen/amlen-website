@@ -1,0 +1,85 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="The JMSSampleAdmin application provides a sample tool for creating Eclipse Amlen administered objects for JMS. It demonstrates how to use ImaJmsFactory to create objects, and how to use ImaProperties to configure objects."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>The JMSSampleAdmin application</title></head><body id="devjms_jmssampleadmin"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a><ul><li><a href="../Developing/devconcepts.html">Messaging concepts</a></li><li><a href="../Developing/devmsgtypes.html">Natively supported message types</a></li><li><a href="../Developing/devmsgsize.html">Message size</a></li><li><a href="../Developing/devclientids.html">Client IDs</a></li><li><a href="../Developing/devclientservercert.html">Server certificates</a></li><li><a href="../Developing/devretainmsg.html">Developing retained message applications</a></li><li><a href="../Developing/devexpiredmsg.html">Expired messages</a></li><li><a href="../Developing/devsharedsubscriptions.html">Shared subscriptions</a></li><li><a href="../Developing/devmqttapp.html">Developing MQTT applications</a></li><li><a href="../Developing/devjmsapp.html">Developing JMS applications</a><ul><li><a href="../Developing/devjms_working.html">Working with Eclipse Amlen JMS</a></li><li><a href="../Developing/devjms_sampleapplications.html">Sample applications</a><ul><li class="active"><a href="../Developing/devjms_jmssampleadmin.html">The JMSSampleAdmin application</a></li><li><a href="../Developing/devjms_jmssample.html">The JMSSample application</a></li><li><a href="../Developing/devjms_hasamples.html">The HATopicPublisher and HADurableSubscriber applications</a></li></ul></li><li><a href="../Developing/devjms_writingjmsapplications.html">Writing JMS Applications</a></li><li><a href="../Developing/javadoc/com/ibm/ima/jms/package-summary.html">JMS API reference</a></li></ul></li><li><a href="../Developing/devplug-in.html">Developing a protocol plug-in</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li></ul></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">The JMSSampleAdmin application</h1>
+
+
+
+
+
+
+<div class="body refbody"><p class="shortdesc">The JMSSampleAdmin application provides a sample tool for
+creating <span class="ph">Eclipse Amlen</span> administered
+objects for JMS. It demonstrates how to use <span class="keyword apiname">ImaJmsFactory</span> to
+create objects, and how to use ImaProperties to configure objects.</p>
+<section class="section"><p class="p">The JMSSampleAdmin application is in the <code class="ph codeph">com.ibm.ima.samples.jms</code> package.
+You can use the JMSSampleAdmin application to create, configure, and
+store JMS administered objects for <span class="ph">Eclipse Amlen</span>. The application
+reads <span class="ph">Eclipse Amlen</span> JMS
+administered object configurations from an input file and  populates
+a JNDI repository. This application can populate either LDAP or  file-based
+JNDI repositories. </p><div class="p">You can run the JMSSampleAdmin application
+by using the following command:<pre class="pre codeblock"><code>java com.ibm.ima.samples.jms.JMSSampleAdmin [options] [configfile]</code></pre>Where:</div><dl class="dl">
+
+<dt class="dt dlterm"><span class="keyword parmname">options</span></dt>
+<dd class="dd">are any combination of the following command-line options:<dl class="dl">
+
+<dt class="dt dlterm"><span class="keyword parmname">-c</span></dt>
+<dd class="dd">The JNDI provider URL.</dd>
+<dd class="dd ddexpand">The JMSSampleAdmin application supports file system JNDI by using
+the file: scheme and also supports LDAP JNDI by using the ldap: scheme. </dd>
+<dd class="dd ddexpand"><p class="p"></p></dd>
+<dd class="dd ddexpand">In the following example, administered objects are created in
+a file system JNDI repository by using input from <code class="ph codeph">AdminObjects.config</code>.
+The subdirectory or folder that is named <code class="ph codeph">MyJndi</code> must
+exist.</dd>
+<dd class="dd ddexpand"><pre class="pre codeblock"><code>java com.ibm.ima.samples.jms.JMSSampleAdmin -c file:///c:/test/MyJndi c:\test\AdminObjects.config</code></pre><p class="p">In
+the following example, the objects from an existing LDAP JNDI repository
+on host <code class="ph codeph">myldaphost</code> are printed to the console.</p><pre class="pre codeblock"><code>java com.ibm.ima.samples.jms.ImaJmsAdmin -c ldap://myldaphost.mycompany.com/cn=Manager,o=jndiTest -l</code></pre></dd>
+
+<dt class="dt dlterm"><span class="keyword parmname">-h</span> or <span class="keyword parmname">-?</span></dt>
+<dd class="dd"></dd>
+
+<dt class="dt dlterm"></dt>
+<dd class="dd"> Print usage output.</dd>
+
+<dt class="dt dlterm"><span class="keyword parmname">-l</span> </dt>
+<dd class="dd"> List <span class="ph">Eclipse Amlen</span> JMS
+objects in the JNDI repository. These objects are printed to the console.</dd>
+
+<dt class="dt dlterm"><span class="keyword parmname">-u</span></dt>
+<dd class="dd">The JNDI provider userid.</dd>
+
+<dt class="dt dlterm"><span class="keyword parmname">-p</span></dt>
+<dd class="dd">The JNDI provider password.</dd>
+
+<dt class="dt dlterm"><span class="keyword parmname">-n</span></dt>
+<dd class="dd">Name prefix for creating and looking up objects.</dd>
+
+<dt class="dt dlterm"><span class="keyword parmname">-v</span></dt>
+<dd class="dd">Verbose output.</dd>
+
+<dt class="dt dlterm"><span class="keyword parmname">-w</span></dt>
+<dd class="dd">Do not show warnings.</dd>
+</dl></dd>
+
+<dt class="dt dlterm"><span class="keyword parmname">configfile</span></dt>
+<dd class="dd">The <span class="keyword parmname">configfile</span> argument is an input file
+that contains the required configuration data for the administered
+objects to be created. The <span class="keyword parmname">configfile</span> argument
+is required for all cases except when the <span class="keyword parmname">-h</span>, <span class="keyword parmname">-?</span>,
+or <span class="keyword parmname">-l</span> options are used.</dd>
+</dl><p class="p">The following example <span class="keyword parmname">configfile</span> content
+shows content that can be used to create or update a connection factory
+administered object and a topic destination administered object. The
+JNDI name for each object appears as the second parameter inside the
+square brackets. This JNDI name is the name that is used to look up
+the object when the object is to be used (or updated).</p><pre class="pre codeblock"><code># Sample config
+[connection connFactory1]
+Server = 127.0.0.1
+Port = 1883
+
+[topic topic1]
+Name = topic1</code></pre></section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Developing/devjms_sampleapplications.html" title="There are four sample applications for JMS: JMSSampleAdmin, JMSSample, HATopicPublisher, and HADurableSubscriber. These sample applications are in the com.ibm.ima.samples.jms package.">Sample applications</a></div></div></nav></article></main></body></html>

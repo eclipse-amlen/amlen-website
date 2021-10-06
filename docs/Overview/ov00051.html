@@ -1,0 +1,50 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="WebSockets provides full-duplex communication over a single TCP socket. WebSockets is a component of HTML5, designed to replace existing push-based technologies with the aim of reducing latency and network traffic between client and server."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>WebSockets</title></head><body id="ov00051"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a><ul><li><a href="../Overview/ov00002_.html">Architecture Overview</a></li><li><a href="../Overview/ov60000_.html">Eclipse Amlen in Containers</a></li><li><a href="../Overview/ov00050.html">Supported protocols</a><ul><li class="active"><a href="../Overview/ov00051.html">WebSockets</a></li></ul></li><li><a href="../Bridge/br00000.html">   Amlen Bridge</a></li><li><a href="../Overview/ov00003_.html">Key Concepts</a></li><li><a href="../Overview/accessibility_topic.html">Accessibility features for Eclipse Amlen</a></li><li><a href="../Overview/notices.html">Notices</a></li></ul></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">WebSockets</h1>
+
+
+
+
+
+
+<div class="body conbody"><p class="shortdesc">WebSockets provides full-duplex communication over a single
+TCP socket.  WebSockets is a component of HTML5, designed to replace
+existing push-based technologies with the aim of reducing latency
+and network traffic between client and server. 
+</p>
+<div class="p">The protocol operates in two parts: <ul class="ul">
+<li class="li">First, a handshake is exchanged between client and server (as
+an HTTP Upgrade request).  </li>
+<li class="li">Next, data is transferred back and forth in messages that are
+composed of one or more frames, each having a specified type (for
+example, UTF-8 text, binary data, or control frames) that is the same
+for each frame in a message.</li>
+</ul></div>
+<p class="p">The WebSockets protocol is designed on the principle that there should
+be minimal framing (the only framing that exists is to make the protocol
+frame-based instead of stream-based, and to support a distinction
+between Unicode text and binary frames).  It is expected that metadata
+would be layered on top of WebSocket by the application layer, in
+the same way that metadata is layered on top of TCP by the application
+layer (for example, HTTP).  </p>
+<div class="p">Conceptually, WebSockets is a layer on top of TCP that: <ul class="ul">
+<li class="li">Adds a web origin-based security model for browsers.</li>
+<li class="li">Adds an addressing and protocol naming mechanism to support multiple
+services on one port and multiple host names on one IP address.</li>
+<li class="li">Layers a framing mechanism on top of TCP to get back to the IP
+packet mechanism that TCP is built on, but without length limits</li>
+<li class="li">Includes an extra closing handshake in-band that is designed to
+work in the presence of proxies and other intermediaries.</li>
+</ul></div>
+<div class="p">WebSockets is ideal for the following types of applications:<ul class="ul">
+<li class="li">Gaming</li>
+<li class="li">Stock ticker</li>
+<li class="li">Traffic updates</li>
+<li class="li">Telemetry data (MQTT over WebSocket)</li>
+<li class="li">Mobile payments</li>
+<li class="li">Mobile app gateway</li>
+<li class="li">Scoring</li>
+</ul></div>
+</div>
+</article></main></body></html>

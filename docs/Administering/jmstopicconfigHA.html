@@ -1,0 +1,104 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="When you want to set up Eclipse Amlen resource adapter in a highly available configuration, you must consider the values that are assigned to the following activation specification properties."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Configuring the Eclipse Amlen resource adapter for high availability when you use topics</title></head><body id="JMStopicHA"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a><ul><li><a href="../Administering/ad00102_.html">MQ Connectivity</a></li><li><a href="../Administering/workingwithjmsra.html">Eclipse Amlen resource adapter</a><ul><li><a href="../Administering/installingra.html">Installing Eclipse Amlen resource adapter on WebSphere Application Server</a></li><li><a href="../Administering/upgradingra.html">Updating the Eclipse Amlen resource adapter on WebSphere Application Server</a></li><li><a href="../Administering/configuringra.html">Configuring Eclipse Amlen resource adapter for WebSphere Application Server</a></li><li><a href="../Administering/tlssecurityforjmsra.html">Transport Layer Security for the Eclipse Amlen resource adapter</a></li><li><a href="../Administering/xaconsiderations.html">Working with XA transactions</a></li><li><a href="../Administering/adscenarios.html">Scenarios</a><ul><li><a href="../Administering/scenarios.html">Scenarios for configuring the Eclipse Amlen resource adapter for inbound communication</a><ul><li><a href="../Administering/considerationsforclustering.html">Configuring Eclipse Amlen resource adapter in a WebSphere Application Server cluster</a></li><li><a href="../Administering/considerationsformsgorder.html">Configuring the Eclipse Amlen resource adapter to preserve message order</a></li><li><a href="../Administering/considerationsscalinginserver.html">Configuring Eclipse Amlen resource adapter for scaling within a single WebSphere Application Server</a></li><li><a href="../Administering/considerationsHA.html">Configuring Eclipse Amlen resource adapter for high availability</a><ul><li class="active"><a href="../Administering/jmstopicconfigHA.html">Configuring the Eclipse Amlen resource adapter for high availability when you use topics</a></li><li><a href="../Administering/jmsqconfigHA.html">Configuring the Eclipse Amlen resource adapter for high availability when you use queues</a></li></ul></li></ul></li><li><a href="../Administering/jmssecurityconfig.html">Security and the Eclipse Amlen resource adapter </a></li><li><a href="../Administering/sc10000.html">Scenarios to connect WebSphere Application Server and Eclipse Amlen</a></li></ul></li></ul></li><li><a href="../Administering/vm00001_.html">Using VMware vSphere to handle Eclipse Amlen failover</a></li></ul></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Configuring the <span class="ph">Eclipse Amlen</span> resource
+adapter for high availability when you use topics</h1>
+
+<div class="body conbody"><p class="shortdesc">When you want to set up <span class="ph">Eclipse Amlen</span> resource adapter
+in a highly available configuration, you must consider the values
+that are assigned to the following activation specification properties. </p>
+<p class="p">You can configure a <code class="ph codeph">clientId</code> in this scenario.
+JMS allows only one connection per <code class="ph codeph">clientId</code>.  Set <code class="ph codeph">clientId</code> so
+that only one <span class="ph">WebSphere® Application
+Server</span> can
+connect to <span class="ph">Eclipse Amlen</span> at
+a time. The connected <span class="ph">WebSphere Application
+Server</span> is
+the server that is processing messages. </p>
+<section class="section"><h2 class="title sectiontitle">Configure the <span class="ph">Eclipse Amlen</span> resource adapter
+properties </h2><div class="p"><dl class="dl">
+<dt class="dt dlterm">Activation specification configuration</dt>
+<dd class="dd"><div class="p">Consider the settings of the following activation specification
+properties when you configure the <span class="ph">Eclipse Amlen</span> resource adapter
+to support high availability for inbound communication:<ul class="ul">
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">clientId </dt>
+<dd class="dd">The client ID for this connection. </dd>
+<dd class="dd ddexpand">You might want to set a client ID so that you can restrict connections
+into <span class="ph">Eclipse Amlen</span> based
+on the client ID that is specified in the connection policy. Using
+a client ID ensures that only one <span class="ph">WebSphere Application
+Server</span> can connect at
+a time. You can also limit the actions that a connected client can
+perform based on the client ID that is specified in the messaging
+policy.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">server</dt>
+<dd class="dd">A comma or space separated list of the two host names or IP addresses for the primary and the
+             standby <span class="ph">Eclipse Amlen</span> servers. For example,
+              <code class="ph codeph">9.1.2.3,9.1.2.4</code>.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">port</dt>
+<dd class="dd">The port of the endpoint that you configured.</dd>
+<dd class="dd ddexpand">If there are multiple <span class="ph">Eclipse Amlen</span> servers in the
+              <code class="ph codeph">server</code> properties list, then all servers use the same port. </dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">concurrentConsumers </dt>
+<dd class="dd">The maximum number of consumers on this connection. </dd>
+<dd class="dd ddexpand">You can tune the value of this parameter to enable multiple instances
+of the MDB to run in parallel to help to improve throughput.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">clientMessageCache </dt>
+<dd class="dd">The maximum number of cached messages for each consumer. </dd>
+<dd class="dd ddexpand"><code class="ph codeph">clientMessageCache</code> allows <span class="ph">Eclipse Amlen</span> and
+the MDB to consume a number of messages at the same time. A higher
+setting increases throughput, but can result in uneven message distribution. </dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">subscriptionDurability </dt>
+<dd class="dd">Specifies whether a topic subscription is durable.</dd>
+<dd class="dd ddexpand">Set this value to <code class="ph codeph">Durable</code> if you want published
+messages to be kept for processing even when <span class="ph">WebSphere Application
+Server</span> is not connected
+or your applications are stopped. </dd>
+<dd class="dd ddexpand">Set this value to <code class="ph codeph">Nondurable</code> if you want to process
+messages only while <span class="ph">WebSphere Application
+Server</span> is
+connected and your applications are running.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">subscriptionName </dt>
+<dd class="dd">If you are using shared durable subscriptions, set the <span class="keyword parmname">subscriptionName</span> to
+the destination that is specified in the global-shared subscription
+messaging policy.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">subscriptionShared </dt>
+<dd class="dd">Specifies whether a subscription is shared between consumers or
+not.</dd>
+<dd class="dd ddexpand">Set this value to <code class="ph codeph">Shared</code> to use the shared subscription
+capability and enable scaling within a <span class="ph">WebSphere Application
+Server</span>.</dd>
+</dl></li>
+</ul></div><div class="p">Specify one of the following options:<ul class="ul">
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">destination and destinationType</dt>
+<dd class="dd"><span class="keyword parmname">destination</span> specifies the name of the topic
+from which messages are received. <span class="keyword parmname">destinationType</span> specifies
+the type of destination. </dd>
+<dd class="dd ddexpand">The value of <span class="keyword parmname">destinationType</span> must be set
+to <code class="ph codeph">javax.jms.Topic</code>. </dd>
+</dl> </li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">destinationLookup </dt>
+<dd class="dd">The name of a JNDI object that represents the <span class="ph">Eclipse Amlen</span> topic
+from which messages are received.  </dd>
+</dl></li>
+</ul></div></dd>
+</dl></div></section>
+</div>
+</article></main></body></html>

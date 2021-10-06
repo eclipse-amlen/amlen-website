@@ -1,0 +1,89 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="The rapid growth of mobile devices is resulting in an increase in the volume of data that flows into an enterprise. To manage the volume of data, the Eclipse Amlen resource adapter can be installed and configured to support horizontal scaling across a WebSphere Application Server cluster."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Configuring Eclipse Amlen resource adapter in a WebSphere Application Server cluster</title></head><body id="considerationsforclustering"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a><ul><li><a href="../Administering/ad00102_.html">MQ Connectivity</a></li><li><a href="../Administering/workingwithjmsra.html">Eclipse Amlen resource adapter</a><ul><li><a href="../Administering/installingra.html">Installing Eclipse Amlen resource adapter on WebSphere Application Server</a></li><li><a href="../Administering/upgradingra.html">Updating the Eclipse Amlen resource adapter on WebSphere Application Server</a></li><li><a href="../Administering/configuringra.html">Configuring Eclipse Amlen resource adapter for WebSphere Application Server</a></li><li><a href="../Administering/tlssecurityforjmsra.html">Transport Layer Security for the Eclipse Amlen resource adapter</a></li><li><a href="../Administering/xaconsiderations.html">Working with XA transactions</a></li><li><a href="../Administering/adscenarios.html">Scenarios</a><ul><li><a href="../Administering/scenarios.html">Scenarios for configuring the Eclipse Amlen resource adapter for inbound communication</a><ul><li class="active"><a href="../Administering/considerationsforclustering.html">Configuring Eclipse Amlen resource adapter in a WebSphere Application Server cluster</a><ul><li><a href="../Administering/jmstopicconfig.html">Configuring the Eclipse Amlen resource adapter for inbound communication when you use topics in a WebSphere Application Server cluster</a></li><li><a href="../Administering/jmsqconfig.html">Configuring the Eclipse Amlen resource adapter for inbound communication when you use queues in a WebSphere Application Server cluster </a></li></ul></li><li><a href="../Administering/considerationsformsgorder.html">Configuring the Eclipse Amlen resource adapter to preserve message order</a></li><li><a href="../Administering/considerationsscalinginserver.html">Configuring Eclipse Amlen resource adapter for scaling within a single WebSphere Application Server</a></li><li><a href="../Administering/considerationsHA.html">Configuring Eclipse Amlen resource adapter for high availability</a></li></ul></li><li><a href="../Administering/jmssecurityconfig.html">Security and the Eclipse Amlen resource adapter </a></li><li><a href="../Administering/sc10000.html">Scenarios to connect WebSphere Application Server and Eclipse Amlen</a></li></ul></li></ul></li><li><a href="../Administering/vm00001_.html">Using VMware vSphere to handle Eclipse Amlen failover</a></li></ul></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Configuring <span class="ph">Eclipse Amlen</span> resource
+adapter in a <span class="ph">WebSphere Application
+Server</span> cluster</h1>
+
+<div class="body taskbody"><p class="shortdesc">The rapid growth of mobile devices is resulting in an increase
+in the volume of data that flows into an enterprise. To manage the
+volume of data, the <span class="ph">Eclipse Amlen</span> resource
+adapter can be installed and configured to support horizontal scaling
+across a <span class="ph">WebSphere® Application
+Server</span> cluster. </p>
+<section class="section context"><p class="p"><span class="ph">Eclipse Amlen</span> can
+handle a large volume of data that application servers might not be
+able to process as quickly. To handle the volume of data in a <span class="ph">WebSphere Application
+Server</span> cluster, you
+might want to enable concurrent MDB instances on multiple application
+servers in order to support horizontal scaling. Each application server
+has its own connection. Complete the following steps to configure
+the <span class="ph">Eclipse Amlen</span> resource
+adapter in a <span class="ph">WebSphere Application
+Server</span> cluster.</p></section>
+<section><ol class="ol steps"><li class="li step stepexpand"><span class="ph cmd">Download and install the <span class="ph">Eclipse Amlen</span> resource adapter.</span>
+<div class="itemgroup tutorialinfo"><p class="p">The <span class="ph">Eclipse Amlen</span> resource adapter is available to
+download as part of the JMS client. The JMS client can be obtained from the <a class="xref" href="https://www.ibm.com/developerworks/community/blogs/c565c720-fe84-4f63-873f-607d87787327/entry/download?lang=en" target="_blank" rel="external noopener">Downloads page</a> in the IBM® Messaging
+Community at developerWorks®. Click
+<span class="ph uicontrol">Download IBM Watson IoT Platform - Message Gateway JMS Client Pack</span>.</p><p class="p">After the download
+is complete, you can install the <span class="ph">Eclipse Amlen</span> resource adapter
+in your <span class="ph">WebSphere Application
+Server</span> cluster. </p><p class="p">You
+must install the <span class="ph">Eclipse Amlen</span> resource
+adapter on each node in the <span class="ph">WebSphere Application
+Server</span> cluster. You
+can then choose one of the following installation options:</p><ul class="ul">
+<li class="li">Create a resource adapter instance from the installed RAR file
+at the cluster scope. Creating an instance at the cluster scope means
+that you can configure your J2C connection factories, activation specifications,
+and administered objects at cluster level rather than at node level.</li>
+<li class="li">Create your J2C connection factories, activation specifications,
+and administered objects at node level on each of the nodes in your
+cluster. </li>
+</ul></div></li><li class="li step stepexpand"><span class="ph cmd">Configure an endpoint and setup connection and messaging
+policies.</span><div class="itemgroup info"><p class="p">You must configure an endpoint that supports
+the JMS protocol for the <span class="ph">WebSphere Application
+Server</span> to connect to.
+For more information about configuring an endpoint, see <a class="xref" href="ad00360_.html" title="You can configure messaging hubs either by using the Amlen WebUI or by using REST Administration APIs.">Configuring
+message hubs</a>.</p></div>
+<ul class="ul choices">
+<li class="li choice"><p class="p"> For inbound communications by using topics, create the
+following policies:</p><ul class="ul">
+<li class="li">One or more connection policies to allow a <span class="ph">WebSphere Application
+Server</span> to connect to
+the configured endpoint over JMS.  For more information, see <a class="xref" href="../Security/se00003_.html" title="You can use connection policies to authorize a client to connect to an endpoint on Eclipse Amlen.">Authorizing client connections</a>.</li>
+<li class="li">One or more topic messaging policies to allow a <span class="ph">WebSphere Application
+Server</span> to subscribe
+to the topic over JMS.  For more information, see <a class="xref" href="../Security/se00015_.html" title="You can use a topic policy to specify which clients can publish or subscribe to a topic.">Topic
+messaging policy</a>.</li>
+<li class="li">If you are using global-shared durable subscriptions, you must
+create one or more subscription messaging policies. Subscription messaging
+policies specify which clients can create, modify, and delete global-shared
+durable subscriptions. Subscription messaging policies also specify
+which clients can receive messages from global-shared durable subscriptions.
+For more information, see <a class="xref" href="../Security/se00014_.html" title="You can use a subscription policy to specify which clients can create, modify, or delete global-shared durable subscriptions. You can also set up the authorization for a client to receive messages from a global-shared durable subscription. Global-shared durable subscriptions require a subscription policy and a topic policy; all other types of subscriptions, including non-durable shared subscriptions, require only a topic messaging policy.">Subscription
+messaging policy</a>. </li>
+</ul><p class="p"></p></li>
+<li class="li choice"><p class="p"> For inbound communications by using queues, create the
+following policies:</p><ul class="ul">
+<li class="li">One or more connection policies to allow a <span class="ph">WebSphere Application
+Server</span> to connect to
+the configured endpoint over JMS.  For more information, see <a class="xref" href="../Security/se00003_.html" title="You can use connection policies to authorize a client to connect to an endpoint on Eclipse Amlen.">Authorizing client connections</a>.</li>
+<li class="li">One or more queue messaging policies to allow a <span class="ph">WebSphere Application
+Server</span> to receive messages
+over JMS.  For more information, see <a class="xref" href="../Security/se00016_.html" title="You can use a queue policy to specify which clients can send messages, receive messages, or browse a queue for messages.">Queue
+messaging policy</a>.</li>
+</ul><p class="p"></p></li>
+</ul>
+<div class="itemgroup tutorialinfo"></div></li><li class="li step stepexpand"><span class="ph cmd">Configure the <span class="ph">Eclipse Amlen</span> resource adapter
+properties for one or more of the following options:</span>
+<ul class="ul choices">
+<li class="li choice"><p class="p">Inbound communication by using topics. For more information,
+see <a class="xref" href="jmstopicconfig.html" title="When you use topics with the Eclipse Amlen resource adapter in a WebSphere Application Server cluster, you must consider the values that are assigned to the activation specification properties.">Configuring the Eclipse Amlen resource adapter for inbound communication when you use topics in a WebSphere Application Server cluster</a></p></li>
+<li class="li choice"><p class="p">Inbound communication by using queues. For more information,
+see <a class="xref" href="jmsqconfig.html" title="When you use queues with the Eclipse Amlen resource adapter in a WebSphere Application Server cluster, you must consider the values that are assigned to the activation specification properties.">Configuring the Eclipse Amlen resource adapter for inbound communication when you use queues in a WebSphere Application Server cluster</a></p></li>
+</ul>
+</li><li class="li step stepexpand"><span class="ph cmd">Deploy and start your MDB if appropriate.</span></li></ol></section>
+</div>
+
+</article></main></body></html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="A message hub is a self-contained unit that groups endpoints and policies around a specific application. Grouping endpoints and policies makes them easier to manage, and to monitor."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Message hubs</title></head><body id="ov00100_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a><ul><li><a href="../Overview/ov00002_.html">Architecture Overview</a></li><li><a href="../Overview/ov60000_.html">Eclipse Amlen in Containers</a></li><li><a href="../Overview/ov00050.html">Supported protocols</a></li><li><a href="../Bridge/br00000.html">   Amlen Bridge</a></li><li><a href="../Overview/ov00003_.html">Key Concepts</a><ul><li><a href="../Overview/ov20000.html">Point-to-point messaging</a></li><li><a href="../Overview/ov00030.html">Publish/Subscribe</a></li><li><a href="../Planning/ov00102_.html">Message delivery</a></li><li><a href="../Planning/ov00101_.html">Messaging patterns</a></li><li><a href="../Overview/ov00060.html">Message hubs, endpoints, and policies</a><ul><li class="active"><a href="../Overview/ov00100_.html">Message hubs</a></li><li><a href="../Overview/ov00110_.html">Endpoints</a></li></ul></li><li><a href="../Overview/ov00150_.html">Clustering in Eclipse Amlen</a></li><li><a href="../Overview/ov00140_.html">Disconnected client notifications</a></li><li><a href="../Overview/ov00070.html">MQ Connectivity</a></li><li><a href="../Overview/ov40000.html">High availability</a></li><li><a href="../Bridge/br00001.html">   Amlen Bridge concepts</a></li></ul></li><li><a href="../Overview/accessibility_topic.html">Accessibility features for Eclipse Amlen</a></li><li><a href="../Overview/notices.html">Notices</a></li></ul></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Message hubs</h1>
+
+<div class="body conbody"><p class="shortdesc">A message hub is a self-contained unit that groups endpoints
+and policies around a specific application. Grouping endpoints and
+policies makes them easier to manage, and to monitor.</p>
+<p class="p">Hubs are an organizational configuration object to collect the endpoints, connection policies,
+         and messaging policy types that are associated with a specific goal in a single place.
+         There are three types of messaging policy - topic policies, queue policies, and
+         subscription policies. The specific goal is user-defined and might relate to one or more
+         applications or services.</p>
+<p class="p">System administrators, and messaging administrators can define, edit, or delete message hubs.
+         These administrators can then create endpoints, connection policies, topic policies, queue
+         policies, and subscription policies on the message hub for a specific job, application, or
+         task. </p>
+<p class="p">Policies are hub-specific. For example, you might create one message hub for a financial
+   application, and one message hub for a specific operational task. You can also create message
+   hubs associated with a particular type of user. So you might create one message hub for internal
+   users, and one message hub for external users. You can then manage connections policies and
+   messaging policy types that are associated with a specific message hub. </p>
+<p class="p">If you add an application at a future date, you can create a message hub with a new connection
+         and messaging policy type for that application.  The task that is associated with that hub
+         can then be monitored as a complete entity.</p>
+<p class="p">Monitoring data is aggregated for all endpoints in the hub. The
+aggregation of data means that endpoints can be monitored to provide
+a complete picture of traffic and activity across the message hub.
+You can monitor active connections, and system throughput (messages/second)
+on the message hub to provide an overview of system connections, and
+performance.</p>
+</div>
+</article></main></body></html>

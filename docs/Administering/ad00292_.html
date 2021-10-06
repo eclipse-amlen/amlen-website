@@ -1,0 +1,101 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can set the logging level by using the Eclipse Amlen REST Administration APIs."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Setting the logging level by using REST Administration APIs</title></head><body id="ad00292_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a><ul><li><a href="../Administering/ad00210_.html">Network interface controllers</a></li><li><a href="../Administering/ad00380_.html">Configuring the server name</a></li><li><a href="../Administering/ad00290_.html">Configuring log files</a><ul><li><a href="../Administering/ad00293_.html">Setting the logging level</a><ul><li><a href="../Administering/ad00291_.html">Setting the logging level by using the GUI</a></li><li class="active"><a href="../Administering/ad00292_.html">Setting the logging level by using REST Administration APIs</a></li></ul></li><li><a href="../Administering/ad01295_.html">Viewing the logging level by using REST Administration APIs</a></li><li><a href="../Administering/ad01291.html">Changing and viewing log location information by using REST Administration APIs</a></li><li><a href="../Administering/ad01292.html">Configuring and viewing syslog server information by using REST Administration APIs</a></li><li><a href="../Administering/ad01293.html">Store and forward syslog messages by using rsyslog </a></li><li><a href="../Administering/ad01294.html">Logging in a high availability environment</a></li><li><a href="../Administering/ad01297_.html">Configuring log rotation for Eclipse Amlen in a Docker environment</a></li></ul></li><li><a href="../Administering/ad00400_.html">Configuring your system for high availability</a></li><li><a href="../Administering/ad00790_.html">Configuring licensed usage and accepting the license for Eclipse Amlen  </a></li><li><a href="../Administering/ad00280_.html">Starting, stopping, restarting and viewing the status of the Eclipse Amlen server</a></li></ul></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Setting the logging level by using <span class="ph">REST Administration APIs</span></h1>
+
+<div class="body taskbody"><p class="shortdesc">System administrators can set the logging level by using the <span class="ph">Eclipse Amlen</span> <span class="ph">REST Administration APIs</span>.</p>
+<section class="section prereq">You can set the logging level only if the <span class="ph">Eclipse Amlen</span> server is running.
+For more information about starting the <span class="ph">Eclipse Amlen</span> server, see <a class="xref" href="ad00280_.html" title="You can restart, stop and view the status of the Eclipse Amlen server by using REST Administration APIs or by using the Amlen WebUI.">Starting, stopping, restarting and viewing the status of the Eclipse Amlen server</a>.</section>
+<section class="section context">You can set the logging level by using a REST Administration API, or by using the <span class="ph">Amlen WebUI</span>. For more information about using the <span class="ph">Amlen WebUI</span> to set the logging level, see <a class="xref" href="ad00291_.html" title="System administrators can set the logging level by using the System Control page in the Amlen WebUI.">Setting the logging level by using the GUI</a>.</section>
+<section><div class="ul steps-unordered"><div class="li step p">
+<span class="ph cmd">Use the <span class="ph">Eclipse Amlen</span> REST API POST method.  </span>
+<ol class="ol substeps">
+<li class="li substep substepexpand">
+<span class="ph cmd">Use the following <span class="ph">Eclipse Amlen</span> configuration URI: </span>
+<div class="itemgroup info">
+<p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/configuration</code></p>
+</div>
+</li>
+<li class="li substep substepexpand">
+<span class="ph cmd">Provide log level configuration data in the payload of the POST method by using the following schema:</span>
+<div class="itemgroup info"><pre class="pre codeblock"><code> 
+{     
+  "&lt;Log type&gt;" : "MIN"|"MAX"|"NORMAL"      
+}</code></pre>Where:<ul class="ul">
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">Log type</dt>
+<dd class="dd">Specifies the type of log file on which you want to set the logging level. Log type can be one
+of the following values:<ul class="ul">
+<li class="li">LogLevel</li>
+<li class="li">ConnectionLog</li>
+<li class="li">SecurityLog</li>
+<li class="li">AdminLog </li>
+<li class="li">MQConnectivityLog</li>
+</ul></dd>
+
+</dl>
+</li>
+</ul><div class="p">The logging level can be set to one of the following values: <dl class="dl">
+
+<dt class="dt dlterm">MIN</dt>
+<dd class="dd">A setting of MIN includes only the most important entries. </dd>
+
+
+<dt class="dt dlterm">MAX</dt>
+<dd class="dd">A setting of MAX includes all entries. </dd>
+
+
+<dt class="dt dlterm">NORMAL</dt>
+<dd class="dd">A setting of NORMAL includes all important entries. </dd>
+
+</dl></div><p class="p">The following table show the types of log that are available and the corresponding log
+files:</p>
+<table class="table" id="ad00292___datasimpletable_t5r_gzh_qfb"><caption><span class="table--title-label">Table 1. </span><span class="title">A number of log types are available, and these log types are associated with
+specific log files. </span></caption><colgroup><col><col></colgroup><thead class="thead">
+<tr class="row">
+<th class="entry" id="ad00292___datasimpletable_t5r_gzh_qfb__entry__1">Log type</th>
+<th class="entry" id="ad00292___datasimpletable_t5r_gzh_qfb__entry__2">Log file</th>
+</tr>
+</thead><tbody class="tbody">
+<tr class="row">
+<td class="entry" headers="ad00292___datasimpletable_t5r_gzh_qfb__entry__1">LogLevel</td>
+<td class="entry" headers="ad00292___datasimpletable_t5r_gzh_qfb__entry__2">imaserver-default.log</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00292___datasimpletable_t5r_gzh_qfb__entry__1">ConnectionLog</td>
+<td class="entry" headers="ad00292___datasimpletable_t5r_gzh_qfb__entry__2">imaserver-connection.log</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00292___datasimpletable_t5r_gzh_qfb__entry__1">SecurityLog</td>
+<td class="entry" headers="ad00292___datasimpletable_t5r_gzh_qfb__entry__2">imaserver-security.log</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00292___datasimpletable_t5r_gzh_qfb__entry__1">AdminLog</td>
+<td class="entry" headers="ad00292___datasimpletable_t5r_gzh_qfb__entry__2">imaserver-admin.log</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00292___datasimpletable_t5r_gzh_qfb__entry__1">MQConnectivityLog</td>
+<td class="entry" headers="ad00292___datasimpletable_t5r_gzh_qfb__entry__2">imaserver-mqconnectivity.log</td>
+</tr>
+</tbody></table>
+<p class="p"> For more information about the logs, see <a class="xref" href="ad00290_.html" title="You can set the logging level, view the logging level, change the log location, and view log location information by using REST Administration APIs. You can also configure log rotation in a Docker environment by using Docker commands and modifying a sample log rotation file.">Configuring log files</a>.</p></div>
+</li>
+</ol>
+</div></div></section>
+<section class="example"><div class="p">The following example shows setting the logging level of <code class="ph codeph"><span class="ph">imaserver</span>-default.log</code> to
+          <code class="ph codeph">MAX</code>:<pre class="pre codeblock"><code>curl -X POST -H 'Content-Type: application/json' -d  '{ "LogLevel": "MAX" }' http://127.0.0.1:9089/ima/v1/configuration/</code></pre></div>
+      <div class="p">The following example shows setting the logging level of <code class="ph codeph"><span class="ph">imaserver</span>-default.log</code> to
+          <code class="ph codeph">NORMAL</code> and <code class="ph codeph"><span class="ph">imaserver</span>-connection.log</code> to
+          <code class="ph codeph">MAX</code>:<pre class="pre codeblock"><code>curl -X POST -H 'Content-Type: application/json' -d  '{ "LogLevel": "NORMAL", "ConnectionLog": "MAX" }' http://127.0.0.1:9089/ima/v1/configuration/</code></pre></div>The
+      following shows an example response to the POST
+      method.<pre class="pre codeblock"><code>
+{        
+  "Version": "v1",
+  "Code": "CWLNA6011",
+  "Message": "The requested configuration change has completed successfully."
+}
+</code></pre></section>
+</div>
+</article></main></body></html>

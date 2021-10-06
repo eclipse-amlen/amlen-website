@@ -1,0 +1,319 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can view monitoring statistics by using REST Monitoring APIs."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Viewing endpoint level statistics by using REST Monitoring APIs</title></head><body id="admin00013"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a><ul><li><a href="../Monitoring/admin00080.html">Cluster monitoring</a></li><li><a href="../Monitoring/admin00009.html">Connection Monitoring</a></li><li><a href="../Monitoring/admin00010.html">Endpoint Monitoring</a><ul><li><a href="../Monitoring/admin00015.html">Viewing endpoint level statistics by using the Amlen WebUI</a></li><li class="active"><a href="../Monitoring/admin00013.html">Viewing endpoint level statistics by using REST Monitoring APIs</a></li><li><a href="../Monitoring/admin00040.html">Viewing endpoint level statistics by using an external application</a></li></ul></li><li><a href="../Monitoring/admin00016.html">Topic Monitoring</a></li><li><a href="../Monitoring/admin00019.html">Queue Monitoring</a></li><li><a href="../Monitoring/admin00022.html">Subscription Monitoring</a></li><li><a href="../Monitoring/admin00025.html">MQTT Client Monitoring</a></li><li><a href="../Monitoring/admin00031.html">MQ Connectivity monitoring</a></li><li><a href="../Monitoring/admin00070.html">Viewing protocol plug-in monitoring statistics by using an external application</a></li><li><a href="../Monitoring/admin00028.html">Server Monitoring</a></li><li><a href="../Monitoring/admin00060.html">XA Transaction monitoring</a></li></ul></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Viewing endpoint level statistics by using <span class="ph">REST Monitoring APIs</span></h1>
+
+<div class="body taskbody"><p class="shortdesc">System administrators can view monitoring statistics by using <span class="ph">REST Monitoring APIs</span>.</p>
+<section class="section context"><p class="p">System administrators can view endpoint level statistics by using the <span class="ph">Amlen WebUI</span>,  by using a <span class="ph">REST Monitoring API</span>, or
+                by using an external monitoring application. For more information about using the
+                    <span class="ph">Amlen WebUI</span> to view endpoint level
+                statistics, see <a class="xref" href="admin00015.html" title="Use the endpoint monitor to view live, aggregated endpoint data, and to query the best and worst performing connections across several connection metrics.">Viewing endpoint level statistics by using the GUI</a>. For
+                more information about using an external application to view endpoint level
+                statistics, see <a class="xref" href="admin00040.html" title="External monitoring applications can access endpoint data that is published by Eclipse Amlen by subscribing to the Eclipse Amlen topic $SYS/ResourceStatistics/Endpoint.">Viewing endpoint level statistics by using an external application</a>.</p></section>
+<section><div class="li stepsection">Endpoint-related monitoring statistics can be viewed by using a <span class="ph">REST Monitoring API</span>. To
+                create endpoint-related monitoring statistics, complete the following
+                steps:</div><ol class="ol steps"><li class="li step stepexpand">
+                <span class="ph cmd">Use the <span class="ph">Eclipse Amlen</span>
+                    REST API GET method with the following <span class="ph">Eclipse Amlen</span>
+                    monitoring URI:</span>
+                <div class="itemgroup info">
+                    <p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/monitor/&lt;Object
+                            Type&gt;</code></p>
+                </div>
+            </li><li class="li step stepexpand">
+                <span class="ph cmd">Provide query parameters requesting the statistics that you want returned in
+                    the JSON payload. The following example uses cURL to create endpoint-related
+                    statistics:</span>
+                <div class="itemgroup info">
+                    <pre class="pre codeblock"><code>curl -X GET http://127.0.0.1:9089/ima/v1/monitor/Endpoint?Name=<var class="keyword varname">EndpointName</var>%26SubType=<var class="keyword varname">SubType</var>%26Duration=<var class="keyword varname">Duration</var>%26StatType=<var class="keyword varname">StatType</var>
+</code></pre>
+                </div>
+                <div class="itemgroup stepxmp">
+                    <p class="p">where:</p>
+                    <ul class="ul">
+                        <li class="li">
+                            <dl class="dl">
+                                
+                                    <dt class="dt dlterm">Name</dt>
+                                    <dd class="dd">Specifies the name of the endpoint. </dd>
+                                
+                            </dl>
+                        </li>
+                        <li class="li">
+                            <dl class="dl">
+                                
+                                    <dt class="dt dlterm">SubType</dt>
+                                    <dd class="dd">Specifies the statistics to create</dd>
+                                    <dd class="dd ddexpand">This value can be one of the following values:<dl class="dl">
+                                            
+                                                <dt class="dt dlterm">Current®</dt>
+                                                <dd class="dd">View the most recent statistics.</dd>
+                                            
+                                            
+                                                <dt class="dt dlterm"> History</dt>
+                                                <dd class="dd">View older statistics.</dd>
+                                            
+                                        </dl></dd>
+                                
+                            </dl>
+                        </li>
+                        <li class="li">
+                            <dl class="dl">
+                                
+                                    <dt class="dt dlterm">Duration</dt>
+                                    <dd class="dd">Specifies the time span (in seconds) of the data to be
+                                        collected. <p class="p">Valid value range is 1 - 86400.</p><p class="p">The
+                                            default value is <span class="keyword parmname">1800</span>.</p>
+                                    </dd>
+                                
+                            </dl>
+                        </li>
+                        <li class="li">
+                            <dl class="dl">
+                                
+                                    <dt class="dt dlterm">StatType</dt>
+                                    <dd class="dd">Specifies the type of data to order the results by.</dd>
+                                    <dd class="dd ddexpand">This value can be one of the following values:<dl class="dl">
+                                            
+                                                <dt class="dt dlterm"> ActiveConnections</dt>
+                                                <dd class="dd">Currently active connections.</dd>
+                                            
+                                            
+                                                <dt class="dt dlterm">Connections </dt>
+                                                <dd class="dd">Count of connections since <span class="ph">Eclipse Amlen</span> was last reset.</dd>
+                                            
+                                            
+                                                <dt class="dt dlterm">BadConnections </dt>
+                                                <dd class="dd">Count of connections that failed to connect
+                                                  since reset.</dd>
+                                            
+                                            
+                                                <dt class="dt dlterm"> LostMsgs </dt>
+                                                <dd class="dd">Count of messages since reset that, when
+                                                  published, resulted in an error. This error can be
+                                                  caused by a number of events.<p class="p"> It is usually
+                                                  caused when a message is published that cannot be
+                                                  accepted by one or more subscriptions and, because
+                                                  of the quality of service (QoS) of the message and
+                                                  subscriptions, the publish request fails. </p>The
+                                                  publishing application receives an error.</dd>
+                                            
+                                            
+                                                <dt class="dt dlterm">ReadMsgs</dt>
+                                                <dd class="dd">Count of messages read since reset.</dd>
+                                            
+                                            
+                                                <dt class="dt dlterm">ReadBytes </dt>
+                                                <dd class="dd">Count of bytes read since reset.</dd>
+                                            
+                                            
+                                                <dt class="dt dlterm"> WarnMsgs </dt>
+                                                <dd class="dd">Count of messages since reset that, when
+                                                  published, resulted in a warning. <p class="p">This count is
+                                                  increased when a message is published that cannot
+                                                  be accepted by one or more subscriptions but,
+                                                  because of the QoS of the message and
+                                                  subscriptions, the publish request does not fail.
+                                                  Even though the publish request does not fail,
+                                                  this count indicates that one or more
+                                                  subscriptions are not able to process the messages
+                                                  that are being published.</p></dd>
+                                            
+                                            
+                                                <dt class="dt dlterm">WriteMsgs</dt>
+                                                <dd class="dd"> Count of messages written since reset.</dd>
+                                            
+                                            
+                                                <dt class="dt dlterm">WriteBytes</dt>
+                                                <dd class="dd">Count of bytes written since reset.</dd>
+                                            
+                                        </dl></dd>
+                                    <dd class="dd ddexpand">The default value is
+                                        <span class="keyword parmname">ActiveConnections</span>.</dd>
+                                
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+            </li></ol></section>
+        <section class="section result" id="admin00013__results">
+            <div class="p" id="admin00013__TheFollowingFieldsAreReturnedInThe.">The following fields are returned: <ul class="ul">
+                    <li class="li">
+                        <dl class="dl">
+                            
+                                <dt class="dt dlterm">Name</dt>
+                                <dd class="dd">String</dd>
+                                <dd class="dd ddexpand">The name of the endpoint.</dd>
+                            
+                        </dl>
+                    </li>
+                    <li class="li">
+                        <dl class="dl">
+                            
+                                <dt class="dt dlterm">IPAddr</dt>
+                                <dd class="dd">String</dd>
+                                <dd class="dd ddexpand">The network interface address to which the endpoint is
+                                    bound.</dd>
+                            
+                        </dl>
+                    </li>
+                    <li class="li">
+                        <dl class="dl">
+                            
+                                <dt class="dt dlterm">Enabled</dt>
+                                <dd class="dd">Boolean</dd>
+                                <dd class="dd ddexpand">Indicates whether the endpoint is enabled. If the endpoint is
+                                    enabled and the <span class="keyword parmname">LastErrorCode</span> is
+                                        <span class="keyword option">0</span>, this indicates that the endpoint is
+                                    accepting connections. </dd>
+                            
+                        </dl>
+                    </li>
+                    <li class="li">
+                        <dl class="dl">
+                            
+                                <dt class="dt dlterm">Total</dt>
+                                <dd class="dd">Numeric</dd>
+                                <dd class="dd ddexpand">The number of connections that completed through to the protocol
+                                    handshake since configuration time.</dd>
+                            
+                        </dl>
+                    </li>
+                    <li class="li">
+                        <dl class="dl">
+                            
+                                <dt class="dt dlterm">Active</dt>
+                                <dd class="dd">Numeric</dd>
+                                <dd class="dd ddexpand">The number of connections that are currently active.</dd>
+                            
+                        </dl>
+                    </li>
+                    <li class="li">
+                        <dl class="dl">
+                            
+                                <dt class="dt dlterm">Messages</dt>
+                                <dd class="dd">Numeric</dd>
+                                <dd class="dd ddexpand">The number of messages that are sent or received since
+                                    configuration time. </dd>
+                            
+                        </dl>
+                    </li>
+                    <li class="li">
+                        <dl class="dl">
+                            
+                                <dt class="dt dlterm">Bytes</dt>
+                                <dd class="dd">Numeric</dd>
+                                <dd class="dd ddexpand">The number of bytes that are sent and received since
+                                    configuration time. </dd>
+                            
+                        </dl>
+                    </li>
+                    <li class="li">
+                        <dl class="dl">
+                            
+                                <dt class="dt dlterm">LastErrorCode</dt>
+                                <dd class="dd">Numeric</dd>
+                                <dd class="dd ddexpand">This value provides an indication of the success of the last
+                                    configuration of the endpoint. 
+                                    An endpoint is working if <span class="keyword parmname">Enabled</span> is 
+                                    <span class="keyword option">1</span> and <span class="keyword parmname">LastErrorCode</span> 
+                                    is <span class="keyword option">1</span>.
+                                    For more information about error codes, see <a class="xref" href="../Troubleshooting/admin_messagecatalog.html" title="You can use the messages in this catalog to help you solve problems with Eclipse Amlen.">Message catalog</a>.</dd>
+                            
+                        </dl>
+                    </li>
+                    <li class="li">
+                        <dl class="dl">
+                            
+                                <dt class="dt dlterm">ConfigTime</dt>
+                                <dd class="dd">Numeric</dd>
+                                <dd class="dd ddexpand">Specifies the number of microseconds since the unix epoch.</dd>
+                                <dd class="dd ddexpand">The time of the last major configuration of an endpoint and when
+                                    the statistics were reset. 
+                                    The <span class="keyword parmname">ConfigTime</span>
+                                    is usually the time at which the endpoint is first enabled. If
+                                    the endpoint is deleted and re-created, then the configuration
+                                    time is updated. The <span class="keyword parmname">ConfigTime</span> is used by
+                                    monitoring applications that keep time series statistics so that
+                                    any discontinuity is identifiable. </dd>
+                            
+                        </dl>
+                    </li>
+                    <li class="li">
+                        <dl class="dl">
+                            
+                                <dt class="dt dlterm">BadConnections</dt>
+                                <dd class="dd">Numeric</dd>
+                                <dd class="dd ddexpand">The count of connections that failed before the protocol
+                                    handshake completed.</dd>
+                            
+                        </dl>
+                    </li>
+                </ul></div>
+        </section>
+<section class="example">
+            <p class="p">The following example uses cURL to show how a GET method is used to create the most
+                recent statistics for all endpoints:</p>
+            <pre class="pre codeblock"><code>curl -X GET http://127.0.0.1:9089/ima/v1/monitor/Endpoint?SubType=Current  
+ 
+ </code></pre>
+            <p class="p">The following example shows a successful example response to the GET method that was
+                used to create the most recent statistics for all endpoints:</p>
+            <pre class="pre codeblock"><code>{ 
+    "Version":"v1", 
+      "Endpoint": [ 
+        {
+          "Name":"DemoEndpoint","IPAddr":"ALL","Enabled":false,"Total":0,"Active":0,
+          "Messages":0,"Bytes":0,"LastErrorCode":0,
+          "ConfigTime":"2015-12-11T18:29:15.519Z","ResetTime":null,"BadConnections":0
+        },
+        {
+          "Name":"DemoMqttEndpoint","IPAddr":"ALL","Enabled":false,"Total":0,"Active":0,
+          "Messages":0,"Bytes":0,"LastErrorCode":0,
+          "ConfigTime":"2015-12-11T18:29:15.519Z","ResetTime":null,"BadConnections":0
+        },
+        {
+          "Name":"!MQConnectivityEndpoint","IPAddr":"/var/messagesight/data/MQConnectivityEndpoint_34109b4a50a7",
+          "Enabled":true, "Total":0,"Active":0,"Messages":0,"Bytes":0,"LastErrorCode":0,
+          "ConfigTime":"2016-04-27T16:42:33.464-05:00","ResetTime":null,"BadConnections":0
+        } 
+      ]  }</code></pre>
+            <div class="note note note_note"><span class="note__title">Note:</span> In the example that shows the most recent statistics for all endpoints,
+                    <code class="ph codeph">!MQConnectivityEndpoint</code> is displayed even if MQConnectivity is
+                not enabled. <code class="ph codeph">!MQConnectivityEndpoint</code> is an internal pre-configured
+                endpoint that cannot be changed. </div>
+            <p class="p">The following example uses cURL to show how a GET method is used to create the most
+                recent statistics about an endpoint called DemoEndpoint:</p>
+            <pre class="pre codeblock"><code>curl -X GET http://127.0.0.1:9089/ima/v1/monitor/Endpoint?Name=DemoEndpoint%26SubType=Current  
+ 
+ </code></pre>
+            <p class="p">The following example shows a successful example response to the GET method that was
+                used to create the most recent statistics about an endpoint called DemoEndpoint:</p>
+            <pre class="pre codeblock"><code>{ "Version":"v1", "Endpoint": [ {
+    "Name":"DemoEndpoint","IPAddr":"ALL","Enabled":false,"Total":0,"Active":0,"Messages":0,"Bytes":0,"LastErrorCode":0,
+"ConfigTime":"2015-12-11T18:29:15.519Z","ResetTime":null,"BadConnections":0 } ]
+</code></pre>
+            <p class="p">The following example uses cURL to show how a GET method is used to create statistics
+                about an internal pre-configured endpoint,
+                <code class="ph codeph">!MQConnectivityEndpoint</code>:</p>
+            <pre class="pre codeblock"><code>curl -X GET http://127.0.0.1:9089/ima/v1/monitor/Endpoint?Name=%21MQConnectivityEndpoint 
+ 
+ </code></pre>
+            <div class="p">
+                <div class="note note note_note"><span class="note__title">Note:</span> You must encode the special endpoints that start with the character
+                        <kbd class="ph userinput">!</kbd> with <kbd class="ph userinput">%21</kbd> when using the REST
+                    API GET method.</div>
+            </div>
+            <p class="p">The following example shows a successful example response to the GET method that was
+                used to create statistics about <code class="ph codeph">!MQConnectivityEndpoint</code>:</p>
+            <pre class="pre codeblock"><code>
+{ 
+"Version":"v1", "Endpoint": [ { "Name":"!MQConnectivityEndpoint","IPAddr":"127.0.0.1",
+"Enabled":true,"Total":0,"Active":0,"Messages":0,"Bytes":0,"LastErrorCode":0,"ConfigTime":"2016-04-27T16:42:33.464-05:00",
+"ResetTime":null,"BadConnections":0 }]
+}
+</code></pre>
+        </section>
+</div>
+
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Monitoring/admin00010.html" title="Monitor the performance of individual endpoints, in terms of connection activity and throughput across a specified time frame.">Endpoint Monitoring</a></div></div></nav></article></main></body></html>

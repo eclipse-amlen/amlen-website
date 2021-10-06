@@ -1,0 +1,208 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="keywords" content="Topic"><link rel="stylesheet" type="text/css" href="../../commonltr.css"><link rel="stylesheet" type="text/css" href="../../doc.css"><title>Show topic related statistics by using REST Monitoring APIs</title></head><body id="cmd_imaserver_stat_topic"><nav role="toc"><ul><li><a href="../../welcome.html">Welcome</a></li><li><a href="../../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../../Overview/ov00000_.html">Product overview</a></li><li><a href="../../Planning/pl00001_.html">Planning</a></li><li><a href="../../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../../Administering/ad00000_.html">Administering</a></li><li><a href="../../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../../Security/se00000_.html">Security</a></li><li><a href="../../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../../Reference/re00000_.html">Reference</a><ul><li><a href="../../Reference/intro.html">REST API Reference</a><ul><li><a href="../../Reference/cmd_delete_config.html">Delete configuration objects</a></li><li><a href="../../Reference/cmd_show_config.html">Show configuration details of nameable configuration objects</a></li><li><a href="../../Reference/cmd_show_config_fix.html">Show configuration details of fixed-name configuration objects</a></li><li><a href="../../Reference/cmd_REST_file_put.html">Copy a file from the local machine to Eclipse Amlen  </a></li><li><a href="../../Reference/AdminEndpointCmd/adminendpoint.html">Admin endpoint REST Administration APIs</a></li><li><a href="../../Reference/ApplianceCmd/appliancesettingcommands.html">Server REST Administration APIs</a></li><li><a href="../../Reference/ClusterCmd/clustercommands.html">Cluster REST Administration APIs</a></li><li><a href="../../Reference/SecurityCmd/securitycommands.html">Security REST Administration APIs</a></li><li><a href="../../Reference/MsgHubCmd/messagehubcommands.html">Message hub REST Administration APIs</a></li><li><a href="../../Reference/QueueCmd/QueueCmd.html">Queue REST Administration APIs</a></li><li><a href="../../Reference/MQConnCmd/mqconnectivitycommands.html">MQ Connectivity  REST Administration APIs</a></li><li><a href="../../Reference/HACmd/HAcommands.html">High availability REST Administration APIs</a></li><li><a href="../../Reference/BackupCmd/backupandrestorecommands.html">Backup and restore commands</a></li><li><a href="../../Reference/MonitorCmd/monitoringandreportingcommands.html">REST Monitoring APIs</a><ul><li><a href="../../Reference/MonitorCmd/cmd_imaserver_delete_MQTT.html">Delete MQTTClient</a></li><li><a href="../../Reference/MonitorCmd/cmd_imaserver_delete_Subscription.html">Delete Subscription</a></li><li><a href="../../Reference/MonitorCmd/cmd_imaserver_delete_tmonitor.html">Delete TopicMonitor</a></li><li><a href="../../Reference/MonitorCmd/cmd_imaserver_list_tmonitor.html">Show TopicMonitor </a></li><li><a href="../../Reference/MonitorCmd/cmd_display_cluster.html">Show cluster statistics by using REST Monitoring APIs  </a></li><li><a href="../../Reference/MonitorCmd/cmd_imaserver_stat_Connection.html">Show connection level statistics by using REST Monitoring APIs</a></li><li><a href="../../Reference/MonitorCmd/cmd_imaserver_stat_dmr.html">Show destination mapping rule statistics by REST Monitoring APIs  </a></li><li><a href="../../Reference/MonitorCmd/cmd_imaserver_stat_Endpoint.html">Show endpoint level statistics by using REST Monitoring APIs</a></li><li><a href="../../Reference/MonitorCmd/cmd_imaserver_stat_Memory.html">Show memory statistics by using REST Monitoring APIs  </a></li><li><a href="../../Reference/MonitorCmd/cmd_imaserver_stat_MQTTClient.html">Show MQTT client monitoring statistics by REST Monitoring APIs</a></li><li><a href="../../Reference/MonitorCmd/cmd_imaserver_stat_Queue.html">Show queue related statistics by using REST Monitoring APIs  </a></li><li><a href="../../Reference/MonitorCmd/cmd_imaserver_stat_server.html">Show server statistics by using REST Monitoring APIs  </a></li><li><a href="../../Reference/MonitorCmd/cmd_imaserver_stat_Store.html">Show store statistics by using REST Monitoring APIs  </a></li><li><a href="../../Reference/MonitorCmd/cmd_imaserver_stat_Subscription.html">Show subscription related statistics by REST Monitoring APIs</a></li><li class="active"><a href="../../Reference/MonitorCmd/cmd_imaserver_stat_Topic.html">Show topic related statistics by using REST Monitoring APIs</a></li><li><a href="../../Reference/MonitorCmd/cmd_imaserver_stat_transaction.html">Show transaction data for XA transaction statistics by using REST Monitoring APIs  </a></li></ul></li><li><a href="../../Reference/XATranCmd/xatransactioncommands.html">XA transaction REST Administration APIs</a></li><li><a href="../../Reference/SNMPCmd/snmpcommands.html">SNMP REST Administration APIs</a></li><li><a href="../../Reference/ProtocolPluginCmd/ProtocolPluginCmd.html">Protocol plug-in REST Administration APIs</a></li><li><a href="../../Reference/SpecialCmd/spepcom.html">Special purpose REST Administration APIs</a></li></ul></li><li><a href="../../Reference/_Topics/sy10530_.html">Digital certificates</a></li><li><a href="../../Reference/_Topics/re00003_.html">Supported cipher lists</a></li><li><a href="../../Reference/_Topics/re00001_.html">Classless Inter-Domain Routing</a></li></ul></li><li><a href="../../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Show topic related statistics by using <span class="ph">REST Monitoring APIs</span></h1>
+
+
+<div class="body refbody">
+<section class="section"><h2 class="title sectiontitle">Purpose</h2>Reports topic-related monitoring data for topics that have been
+   defined in topic monitors. </section>
+<section class="section"><h2 class="title sectiontitle">URI</h2>Use the <span class="ph">Eclipse Amlen</span> REST API
+   GET method with the following <span class="ph">Eclipse Amlen</span> monitoring
+     URI:<p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/monitor/Topic</code></p></section>
+<section class="section"><h2 class="title sectiontitle">Object configuration data</h2><div class="p">Provide query parameters requesting the
+    statistics that you want returned in the JSON payload. The following example uses cURL to create
+    topic-related
+    statistics:<pre class="pre codeblock"><code>curl -X GET http://127.0.0.1:9089/ima/v1/monitor/Topic?TopicString=<var class="keyword varname">TopicString</var>%26ResultCount=<var class="keyword varname">ResultCount</var>%26Monitoring-DataType=<var class="keyword varname">Monitoring-DataType</var></code></pre></div>Where:<ul class="ul">
+    <li class="li">
+     <dl class="dl">
+      
+       <dt class="dt dlterm">TopicString</dt>
+       <dd class="dd">Optional.</dd>
+       <dd class="dd ddexpand"><span class="keyword parmname">TopicString</span> is a filter, which you can use to match specific topic
+        strings. <span class="keyword parmname">TopicString</span> can contain wildcards (*) to match 0 or more
+        characters. The default value is <span class="keyword parmname">*</span>.</dd>
+      
+     </dl>
+    </li>
+    <li class="li">
+     <dl class="dl">
+      
+       <dt class="dt dlterm">ResultCount</dt>
+       <dd class="dd">Optional.</dd>
+       <dd class="dd ddexpand">Specifies the maximum number of results to return. Options available for selection are
+        10, 25, 50, and 100. The default value is 25. If the number of topics that are being
+        monitored is less than the <span class="keyword parmname">Count</span> specified, then only those topics that
+        are being monitored are returned.</dd>
+       <dd class="dd ddexpand">Specifies the number of results to display. </dd>
+      
+     </dl>
+    </li>
+    <li class="li">
+     <dl class="dl">
+      
+       <dt class="dt dlterm">Monitoring-DataType</dt>
+       <dd class="dd">Optional.</dd>
+       <dd class="dd ddexpand">Specifies the type of data to order the results by.</dd>
+       <dd class="dd ddexpand">This value can be one of the following values:<ul class="ul">
+         <li class="li">
+          <dl class="dl">
+           
+            <dt class="dt dlterm"> PublishedMsgsHighest</dt>
+            <dd class="dd">Topics with the most publications. </dd>
+           
+          </dl>
+         </li>
+         <li class="li">
+          <dl class="dl">
+           
+            <dt class="dt dlterm">PublishedMsgsLowest</dt>
+            <dd class="dd">Topics with the least publications. </dd>
+           
+          </dl>
+         </li>
+         <li class="li">
+          <dl class="dl">
+           
+            <dt class="dt dlterm">SubscriptionsHighest</dt>
+            <dd class="dd">Topics with the most subscribers.</dd>
+           
+          </dl>
+         </li>
+         <li class="li">
+          <dl class="dl">
+           
+            <dt class="dt dlterm">SubscriptionsLowest</dt>
+            <dd class="dd">Topics with the least subscribers.</dd>
+           
+          </dl>
+         </li>
+         <li class="li">
+          <dl class="dl">
+           
+            <dt class="dt dlterm">RejectedMsgsHighest</dt>
+            <dd class="dd">Topics with the most rejected messages.</dd>
+           
+          </dl>
+         </li>
+         <li class="li">
+          <dl class="dl">
+           
+            <dt class="dt dlterm">RejectedMsgsLowest</dt>
+            <dd class="dd">Topics with the least rejected messages.</dd>
+           
+          </dl>
+         </li>
+         <li class="li">
+          <dl class="dl">
+           
+            <dt class="dt dlterm">FailedPublishesHighest</dt>
+            <dd class="dd">Topics with the most rejected publishes.</dd>
+           
+          </dl>
+         </li>
+         <li class="li">
+          <dl class="dl">
+           
+            <dt class="dt dlterm">FailedPublishesLowest</dt>
+            <dd class="dd">Topics with the least rejected publishes.</dd>
+           
+          </dl>
+         </li>
+        </ul></dd>
+       <dd class="dd ddexpand">The default value is <span class="keyword parmname">PublishedMsgsHighest</span>.</dd>
+      
+     </dl>
+    </li>
+   </ul></section>
+<section class="section"><h2 class="title sectiontitle">Usage Notes</h2><ul class="ul">
+<li class="li">The command must be capitalized as shown.</li>
+<li class="li">The command must use the double quotation marks as shown.</li>
+<li class="li">The statistics that are produced can be up to 60 seconds out of date.</li>
+<li class="li">Before you can monitor a topic, you must create a topic monitor that specifies the topic string
+     that you want to monitor. After you create the topic monitor, statistics about the topic string
+     are recorded. You can create topic monitors by using <span class="ph">REST Monitoring APIs</span>. For more information about
+     creating topic monitors, see <a class="xref" href="../../Monitoring/admin00018.html" title="System administrators can view topic-related statistics by using a REST Monitoring API.">Viewing topic monitoring statistics by using REST Monitoring APIs</a>.</li>
+<li class="li">If the <span class="ph">Eclipse Amlen</span> server
+is restarted, monitored topic data is reset.</li>
+<li class="li">To reset the monitoring data for a particular topic string, you
+must delete and re-create the topic monitor.</li>
+<li class="li"><div class="p">The following fields are returned: <ul class="ul">
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">TopicString</dt>
+          <dd class="dd">String</dd>
+          <dd class="dd ddexpand">The topic that is being monitored. The topic string always contains a wildcard.</dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">Subscriptions</dt>
+          <dd class="dd">Numeric</dd>
+          <dd class="dd ddexpand">The number of active subscriptions on the topics that are monitored. The figure shows
+           all active subscriptions that match the wildcarded topic string.</dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">ResetTime</dt>
+          <dd class="dd">Date/Time</dd>
+          <dd class="dd ddexpand">The time at which the statistics for the topic were reset. The
+            <span class="ph uicontrol">ResetTime</span> is usually the time when the topic monitor is
+           created.</dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">PublishedMsgs</dt>
+          <dd class="dd">Numeric</dd>
+          <dd class="dd ddexpand">The number of messages that are successfully published to a topic that matches the
+           wildcarded topic string.</dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">RejectedMsgs</dt>
+          <dd class="dd">Numeric</dd>
+          <dd class="dd ddexpand">The number of messages that are rejected by one or more subscriptions where the
+           quality of service level did not cause the publish request to fail.</dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm">FailedPublishes</dt>
+          <dd class="dd">Numeric</dd>
+          <dd class="dd ddexpand">The number of publish requests that failed because the message is rejected by one or
+           more subscriptions.</dd>
+         
+        </dl>
+       </li>
+      </ul></div></li>
+</ul></section>
+<section class="section"><h2 class="title sectiontitle">Example</h2>
+   
+   <p class="p">The following example uses cURL to show how a GET method is used to create statistics about
+    topics with the highest number of published messages:</p>
+   <pre class="pre codeblock"><code>curl -X GET http://127.0.0.1:9089/ima/v1/monitor/Topic?TopicString=*%26Monitoring-DataType=PublishedMsgsHighest
+ 
+ </code></pre>
+   <p class="p">The following example shows a successful example response to the GET method that was used to
+    create statistics about topics with the highest number of published messages::</p>
+   <pre class="pre codeblock"><code>{ "Version":"v1", "Topic": [ { "TopicString":"ROOT/#","Subscriptions":5,"ResetTime":"0","PublishedMsgs":50,
+"RejectedMsgs":4,"FailedPublishes":2,"ResultCount":10 } ] }
+</code></pre>
+  </section>
+</div>
+
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../../Reference/MonitorCmd/monitoringandreportingcommands.html" title="REST Monitoring APIs allow you to monitor Eclipse Amlen. You can monitor topics, subscriptions, connections, endpoints, destination mapping rules, MQTT clients, queues, transactions, memory usage, and store usage.">REST Monitoring APIs</a></div></div></nav></article></main></body></html>

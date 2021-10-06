@@ -1,0 +1,48 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="Eclipse Amlen can be deployed as a container e.g. on Docker on a supported operating system."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Eclipse Amlen in Containers</title></head><body id="ov60000_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a><ul><li><a href="../Overview/ov00002_.html">Architecture Overview</a></li><li class="active"><a href="../Overview/ov60000_.html">Eclipse Amlen in Containers</a></li><li><a href="../Overview/ov00050.html">Supported protocols</a></li><li><a href="../Bridge/br00000.html">   Amlen Bridge</a></li><li><a href="../Overview/ov00003_.html">Key Concepts</a></li><li><a href="../Overview/accessibility_topic.html">Accessibility features for Eclipse Amlen</a></li><li><a href="../Overview/notices.html">Notices</a></li></ul></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+    <h1 class="title topictitle1" id="ariaid-title1"><span class="ph">Eclipse Amlen</span> in Containers</h1>
+    
+    
+    
+    
+    <div class="body conbody"><p class="shortdesc">
+        <span class="ph">Eclipse Amlen</span> can be deployed
+        as a container e.g. on Docker on a supported operating system. </p>
+        <p class="p">Docker is an open source platform that uses Linux™ containerization and a layered file system. The image that is built by using Docker consists of layers that contain the application and the dependent binary files and libraries, but uses the kernel from the host operating system. The layering allows changes to be made quickly because only the modified layers are rebuilt and deployed. For more information about Docker and its advantages, see <a class="xref" href="https://www.docker.com/whatisdocker/" target="_blank" rel="external noopener">What is Docker?</a></p>
+        <div class="p"> Installing <span class="ph">Eclipse Amlen</span> on a
+            Docker platform provides a number of benefits: <ul class="ul">
+                <li class="li">Portability across machines on traditional systems, or in a public or private
+                    cloud.</li>
+                <li class="li">Rapid deployment of services. A Docker image is simple to build and can be
+                    quickly and easily deployed across environments.</li>
+                <li class="li">Decreased overhead. A Docker container has a small footprint because the need
+                    for a hypervisor is removed. </li>
+                <li class="li">Simplified maintenance provided by the use of a layered file system. </li>
+            </ul>
+        </div>
+        <p class="p">Compressed files are provided that contain the files that you need to build your own Docker images. You can use these images to create a container by using the <span class="keyword cmdname">docker run</span> command.</p>
+        <div class="p">You can run the following Docker containers to start working with <span class="ph">Eclipse Amlen</span>:<dl class="dl">
+                
+                    <dt class="dt dlterm">Messaging server container</dt>
+                <dd class="dd"> The messaging server container is the core messaging service. You can use this
+container to administer connected clients and devices, and to process messages. All the features
+that are available in the <span class="ph">Amlen Virtual Edition</span> are supported
+except for log file offloader and local user registry. </dd>
+                    <dd class="dd ddexpand">You can configure this container by using interactive or batch commands on
+                        the command-line. Alternatively, you can configure this container by using
+                        the WebUI container. </dd>
+                
+                
+                    <dt class="dt dlterm">WebUI container </dt>
+                    <dd class="dd">You can use the WebUI container to administer the messaging server
+                        container. The Web UI container can be used to administer one or more
+                        messaging server containers. </dd>
+                
+            </dl></div>
+    <p class="p">For more information about building <span class="ph">Eclipse Amlen</span>
+Docker images and creating containers, see <a class="xref" href="../QuickStartGuide/qs00055_.html">Installing <span class="ph">Eclipse Amlen</span> in Docker
+containers</a>.</p>
+        
+    </div>
+</article></main></body></html>

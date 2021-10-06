@@ -1,0 +1,202 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="The Amlen Bridge provides the ability to create admin endpoints."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Administrative REST interfaces</title></head><body id="br00023.dita"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a><ul><li><a href="../Bridge/br00026.html">Installing  Amlen Bridge  </a></li><li><a href="../Bridge/br00012.html">Post installation user actions</a></li><li><a href="../Bridge/br00020.html">File paths</a></li><li><a href="../Bridge/br00021.html">Updating the Bridge configuration</a></li><li><a href="../Bridge/br00022.html">Monitoring</a></li><li class="active"><a href="../Bridge/br00023.html">Administrative REST interfaces</a></li></ul></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Administrative REST interfaces</h1>
+
+<div class="body conbody"><p class="shortdesc">The <span class="ph"> Amlen Bridge</span> provides the ability to create admin
+endpoints.</p>
+<section class="section"><h2 class="title sectiontitle">Using the administrative REST interfaces</h2><p class="p"> There is an admin endpoint
+defined during the installation as a service or using Docker. This endpoint uses a self-signed
+certificate that is provided with the installation. You can modify this configured admin interface,
+and you can define additional admin interfaces with different security and interface bindings, but
+each one must listen to a separate port. </p><p class="p">For example, you can have one that listens on
+localhost and another one on a private network. It is best practice to restrict the admin interface
+so that it is not exposed to the public internet. Always use secure connections, which requires you
+to provide a server certificate and key. It is best practice to restrict the interfaces that the
+admin endpoint listens on. You must also provide your own certificate. </p><p class="p">You must have at least
+one defined user to use the REST APIs. All defined users are authorized to use all REST calls. You
+must use basic authentication and specify a user and a password.</p><p class="p">You do not need to specify
+all fields when an object is modified, you only need to specify those that are changed. This means
+that you must also explicitly delete any complex object you wish to delete from configuration.
+Complex objects are those represented as JSON objects. You can delete complex objects using a
+<code class="ph codeph">DELETE REST</code> method or by changing the global configuration with the value of the
+object set to <kbd class="ph userinput">null</kbd>.</p><p class="p">All paths that are shown in the following tables
+come after the initial path <span class="ph filepath">/admin/</span>.</p><p class="p">For a description of the connection
+object, forwarder object, and endpoint object properties, see <a class="xref" href="br00010.html" title="The Amlen Bridge is configured by using a small set of objects that are stored in a JSON dynamic configuration file. The objects can be created and modified as files or specified by using the Bridge REST APIs. When the configuration objects are modified, the dynamic configuration file is updated with the current state.">Configuring the Bridge</a>.</p><p class="p">The following table shows the paths
+that can be used with the <code class="ph codeph">GET</code> method:</p>
+<table class="table" id="br00023.dita__datasimpletable_xn1_bln_qfb"><caption><span class="table--title-label">Table 1. </span><span class="title">Paths that can be used with the GET method, and associated description</span></caption><colgroup><col><col></colgroup><thead class="thead">
+<tr class="row">
+<th class="entry" id="br00023.dita__datasimpletable_xn1_bln_qfb__entry__1">Path</th>
+<th class="entry" id="br00023.dita__datasimpletable_xn1_bln_qfb__entry__2">Description</th>
+</tr>
+</thead><tbody class="tbody">
+<tr class="row">
+<td class="entry" headers="br00023.dita__datasimpletable_xn1_bln_qfb__entry__1">config</td>
+<td class="entry" headers="br00023.dita__datasimpletable_xn1_bln_qfb__entry__2">Return the complete dynamic config for this bridge instance. </td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00023.dita__datasimpletable_xn1_bln_qfb__entry__1">config/connection/[match]</td>
+<td class="entry" headers="br00023.dita__datasimpletable_xn1_bln_qfb__entry__2">Return matching connection config. If match is missing or contains an asterisk, return all
+matching connections. Only the inner levels of the object are returned.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00023.dita__datasimpletable_xn1_bln_qfb__entry__1">config/endpoint/{match}</td>
+<td class="entry" headers="br00023.dita__datasimpletable_xn1_bln_qfb__entry__2">Return matching endpoint config. If match is missing or contains an asterisk, return all
+matching endpoints. Only the inner levels of the object are returned.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00023.dita__datasimpletable_xn1_bln_qfb__entry__1">config/forwarder/{match}</td>
+<td class="entry" headers="br00023.dita__datasimpletable_xn1_bln_qfb__entry__2">Return matching forwarder config. If match is missing or contains an asterisk, return all
+matching forwarders. Only the inner levels of the object are returned.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00023.dita__datasimpletable_xn1_bln_qfb__entry__1">config/user/{match}</td>
+<td class="entry" headers="br00023.dita__datasimpletable_xn1_bln_qfb__entry__2">Return matching user config. If match is missing or contains an asterisk, return all
+matching users. Only the inner levels of the object are returned.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00023.dita__datasimpletable_xn1_bln_qfb__entry__1">connection/password/{password}</td>
+<td class="entry" headers="br00023.dita__datasimpletable_xn1_bln_qfb__entry__2">Return the obfuscated connection password as text. </td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00023.dita__datasimpletable_xn1_bln_qfb__entry__1">endpoint/{match?</td>
+<td class="entry" headers="br00023.dita__datasimpletable_xn1_bln_qfb__entry__2">Return the matching endpoint statistics. The match can be missing or can contain *
+wildcards</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00023.dita__datasimpletable_xn1_bln_qfb__entry__1">forwarder/{match}</td>
+<td class="entry" headers="br00023.dita__datasimpletable_xn1_bln_qfb__entry__2">Return the forwarder status and statistics. The {match} can be left out or can be a name
+including * wildcards.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00023.dita__datasimpletable_xn1_bln_qfb__entry__1">info/{kind}</td>
+<td class="entry" headers="br00023.dita__datasimpletable_xn1_bln_qfb__entry__2">Show bridge execution information. If the {kind} is missing or “all”, a JSON object showing
+all info is returned. If kind is “version”, “container”, “hostname”, “servername”, “platform”,
+“processor”, or “buildlabel” the specific info value is returned as text.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00023.dita__datasimpletable_xn1_bln_qfb__entry__1">password/{user}/{password}</td>
+<td class="entry" headers="br00023.dita__datasimpletable_xn1_bln_qfb__entry__2">Return a user object with the obfuscated password matching the specified user and password.
+This can be used to get an obfuscated password when manually modifying the config files.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00023.dita__datasimpletable_xn1_bln_qfb__entry__1">set/{match}</td>
+<td class="entry" headers="br00023.dita__datasimpletable_xn1_bln_qfb__entry__2">Return a config object showing the value of selected properties. Both static and dynamic
+properties are returned. If the item to match does not include a wildcard, then the value is
+returned without any JSON wrappers. </td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00023.dita__datasimpletable_xn1_bln_qfb__entry__1">time</td>
+<td class="entry" headers="br00023.dita__datasimpletable_xn1_bln_qfb__entry__2">Return the time as known to the server in ISO8601 format</td>
+</tr>
+</tbody></table>
+<p class="p">The following table show the paths that can be used with the POST method, and
+provide an associated description:</p>
+<table class="table" id="br00023.dita__datasimpletable_zfq_x4n_qfb"><caption><span class="table--title-label">Table 2. </span><span class="title">Paths that can be used with the POST method, and associated
+description</span></caption><colgroup><col><col></colgroup><thead class="thead">
+<tr class="row">
+<th class="entry" id="br00023.dita__datasimpletable_zfq_x4n_qfb__entry__1">Path</th>
+<th class="entry" id="br00023.dita__datasimpletable_zfq_x4n_qfb__entry__2">Description</th>
+</tr>
+</thead><tbody class="tbody">
+<tr class="row">
+<td class="entry" headers="br00023.dita__datasimpletable_zfq_x4n_qfb__entry__1">accept/license/{usage}</td>
+<td class="entry" headers="br00023.dita__datasimpletable_zfq_x4n_qfb__entry__2">Accept the license and specify the license type as: “Developers”, "Non-Production”, or
+“Production”. If you do not accept the license, use <code class="ph codeph">accept/license/None</code>.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00023.dita__datasimpletable_zfq_x4n_qfb__entry__1">config</td>
+<td class="entry" headers="br00023.dita__datasimpletable_zfq_x4n_qfb__entry__2">Post a config from the outermost level of config. At this level complex objects are
+represented by a JSON object named by the object type which contains a set of named objects of that
+type.  The objects are described in <a class="xref" href="br00010.html" title="The Amlen Bridge is configured by using a small set of objects that are stored in a JSON dynamic configuration file. The objects can be created and modified as files or specified by using the Bridge REST APIs. When the configuration objects are modified, the dynamic configuration file is updated with the current state.">Configuring the Bridge</a>.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00023.dita__datasimpletable_zfq_x4n_qfb__entry__1">keystore/{name}</td>
+<td class="entry" headers="br00023.dita__datasimpletable_zfq_x4n_qfb__entry__2">Write a file into the key store. The contents must be a X.509 objects in PEM
+format.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00023.dita__datasimpletable_zfq_x4n_qfb__entry__1">quit/{rc}</td>
+<td class="entry" headers="br00023.dita__datasimpletable_zfq_x4n_qfb__entry__2">Terminate the bridge process cleanly. The {rc} is the return code send to the operating
+system and is optional and default to 0. When running the installed bridge, using a value of 2 will
+cause the bridge not to be restarted. Using other rc values will cause the bridge to be restarted.
+This POST does not take any content.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00023.dita__datasimpletable_zfq_x4n_qfb__entry__1">set/{property}/{value}</td>
+<td class="entry" headers="br00023.dita__datasimpletable_zfq_x4n_qfb__entry__2">Set the specified property to the value. The following properties may be set:
+LicensedUsage, LogLevel, ShutdownWait, TraceConnection, TraceLevel, TraceMessageData, and
+TraceSelected. The values of LicensedUsage, LogLevel, and TraceLevel are persisted, the others only
+affect this process. This POST does not take any content.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00023.dita__datasimpletable_zfq_x4n_qfb__entry__1">start</td>
+<td class="entry" headers="br00023.dita__datasimpletable_zfq_x4n_qfb__entry__2">Start the bridge processing. This only has an effect if the bridge was set to not
+automatically start, or the delay has been set very large. This POST does not take any
+content.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00023.dita__datasimpletable_zfq_x4n_qfb__entry__1">truststore/{name}</td>
+<td class="entry" headers="br00023.dita__datasimpletable_zfq_x4n_qfb__entry__2">Write a file into the trust store. The contents must be a X.509 objects in PEM
+format.</td>
+</tr>
+</tbody></table>
+<p class="p">The following table show the paths that can be used with the DELETE method, and
+provide an associated description:</p>
+<table class="table" id="br00023.dita__datasimpletable_en3_3pn_qfb"><caption><span class="table--title-label">Table 3. </span><span class="title">Paths that can be used with the DELETE method, and associated description</span></caption><colgroup><col><col></colgroup><thead class="thead">
+<tr class="row">
+<th class="entry" id="br00023.dita__datasimpletable_en3_3pn_qfb__entry__1">Path</th>
+<th class="entry" id="br00023.dita__datasimpletable_en3_3pn_qfb__entry__2">Description</th>
+</tr>
+</thead><tbody class="tbody">
+<tr class="row">
+<td class="entry" headers="br00023.dita__datasimpletable_en3_3pn_qfb__entry__1">config/connection/{name}</td>
+<td class="entry" headers="br00023.dita__datasimpletable_en3_3pn_qfb__entry__2">Delete a single named connection</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00023.dita__datasimpletable_en3_3pn_qfb__entry__1">config/endpoint/{name}</td>
+<td class="entry" headers="br00023.dita__datasimpletable_en3_3pn_qfb__entry__2">Delete a single named endpoint</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00023.dita__datasimpletable_en3_3pn_qfb__entry__1">config/forwarder/{name}</td>
+<td class="entry" headers="br00023.dita__datasimpletable_en3_3pn_qfb__entry__2">Delete a single named forwarder</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00023.dita__datasimpletable_en3_3pn_qfb__entry__1">config/user/{name}</td>
+<td class="entry" headers="br00023.dita__datasimpletable_en3_3pn_qfb__entry__2">Delete a single named user</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00023.dita__datasimpletable_en3_3pn_qfb__entry__1">config/routingrule/{forwarder}/{name}</td>
+<td class="entry" headers="br00023.dita__datasimpletable_en3_3pn_qfb__entry__2">Delete a single routing rule from a forwarder</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00023.dita__datasimpletable_en3_3pn_qfb__entry__1">keystore/{name}</td>
+<td class="entry" headers="br00023.dita__datasimpletable_en3_3pn_qfb__entry__2">Delete a file from the key store</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="br00023.dita__datasimpletable_en3_3pn_qfb__entry__1">truststore/{name}</td>
+<td class="entry" headers="br00023.dita__datasimpletable_en3_3pn_qfb__entry__2">Delete a file from the trust store</td>
+</tr>
+</tbody></table><p class="p">The installation comes with the default self-signed certificate. The
+certificate must be replaced with an installation-specific certificate, which can come from a
+Certificate Authority or it can be self-generated. To change the certificate, put the certificate
+and key into the <span class="ph filepath">/var/imabridge/keystore/</span> directory and update
+<span class="ph filepath">/var/imabridge/bridge.cfg</span> to specify the new files. Update the fields
+<var class="keyword varname">Endpoint.admin.Certificate</var>, and <var class="keyword varname">Endpoint.admin.Key</var> with the
+names of the files, and <var class="keyword varname">Endpoint.admin.KeyPassword</var> with the key password. Also,
+verify that <var class="keyword varname">Endpoint.admin.Secure</var> is set to true. To increase security, you can
+limit the admin endpoint to only a single network interface. For example, to limit the admin
+interface to only localhost, set the field <var class="keyword varname">Endpoint.admin.interface</var> to
+“localhost”.</p><p class="p">To generate a self-signed certificate with a private key, you can run the
+following openssl commands:</p><code class="ph codeph">openssl rand -base64 8 -out myserver.keypw openssl genrsa
+-aes128 -passout file:myserver.keypw -out myserver_key.pem 2048 openssl req -new -x509 -days 3650
+-key myserver_key.pem -passin file:myserver.keypw -subj "/CN=&lt;common_name&gt;/" -out
+myserver_crt.pem </code><p class="p">The full set of subject name elements can be specified in the subj
+argument:</p><code class="ph codeph">"/C=&lt;country&gt;/ST=&lt;state&gt;/L=&lt;location&gt;/O=&lt;organization&gt;/OU=&lt;unit&gt;/CN=&lt;common_name&gt;/"
+</code><div class="p">The result is the file <span class="ph filepath">myserver_crt.pem</span>, which contains the
+certificate. The file <span class="ph filepath">myserver_key.pem</span>, which contains the key. The file
+<span class="ph filepath">myserver.keypw</span>, which contains the key password. <div class="note note note_note"><span class="note__title">Note:</span> When you configure the
+admin endpoint, the key password must be entered as a string, not as the name of the
+file.</div></div></section>
+</div>
+</article></main></body></html>

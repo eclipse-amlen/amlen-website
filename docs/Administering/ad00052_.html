@@ -1,0 +1,213 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="In this scenario, a IBM MQ topic subtree is mapped to an Eclipse Amlen topic subtree. Messages that are put on topics in the IBM MQ subtree are forwarded to the equivalent Eclipse Amlen topic subtree."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>MQ Connectivity scenario 3: Fan out per device notification</title></head><body id="ad00052_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a><ul><li><a href="../Administering/ad00102_.html">MQ Connectivity</a><ul><li><a href="../Administering/ad00092_.html">MQ Connectivity throughput and message order</a></li><li><a href="../Administering/ad00101_.html">MQ Connectivity message persistence</a></li><li><a href="../Administering/ad00132_.html">MQ Connectivity retained messages</a></li><li><a href="../Administering/ad00103_.html">MQ Connectivity and high availability</a></li><li><a href="../Administering/ad00104_.html">MQ Connectivity security</a></li><li><a href="../Administering/ad00091_.html">Configuring the IBM MQ server connection channel</a></li><li><a href="../Administering/ad00105_.html">Configuring the MQ Connectivity SSL key repository</a></li><li><a href="../Administering/ad00113_.html">Configuring queue manager connections</a></li><li><a href="../Administering/ad00110_.html">Configuring destination mapping rules</a></li><li><a href="../Administering/ad00129_.html">Starting, restarting, stopping, and viewing the status of MQ Connectivity</a></li><li><a href="../Administering/ad00111_.html">MQ Connectivity scenarios</a><ul><li><a href="../Administering/ad00050_.html">MQ Connectivity scenario 1: Fan out broadcast</a></li><li><a href="../Administering/ad00051_.html">MQ Connectivity scenario 2: Fan in per device notification</a></li><li class="active"><a href="../Administering/ad00052_.html">MQ Connectivity scenario 3: Fan out per device notification</a></li><li><a href="../Administering/ad00053_.html">MQ Connectivity scenario 4: Fan out per device request-reply</a></li><li><a href="../Administering/ad00054_.html">MQ Connectivity scenario 5: Fan in per device request-reply</a></li></ul></li></ul></li><li><a href="../Administering/workingwithjmsra.html">Eclipse Amlen resource adapter</a></li><li><a href="../Administering/vm00001_.html">Using VMware vSphere to handle Eclipse Amlen failover</a></li></ul></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1"><span class="ph">MQ Connectivity</span> scenario
+3: Fan out per device notification</h1>
+
+<div class="body conbody"><p class="shortdesc">In this scenario, a <span class="ph">IBM® MQ</span> topic subtree
+is mapped to an <span class="ph">Eclipse Amlen</span> topic
+subtree. Messages that are put on topics in the <span class="ph">IBM MQ</span> subtree are forwarded
+to the equivalent <span class="ph">Eclipse Amlen</span> topic
+subtree.</p>
+<section class="section"><h2 class="title sectiontitle">Background to this scenario</h2><p class="p">This <span class="ph">MQ Connectivity</span> scenario
+extends the basic <span class="ph">Eclipse Amlen</span> fan-out
+per device notification end-to-end scenario. </p><p class="p">In this scenario,
+the publisher application is replaced by <span class="ph">IBM MQ</span>. Messages are
+published to <span class="ph">IBM MQ</span> topics,
+and <span class="ph">Eclipse Amlen</span> forwards
+the messages on to the equivalent <span class="ph">Eclipse Amlen</span> topics. The subscriber
+applications subscribe to the topics, and receive messages in the
+same way as the basic scenario.</p><p class="p">You must complete the steps
+in <a class="xref" href="../Scenarios/sc00003_.html" title="In this scenario, publisher devices publish messages to many topic strings. Each topic string has only one subscriber device.">Scenario: Fan-out per device notification</a> to
+set up the basic scenario before you implement the <span class="ph">MQ Connectivity</span> extension.</p></section>
+<section class="section"><h2 class="title sectiontitle">Planning and implementing the solution</h2><dl class="dl">
+
+<dt class="dt dlterm">Plan your solution</dt>
+<dd class="dd">In this scenario, consider the following key points:<ul class="ul">
+<li class="li"><p class="p">What type of destination mapping rule do you need?</p><p class="p">Destination
+mapping rules identify the source and destination of a message. The
+source is either an <span class="ph">Eclipse Amlen</span> topic,
+topic subtree, or queue, or a <span class="ph">IBM MQ</span> topic, topic
+subtree, or queue. Similarly, the destination is either an <span class="ph">Eclipse Amlen</span> topic, topic
+subtree, or queue, or a <span class="ph">IBM MQ</span> topic, topic
+subtree, or queue. For more information about the different rule types,
+see <a class="xref" href="ad00110_.html" title="To send messages between Eclipse Amlen and IBM MQ, you must create destination mapping rules. Destination mapping rules are created by associating an Eclipse Amlen topic or queue with a IBM MQ topic or queue. You can create a maximum of 64 destination mapping rules.">Configuring destination mapping rules</a>.</p><p class="p">In this scenario, as
+messages are being sent to many topics within a subtree, and the subtree
+must be preserved in <span class="ph">Eclipse Amlen</span>,
+the following rule is required: <span class="ph">IBM MQ</span> topic subtree
+to <span class="ph">Eclipse Amlen</span> topic
+subtree.</p></li>
+<li class="li"><p class="p">Is the order of messages important?</p><p class="p">If the order that
+messages arrive in is important to your solution, you must set up
+your solution in a particular way. If you use multiple queue managers
+to send messages, messages can be sent out of order. If you use multiple
+queue managers to receive messages, messages can be received out of
+order.</p><p class="p">However, <span class="ph">IBM MQ</span> cannot
+handle the same volume of messages as <span class="ph">Eclipse Amlen</span>. Therefore, in
+solutions that involve a high volume of messages, you can use multiple
+queue managers to ensure that a backlog of messages does not build
+up on <span class="ph">Eclipse Amlen</span>. If
+the message backlog reaches the maximum message count that is set
+on the destination mapping rule, messages cannot be sent until the
+backlog reduces.</p><p class="p">When messages are moved from <span class="ph">IBM MQ</span> to <span class="ph">Eclipse Amlen</span>, <span class="ph">Eclipse Amlen</span> forwards persistent
+messages within transactions, and forwards nonpersistent messages
+immediately. Therefore, nonpersistent messages can be forwarded before
+earlier persistent messages are forwarded within a transaction. In
+this case, message order is not preserved.</p><p class="p">When MQTT messages
+are moved from <span class="ph">Eclipse Amlen</span> to <span class="ph">IBM MQ</span>, <span class="ph">Eclipse Amlen</span> forwards QoS
+1 and QoS 2 messages within transactions, and forwards QoS 0 messages
+immediately. Therefore, QoS 0 messages can be forwarded before earlier
+QoS 1 and QoS 2 messages are forwarded within a transaction. In this
+case, message order is not preserved.</p><p class="p">When JMS messages are
+moved from <span class="ph">Eclipse Amlen</span> to <span class="ph">IBM MQ</span>, <span class="ph">Eclipse Amlen</span> forwards both
+JMS persistent and nonpersistent messages within transactions. If
+a nonpersistent message has the ConnectionFactory property DisableACK
+set, the message is forwarded immediately. Therefore, nonpersistent
+JMS messages with DisableACK set can be forwarded before earlier JMS
+messages are forwarded within a transaction. In this case, message
+order is not preserved.</p><p class="p">In this scenario, <span class="ph">IBM MQ</span> is the source
+of the messages, and a single queue manager is sufficient to handle
+the volume of messages. All the messages that are sent have the same
+quality of service. Therefore, the order of messages is automatically
+preserved.</p></li>
+</ul></dd>
+
+<dt class="dt dlterm">Write your applications</dt>
+<dd class="dd">Continuing from the basic scenario, the subscriber applications
+are set up, and subscribe to the topic string <code class="ph codeph">car/<var class="keyword varname">clientID</var></code>,
+where <var class="keyword varname">clientID</var> specifies the client ID of the application.</dd>
+<dd class="dd ddexpand">For the <span class="ph">IBM MQ</span> applications,
+use the sample <span class="ph">IBM MQ</span> application <code class="ph codeph">amqspub</code>.</dd>
+<dd class="dd ddexpand">Alternatively, you can write your own <span class="ph">IBM MQ</span> application.
+For more information about writing <span class="ph">IBM MQ</span> publish/subscribe
+applications, see <a class="xref" href="http://www-01.ibm.com/support/knowledgecenter/SSFKSJ_7.5.0/com.ibm.mq.dev.doc/q026550_.htm" target="_blank" rel="external noopener">Writing publish/subscribe applications</a> in
+the <span class="ph">IBM MQ</span> documentation.
+For more information about writing <span class="ph">IBM MQ</span> queuing applications,
+see <a class="xref" href="http://www-01.ibm.com/support/knowledgecenter/SSFKSJ_7.5.0/com.ibm.mq.dev.doc/q025700_.htm" target="_blank" rel="external noopener">Writing a queuing application</a> in the <span class="ph">IBM MQ</span> documentation.</dd>
+
+<dt class="dt dlterm">Set up your infrastructure</dt>
+<dd class="dd"><ol class="ol">
+<li class="li">Set up <span class="ph">IBM MQ</span>:<ol class="ol" type="a">
+<li class="li">Create a queue manager to handle the messages. In this scenario,
+the queue manager is called <code class="ph codeph">CarHireQM</code>. From the command
+line of the <span class="ph">IBM MQ</span> system,
+enter the following commands:<p class="p"><code class="ph codeph">crtmqm CarHireQM</code></p><p class="p"><code class="ph codeph">strmqm
+CarHireQM</code></p></li>
+<li class="li">Make a note of the IP address or host name of the <span class="ph">IBM MQ</span> system. These
+details are used when you create a queue manager connection.</li>
+<li class="li">The following steps use MQSC commands, which must be run from
+an MQSC command prompt. From the command line, enter the following
+command to start MQSC:<p class="p"><code class="ph codeph">runmqsc CarHireQM</code></p></li>
+<li class="li">Create a server-connection channel for the queue manager. In this
+scenario, the server-connection channel is called <code class="ph codeph">MQ.MSG.SVRCONN</code>.
+From the MQSC prompt, enter the following command:<p class="p"><code class="ph codeph">DEFINE
+CHANNEL(MQ.MSG.SVRCONN) CHLTYPE(SVRCONN) TRPTYPE(TCP)</code></p></li>
+<li class="li">Start a listener for the queue manager. In this scenario, the
+listener is called <code class="ph codeph">CarHireQL</code>, and listens on port
+1414. From the MQSC prompt, enter the following commands:<p class="p"><code class="ph codeph">DEFINE
+LISTENER ('CarHireQL') TRPTYPE(TCP) CONTROL(QMGR) PORT(1414)</code></p><p class="p"><code class="ph codeph">START
+LISTENER ('CarHireQL')</code></p></li>
+<li class="li">Authorize <span class="ph">Eclipse Amlen</span> to
+connect to the queue manager:<ol class="ol" type="i">
+<li class="li">Create a user ID on the <span class="ph">IBM MQ</span> system. In this
+scenario, the user ID is called <code class="ph codeph">MSGUSER</code>.</li>
+<li class="li">Create a channel authentication record that allows only the <span class="ph">Eclipse Amlen</span> IP address to
+use the server-connection channel that you created in step 1d. From
+the MQSC prompt, enter the following command:<p class="p"><code class="ph codeph">SET CHLAUTH(MQ.MSG.SVRCONN)
+TYPE(ADDRESSMAP) ADDRESS(<var class="keyword varname">IPAddress</var>) MCAUSER('MSGUSER')</code></p>Where:<dl class="dl">
+
+<dt class="dt dlterm"><var class="keyword varname">IPAddress</var></dt>
+<dd class="dd">Specifies the IP address of the <span class="ph">Eclipse Amlen</span>
+               server.</dd>
+</dl></li>
+<li class="li">Grant general <span class="ph">IBM MQ</span> access
+to <code class="ph codeph">MSGUSER</code>. From the MQSC prompt, enter the following
+commands:<p class="p"><code class="ph codeph">SET AUTHREC OBJTYPE(QMGR) PRINCIPAL('MSGUSER')
+AUTHADD(CONNECT, INQ, DSP)</code></p></li>
+<li class="li">Grant authority for the user <code class="ph codeph">MSGUSER</code> to issue
+requests to <span class="ph">IBM MQ</span>:<p class="p"><code class="ph codeph">SET
+AUTHREC PROFILE('SYSTEM.DEFAULT.MODEL.QUEUE') OBJTYPE(QUEUE) PRINCIPAL('MSGUSER')
+AUTHADD(DSP, GET)</code></p><p class="p"><code class="ph codeph">SET AUTHREC PROFILE('SYSTEM.ADMIN.COMMAND.QUEUE')
+OBJTYPE(QUEUE) PRINCIPAL('MSGUSER') AUTHADD(DSP, PUT)</code></p></li>
+<li class="li">Grant authority for the user <code class="ph codeph">MSGUSER</code> to create
+a queue for <span class="ph">Eclipse Amlen</span> synchronization
+records:<p class="p"><code class="ph codeph">SET AUTHREC PROFILE('SYSTEM.IMA.*') OBJTYPE(QUEUE)
+PRINCIPAL('MSGUSER') AUTHADD(CRT, PUT, GET, BROWSE)</code></p><p class="p"><code class="ph codeph">SET
+AUTHREC PROFILE('SYSTEM.DEFAULT.LOCAL.QUEUE') OBJTYPE(QUEUE) PRINCIPAL('MSGUSER')
+AUTHADD(DSP)</code></p></li>
+</ol></li>
+<li class="li">Create the <span class="ph">IBM MQ</span> topic
+objects, and grant specific authorities to allow <span class="ph">Eclipse Amlen</span> to access the
+topics. In this scenario, the topic object is called <code class="ph codeph">CarHire</code> and
+requires <code class="ph codeph">PUB, DSP</code> authority. From the MQSC prompt,
+enter the following commands:<p class="p"><code class="ph codeph">DEFINE TOPIC('CarHire') TOPICSTR('car')</code></p><p class="p"><code class="ph codeph">SET
+AUTHREC PROFILE('CarHire') OBJTYPE(TOPIC) PRINCIPAL('MSGUSER') AUTHADD(PUB,
+DSP)</code></p></li>
+</ol></li>
+<li class="li">Set up <span class="ph">Eclipse Amlen</span>:<ol class="ol" type="a">
+<li class="li">Create a queue manager connection so that <span class="ph">Eclipse Amlen</span> can connect to
+the queue manager. In this scenario, <span class="ph">Eclipse Amlen</span> must connect
+to the <code class="ph codeph">CarHireQM</code> queue manager. From the <span class="ph">Amlen WebUI</span>:<ol class="ol" type="i">
+<li class="li">Go to the <span class="ph">MQ Connectivity</span> page
+by clicking <span class="ph uicontrol">Messaging &gt; MQ Connectivity</span>. </li>
+<li class="li">Under the <span class="ph uicontrol">Queue Manager Connection Properties</span> pane,
+click the <span class="ph uicontrol">Add</span> icon.</li>
+<li class="li">Enter the details for a queue manager connection, and click <span class="ph uicontrol">Save</span>.
+In this scenario, the following values are used:<ul class="ul">
+<li class="li">Name: <code class="ph codeph">CarHireQMC</code></li>
+<li class="li">Queue Manager: <code class="ph codeph">CarHireQM</code></li>
+<li class="li">Connection Name: The IP address or host name of the <span class="ph">IBM MQ</span> system on which
+the queue manager was configured.</li>
+<li class="li">Channel Name: <code class="ph codeph">MQ.MSG.SVRCONN</code></li>
+</ul></li>
+</ol></li>
+<li class="li">Create a destination mapping rule to map from the message source
+to the message destination. In this scenario, the destination mapping
+rule must map from the <span class="ph">IBM MQ</span> topic
+subtree <code class="ph codeph">car</code> to the <span class="ph">Eclipse Amlen</span> topic subtree <code class="ph codeph">car</code>.
+With this rule, a message that is published on the <span class="ph">IBM MQ</span> topic <code class="ph codeph">car/123</code> is
+forwarded to the <span class="ph">Eclipse Amlen</span> topic <code class="ph codeph">car/123</code>.
+From the <span class="ph">Amlen WebUI</span>:<ol class="ol" type="i">
+<li class="li">Go to the <span class="ph">MQ Connectivity</span> page
+by clicking <span class="ph uicontrol">Messaging &gt; MQ Connectivity</span>. </li>
+<li class="li">Under the <span class="ph uicontrol">Destination Mapping Rules</span> pane,
+click the <span class="ph uicontrol">Add</span> icon.</li>
+<li class="li">Enter the details for a destination mapping rule, and click <span class="ph uicontrol">Save</span>.
+In this scenario, the following values are used:<ul class="ul">
+<li class="li">Name: <code class="ph codeph">CarHireDMR</code></li>
+<li class="li">Rule Type: <code class="ph codeph">MQ topic subtree to <span class="ph">Amlen</span> topic subtree</code></li>
+<li class="li">Source: <code class="ph codeph">Car</code></li>
+<li class="li">Destination: <code class="ph codeph">Car</code></li>
+<li class="li">Maximum Messages: 5000</li>
+<li class="li">Associated queue manager connections: <code class="ph codeph">CarHireQMC</code></li>
+<li class="li">Enabled: True</li>
+</ul></li>
+</ol></li>
+</ol></li>
+<li class="li">Optionally, delete the connection policy <code class="ph codeph">Car Messaging
+Intranet ConPol</code> and messaging policy <code class="ph codeph">Car Messaging
+Intranet MsgPol</code>. The <span class="ph">MQ Connectivity</span> process
+does not need a connection policy to connect to <span class="ph">Eclipse Amlen</span>. The<span class="ph">MQ Connectivity</span> process
+uses the information that is contained in the destination mapping
+rules to restrict messaging activities, and therefore does not need
+a messaging policy.</li>
+</ol></dd>
+
+<dt class="dt dlterm">Test your solution</dt>
+<dd class="dd">Use your applications to send test messages through the system
+and check that the solution works. Use the <a class="xref" href="../Troubleshooting/tr10000_.html" title="Look for a troubleshooting task to help you solve a problem when using Eclipse Amlen.">Troubleshooting</a> section
+to help you resolve any problems that you encounter.</dd>
+
+<dt class="dt dlterm">Monitor your solution</dt>
+<dd class="dd">Use the monitoring tools from the basic scenario to monitor the
+solution.</dd>
+
+<dt class="dt dlterm">Strengthen your security</dt>
+<dd class="dd">Beyond the security enhancements that can be completed in the
+basic scenario, you can use SSL to secure the connection between <span class="ph">Eclipse Amlen</span> and <span class="ph">IBM MQ</span>. To use SSL to
+secure the connection, you must configure key repository databases
+and password stash files. For more information, see <a class="xref" href="ad00109_.html" title="You can configure security between Eclipse Amlen and IBM MQ by using CA certificates to secure the connection.">Configuring MQ Connectivity security by using CA certificates</a> and <a class="xref" href="ad00108_.html" title="You can configure security between Eclipse Amlen and IBM MQ by using self-signed certificates to secure the connection.">Configuring MQ Connectivity security by using self-signed certificates</a>.</dd>
+</dl></section>
+</div>
+
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Administering/ad00111_.html" title="The MQ Connectivity scenarios extend the basic Eclipse Amlen scenarios by replacing part of the solution with IBM MQ topics or queues.">MQ Connectivity scenarios</a></div></div></nav></article></main></body></html>

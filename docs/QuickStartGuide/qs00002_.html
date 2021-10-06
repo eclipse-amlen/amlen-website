@@ -1,0 +1,42 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="You can verify the installation of Eclipse Amlen by using the Messaging Tester sample application."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Verifying the installation of Eclipse Amlen</title></head><body id="qs00002_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a><ul><li><a href="../QuickStartGuide/qs00030_.html">Provisioning your operating system </a></li><li><a href="../QuickStartGuide/qs00040_.html">Installing Docker on your operating system</a></li><li><a href="../QuickStartGuide/qs00054_.html">Preparing the Eclipse Amlen .tz packages for installation</a></li><li><a href="../QuickStartGuide/qs00059_.html">Installing Eclipse Amlen  </a></li><li><a href="../QuickStartGuide/qs00053_.html">Logging in to the Amlen WebUI</a></li><li class="active"><a href="../QuickStartGuide/qs00002_.html">Verifying the installation of Eclipse Amlen</a></li></ul></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Verifying the installation of <span class="ph">Eclipse Amlen</span></h1>
+
+<div class="body taskbody"><p class="shortdesc">You can verify the installation of <span class="ph">Eclipse Amlen</span> by using the
+Messaging Tester sample application.</p>
+<section class="section context">This procedure uses a sample application and a demonstration MQTT endpoint to verify the
+installation of the <span class="ph">Eclipse Amlen</span> server. The demonstration
+MQTT endpoint allows applications to connect to <span class="ph">Eclipse Amlen</span>
+on port <code class="ph codeph">1883</code>, and from any configured IP address. The endpoint has a messaging
+policy and a connection policy that is associated with it. These policies allow all applications to
+connect. After you verify the installation, you must disable the endpoint to prevent unauthorized
+applications from accessing <span class="ph">Eclipse Amlen</span>.<p class="p">You can use the
+<span class="ph">Amlen WebUI</span> to download the sample application.
+Alternatively, you can run a hosted version of the application which is available on  <a class="xref" href="http://mqtt-helper.mybluemix.net" target="_blank" rel="external noopener">MQTT Helper</a>. If you
+use the hosted version, you must ensure that your machine can access the internet.</p><p class="p">For more
+information about endpoints, connection policies, and messaging policies, and how these
+configuration items are used to restrict access to <span class="ph">Eclipse Amlen</span>, see <a class="xref" href="../Overview/ov00060.html" title="Message hubs are an organizational configuration object that collects endpoints, connection policies, and messaging policies that are associated with a specific goal into a single place. You can create a message hub per application to organize the endpoints and policies each application uses.">Message hubs, endpoints, and policies</a>.</p></section>
+<section><ol class="ol steps"><li class="li step"><span class="ph cmd">Go to the <span class="keyword wintitle">Messaging Tester Sample Application</span> page
+in one of the following ways:</span>
+<ul class="ul choices">
+<li class="li choice">From the <span class="ph uicontrol">Home</span> tab, click <span class="ph uicontrol">Messaging Tester Sample
+Application</span> in the <span class="ph uicontrol">Verify your configuration with the IBM IoT Message Gateway
+Messaging Tester sample application</span> pane.</li>
+<li class="li choice">From the <span class="ph uicontrol">Messaging</span> menu, click <span class="ph uicontrol">Sample
+Application</span>.</li>
+</ul>
+</li><li class="li step"><span class="ph cmd">Follow the instructions on the <span class="keyword wintitle">Messaging Tester
+Sample Application</span> page to complete the verification procedure.</span>
+</li></ol></section>
+<section class="section postreq"><div class="p">After you verify the server installation, you can take a number of steps:<ul class="ul">
+     <li class="li">You can learn about the basic concepts of <span class="ph">Eclipse Amlen</span>. For example, you can learn about message
+      hubs, endpoints, connection policies, and messaging policies, and how these configuration
+      items control your messaging solution. <p class="p">For more information, see <a class="xref" href="../Overview/ov00003_.html" title="An introduction to terminology and concepts associated with Eclipse Amlen.">Key Concepts</a>.</p></li>
+     <li class="li">You can plan your solution by examining common messaging patterns, and making key decisions
+      about your solution. You can explore example end-to-end scenarios, and use these scenarios as
+      the basis for your solution. <p class="p">For more information, see <a class="xref" href="../Planning/pl00001_.html" title="When you plan your Eclipse Amlen solution, you must make a number of decisions to ensure your solution works effectively.">Planning</a>, and <a class="xref" href="../Scenarios/sc00000_.html" title="There are a number of messaging patterns that identify common message flows that are used in messaging solutions. Use the messaging patterns to help identify your messaging needs, and then use the scenarios to get up and running quickly.">End-to-end scenarios</a>.</p></li>
+    </ul></div></section>
+</div>
+
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../QuickStartGuide/qsg10000.html" title="You can install Eclipse Amlen in Docker images or as RPMs directly on your host operating system (OS).">Installing Eclipse Amlen</a></div></div></nav></article></main></body></html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can view store-related statistics by using a REST Monitoring API"><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Viewing store statistics by using REST Monitoring APIs</title></head><body id="admin00036"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a><ul><li><a href="../Monitoring/admin00080.html">Cluster monitoring</a></li><li><a href="../Monitoring/admin00009.html">Connection Monitoring</a></li><li><a href="../Monitoring/admin00010.html">Endpoint Monitoring</a></li><li><a href="../Monitoring/admin00016.html">Topic Monitoring</a></li><li><a href="../Monitoring/admin00019.html">Queue Monitoring</a></li><li><a href="../Monitoring/admin00022.html">Subscription Monitoring</a></li><li><a href="../Monitoring/admin00025.html">MQTT Client Monitoring</a></li><li><a href="../Monitoring/admin00031.html">MQ Connectivity monitoring</a></li><li><a href="../Monitoring/admin00070.html">Viewing protocol plug-in monitoring statistics by using an external application</a></li><li><a href="../Monitoring/admin00028.html">Server Monitoring</a><ul><li><a href="../Monitoring/admin00038.html">Viewing server statistics by using the Amlen WebUI</a></li><li><a href="../Monitoring/admin00037.html">Viewing server statistics by using REST Monitoring APIs</a></li><li><a href="../Monitoring/admin00034.html">Store Monitoring</a><ul><li><a href="../Monitoring/admin00035.html">Viewing store statistics by using the Amlen WebUI</a></li><li class="active"><a href="../Monitoring/admin00036.html">Viewing store statistics by using REST Monitoring APIs</a></li><li><a href="../Monitoring/admin00050.html">Viewing store statistics by using an external application</a></li></ul></li><li><a href="../Monitoring/admin00051.html">Memory Monitoring</a></li></ul></li><li><a href="../Monitoring/admin00060.html">XA Transaction monitoring</a></li></ul></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Viewing store statistics by using <span class="ph">REST Monitoring APIs</span></h1>
+
+<div class="body taskbody"><p class="shortdesc">System administrators can view store-related statistics by using a <span class="ph">REST Monitoring API</span></p>
+<section class="section context"> <p class="p">System administrators can view statistics about <span class="ph">Eclipse Amlen</span> persistent memory by using a <span class="ph">REST Monitoring API</span>, by using the <span class="ph">Amlen WebUI</span>, or by using an external monitoring application. For more information about using the <span class="ph">Amlen WebUI</span> to view store-related statistics, see <a class="xref" href="admin00035.html" title="Use the Server Dashboard or the Server Monitor to view statistics about Eclipse Amlen persistent memory.">Viewing store statistics by using the <span class="ph">Amlen WebUI</span></a>. For more information about using an external application to view store-related statistics, see <a class="xref" href="admin00050.html" title="External monitoring applications can access store data that is published by Eclipse Amlen by subscribing to the Eclipse Amlen topic $SYS/ResourceStatistics/Store.">Viewing store statistics by using an external application</a>.</p></section>
+<section><div class="li stepsection">Store-related monitoring statistics can be viewed by using a <span class="ph">REST Monitoring API</span>. To create
+    store-related monitoring statistics, complete the following steps:</div><ol class="ol steps"><li class="li step stepexpand">
+    <span class="ph cmd">Use the <span class="ph">Eclipse Amlen</span> REST API
+     GET method with the following <span class="ph">Eclipse Amlen</span> monitoring URI:</span>
+    <div class="itemgroup info">
+     <p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/monitor/Store</code></p>
+    </div>
+   </li><li class="li step stepexpand">
+    <span class="ph cmd">Provide query parameters requesting the statistics that you want returned in the JSON
+     payload. The following example uses cURL to create store-related statistics:</span>
+    <div class="itemgroup info">
+     <pre class="pre codeblock"><code>curl -X GET http://127.0.0.1:9089/ima/v1/monitor/Store?SubType=<var class="keyword varname">SubType</var>%26Duration=<var class="keyword varname">Duration</var>%26StatType=<var class="keyword varname">StatType</var></code></pre>
+     <div class="p">Where:<ul class="ul">
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm"><var class="keyword varname">SubType</var></dt>
+          <dd class="dd">Optional.</dd>
+          <dd class="dd ddexpand">Specifies the time period of data to report.</dd>
+          <dd class="dd ddexpand">This value can be one of the following values:<ul class="ul">
+            <li class="li">
+             <dl class="dl">
+              
+               <dt class="dt dlterm">Current®</dt>
+               <dd class="dd">View a summarized list of store data.</dd>
+              
+             </dl>
+            </li>
+            <li class="li">
+             <dl class="dl">
+              
+               <dt class="dt dlterm">History</dt>
+               <dd class="dd">View a list of store data as selected on the <span class="keyword parmname">StatType</span>
+                parameter .</dd>
+              
+             </dl>
+            </li>
+            <li class="li">
+             <dl class="dl">
+              
+               <dt class="dt dlterm">MemoryDetail</dt>
+               <dd class="dd">View a detailed list of store memory usage. </dd>
+              
+             </dl>
+            </li>
+           </ul>The default value is <span class="keyword parmname">Current</span>.</dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm"><var class="keyword varname">time</var></dt>
+          <dd class="dd">Optional.</dd>
+          <dd class="dd ddexpand">Specifies the time span (in seconds) of the data to be collected. <p class="p">Valid value range
+            is 1 - 86400.</p><p class="p">The default value is <span class="keyword parmname">1800</span>.</p>
+          </dd>
+         
+        </dl>
+       </li>
+       <li class="li">
+        <dl class="dl">
+         
+          <dt class="dt dlterm"><var class="keyword varname">StatType</var></dt>
+          <dd class="dd">Optional.</dd>
+          <dd class="dd ddexpand">Specifies the types of data to return when <code class="ph codeph">SubType</code> is set to
+            <span class="keyword parmname">History</span>.</dd>
+          <dd class="dd ddexpand">You can specify multiple values in a comma delimited list. This value can be one of
+           the following values:<ul class="ul">
+            <li class="li">
+             <dl class="dl">
+              
+               <dt class="dt dlterm">MemoryUsedPercent</dt>
+               <dd class="dd">Shows the percentage of persistent memory that is used, and therefore is not
+                available.</dd>
+              
+             </dl>
+            </li>
+            <li class="li">
+             <dl class="dl">
+              
+               <dt class="dt dlterm">DiskUsedPercent</dt>
+               <dd class="dd">Shows the percentage of disk space that is used.</dd>
+              
+             </dl>
+            </li>
+            <li class="li">
+             <dl class="dl">
+              
+               <dt class="dt dlterm">DiskFreeBytes</dt>
+               <dd class="dd">Shows the amount of disk space, in bytes, that is available.</dd>
+              
+             </dl>
+            </li>
+            <li class="li">
+             <dl class="dl">
+              
+               <dt class="dt dlterm">Pool1TotalBytes</dt>
+               <dd class="dd">Shows the amount of memory, in bytes, in pool 1.</dd>
+              
+             </dl>
+            </li>
+            <li class="li">
+             <dl class="dl">
+              
+               <dt class="dt dlterm">Pool1UsedBytes</dt>
+               <dd class="dd">Shows the amount of memory, in bytes, that is currently in use in pool 1.</dd>
+              
+             </dl>
+            </li>
+            <li class="li">
+             <dl class="dl">
+              
+               <dt class="dt dlterm">Pool1UsedPercent</dt>
+               <dd class="dd">Shows the percentage of memory that is in use in pool 1.</dd>
+              
+             </dl>
+            </li>
+            <li class="li">
+             <dl class="dl">
+              
+               <dt class="dt dlterm">Pool1RecordSizeBytes</dt>
+               <dd class="dd">Shows the size, in bytes, of each record in pool 1.</dd>
+              
+             </dl>
+            </li>
+            <li class="li">
+             <dl class="dl">
+              
+               <dt class="dt dlterm">Pool1RecordsLimitBytes</dt>
+               <dd class="dd">Shows the overall amount of memory, in bytes, that can be used by client
+                applications. When the pool 1 record limit is reached, records cannot be created for
+                topics with retained messages, durable subscriptions, queues, clients, and
+                connectivity with <span class="ph">IBM® MQ</span> queue
+                managers.</dd>
+              
+             </dl>
+            </li>
+            <li class="li">
+             <dl class="dl">
+              
+               <dt class="dt dlterm">Pool1RecordsUsedBytes</dt>
+               <dd class="dd">Shows the amount of memory, in bytes, that is being used for client records.</dd>
+              
+             </dl>
+            </li>
+            <li class="li">
+             <dl class="dl">
+              
+               <dt class="dt dlterm">ClientStatesBytes</dt>
+               <dd class="dd">Shows the memory allocated for clients that must be remembered when they are
+                disconnected. In MQTT, these are clients that connected using a
+                 <code class="ph codeph">cleanSession=0</code> setting or clients that connected and set a will
+                message the quality of service of which is 1 or 2.</dd>
+              
+             </dl>
+            </li>
+            <li class="li">
+             <dl class="dl">
+              
+               <dt class="dt dlterm">QueuesBytes</dt>
+               <dd class="dd">Shows the memory, in bytes, allocated for queues. Memory is allocated in this
+                category for each queue that is created for point-to-point messaging.</dd>
+              
+             </dl>
+            </li>
+            <li class="li">
+             <dl class="dl">
+              
+               <dt class="dt dlterm">TopicsBytes</dt>
+               <dd class="dd">Shows the memory, in bytes, allocated for topics. The server allocates memory in
+                this category for each topic with a persistent retained message.</dd>
+              
+             </dl>
+            </li>
+            <li class="li">
+             <dl class="dl">
+              
+               <dt class="dt dlterm">SubscriptionsBytes</dt>
+               <dd class="dd">Shows the memory, in bytes, allocated for durable subscription records. In MQTT,
+                these are subscriptions for clients that connected using a
+                 <code class="ph codeph">cleanSession=0</code> setting.</dd>
+              
+             </dl>
+            </li>
+            <li class="li">
+             <dl class="dl">
+              
+               <dt class="dt dlterm">TransactionsBytes</dt>
+               <dd class="dd">Shows the memory, in bytes, allocated for transaction records. The server
+                allocates memory in this category for each transaction so that it can complete
+                recovery when the server restarts.</dd>
+              
+             </dl>
+            </li>
+            <li class="li">
+             <dl class="dl">
+              
+               <dt class="dt dlterm">MQConnectivityBytes</dt>
+               <dd class="dd">Shows the memory, in bytes, allocated for connectivity with <span class="ph">IBM MQ</span> queue managers.</dd>
+              
+             </dl>
+            </li>
+            <li class="li">
+             <dl class="dl">
+              
+               <dt class="dt dlterm">Pool2TotalBytes</dt>
+               <dd class="dd">Shows the amount of memory, in bytes, in pool 2.</dd>
+              
+             </dl>
+            </li>
+            <li class="li">
+             <dl class="dl">
+              
+               <dt class="dt dlterm">Pool2UsedBytes</dt>
+               <dd class="dd">Shows the amount of memory, in bytes, that is currently in use in pool 2.</dd>
+              
+             </dl>
+            </li>
+            <li class="li">
+             <dl class="dl">
+              
+               <dt class="dt dlterm">Pool2UsedPercent</dt>
+               <dd class="dd">Shows the percentage of memory that is in use in pool 2.</dd>
+              
+             </dl>
+            </li>
+            <li class="li">
+             <dl class="dl">
+              
+               <dt class="dt dlterm">IncomingMessageAcksBytes</dt>
+               <dd class="dd">Shows the memory, in bytes, allocated for acknowledging incoming messages. The
+                server allocates memory in this category for MQTT clients that connected using a
+                 <code class="ph codeph">cleanSession=0</code> setting and are publishing messages the quality of
+                service of which is 2. This memory is used to ensure once-and-once-only
+                delivery.</dd>
+              
+             </dl>
+            </li>
+           </ul><p class="p">The default value is <span class="keyword parmname">DiskUsedPercent</span>. For reasons of
+            compatability with earlier versions, the header <code class="ph codeph">StoreDiskUsage</code> is
+            returned when the default is used.</p></dd>
+         
+        </dl>
+       </li>
+      </ul></div>
+    </div>
+   </li></ol></section>
+<section class="section result"><p class="p">If the <code class="ph codeph">SubType</code> is set to <span class="keyword parmname">History</span>,
+and monitoring data is not available for the requested statistic,
+a value of <code class="ph codeph">-1</code> is returned.</p>For more information
+about the fields that are returned, see <a class="xref" href="admin00034.html" title="You can use the Server Dashboard or the Server Monitor or REST Monitoring APIs to view metrics on the store (persistent memory and disk).">Store Monitoring</a>.</section>
+<section class="example">
+   <p class="p">The following example uses cURL to show how a GET method is used to view statistical
+    information about the usage of the persistent memory and disk. </p>
+   <pre class="pre codeblock"><code>curl -X GET http://127.0.0.1:9089/ima/v1/monitor/Store?SubType=Current  
+ 
+ </code></pre>
+   <p class="p">The following example shows a successful example response to the GET method that was used to
+    create statistical information about the usage of the persistent memory and disk.:</p>
+   <pre class="pre codeblock"><code>{ "Version":"v1", "Store": {"DiskUsedPercent":20,"DiskFreeBytes":83618123776,"MemoryUsedPercent":1,"MemoryTotalBytes":268434944,
+"Pool1TotalBytes":187904512,"Pool1UsedBytes":0,"Pool1UsedPercent":0,"Pool1RecordsLimitBytes":93952256,"Pool1RecordsUsedBytes":0,
+"Pool2TotalBytes":80530432,"Pool2UsedBytes":3944448,"Pool2UsedPercent":4 } }</code></pre>
+  </section>
+</div>
+
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Monitoring/admin00034.html" title="You can use the Server Dashboard or the Server Monitor or REST Monitoring APIs to view metrics on the store (persistent memory and disk).">Store Monitoring</a></div></div></nav></article></main></body></html>

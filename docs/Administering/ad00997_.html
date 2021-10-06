@@ -1,0 +1,255 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="You can add high availability (HA) to members of your cluster by using REST Administration APIs."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Enabling high availability on a member of a cluster by using REST Administration APIs</title></head><body id="ad00997_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a><ul><li><a href="../Administering/ad00210_.html">Network interface controllers</a></li><li><a href="../Administering/ad00380_.html">Configuring the server name</a></li><li><a href="../Administering/ad00290_.html">Configuring log files</a></li><li><a href="../Administering/ad00400_.html">Configuring your system for high availability</a><ul><li><a href="../Administering/ad00909_.html">Configuring HA </a><ul><li><a href="../Administering/ad01001_.html">Configuring high availability by using the Amlen WebUI</a></li><li><a href="../Administering/ad00993_.html">Configuring high availability by using REST Administration APIs</a><ul><li><a href="../Administering/ad00992_.html">Configuring Eclipse Amlen servers as an HA pair by using REST Administration APIs</a></li><li><a href="../Administering/ad00996_.html">Configuring high availability in an Eclipse Amlen cluster by using REST Administration APIs</a><ul><li class="active"><a href="../Administering/ad00997_.html">Enabling high availability on a member of a cluster by using REST Administration APIs</a></li><li><a href="../Administering/ad00998_.html">Disabling high availability on cluster members by using REST Administration APIs</a></li></ul></li><li><a href="../Administering/ad00995_.html">Viewing high availability configuration details by using a REST Administration API</a></li><li><a href="../Administering/ad00994_.html">Viewing the status of the high availability service by using a REST Administration API</a></li></ul></li></ul></li><li><a href="../Administering/ad00416_.html">High availability scenarios</a></li></ul></li><li><a href="../Administering/ad00790_.html">Configuring licensed usage and accepting the license for Eclipse Amlen  </a></li><li><a href="../Administering/ad00280_.html">Starting, stopping, restarting and viewing the status of the Eclipse Amlen server</a></li></ul></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Enabling high availability on a member of a cluster by using <span class="ph">REST Administration APIs</span></h1>
+
+
+
+
+
+
+  <div class="body taskbody"><p class="shortdesc">You can add high availability (HA) to members of your cluster by using <span class="ph">REST Administration APIs</span>. </p>
+    <section class="section context">
+      <p class="p">System administrators can add HA to members of a cluster by using <span class="ph">REST Administration APIs</span>, or by using the <span class="ph">Amlen WebUI</span>. For more information about using the <span class="ph">Amlen WebUI</span> to add HA to cluster members, see <a class="xref" href="ad00999_.html" title="You can add high availability (HA) to members of your cluster by using the Amlen WebUI.">Enabling high availability on cluster members by using the Amlen WebUI</a>.</p>
+      <p class="p">In this scenario, an <span class="ph">Eclipse Amlen</span> server that is a member of a cluster but has HA disabled is paired with another <span class="ph">Eclipse Amlen</span> server to act as its backup. In this scenario, Server A is already member of a cluster, and becomes the primary node. Server B becomes the standby node in the HA pair. Server A can be a server that has data on it. Server B must be a newly installed <span class="ph">Eclipse Amlen</span> server or you must complete Step 1 to remove any pre-existing data. </p>
+    </section>
+    <section><ol class="ol steps"><li class="li step stepexpand"><strong>Optional: </strong>
+        <span class="ph cmd">If Server B is a newly installed server, you do not need to perform this step. If Server B is not a newly installed server and has been used for messaging services, you must delete any JMS queues that exist on the server and then clean the store. </span>
+        <div class="itemgroup info">
+          <p class="p">For more information about deleting message queues, see <a class="xref" href="ad00356_.html" title="System administrators can delete queues by using a REST Administration API.">Deleting a queue by using a REST Administration API</a>.</p>
+          <p class="p">For more information about cleaning the store, see <a class="xref" href="ad00282_.html" title="System administrators can restart and stop the Eclipse Amlen server by using REST Administration APIs.">Starting, restarting and stopping the Eclipse Amlen server by using REST Administration APIs</a>.</p>
+        </div>
+      </li><li class="li step stepexpand">
+        <span class="ph cmd">Configure HA on Server A.</span>
+        <div class="itemgroup info"><div class="p">Use the <span class="ph">Eclipse Amlen</span> REST API POST method with the following <span class="ph">Eclipse Amlen</span> configuration URI:<pre class="pre codeblock"><code>http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/configuration/</code></pre></div>Ensure that you specify the following HighAvailability object configuration data in the payload of the POST method:<ul class="ul">
+          <li class="li"><code class="ph codeph">"EnableHA": true</code></li>
+          <li class="li">A value for <code class="ph codeph">"Group":</code></li>
+          <li class="li">A value for <code class="ph codeph">"LocalDiscoveryNIC":</code> For example, <code class="ph codeph">"LocalDiscoveryNIC": "192.0.2.0"</code></li>
+          <li class="li">A value for <code class="ph codeph">"LocalReplicationNIC":</code> For example, <code class="ph codeph">"LocalReplicationNIC": "192.0.3.0" </code> </li>
+          <li class="li">A value for <code class="ph codeph">"RemoteDiscoveryNIC":</code> For example, <code class="ph codeph">"RemoteDiscoveryNIC": "192.0.2.2" </code></li>
+          <li class="li"><code class="ph codeph">"PreferredPrimary": true</code></li>
+          </ul> For more information about configuring a servers as an HA pair, see <a class="xref" href="ad00992_.html" title="In this scenario, an Eclipse Amlen server that has high availability (HA) disabled is now paired with another Eclipse Amlen server to act as its backup. System administrators can configure a pair of servers for high availability by using REST Administration APIs.">Configuring Eclipse Amlen servers as an HA pair by using REST Administration APIs</a>.</div>
+      </li><li class="li step stepexpand">
+        <span class="ph cmd">Configure HA on Server B. It is best practice to use a newly installed <span class="ph">Eclipse Amlen</span> server to act as the standby server in the HA pair.</span>
+        <div class="itemgroup info">
+          <div class="p">Use the <span class="ph">Eclipse Amlen</span> REST API POST method with the following <span class="ph">Eclipse Amlen</span> configuration URI:<pre class="pre codeblock"><code>http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/configuration/</code></pre>Ensure that you specify the following HighAvailability object configuration data in the payload of the POST method:</div>
+          <ul class="ul">
+            <li class="li"><code class="ph codeph">"EnableHA": true</code></li>
+            <li class="li">The same value for <code class="ph codeph">"Group":</code> as that specified for Server A.</li>
+            <li class="li">A value for <code class="ph codeph">"LocalDiscoveryNIC":</code> For example, <code class="ph codeph">"LocalDiscoveryNIC": "192.0.2.2"</code></li>
+            <li class="li">A value for <code class="ph codeph">"LocalReplicationNIC":</code> For example, <code class="ph codeph">"LocalReplicationNIC": "192.0.3.2" </code> </li>
+            <li class="li">The same value for <code class="ph codeph">"RemoteDiscoveryNIC":</code> as that specified for <code class="ph codeph">"LocalDiscoveryNIC":</code> on the primary server. For example, <code class="ph codeph">"RemoteDiscoveryNIC": "192.0.2.0"</code></li>
+            <li class="li"><code class="ph codeph">"PreferredPrimary": false</code></li>
+          </ul>
+        </div>
+      </li><li class="li step stepexpand">
+        <span class="ph cmd">Configure and enable cluster membership on Server B.</span>
+        <div class="itemgroup info"> <div class="p">Use the <span class="ph">Eclipse Amlen</span> REST API POST method with the following <span class="ph">Eclipse Amlen</span> configuration URI:<pre class="pre codeblock"><code>http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/configuration/</code></pre>Ensure that you specify the following ClusterMembership object configuration data in the payload of the POST method:</div> <ul class="ul">
+          <li class="li"><code class="ph codeph">"EnableClusterMembership": true</code></li>
+          <li class="li">The same value for <code class="ph codeph">"ClusterName":</code> as that specified in the cluster membership configuration of Server A.</li>
+          <li class="li"><code class="ph codeph">"ControlAddress":</code> of Server B.</li>
+          <li class="li"><code class="ph codeph">"MessagingAddress":</code> of Server B.</li>
+          </ul>Ensure that you also include any other cluster membership configuration parameters that you need so that Server B and Server A can identify and connect to the other members of the cluster, for example, if Server A is using external addresses or ports. For more information about configuring cluster membership on a server, see <a class="xref" href="ad00942_.html" title="System administrators can configure clusters by using a REST Administration API. The REST Administration API allows you to configure the cluster membership attributes of Eclipse Amlen servers.">Configuring cluster membership by using REST Administration APIs</a>.</div>
+      </li><li class="li step stepexpand">
+        <span class="ph cmd">Restart both servers. Restart Server B first.</span>
+        <div class="itemgroup info">
+          <p class="p">Use the <span class="ph">Eclipse Amlen</span> REST API POST method on each server with the following <span class="ph">Eclipse Amlen</span> configuration URI:</p>
+          <p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:port&gt;/ima/v1/service/restart</code></p>
+          <p class="p">Provide object configuration data in the payload of the POST method by using the following schema. <span class="keyword parmname">Content-type</span> is set to <kbd class="ph userinput">application/json</kbd>: </p>
+          <pre class="pre codeblock"><code>
+{    
+  "Service": "Server" 
+}</code></pre>
+        </div>
+      </li><li class="li step stepexpand">
+        <span class="ph cmd">After your servers have restarted, verify the status of your servers.</span>
+        <div class="itemgroup info">On each server, use the <span class="ph">Eclipse Amlen</span> REST API GET method with the following URI:<p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/service/status</code></p></div>
+        <ol type="a" class="ol substeps">
+          <li class="li substep substepexpand">
+            <span class="ph cmd">Check the status information that is returned for Server A to verify that:</span>
+            <div class="itemgroup info"><ul class="ul">
+              <li class="li">Server A is running.</li>
+              <li class="li">The status of the HA service status is <code class="ph codeph">Active</code></li>
+              <li class="li">The value of <code class="ph codeph">NewRole</code> is <code class="ph codeph">PRIMARY</code></li>
+              <li class="li">The status of the cluster is <code class="ph codeph">Active</code> and the server is connected to other servers in the cluster.</li>
+              </ul>Excerpt from an example response to the REST API GET method for Server A status:<pre class="pre codeblock"><code>{
+"Version":"v1",
+"Server": {  
+  "Name": "ServerA.mycompany.com:9089",   
+  "UID": "PgOSgS1k",  
+  <strong class="ph b">"Status": "Running",</strong>
+  "State": 1,
+  "StateDescription": "Running (production)",
+  "ServerTime": "2016-04-15T13:55:01.614Z",
+  "UpTimeSeconds": 1604,
+  "UpTimeDescription": "0 days 0 hours 26 minutes 44 seconds",
+  "Version": "2.0 20160414-1500",
+  "ErrorCode": 0,
+  "ErrorMessage": ""
+},
+"HighAvailability": {
+  <strong class="ph b">"Status": "Active",</strong>
+  "Enabled": true,
+  "Group": "MyHAGroup",
+  <strong class="ph b">"NewRole": "PRIMARY",</strong>
+  "OldRole": "PRIMARY",
+  "ActiveNodes": 2,
+  "SyncNodes": 2,
+  "PrimaryLastTime": "2016-04-15T14:05:22Z",
+  "PctSyncCompletion": -1,
+  "ReasonCode": 0,
+  "RemoteServerName": "ServerB.myCompany.com:9089"
+},
+"Cluster": {
+  <strong class="ph b">"Status": "Active",</strong>
+  "Name": "MyCluster",
+  "Enabled": true,
+  <strong class="ph b">"ConnectedServers": 2,</strong>
+  "DisconnectedServers": 0
+</code></pre></div>
+          </li>
+          <li class="li substep substepexpand">
+            <span class="ph cmd">Check the status information that is returned for Server B to verify that:</span>
+            <div class="itemgroup info"><ul class="ul">
+              <li class="li">Server B is running.</li>
+              <li class="li">The status of the HA service status is <code class="ph codeph">Active</code></li>
+              <li class="li">The value of <code class="ph codeph">NewRole</code> is <code class="ph codeph">STANDBY</code></li>
+              <li class="li">The status of the cluster is <code class="ph codeph">Standby</code> and the server is not connected to other servers in the cluster.</li>
+              </ul>Excerpt from an example response to the REST API GET method for Server B status:<pre class="pre codeblock"><code>{
+"Version":"v1",
+"Server": {  
+  "Name": "ServerB.myCompany.com:9089",
+  "UID": "PgOSgS1k",
+  <strong class="ph b">"Status": "Running",</strong>
+  "State": 10,
+  "StateDescription": "Standby",
+  "ServerTime": "2016-04-15T14:05:52.850Z",
+  "UpTimeSeconds": 1608,
+  "UpTimeDescription": "0 days 0 hours 26 minutes 48 seconds",
+  "Version": "2.0 20160414-1500",
+  "ErrorCode": 0,
+  "ErrorMessage": ""
+},
+"HighAvailability": {
+  <strong class="ph b">"Status": "Active",</strong>
+  "Enabled": true,
+  "Group": "MyHAGroup",
+  <strong class="ph b">"NewRole": "STANDBY",</strong>
+  "OldRole": "UNSYNC",
+  "ActiveNodes": 2,
+  "SyncNodes": 2,
+  "PrimaryLastTime": "",
+  "PctSyncCompletion": -1,
+  "ReasonCode": 0,
+  "RemoteServerName": "ServerA.myCompany.com:9089"
+},
+"Cluster": {
+  <strong class="ph b">"Status": "Standby",</strong>
+  "Name": "MyCluster",
+  "Enabled": true,
+  <strong class="ph b">"ConnectedServers": 0,</strong>
+  "DisconnectedServers": 0
+</code></pre></div>
+          </li>
+        </ol>
+      </li><li class="li step stepexpand">
+        <span class="ph cmd">Force a failover operation in order to verify that Server B is correctly configured to work with the cluster.</span>
+        <div class="itemgroup info">You can force a failover operation by restarting Server A.<div class="p">Use the <span class="ph">Eclipse Amlen</span> REST API POST method with the following URI:<pre class="pre codeblock"><code>http://&lt;admin-endpoint-IP:port&gt;/ima/v1/service/restart</code></pre></div><p class="p">Provide configuration data in the payload of the POST method by using the following schema. <span class="keyword parmname">Content-type</span> is set to <kbd class="ph userinput">application/json</kbd>:</p><pre class="pre codeblock"><code>
+{    
+  "Service": "Server"
+}</code></pre></div>
+      </li><li class="li step stepexpand">
+        <span class="ph cmd">Verify the status of your servers after the failover.</span>
+        <div class="itemgroup info">On each server, use the <span class="ph">Eclipse Amlen</span> REST API GET method with the following URI:<p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/service/status</code></p></div>
+        <ol type="a" class="ol substeps">
+          <li class="li substep substepexpand">
+            <span class="ph cmd">Check the status information that is returned for Server A to verify that:</span>
+            <div class="itemgroup info"><ul class="ul">
+              <li class="li">Server A is running as the standby server.</li>
+              <li class="li">The status of the HA service status is <code class="ph codeph">Active</code></li>
+              <li class="li">The value of <code class="ph codeph">NewRole</code> is <code class="ph codeph">STANDBY</code></li>
+              <li class="li">The status of the cluster is <code class="ph codeph">Standby</code> and the server is not connected to other servers in the cluster.</li>
+              </ul>Excerpt from an example response to the REST API GET method for Server A status:<pre class="pre codeblock"><code>{
+"Version":"v1",
+"Server": {  
+  "Name": "ServerA.myCompany.com:9089",
+  "UID": "PgOSgS1k",
+  <strong class="ph b">"Status": "Running",</strong>
+  "State": 10,
+  "StateDescription": "Standby",
+  "ServerTime": "2016-04-15T14:05:52.850Z",
+  "UpTimeSeconds": 360,
+  "UpTimeDescription": "0 days 0 hours 6 minutes 0 seconds",
+  "Version": "2.0 20160414-1500",
+  "ErrorCode": 0,
+  "ErrorMessage": ""
+},
+"HighAvailability": {
+  <strong class="ph b">"Status": "Active",</strong>
+  "Enabled": true,
+  "Group": "MyHAGroup",
+  <strong class="ph b">"NewRole": "STANDBY",</strong>
+  "OldRole": "UNSYNC",
+  "ActiveNodes": 2,
+  "SyncNodes": 2,
+  "PrimaryLastTime": "",
+  "PctSyncCompletion": -1,
+  "ReasonCode": 0,
+  "RemoteServerName": "ServerB.myCompany.com:9089"
+},
+"Cluster": {
+  <strong class="ph b">"Status": "Standby",</strong>
+  "Name": "MyCluster",
+  "Enabled": true,
+  <strong class="ph b">"ConnectedServers": 0,</strong>
+  "DisconnectedServers": 0
+    }
+</code></pre></div>
+          </li>
+          <li class="li substep substepexpand">
+            <span class="ph cmd">Check the status information that is returned for Server B to verify that:</span>
+            <div class="itemgroup info"><ul class="ul">
+              <li class="li">Server B is running.</li>
+              <li class="li">The status of the HA service is <code class="ph codeph">Active</code></li>
+              <li class="li">The value of <code class="ph codeph">NewRole</code> is <code class="ph codeph">PRIMARY</code></li>
+              <li class="li">The status of the cluster is <code class="ph codeph">Active</code> and the cluster is connected to other servers in the cluster.</li>
+              </ul>Excerpt from an example response to the REST API GET method for Server B status:<pre class="pre codeblock"><code>{
+"Version":"v1",
+"Server": {  
+  "Name": "ServerB.mycompany.com:9089",
+  "UID": "PgOSgS1k",
+  <strong class="ph b">"Status": "Running",</strong>
+  "State": 1,
+  "StateDescription": "Running (production)",
+  "ServerTime": "2016-04-15T13:55:01.614Z",
+  "UpTimeSeconds": 1714,
+  "UpTimeDescription": "0 days 0 hours 29 minutes 54 seconds",
+  "Version": "2.0 20160414-1500",
+  "ErrorCode": 0,
+  "ErrorMessage": ""
+},
+  "HighAvailability": {
+  <strong class="ph b">"Status": "Active",</strong>
+  "Enabled": true,
+  "Group": "MyHAGroup",
+  <strong class="ph b">"NewRole": "PRIMARY",</strong>
+  "OldRole": "STANDBY",
+  "ActiveNodes": 2,
+  "SyncNodes": 2,
+  "PrimaryLastTime": "2016-04-15T14:25:01Z",
+  "PctSyncCompletion": -1,
+  "ReasonCode": 0,
+  "RemoteServerName": "ServerA.myCompany.com:9089"
+},
+"Cluster": {
+  <strong class="ph b">"Status": "Active",</strong>
+  "Name": "MyCluster",
+  "Enabled": true,
+  <strong class="ph b">"ConnectedServers": 2,</strong>
+  "DisconnectedServers": 0 
+</code></pre></div>
+          </li>
+        </ol>
+      </li></ol></section>
+  </div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Administering/ad00996_.html" title="System administrators can configure cluster members as high availability (HA) pairs by using REST Administration APIs.">Configuring high availability in an Eclipse Amlen cluster by using REST Administration APIs</a></div></div></nav></article></main></body></html>

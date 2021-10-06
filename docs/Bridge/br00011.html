@@ -1,0 +1,138 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="Before you build and deploy the Docker images that you need to run Amlen Bridge, you must provision your operating system and install Docker."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Installing the Bridge by using Docker containers</title></head><body id="br00011"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a><ul><li><a href="../Bridge/br00026.html">Installing  Amlen Bridge  </a><ul><li class="active"><a href="../Bridge/br00011.html">Installing the Bridge by using Docker containers</a></li><li><a href="../Bridge/br00024.html">Installing the  Amlen BridgeRPM</a></li></ul></li><li><a href="../Bridge/br00012.html">Post installation user actions</a></li><li><a href="../Bridge/br00020.html">File paths</a></li><li><a href="../Bridge/br00021.html">Updating the Bridge configuration</a></li><li><a href="../Bridge/br00022.html">Monitoring</a></li><li><a href="../Bridge/br00023.html">Administrative REST interfaces</a></li></ul></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+    <h1 class="title topictitle1" id="ariaid-title1">Installing the Bridge by using <span class="ph">Docker</span> containers</h1>
+    
+<div class="body taskbody"><p class="shortdesc">Before you build and deploy the <span class="ph">Docker</span> images that you need to run <span class="ph"> Amlen Bridge</span>, you must provision your operating
+    system and install <span class="ph">Docker</span>. </p>
+<section class="section prereq"><ol class="ol"><li class="li">Complete the instructions to <a class="xref" href="../QuickStartGuide/qs00030_.html"> provision your operating system</a> .</li>
+        <li class="li">Complete the instructions to <a class="xref" href="../QuickStartGuide/qs00040_.html">install Docker on your operating system</a>.</li></ol>
+    </section><section class="section context">
+    <div class="p">The installation involves modifying the <span class="ph filepath">imabridge-docker.env</span> file, which contains the following content:
+            <pre class="pre codeblock"><code>
+                IMABRIDGE_ADMINPORT=9082
+                IMABRIDGE_ADMINIFACE=localhost
+                IMABRIDGE_ADMINSECURE=true
+                IMABRIDGE_ADMINUSER=adminUser
+                IMABRIDGE_ADMINPW=adminPassword
+                IMABRIDGE_ENABLEABOUT=true
+                IMABRIDGE_AUTHENTICATION=basic
+            </code></pre></div>
+                    <table class="table" id="br00011__datasimpletable_r2l_1mn_qfb"><caption><span class="table--title-label">Table 1. </span><span class="title">A connection object defines the following properties that are required to
+                        connect to an MQTT server.</span></caption><colgroup><col><col><col></colgroup><thead class="thead">
+                            <tr class="row">
+                            <th class="entry" id="br00011__datasimpletable_r2l_1mn_qfb__entry__1">Parameter</th>
+                            <th class="entry" id="br00011__datasimpletable_r2l_1mn_qfb__entry__2">Default value</th>
+                            <th class="entry" id="br00011__datasimpletable_r2l_1mn_qfb__entry__3">Description</th>
+                            </tr>
+                        </thead><tbody class="tbody">
+                        <tr class="row">
+                            <td class="entry" headers="br00011__datasimpletable_r2l_1mn_qfb__entry__1">IMABRIDGE_ADMINPORT</td>
+                            <td class="entry" headers="br00011__datasimpletable_r2l_1mn_qfb__entry__2">9082
+                            </td>
+                            <td class="entry" headers="br00011__datasimpletable_r2l_1mn_qfb__entry__3">The mandatory admin port number, ranging from 1 to 65535. </td>
+                        </tr>
+                        <tr class="row">
+                            <td class="entry" headers="br00011__datasimpletable_r2l_1mn_qfb__entry__1">IMABRIDGE_ADMINIFACE</td>
+                            <td class="entry" headers="br00011__datasimpletable_r2l_1mn_qfb__entry__2">localhost
+                            </td>
+                            <td class="entry" headers="br00011__datasimpletable_r2l_1mn_qfb__entry__3">The optional administrative interface.</td>
+                        </tr>
+                        <tr class="row">
+                            <td class="entry" headers="br00011__datasimpletable_r2l_1mn_qfb__entry__1">IMABRIDGE_ADMINSECURE</td>
+                            <td class="entry" headers="br00011__datasimpletable_r2l_1mn_qfb__entry__2">true
+                            </td>
+                            <td class="entry" headers="br00011__datasimpletable_r2l_1mn_qfb__entry__3">The optional TLS switch, which is set to true by default (meaning TLS is enabled). If
+                                IMABRIDGE_ADMINSECURE is true, you must provide further TLS-related information, which is
+                                explained in the Using the Bridge configuration topic.</td>
+                        </tr>
+                        <tr class="row">
+                            <td class="entry" headers="br00011__datasimpletable_r2l_1mn_qfb__entry__1">IMABRIDGE_ADMINUSER</td>
+                            <td class="entry" headers="br00011__datasimpletable_r2l_1mn_qfb__entry__2">adminUser
+                            </td>
+                            <td class="entry" headers="br00011__datasimpletable_r2l_1mn_qfb__entry__3">The optional admin user ID.</td>
+                        </tr>
+                        <tr class="row">
+                            <td class="entry" headers="br00011__datasimpletable_r2l_1mn_qfb__entry__1">IMABRIDGE_ADMINPW</td>
+                            <td class="entry" headers="br00011__datasimpletable_r2l_1mn_qfb__entry__2">adminPassword
+                            </td>
+                            <td class="entry" headers="br00011__datasimpletable_r2l_1mn_qfb__entry__3">The optional password for IMABRIDGE_ADMINUSER. The password can be either plain text or obfuscated by using a uni-directional hash. </td>
+                        </tr>
+                        <tr class="row">
+                            <td class="entry" headers="br00011__datasimpletable_r2l_1mn_qfb__entry__1">IMABRIDGE_ENABLEABOUT</td>
+                            <td class="entry" headers="br00011__datasimpletable_r2l_1mn_qfb__entry__2">true</td>
+                            <td class="entry" headers="br00011__datasimpletable_r2l_1mn_qfb__entry__3">The simple HTTP server is enabled showing the About page. IMABRIDGE_AUTHENTICATION is set to basic. If the
+                                username is not specified, an HTTP status of 401 is returned. </td>
+                        </tr>
+                        </tbody></table>
+    </section>
+
+<section><ol class="ol steps"><li class="li step">
+<span class="ph cmd">Installing the Bridge</span>
+<ol type="a" class="ol substeps">
+<li class="li substep">
+<span class="ph cmd">Copy <span class="ph filepath">EclipseAmlenBridge-&lt;build_info&gt;.tz</span> to the OS on which you
+are installing the Bridge.</span>
+</li>
+<li class="li substep">
+<span class="ph cmd">Create a subdirectory in which you can unpack the .tz file. For example, create a subdirectory called
+<span class="ph filepath">imabridge</span>.</span>
+</li>
+<li class="li substep">
+<span class="ph cmd">Unpack the contents of the <span class="ph filepath">EclipseAmlenBridge-&lt;build_info&gt;.tz</span>
+file into the <span class="ph filepath">imabridge</span> subdirectory.</span>
+</li>
+</ol>
+</li><li class="li step">
+    <span class="ph cmd">Building and running the Bridge <span class="ph">Docker</span> image</span>
+<ol type="a" class="ol substeps">
+<li class="li substep substepexpand">
+<span class="ph cmd">In the <span class="ph filepath">imabridge</span> subdirectory, link the
+<span class="ph filepath">EclipseAmlenBridge-&lt;build_info&gt;.rpm</span> file to
+<span class="ph filepath">imabridge.rpm</span> by entering the following command: 
+<code class="ph codeph">ln -s EclipseAmlenBridge-<var class="keyword varname">build_info</var>.rpm imabridge.rpm</code></span>
+</li>
+<li class="li substep substepexpand">
+<span class="ph cmd">The following commands are issued as a user with sudo access or a root.</span>
+</li>
+<li class="li substep substepexpand">
+    <span class="ph cmd">If your host OS is <span class="ph">Red Hat Enterprise Linux™</span>, you need to modify the Dockerfile. Change "FROM centos:latest" to
+"FROM rhel:latest".</span>
+</li>
+<li class="li substep substepexpand">
+    <span class="ph cmd">Build the <span class="ph">Docker</span> image by entering the following command: <code class="ph codeph">sudo docker build
+--force-rm=true -t imabridge:5.0.0.0 .</code></span>
+<div class="itemgroup stepresult">
+<div class="note note note_note"><span class="note__title">Note:</span> Ensure that you include the period at the end of the command.</div>
+    <p class="p">This command builds the <span class="ph">Docker</span> container by using the Dockerfile, installs the imabridge.rpm,
+applies additional RPMs to the container, and updates any existing RPMs in the container. Successful
+completion of the command is indicated by output that is similar to the following line:
+<code class="ph codeph">Successfully built 217669ee8a82</code></p>
+</div>
+</li>
+<li class="li substep substepexpand">
+    <span class="ph cmd">Confirm that the <span class="ph">Docker</span> image is built successfully by entering the following command:
+<code class="ph codeph">docker images</code></span>
+<div class="itemgroup stepresult">
+<p class="p">Check the output is similar to the following line: <code class="ph codeph">imabridge 5.0.0.0 217669ee8a82 38
+seconds ago 569MB</code></p>
+</div>
+</li>
+<li class="li substep substepexpand">
+<span class="ph cmd">Optional. Create a .tar file of the image so that you can deploy the Bridge on other hosts by
+entering the following command: <code class="ph codeph">sudo docker save -o ./imabridge-dockerimage.tar
+imabridge:5.0.0.0</code></span>
+</li><li class="li substep substepexpand"><span class="ph cmd">Edit the file <span class="ph filepath">imabridge-docker.env</span> to set the username, password and interface for the REST admin endpoint. Note: If you want to create the admin endpoint later, then use a blank file.</span></li>
+    <li class="li substep substepexpand">
+<span class="ph cmd">Create the container by using the following command: <code class="ph codeph">docker run --net=host -P -it
+--name BRIDGE -m &lt;memory_size&gt; -v &lt;data_volume_on_host&gt;:/var/imabridge --env-file
+imabridge-docker.env -d imabridge:5.0.0.0 </code></span>
+</li>
+<li class="li substep substepexpand">
+<span class="ph cmd">Verify that the <span class="ph">Eclipse Amlen</span> messaging bridge container
+is running by entering the following command: <code class="ph codeph">sudo docker ps</code>.</span>
+</li>
+</ol>
+</li></ol></section>
+</div>
+<nav role="navigation" class="related-links"><ul class="ullinks"><li class="link ulchildlink"><strong><a href="../Developing/devplug-ineclipse.html">Debugging a protocol plug-in by running the plug-in server in Eclipse</a></strong><br>You can debug your protocol plug-in by running the plug-in server in Eclipse.</li><li class="link ulchildlink"><strong><a href="../Bridge/br00012.html">Post installation user actions</a></strong><br>After installation is complete, some host configuration changes might be required.</li></ul><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Bridge/br00010.html" title="The Amlen Bridge is configured by using a small set of objects that are stored in a JSON dynamic configuration file. The objects can be created and modified as files or specified by using the Bridge REST APIs. When the configuration objects are modified, the dynamic configuration file is updated with the current state.">Configuring the Bridge</a></div></div></nav></article></main></body></html>

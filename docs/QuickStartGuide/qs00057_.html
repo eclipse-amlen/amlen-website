@@ -1,0 +1,58 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="Install the Eclipse Amlen messaging server RPM. The Eclipse Amlen messaging server handles connected clients and devices, and processes messages."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Installing the Eclipse Amlen messaging server RPM</title></head><body id="qs00057_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a><ul><li><a href="../QuickStartGuide/qs00030_.html">Provisioning your operating system </a></li><li><a href="../QuickStartGuide/qs00040_.html">Installing Docker on your operating system</a></li><li><a href="../QuickStartGuide/qs00054_.html">Preparing the Eclipse Amlen .tz packages for installation</a></li><li><a href="../QuickStartGuide/qs00059_.html">Installing Eclipse Amlen  </a><ul><li><a href="../QuickStartGuide/qs00055_.html">Installing Eclipse Amlen in Docker containers</a></li><li><a href="../QuickStartGuide/qs00056_.html">Installing the Eclipse Amlen RPM on a host OS</a><ul><li class="active"><a href="../QuickStartGuide/qs00057_.html">Installing the Eclipse Amlen messaging server RPM</a></li><li><a href="../QuickStartGuide/qs00058_.html">Installing the Amlen WebUI RPM</a></li></ul></li></ul></li><li><a href="../QuickStartGuide/qs00053_.html">Logging in to the Amlen WebUI</a></li><li><a href="../QuickStartGuide/qs00002_.html">Verifying the installation of Eclipse Amlen</a></li></ul></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Installing the <span class="ph">Eclipse Amlen</span> messaging server
+        RPM</h1>
+
+
+
+
+
+
+<div class="body taskbody"><p class="shortdesc">Install the <span class="ph">Eclipse Amlen</span> messaging server RPM. The <span class="ph">Eclipse Amlen</span> messaging server handles connected clients and devices, and processes messages.</p>
+<section class="section prereq">
+<ul class="ul">
+<li class="li">Ensure that you have root privileges and access to a yum repository so that you can use the RPM file in the .tz file to install the RPM.</li>
+<li class="li">Ensure that core files can be redirected to a known location. For more information about how to redirect core files, see <a class="xref" href="../Planning/pl00070.html" title="Before you install Eclipse Amlen, ensure that core files can be redirected to a known location.">Core file redirection</a>.</li>
+</ul>
+        </section>
+<section><ol class="ol steps"><li class="li step stepexpand">
+                <span class="ph cmd"> Ensure that the current working directory is the sub-directory which contains
+                    the RPM file that you unpacked when you prepared the .tz file.</span>
+            </li><li class="li step stepexpand">
+                <span class="ph cmd">Enter the following command: </span>
+                <div class="itemgroup info">
+                    <pre class="pre codeblock"><code> yum --nogpgcheck localinstall -y EclipseAmlenServer*.rpm</code></pre>
+                </div>
+            </li><li class="li step stepexpand">
+                <span class="ph cmd">The <span class="ph">Eclipse Amlen</span> service uses the
+                    Systemd init system to manage the service. As part of yum install, the <span class="ph">Eclipse Amlen</span> service file is installed
+                    in the Systemd configuration directory. Use the following systemctl commands to
+                    configure the <span class="ph">Eclipse Amlen</span> service for
+                    the <span class="ph">Eclipse Amlen</span> server.</span>
+                <div class="itemgroup info">
+                    <ol class="ol" type="a">
+                        <li class="li">Enable the <span class="ph">Eclipse Amlen</span> service,
+                            by entering the following command:
+                            <pre class="pre codeblock"><code>systemctl enable imaserver</code></pre></li>
+                        <li class="li">Start the <span class="ph">Eclipse Amlen</span> service,
+                            by entering the following command:
+                            <pre class="pre codeblock"><code>systemctl start imaserver</code></pre></li>
+                        <li class="li">Stop the <span class="ph">Eclipse Amlen</span> service,
+                            by entering the following command:
+                            <pre class="pre codeblock"><code>systemctl stop imaserver</code></pre></li>
+                        <li class="li">Restart the <span class="ph">Eclipse Amlen</span>
+                            service, by entering the following command:
+                            <pre class="pre codeblock"><code>systemctl restart imaserver</code></pre></li>
+                        <li class="li">Check status of the <span class="ph">Eclipse Amlen</span>
+                            service, by entering the following command:
+                            <pre class="pre codeblock"><code>systemctl status imaserver</code></pre></li>
+                        <li class="li">Disable the <span class="ph">Eclipse Amlen</span>
+                            service, by entering the following command:
+                            <pre class="pre codeblock"><code>systemctl disable imaserver</code></pre></li>
+                    </ol>
+                </div>
+            </li></ol></section>
+<section class="section postreq">You can install an <span class="ph">Amlen WebUI</span> RPM that you can use to administer the <span class="ph">Eclipse Amlen</span> messaging server. For more information, see <a class="xref" href="qs00058_.html" title="Install the Amlen WebUI RPM. You can then use the Amlen WebUI to administer the Eclipse Amlen messaging server.">Installing the Amlen WebUI RPM</a>. </section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../QuickStartGuide/qs00056_.html" title="Install the Eclipse Amlen RPM directly on your host operating system (OS).">Installing the Eclipse Amlen RPM on a host OS</a></div></div></nav></article></main></body></html>

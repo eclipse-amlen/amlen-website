@@ -1,0 +1,394 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can view destination mapping rule-related statistics by using a REST Monitoring API."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Viewing MQ Connectivity statistics by using REST Monitoring APIs</title></head><body id="admin00033"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a><ul><li><a href="../Monitoring/admin00080.html">Cluster monitoring</a></li><li><a href="../Monitoring/admin00009.html">Connection Monitoring</a></li><li><a href="../Monitoring/admin00010.html">Endpoint Monitoring</a></li><li><a href="../Monitoring/admin00016.html">Topic Monitoring</a></li><li><a href="../Monitoring/admin00019.html">Queue Monitoring</a></li><li><a href="../Monitoring/admin00022.html">Subscription Monitoring</a></li><li><a href="../Monitoring/admin00025.html">MQTT Client Monitoring</a></li><li><a href="../Monitoring/admin00031.html">MQ Connectivity monitoring</a><ul><li><a href="../Monitoring/admin00032.html">Viewing MQ Connectivity statistics by using the Amlen WebUI</a></li><li class="active"><a href="../Monitoring/admin00033.html">Viewing MQ Connectivity statistics by using REST Monitoring APIs</a></li></ul></li><li><a href="../Monitoring/admin00070.html">Viewing protocol plug-in monitoring statistics by using an external application</a></li><li><a href="../Monitoring/admin00028.html">Server Monitoring</a></li><li><a href="../Monitoring/admin00060.html">XA Transaction monitoring</a></li></ul></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Viewing MQ Connectivity statistics by using <span class="ph">REST Monitoring APIs</span></h1>
+
+<div class="body taskbody"><p class="shortdesc">System administrators can view destination mapping rule-related statistics by using a <span class="ph">REST Monitoring API</span>. </p>
+<section class="section context"><p class="p">System administrators can view destination mapping rule-related statistics by using a <span class="ph">REST Monitoring API</span>, or by using the <span class="ph">Amlen WebUI</span>. For more information about using the <span class="ph">Amlen WebUI</span> to view destination mapping rule-related
+    statistics, see <a class="xref" href="admin00032.html" title="System administrators can view destination mapping rule-related statistics by using the MQ Connectivity monitor in the Amlen WebUI.">Viewing MQ
+     Connectivity statistics by using the <span class="ph">Amlen WebUI</span></a>. For more information about the predefined queries that you can run, see
+     <a class="xref" href="admin00031.html" title="View destination mapping rule-related data based on predefined queries. MQ Connectivity monitoring helps you to understand the health of your enterprise by highlighting any destination mapping rules that are not operating normally.">MQ Connectivity
+     monitoring</a>.</p></section>
+<section><div class="li stepsection">Destination mapping rule-related monitoring statistics can be created by using the <span class="ph">Eclipse Amlen</span> REST API GET method . To create destination
+    mapping rule-related monitoring statistics, complete the following steps:</div><ol class="ol steps"><li class="li step stepexpand">
+    <span class="ph cmd">Use the <span class="ph">Eclipse Amlen</span> REST API
+     GET method with the following <span class="ph">Eclipse Amlen</span> monitoring URI:</span>
+    <div class="itemgroup info">
+     <p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/monitor/&lt;Object Type&gt;</code></p>
+    </div>
+   </li><li class="li step stepexpand">
+    <span class="ph cmd">Provide query parameters requesting the statistics that you want returned in the JSON
+     payload. The following example uses cURL to create MQConnectivity-related statistics:</span>
+    <div class="itemgroup info">
+     <pre class="pre codeblock"><code>curl -X GET http://127.0.0.1:9089/ima/v1/monitor/DestinationMappingRule?Name=<var class="keyword varname">Name</var>%26RuleType=<var class="keyword varname">RuleType</var>%26Association=<var class="keyword varname">Association</var>%26StatType=<var class="keyword varname">StatType</var>%26ResultCount=<var class="keyword varname">ResultCount</var></code></pre>
+     <p class="p">Where:</p>
+     <ul class="ul">
+      <li class="li">
+       <dl class="dl">
+        
+         <dt class="dt dlterm">Name</dt>
+         <dd class="dd">Optional.</dd>
+         <dd class="dd ddexpand">Specifies the name of the destination mapping rule to collect data about.</dd>
+         <dd class="dd ddexpand">You can use an asterisk (*) as a wildcard to specify a group of destination mapping
+          rules. For example, to view the status of all destination mapping rules that start with
+           <code class="ph codeph">MQ</code>, use <code class="ph codeph">MQ*</code></dd>
+         <dd class="dd ddexpand">The default value is <span class="keyword parmname">*</span></dd>
+        
+       </dl>
+      </li>
+      <li class="li">
+       <dl class="dl">
+        
+         <dt class="dt dlterm">RuleType</dt>
+         <dd class="dd">Optional.</dd>
+         <dd class="dd ddexpand">Specifies the type of rule to return monitoring data for.</dd>
+         <dd class="dd ddexpand">You can specify one of the following values:<ul class="ul">
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">IMATopicToMQQueue</dt>
+              <dd class="dd">Returns destination mapping rules of the type <span class="ph">Eclipse Amlen</span> topic to <span class="ph">IBM® MQ</span> queue.</dd>
+             
+            </dl>
+           </li>
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">IMATopicToMQTopic</dt>
+              <dd class="dd">Returns destination mapping rules of the type <span class="ph">Eclipse Amlen</span> topic to <span class="ph">IBM MQ</span> topic.</dd>
+             
+            </dl>
+           </li>
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">MQQueueToIMATopic</dt>
+              <dd class="dd">Returns destination mapping rules of the type <span class="ph">IBM MQ</span> queue to <span class="ph">Eclipse Amlen</span> topic.</dd>
+             
+            </dl>
+           </li>
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">MQTopicToIMATopic</dt>
+              <dd class="dd">Returns destination mapping rules of the type <span class="ph">IBM MQ</span> topic to <span class="ph">Eclipse Amlen</span> topic.</dd>
+             
+            </dl>
+           </li>
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">IMATopicSubtreeToMQQueue</dt>
+              <dd class="dd">Returns destination mapping rules of the type <span class="ph">Eclipse Amlen</span> topic subtree to <span class="ph">IBM MQ</span> queue.</dd>
+             
+            </dl>
+           </li>
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">IMATopicSubtreeToMQTopic</dt>
+              <dd class="dd">Returns destination mapping rules of the type <span class="ph">Eclipse Amlen</span> topic subtree to <span class="ph">IBM MQ</span> topic.</dd>
+             
+            </dl>
+           </li>
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">IMATopicSubtreeToMQTopicSubtree</dt>
+              <dd class="dd">Returns destination mapping rules of the type <span class="ph">Eclipse Amlen</span> topic subtree to <span class="ph">IBM MQ</span> topic subtree.</dd>
+             
+            </dl>
+           </li>
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">MQTopicSubtreeToIMATopic</dt>
+              <dd class="dd">Returns destination mapping rules of the type <span class="ph">IBM MQ</span> topic subtree to <span class="ph">Eclipse Amlen</span> topic.</dd>
+             
+            </dl>
+           </li>
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">MQTopicSubtreeToIMATopicSubtree</dt>
+              <dd class="dd">Returns destination mapping rules of the type <span class="ph">IBM MQ</span> topic subtree to <span class="ph">Eclipse Amlen</span> topic subtree.</dd>
+             
+            </dl>
+           </li>
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">IMAQueueToMQQueue</dt>
+              <dd class="dd">Returns destination mapping rules of the type <span class="ph">Eclipse Amlen</span> queue to <span class="ph">IBM MQ</span> queue.</dd>
+             
+            </dl>
+           </li>
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">IMAQueueToMQTopic</dt>
+              <dd class="dd">Returns destination mapping rules of the type <span class="ph">Eclipse Amlen</span> queue to <span class="ph">IBM MQ</span> topic.</dd>
+             
+            </dl>
+           </li>
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">MQQueueToIMAQueue</dt>
+              <dd class="dd">Returns destination mapping rules of the type <span class="ph">IBM MQ</span> queue to <span class="ph">Eclipse Amlen</span> queue.</dd>
+             
+            </dl>
+           </li>
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">MQTopicToIMAQueue</dt>
+              <dd class="dd">Returns destination mapping rules of the type <span class="ph">IBM MQ</span> topic to <span class="ph">Eclipse Amlen</span> queue.</dd>
+             
+            </dl>
+           </li>
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">MQTopicSubtreeToIMAQueue</dt>
+              <dd class="dd">Returns destination mapping rules of the type <span class="ph">IBM MQ</span> topic subtree to <span class="ph">Eclipse Amlen</span> queue.</dd>
+             
+            </dl>
+           </li>
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">Any</dt>
+              <dd class="dd">Returns destination mapping rules of all types.</dd>
+              <dd class="dd ddexpand">This value is the default value.</dd>
+             
+            </dl>
+           </li>
+          </ul></dd>
+        
+       </dl>
+      </li>
+      <li class="li">
+       <dl class="dl">
+        
+         <dt class="dt dlterm">Association</dt>
+         <dd class="dd">Optional.</dd>
+         <dd class="dd ddexpand">Specifies the queue manager connection that the destination mapping rule must be
+          associated with.</dd>
+         <dd class="dd ddexpand">You can use an asterisk (*) as a wildcard to specify a group of queue manager
+          connections. For example, to view the status of all destination mapping rules that are
+          associated with queue managers that start with <code class="ph codeph">MQ</code>, use
+           <code class="ph codeph">MQ*</code></dd>
+         <dd class="dd ddexpand">The default value is <span class="keyword parmname">*</span></dd>
+        
+       </dl>
+      </li>
+      <li class="li">
+       <dl class="dl">
+        
+         <dt class="dt dlterm">StatType</dt>
+         <dd class="dd">Specifies the type of data to order the results by</dd>
+         <dd class="dd ddexpand">This value can be one of the following values:<ul class="ul">
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">CommitCount</dt>
+              <dd class="dd">Orders the monitoring data by the number of commit operations that are completed
+               for the destination mapping rule. One commit operation can commit many messages.</dd>
+              <dd class="dd ddexpand">This value is the default value.</dd>
+             
+            </dl>
+           </li>
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">RollbackCount</dt>
+              <dd class="dd">Orders the monitoring data by the number of rollback operations that are completed
+               for the destination mapping rule.</dd>
+             
+            </dl>
+           </li>
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">PersistentCount</dt>
+              <dd class="dd">Orders the monitoring data by the number of persistent messages that are sent by
+               using the destination mapping rule.</dd>
+             
+            </dl>
+           </li>
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">NonPersistentCount</dt>
+              <dd class="dd">Orders the monitoring data by the number of nonpersistent messages that are sent
+               by using the destination mapping rule.</dd>
+             
+            </dl>
+           </li>
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">CommittedMessageCount</dt>
+              <dd class="dd">Orders the monitoring data by the number of messages that are transferred within
+               the transactions.</dd>
+             
+            </dl>
+           </li>
+           <li class="li">
+            <dl class="dl">
+             
+              <dt class="dt dlterm">Status</dt>
+              <dd class="dd">Orders the monitoring data by the status of the destination mapping rule.</dd>
+              <dd class="dd ddexpand">The status field can be one of the following values:<dl class="dl">
+                
+                 <dt class="dt dlterm">0</dt>
+                 <dd class="dd"> Enabled - the rule is operating normally.</dd>
+                
+                
+                 <dt class="dt dlterm">1</dt>
+                 <dd class="dd"> Disabled - the rule is not operating. The rule must be restarted by an
+                  administrator.</dd>
+                
+                
+                 <dt class="dt dlterm">2</dt>
+                <dd class="dd"> Reconnecting - the rule encountered a problem. <span class="ph">Eclipse Amlen</span> is attempting to restart the rule.</dd>
+                
+                
+                 <dt class="dt dlterm">3</dt>
+                 <dd class="dd"> Starting - the rule is being activated.</dd>
+                
+               </dl></dd>
+             
+            </dl>
+           </li>
+          </ul></dd>
+        
+       </dl>
+      </li>
+      <li class="li">
+       <dl class="dl">
+        
+         <dt class="dt dlterm">ResultCount</dt>
+         <dd class="dd">Optional.</dd>
+         <dd class="dd ddexpand">Specifies the maximum number of results to report.</dd>
+         <dd class="dd ddexpand">This value can be one of the following values: 10, 25, 50, 100.</dd>
+         <dd class="dd ddexpand">The default value is 10.</dd>
+        
+       </dl>
+      </li>
+     </ul>
+    </div>
+   </li></ol></section>
+  <section class="section result">
+   <div class="p">The following fields are returned: <ul class="ul">
+     <li class="li">
+      <dl class="dl">
+       
+        <dt class="dt dlterm">RuleName</dt>
+        <dd class="dd">String</dd>
+        <dd class="dd ddexpand">The name of the destination mapping rule that is monitored.</dd>
+       
+       
+        <dt class="dt dlterm">QueueManagerConnection</dt>
+        <dd class="dd">String</dd>
+        <dd class="dd ddexpand">The name of the queue manager connection that the destination mapping rule is associated
+         with.</dd>
+       
+       
+        <dt class="dt dlterm">CommitCount</dt>
+        <dd class="dd">Numeric</dd>
+        <dd class="dd ddexpand">The number of commit operations that are completed for the destination mapping rule. One
+         commit operation can commit many messages.</dd>
+       
+       
+        <dt class="dt dlterm">RollbackCount</dt>
+        <dd class="dd">Numeric</dd>
+        <dd class="dd ddexpand">The number of rollback operations that are completed for the destination mapping
+         rule.</dd>
+       
+       
+        <dt class="dt dlterm">CommittedMessageCount</dt>
+        <dd class="dd">Numeric</dd>
+        <dd class="dd ddexpand"></dd>
+       
+       
+        <dt class="dt dlterm">PersitentCount</dt>
+        <dd class="dd">Numeric</dd>
+        <dd class="dd ddexpand">The number of persistent messages that are sent by using the destination mapping
+         rule.</dd>
+       
+       
+        <dt class="dt dlterm">NonpersistentCount</dt>
+        <dd class="dd">Numeric</dd>
+        <dd class="dd ddexpand">The number of nonpersistent messages that are sent by using the destination mapping
+         rule.</dd>
+       
+       
+        <dt class="dt dlterm">Status</dt>
+        <dd class="dd">Numeric</dd>
+        <dd class="dd ddexpand">The value of the status field can be one of the following values:<ul class="ul">
+          <li class="li">
+           <dl class="dl">
+            
+             <dt class="dt dlterm">0</dt>
+             <dd class="dd">Enabled.</dd>
+             <dd class="dd ddexpand">The rule is operating normally.</dd>
+            
+           </dl>
+          </li>
+          <li class="li">
+           <dl class="dl">
+            
+             <dt class="dt dlterm">1</dt>
+             <dd class="dd">Disabled.</dd>
+             <dd class="dd ddexpand">The rule is not operating. The rule must be restarted by an administrator.</dd>
+            
+           </dl>
+          </li>
+          <li class="li">
+           <dl class="dl">
+            
+             <dt class="dt dlterm">2</dt>
+             <dd class="dd">Reconnecting.</dd>
+             <dd class="dd ddexpand">The rule encountered a problem. <span class="ph">Eclipse Amlen</span> is attempting to restart the rule.</dd>
+            
+           </dl>
+          </li>
+          <li class="li">
+           <dl class="dl">
+            
+             <dt class="dt dlterm">3</dt>
+             <dd class="dd">Starting.</dd>
+             <dd class="dd ddexpand">The rule is being activated.</dd>
+            
+           </dl>
+          </li>
+         </ul></dd>
+       
+       
+        <dt class="dt dlterm">ExpandedMessage</dt>
+        <dd class="dd">String</dd>
+        <dd class="dd ddexpand">Additional information on the status of the destination mapping rule, including a reason
+         code if applicable.</dd>
+       
+      </dl>
+     </li>
+    </ul></div>
+  </section>
+<section class="example">
+   <p class="p">The following example uses cURL to show how a GET method is used to create statistics about
+    destination mapping rules with a IMATopicToMQQueue rule type. The data is ordered by commit
+    count:</p>
+   <pre class="pre codeblock"><code>curl -X GET http://127.0.0.1:9089/ima/v1/monitor/DestinationMappingRule?Name=*%26RuleType=IMATopicToMQQueue%26StatType=CommittedMessageCount
+ 
+ </code></pre>
+   <p class="p">The following example shows a successful example response to the GET method that was used to
+    create statistics about destination mapping rules with a IMATopicToMQQueue rule type:</p>
+   <pre class="pre codeblock"><code>{ "Version":"v1", "DestinationMappingRule": [ {"RuleName":"MyDestinationMappingRule","QueueManagerConnection":"QM1","CommitCount":1,
+"RollbackCount":0,"CommittedMessageCount":0,"PersistentCount":0,"NonpersistentCount":0,"Status":3 } ] }
+</code></pre>
+  </section>
+</div>
+
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Monitoring/admin00031.html" title="View destination mapping rule-related data based on predefined queries. MQ Connectivity monitoring helps you to understand the health of your enterprise by highlighting any destination mapping rules that are not operating normally.">MQ Connectivity monitoring</a></div></div></nav></article></main></body></html>

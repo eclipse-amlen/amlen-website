@@ -1,0 +1,291 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can view topic-related statistics by using a REST Monitoring API."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Viewing topic monitoring statistics by using REST Monitoring APIs</title></head><body id="admin00018"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a><ul><li><a href="../Monitoring/admin00080.html">Cluster monitoring</a></li><li><a href="../Monitoring/admin00009.html">Connection Monitoring</a></li><li><a href="../Monitoring/admin00010.html">Endpoint Monitoring</a></li><li><a href="../Monitoring/admin00016.html">Topic Monitoring</a><ul><li><a href="../Monitoring/admin00017.html">Viewing topic monitoring statistics by using the Amlen WebUI</a></li><li class="active"><a href="../Monitoring/admin00018.html">Viewing topic monitoring statistics by using REST Monitoring APIs</a></li><li><a href="../Monitoring/admin00041.html">Viewing topic monitoring statistics by using an external application</a></li></ul></li><li><a href="../Monitoring/admin00019.html">Queue Monitoring</a></li><li><a href="../Monitoring/admin00022.html">Subscription Monitoring</a></li><li><a href="../Monitoring/admin00025.html">MQTT Client Monitoring</a></li><li><a href="../Monitoring/admin00031.html">MQ Connectivity monitoring</a></li><li><a href="../Monitoring/admin00070.html">Viewing protocol plug-in monitoring statistics by using an external application</a></li><li><a href="../Monitoring/admin00028.html">Server Monitoring</a></li><li><a href="../Monitoring/admin00060.html">XA Transaction monitoring</a></li></ul></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Viewing topic monitoring statistics by using <span class="ph">REST Monitoring APIs</span></h1>
+
+<div class="body taskbody"><p class="shortdesc">System administrators can view topic-related statistics by using a <span class="ph">REST Monitoring API</span>. </p>
+<section class="section prereq"><p class="p">The system administrator can reset the topic monitor data
+to zero either by stopping and restarting the <span class="ph">Eclipse Amlen</span> server,
+or by deleting and re-creating a specific topic string. </p><p class="p">If
+the <span class="ph">Eclipse Amlen</span> server
+is restarted, then all monitored topic data is set to zero. </p><p class="p">For
+more information about restarting the <span class="ph">Eclipse Amlen</span> server,
+see <a class="xref" href="../Administering/ad00280_.html" title="You can restart, stop and view the status of the Eclipse Amlen server by using REST Administration APIs or by using the Amlen WebUI.">Starting and stopping the server</a>.</p><p class="p">If
+you want to set individual topic data to zero, then you must delete
+and re-create individual topic strings. </p><p class="p">For more information about deleting and re-creating a topic string by using a <span class="ph">REST Monitoring API</span>, see step 1 in
+        the following task information. </p></section>
+<section class="section context"><p class="p">System administrators can view topic-related statistics by using a <span class="ph">REST Monitoring API</span>, by using
+            the <span class="ph">Amlen WebUI</span>, or by using an external
+            monitoring application. For more information about using the <span class="ph">Amlen WebUI</span> to view topic-related statistics,
+            see <a class="xref" href="admin00017.html" title="Use the topic monitor to view live, aggregated topic data, and to query the best and worst performing topics across several connection metrics.">Viewing
+               topic-related statistics by using the GUI</a>. For more information about using an
+            external application to view topic-related statistics, see <a class="xref" href="admin00041.html" title="External monitoring applications can access topic data that is published by Eclipse Amlen by subscribing to the Eclipse Amlen topic $SYS/ResourceStatistics/Topic.">Viewing topic-related statistics by
+               using an external application</a>.</p></section>
+<section><ol class="ol steps"><li class="li step stepexpand"><span class="ph cmd">You must create a set of topics to monitor. </span>
+<ul class="ul choices">
+<li class="li choice">To view the topics that you are monitoring, use the <span class="ph">Eclipse Amlen</span> REST API GET method with the
+            following <span class="ph">Eclipse Amlen</span> URI:
+            <pre class="pre codeblock"><code>http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/configuration/TopicMonitor</code></pre></li>
+<li class="li choice">To add a topic string to the list of topics that you want to monitor, use the <span class="ph">Eclipse Amlen</span> REST API POST method with
+            the following <span class="ph">Eclipse Amlen</span> URI:
+              <pre class="pre codeblock"><code>http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/configuration/ </code></pre><div class="p">and provide TopicMonitor object configuration data in the payload of the POST method by using the
+              following schema. <span class="keyword parmname">Content-type</span> is set to application/json:
+              <pre class="pre codeblock"><code>{"TopicMonitor":["TopicString/#"]}       </code></pre></div><p class="p">where:</p><ul class="ul">
+              <li class="li">
+                <dl class="dl">
+                  
+                    <dt class="dt dlterm">TopicString</dt>
+                    <dd class="dd">Specifies the name of the topic string that you want to add.</dd>
+                    <dd class="dd ddexpand">The string must end with a multi-level wildcard (#), must contain no other
+                      wildcards, and must not start with $SYS. For example,
+                        <kbd class="ph userinput">EXAMPLE/L2/#</kbd>. You can specify only the multi-level
+                      wildcard (#) to monitor all topics. To monitor a single topic, that topic must
+                      have no child topics. For example,
+                        <kbd class="ph userinput">/animals/dogs/labradors/#</kbd> monitors only the topic
+                        <kbd class="ph userinput">/animals/dogs/labradors</kbd> if
+                        <kbd class="ph userinput">labradors</kbd> has no child topics.</dd>
+                  
+                </dl>
+              </li>
+            </ul></li>
+<li class="li choice">To remove a topic string from the list of topics that you are monitoring, use the <span class="ph">Eclipse Amlen</span> REST API DELETE method with
+            the following <span class="ph">Eclipse Amlen</span> URI:
+            <pre class="pre codeblock"><code>http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/configuration/TopicMonitor/TopicString</code></pre></li>
+</ul>
+        <div class="itemgroup info">
+          <p class="p">where</p>
+          <ul class="ul">
+            <li class="li">
+              <dl class="dl">
+                
+                  <dt class="dt dlterm">TopicString</dt>
+                  <dd class="dd">Specifies the name of the topic string that you want to remove. </dd>
+                
+              </dl>
+            </li>
+          </ul>
+        </div>
+</li><li class="li step stepexpand">
+        <span class="ph cmd">Use the <span class="ph">Eclipse Amlen</span> REST
+          API GET method with the following <span class="ph">Eclipse Amlen</span> monitoring
+          URI:</span>
+        <div class="itemgroup info">
+          <p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/monitor/Topic</code></p>
+        </div>
+      </li><li class="li step stepexpand">
+        <span class="ph cmd">Provide query parameters requesting the statistics that you want returned in the JSON
+          payload. The following example uses cURL to create topic-related statistics:</span>
+        <div class="itemgroup info">
+          <div class="p">
+            <pre class="pre codeblock"><code>curl -X GET http://127.0.0.1:9089/ima/v1/monitor/Topic?TopicString=<var class="keyword varname">TopicString</var>%26ResultCount=<var class="keyword varname">ResultCount</var>%26Monitoring-DataType=<var class="keyword varname">Monitoring-DataType</var></code></pre>
+          </div>
+          <p class="p">where:</p>
+          <ul class="ul">
+            <li class="li">
+              <dl class="dl">
+                
+                  <dt class="dt dlterm">TopicString</dt>
+                  <dd class="dd">Optional.</dd>
+                  <dd class="dd ddexpand"><span class="keyword parmname">TopicString</span> is a filter, which you can use to match
+                    specific topic strings. <span class="keyword parmname">TopicString</span> can contain wildcards
+                    (*) to match 0 or more characters. The default value is
+                    <span class="keyword parmname">*</span>.</dd>
+                
+              </dl>
+            </li>
+            <li class="li">
+              <dl class="dl">
+                
+                  <dt class="dt dlterm">ResultCount</dt>
+                  <dd class="dd">Optional.</dd>
+                  <dd class="dd ddexpand">Specifies the maximum number of results to return. Options available for
+                    selection are 10, 25, 50, and 100. The default value is 25. If the number of
+                    topics that are being monitored is less than the <span class="keyword parmname">Count</span>
+                    specified, then only those topics that are being monitored are returned.</dd>
+                  <dd class="dd ddexpand">Specifies the number of results to display. </dd>
+                
+              </dl>
+            </li>
+            <li class="li">
+              <dl class="dl">
+                
+                  <dt class="dt dlterm">Monitoring-DataType</dt>
+                  <dd class="dd">Optional.</dd>
+                  <dd class="dd ddexpand">Specifies the type of data to order the results by.</dd>
+                  <dd class="dd ddexpand">This value can be one of the following values:<ul class="ul">
+                      <li class="li">
+                        <dl class="dl">
+                          
+                            <dt class="dt dlterm"> PublishedMsgsHighest</dt>
+                            <dd class="dd">Topics with the most publications. </dd>
+                          
+                        </dl>
+                      </li>
+                      <li class="li">
+                        <dl class="dl">
+                          
+                            <dt class="dt dlterm">PublishedMsgsLowest</dt>
+                            <dd class="dd">Topics with the least publications. </dd>
+                          
+                        </dl>
+                      </li>
+                      <li class="li">
+                        <dl class="dl">
+                          
+                            <dt class="dt dlterm">SubscriptionsHighest</dt>
+                            <dd class="dd">Topics with the most subscribers.</dd>
+                          
+                        </dl>
+                      </li>
+                      <li class="li">
+                        <dl class="dl">
+                          
+                            <dt class="dt dlterm">SubscriptionsLowest</dt>
+                            <dd class="dd">Topics with the least subscribers.</dd>
+                          
+                        </dl>
+                      </li>
+                      <li class="li">
+                        <dl class="dl">
+                          
+                            <dt class="dt dlterm">RejectedMsgsHighest</dt>
+                            <dd class="dd">Topics with the most rejected messages.</dd>
+                          
+                        </dl>
+                      </li>
+                      <li class="li">
+                        <dl class="dl">
+                          
+                            <dt class="dt dlterm">RejectedMsgsLowest</dt>
+                            <dd class="dd">Topics with the least rejected messages.</dd>
+                          
+                        </dl>
+                      </li>
+                      <li class="li">
+                        <dl class="dl">
+                          
+                            <dt class="dt dlterm">FailedPublishesHighest</dt>
+                            <dd class="dd">Topics with the most rejected publishes.</dd>
+                          
+                        </dl>
+                      </li>
+                      <li class="li">
+                        <dl class="dl">
+                          
+                            <dt class="dt dlterm">FailedPublishesLowest</dt>
+                            <dd class="dd">Topics with the least rejected publishes.</dd>
+                          
+                        </dl>
+                      </li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm"> AllUnsorted</dt>
+<dd class="dd">Lists all topics. </dd>
+<dd class="dd ddexpand">Any value that is specified for <span class="keyword parmname">ResultCount</span> is ignored, so setting
+<span class="keyword parmname">StatType</span>  to <kbd class="ph userinput">AllUnsorted</kbd> can result in a large number of
+responses being generated.</dd>
+
+</dl>
+</li>
+                    </ul></dd>
+                  <dd class="dd ddexpand">The default value is <var class="keyword varname">PublishedMsgsHighest</var>.</dd>
+                
+              </dl>
+            </li>
+          </ul>
+        </div>
+      </li></ol></section>
+    <section class="section result">
+      <div class="p">The following fields are returned:  <ul class="ul">
+          <li class="li">
+            <dl class="dl" id="admin00018__TopicStringStringTheTopicThatIsBein">
+              
+                <dt class="dt dlterm">TopicString</dt>
+                <dd class="dd">String</dd>
+                <dd class="dd ddexpand">The topic that is being monitored. The topic string always contains a
+                  wildcard.</dd>
+              
+            </dl>
+          </li>
+          <li class="li">
+            <dl class="dl" id="admin00018__SubscriptionsNumericTheNumberOfActi">
+              
+                <dt class="dt dlterm">Subscriptions</dt>
+                <dd class="dd">Numeric</dd>
+                <dd class="dd ddexpand">The number of active subscriptions on the topics that are monitored. The figure
+                  shows all active subscriptions that match the wildcarded topic string.</dd>
+              
+            </dl>
+          </li>
+          <li class="li">
+            <dl class="dl" id="admin00018__ResetTimeDateTimeTheTimeAtWhichTheS">
+              
+                <dt class="dt dlterm">ResetTime</dt>
+                <dd class="dd">String</dd>
+                <dd class="dd ddexpand">The time at which the statistics for the topic were reset. The
+                    <span class="keyword parmname">ResetTime</span> is usually the time when the topic monitor is
+                  created.</dd>
+              
+            </dl>
+          </li>
+          <li class="li">
+            <dl class="dl" id="admin00018__PublishedMsgsNumericTheNumberOfMess">
+              
+                <dt class="dt dlterm">PublishedMsgs</dt>
+                <dd class="dd">Numeric</dd>
+                <dd class="dd ddexpand">The number of messages that are successfully published to a topic that matches
+                  the wildcarded topic string.</dd>
+              
+            </dl>
+          </li>
+          <li class="li">
+            <dl class="dl" id="admin00018__RejectedMsgsNumericTheNumberOfMessa">
+              
+                <dt class="dt dlterm">RejectedMsgs</dt>
+                <dd class="dd">Numeric</dd>
+                <dd class="dd ddexpand">The number of messages that are rejected by one or more subscriptions where the
+                  quality of service level did not cause the publish request to fail.</dd>
+              
+            </dl>
+          </li>
+          <li class="li">
+            <dl class="dl" id="admin00018__FailedPublishesNumericTheNumberOfPu">
+              
+                <dt class="dt dlterm">FailedPublishes</dt>
+                <dd class="dd">Numeric</dd>
+                <dd class="dd ddexpand">The number of publish requests that failed because the message is rejected by
+                  one or more subscriptions.</dd>
+              
+            </dl>
+          </li>
+        </ul></div>
+    </section>
+<section class="example">
+      <p class="p">The following example uses cURL to create a topic monitor. This example shows you how to
+        create two topic monitors in a single request: </p>
+      <pre class="pre codeblock"><code>
+curl -X POST \
+   -H "Content-Type: application/json" \
+   -d ' {
+          "TopicMonitor": ["/p1/#","/p2/#"]
+        }
+      ' \
+http://127.0.0.1:9089/ima/v1/configuration</code></pre>
+      <p class="p">The following example shows a successful example response to the GET method that was used
+        to create two topic monitors in a single request: </p>
+      <pre class="pre codeblock"><code>{ "Version":"v1","Code":"CWLNA6011","Message":"The requested configuration change has completed successfully." }
+</code></pre>
+      <p class="p">The following example uses cURL to show how a GET method is used to create statistics about
+        topics with the highest number of published messages:</p>
+      <pre class="pre codeblock"><code> curl -X GET http://127.0.0.1:9089/ima/v1/monitor/Topic?TopicString=*%26Monitoring-DataType=PublishedMsgsHighest
+  </code></pre>
+      <p class="p">The following example shows a successful example response to the GET method that was used
+        to create statistics about topics with the highest number of published messages::</p>
+      <pre class="pre codeblock"><code>{ "Version":"v1", "Topic": [ { "TopicString":"ROOT/#","Subscriptions":5,"ResetTime":"0","PublishedMsgs":50,
+"RejectedMsgs":4,"FailedPublishes":2,"ResultCount":10 } ] }
+</code></pre>
+      
+    </section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Monitoring/admin00016.html" title="View live, aggregated topic data about publications, subscribers, messages, and publishers.">Topic Monitoring</a></div></div></nav></article></main></body></html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="Build and deploy the Eclipse Amlen messaging server Docker image and start the Eclipse Amlen messaging server Docker container. The Eclipse Amlen messaging server handles connected clients and devices, and processes messages."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Building and running the Eclipse Amlen messaging server Docker image</title></head><body id="qs00051_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a><ul><li><a href="../QuickStartGuide/qs00030_.html">Provisioning your operating system </a></li><li><a href="../QuickStartGuide/qs00040_.html">Installing Docker on your operating system</a></li><li><a href="../QuickStartGuide/qs00054_.html">Preparing the Eclipse Amlen .tz packages for installation</a></li><li><a href="../QuickStartGuide/qs00059_.html">Installing Eclipse Amlen  </a><ul><li><a href="../QuickStartGuide/qs00055_.html">Installing Eclipse Amlen in Docker containers</a><ul><li class="active"><a href="../QuickStartGuide/qs00051_.html">Building and running the Eclipse Amlen messaging server Docker image </a></li><li><a href="../QuickStartGuide/qs00052_.html">Building and running the Amlen WebUI Docker image</a></li></ul></li><li><a href="../QuickStartGuide/qs00056_.html">Installing the Eclipse Amlen RPM on a host OS</a></li></ul></li><li><a href="../QuickStartGuide/qs00053_.html">Logging in to the Amlen WebUI</a></li><li><a href="../QuickStartGuide/qs00002_.html">Verifying the installation of Eclipse Amlen</a></li></ul></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Building and running the <span class="ph">Eclipse Amlen</span> messaging server Docker image </h1>
+
+
+
+
+
+
+<div class="body taskbody"><p class="shortdesc">Build and deploy the <span class="ph">Eclipse Amlen</span> messaging server Docker image and start the <span class="ph">Eclipse Amlen</span> messaging server Docker container. The <span class="ph">Eclipse Amlen</span> messaging server handles connected clients and devices, and processes messages.</p>
+<section class="section prereq">
+<ul class="ul">
+<li class="li">Ensure that you have access to a yum repository so that you can use the Dockerfile in the .tz file to build the Docker image.</li>
+<li class="li">Ensure that core files can be redirected to a known location. For more information about how to redirect core files, see <a class="xref" href="../Planning/pl00070.html" title="Before you install Eclipse Amlen, ensure that core files can be redirected to a known location.">Core file redirection</a>.</li>
+</ul>
+</section>
+<section><ol class="ol steps"><li class="li step stepexpand">
+<span class="ph cmd">Build the messaging server Docker image.</span>
+<ol type="a" class="ol substeps">
+<li class="li substep substepexpand">
+<span class="ph cmd">In the <span class="ph filepath">imaserver</span> subdirectory, rename the <span class="ph filepath">EclipseAmlenServer-&lt;<var class="keyword varname">build_info</var>&gt;.rpm</span> file to <span class="ph filepath">imaserver.rpm</span> by entering the following command:</span>
+                        <div class="itemgroup info">
+                            <pre class="pre codeblock"><code>mv EclipseAmlenServer-&lt;<var class="keyword varname">build_info</var>&gt;.rpm imaserver.rpm</code></pre>
+                        </div>
+                    </li>
+<li class="li substep substepexpand" id="qs00051___sudostep">
+<span class="ph cmd">If you are not logged in as the root user, enter the following command:</span>
+<div class="itemgroup info"><pre class="pre codeblock"><code>sudo sh</code></pre>Issuing this command enables you to run subsequent commands without having to specify <code class="ph codeph">sudo</code></div>
+</li>
+                    <li class="li substep substepexpand">
+                        <span class="ph cmd">If your host OS is Red Hat, you need to modify the Dockerfile.</span>
+                        <div class="itemgroup info">Change "<span class="ph filepath">FROM centos:latest</span>" to "<span class="ph filepath">FROM rhel:latest</span>".</div>
+                    </li>
+<li class="li substep substepexpand">
+                        <span class="ph cmd">Build the <span class="ph">Eclipse Amlen</span>
+                            imaserver Docker image by entering the following command:</span>
+                        <div class="itemgroup info"><pre class="pre codeblock"><code>docker build --force-rm=true -t imaserver:<var class="keyword varname">&lt;version&gt;</var> .</code></pre>Ensure
+that you include the period at the end of the command.<div class="p">This command builds the Docker container by
+using the Dockerfile, installs the imaserver.rpm, applies additional RPMs to the container, and
+updates any existing RPMs in the container. Successful completion of the command is indicated by
+output that is similar to the following line:<pre class="pre codeblock"><code>Successfully built 3017eae88d88</code></pre>
+</div></div>
+                    </li>
+<li class="li substep substepexpand">
+                        <span class="ph cmd">Confirm that the <span class="ph">Eclipse Amlen</span>
+                            imaserver Docker image has been built successfully by entering the
+                            following command:</span>
+                        <div class="itemgroup info"><pre class="pre codeblock"><code>docker images</code></pre>and look for output that is
+similar to the following
+line:<pre class="pre codeblock"><code>imaserver     0.1    0952b6b30178    2 seconds ago</code></pre></div>
+                    </li>
+</ol>
+</li><li class="li step stepexpand">
+                <span class="ph cmd">Create a .tar file of the image so that you can deploy the <span class="ph">Eclipse Amlen</span> messaging server on other
+                    hosts by entering the following command:</span>
+                <div class="itemgroup info">
+                    <pre class="pre codeblock"><code>docker save -o ./imaserver-<var class="keyword varname">&lt;version&gt;</var>-dockerimage.tar imaserver:<var class="keyword varname">&lt;version&gt;</var></code></pre>
+                </div>
+            </li><li class="li step stepexpand">
+<span class="ph cmd">Start the <span class="ph">Eclipse Amlen</span> messaging server by entering the following command:</span>
+<div class="itemgroup info"><pre class="pre codeblock"><code>docker run --cap-add SYS_ADMIN --net=host -P -it --name IMA --env-file=imaserver-docker -m <var class="keyword varname">&lt;memory_size&gt;</var> 
+-v <var class="keyword varname">&lt;data_volume&gt;</var> -d imaserver:<var class="keyword varname">&lt;version&gt;</var></code></pre>where:<dl class="dl">
+
+<dt class="dt dlterm"><var class="keyword varname">&lt;memory_size&gt;</var></dt>
+<dd class="dd">The amount of memory available to the container. The minimum value is 4 GB. You can, however,
+specify a value that is as high as the available memory on the host. </dd>
+
+
+<dt class="dt dlterm"><var class="keyword varname">&lt;data_volume&gt;</var></dt>
+<dd class="dd">The external data volume to which the <span class="ph filepath">/var/messagesight</span> directory is to be
+mapped. Mapping the directory to an external data volume is required so that data can be persisted
+over container updates. For information about using data volumes in Docker, see <a class="xref" href="https://docs.docker.com/engine/admin/volumes/" target="_blank" rel="external noopener">Managing data in
+containers</a>.</dd>
+
+
+<dt class="dt dlterm"><var class="keyword varname">&lt;version&gt;</var></dt>
+<dd class="dd">The version of the software being installed for example 0.1.0.0-20210809.0852</dd>
+
+</dl>
+<p class="p">This command creates and starts the <span class="ph">Eclipse Amlen</span>
+messaging server Docker container.</p><div class="p">The following table shows the environment variables that
+are in the <span class="ph filepath">imaserver-docker.env</span> file. You can set the environment variables and
+include them in the <span class="ph filepath">imaserver-docker.env</span> file and include the file in the
+<code class="ph codeph">docker run</code> command or you can specify them separately in the command by using the
+<code class="ph codeph">-e</code> argument on the command.<table class="table frame-all" id="qs00051___table_acx_2s1_3s"><caption><span class="table--title-label">Table 1. </span><span class="title"><span class="ph">Eclipse Amlen</span> messaging server container environment
+variables</span></caption><colgroup><col style="width:48.98911353032659%"><col style="width:15.552099533437014%"><col style="width:35.45878693623639%"></colgroup><thead class="thead">
+<tr class="row">
+<th class="entry" id="qs00051___table_acx_2s1_3s__entry__1">Environment variable name</th>
+<th class="entry" id="qs00051___table_acx_2s1_3s__entry__2">Required?</th>
+<th class="entry" id="qs00051___table_acx_2s1_3s__entry__3">Description</th>
+</tr>
+</thead><tbody class="tbody">
+<tr class="row">
+<td class="entry" headers="qs00051___table_acx_2s1_3s__entry__1">MESSAGESIGHT_ADMIN_HOST</td>
+<td class="entry" headers="qs00051___table_acx_2s1_3s__entry__2">Optional</td>
+<td class="entry" headers="qs00051___table_acx_2s1_3s__entry__3">IP address of the admin endpoint. The default is <code class="ph codeph">All</code></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="qs00051___table_acx_2s1_3s__entry__1">MESSAGESIGHT_ADMIN_PORT</td>
+<td class="entry" headers="qs00051___table_acx_2s1_3s__entry__2">Optional</td>
+<td class="entry" headers="qs00051___table_acx_2s1_3s__entry__3">Port number of the admin endpoint. The default is 9089.</td>
+</tr>
+</tbody></table></div></div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Verify that the <span class="ph">Eclipse Amlen</span> messaging server container is running by entering the following command:</span>
+<div class="itemgroup info">
+<pre class="pre codeblock"><code>docker ps</code></pre>
+</div>
+                <ol type="a" class="ol substeps">
+                    <li class="li substep substepexpand"><strong>Optional: </strong>
+                        <span class="ph cmd">To reconfirm that your browser has access to the messaging server container, load this URL in your web browser:</span>
+                        <div class="itemgroup info">
+                            <pre class="pre codeblock"><code>https://&lt;IP_Address&gt;:9089&gt;</code></pre>
+                            <p class="p">where <var class="keyword varname">IP_Address</var> is the IP address of the host
+                                where the server is installed. </p>
+                        </div>
+                    </li>
+                </ol>
+</li><li class="li step stepexpand">
+<span class="ph cmd">If you are not logged in as the root user, enter the following command to exit from the sudo shell that you created at step <a class="xref" href="qs00051_.html#qs00051___sudostep">1.b</a>:</span>
+<div class="itemgroup info">
+<pre class="pre codeblock"><code>exit</code></pre>
+</div>
+</li><li class="li step stepexpand">
+                <span class="ph cmd">Set the licensed usage and accept the license agreement. For more information about using a REST Administration API to set the licensed usage and accept the license agreement, see <a class="xref" href="../Administering/ad00793_.html" title="System administrators can change the configured licensed usage for Eclipse Amlen and accept the license by using a single REST Administration API.">Configuring the licensed usage for Eclipse Amlen and accepting the license by using REST Administration APIs</a>.</span>
+            </li></ol></section>
+<section class="section postreq">You can create and run an <span class="ph">Amlen WebUI</span> Docker image that you can use to administer the <span class="ph">Eclipse Amlen</span> messaging server. For more information, see <a class="xref" href="qs00052_.html" title="Build and deploy the Amlen WebUI Docker image and then start the Amlen WebUI Docker container. You can then use the Amlen WebUI to administer one or more Eclipse Amlen messaging servers.">Building and running the Amlen WebUI Docker image</a>. </section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../QuickStartGuide/qs00055_.html" title="Install Eclipse Amlen in Docker containers by building and deploying the Docker images that you need to run Eclipse Amlen.">Installing Eclipse Amlen in Docker containers</a></div></div></nav></article></main></body></html>

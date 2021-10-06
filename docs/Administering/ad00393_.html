@@ -1,0 +1,188 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can create and update configuration policies by using REST Administration APIs."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Creating and updating a configuration policy by using REST Administration APIs</title></head><body id="pdf_ad00393_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a><ul><li><a href="../Administering/ad00391_.html">Configuring the admin endpoint by using the Amlen WebUI</a></li><li><a href="../Administering/ad00394_.html">Configuring the admin endpoint by using REST Administration APIs</a><ul><li><a href="../Administering/ad00392_.html">Configuring the admin endpoint by using a REST Administration API</a></li><li><a href="../Administering/ad00056_.html">Configuring the administration endpoint to accept connections over TLS</a></li><li class="active"><a href="../Administering/ad00393_.html">Creating and updating a configuration policy by using REST Administration APIs</a></li><li><a href="../Administering/ad00397_.html">Setting and viewing the admin superuser ID by using REST Administration APIs</a></li><li><a href="../Administering/ad00396_.html">Setting the admin superuser password by using REST Administration APIs</a></li></ul></li></ul></li><li><a href="../Administering/ad00200_.html">Server administration</a></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Creating and updating a configuration policy by using <span class="ph">REST Administration APIs</span></h1>
+
+
+
+
+
+
+<div class="body taskbody"><p class="shortdesc">System administrators can create and update configuration
+policies by using <span class="ph">REST Administration APIs</span>.</p>
+<section class="section context">       <p class="p">You can create or update a configuration policy
+by using a <span class="ph">REST Administration API</span>,
+or by using the <span class="ph">Amlen WebUI</span>.
+For more information about using the <span class="ph">Amlen WebUI</span> to create
+or update a configuration policy, see <a class="xref" href="ad00391_.html" title="System administrators can view and configure the Eclipse Amlen admin endpoint by using the Server tab in the Amlen WebUI.">Configuring the admin endpoint by using the Amlen WebUI</a>.</p> 
+     <p class="p">You can use the <span class="ph">Eclipse Amlen</span> REST API POST
+method to create or update one or more configuration policy objects.
+If the configuration policy that is specified in the request does
+not exist in the configuration table, then the configuration policy
+is created. Otherwise the configuration policy configuration is updated.</p> 
+   </section>
+<section><div class="ol steps"><div class="li step p">
+<span class="ph cmd">To create or update one or more configuration policy objects, use the <span class="ph">Eclipse Amlen</span> REST API POST method. </span>
+<ol type="a" class="ol substeps">
+<li class="li substep substepexpand">
+<span class="ph cmd">Use the following <span class="ph">Eclipse Amlen</span> configuration policy configuration URI:</span>
+<div class="itemgroup info">
+<p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/configuration/</code></p>
+</div>
+</li>
+<li class="li substep substepexpand">
+<span class="ph cmd">Provide ConfigurationPolicy object configuration data in the payload of the POST method by using the following schema. <span class="keyword parmname">Content-type</span> is set to <kbd class="ph userinput">application/json</kbd>. Ensure that capitalization and double quotation marks are used as shown.</span>
+<div class="itemgroup info"><pre class="pre codeblock"><code>
+{    
+  "ConfigurationPolicy": {
+    "&lt;NameOfConfigurationPolicy&gt;": {
+       "Description": "string",
+       "ActionList": "string",
+       "GroupID": "string",
+       "ClientAddress": "string",
+       "UserID": "string",
+       "CommonNames": "string"
+     }
+   }
+}</code></pre>Where:<dl class="dl">
+
+<dt class="dt dlterm"><var class="keyword varname">NameOfConfigurationPolicy</var></dt>
+<dd class="dd">Required.</dd>
+<dd class="dd ddexpand">Specifies the name of the configuration policy.</dd>
+<dd class="dd ddexpand">The name must not have leading or trailing spaces and cannot contain control characters, commas, double quotation marks, backslashes, or equal signs. The first character must not be a number or any of the following special characters: <p class="p"><code class="ph codeph">! # $ % &amp; ' ( ) * + - . / : ; &lt; &gt; ? @</code></p></dd>
+<dd class="dd ddexpand">After the configuration policy is created, you cannot change this name.</dd>
+
+
+<dt class="dt dlterm">Description</dt>
+<dd class="dd">Optional.</dd>
+<dd class="dd ddexpand">Specifies a description for the configuration policy.</dd>
+<dd class="dd ddexpand">If you do not want a description, omit <code class="ph codeph">"Description":"<var class="keyword varname">description</var>"</code>.</dd>
+
+
+<dt class="dt dlterm">ActionList</dt>
+<dd class="dd">Required if you are creating a configuration policy.</dd>
+<dd class="dd ddexpand">Specifies the level of authority that is granted to the user, or users, authorized by the configuration policy to perform administrative or monitoring tasks. You must specify at least one of the following levels of authority:<ul class="ul">
+<li class="li"><strong class="ph b">Configure</strong><p class="p">Grants authority to modify the server configuration.</p></li>
+<li class="li"><strong class="ph b">View</strong><p class="p">Grants authority to view the server configuration.</p></li>
+<li class="li"><strong class="ph b">Monitor</strong><p class="p">Grants authority to view monitoring data.</p></li>
+<li class="li"><strong class="ph b">Manage</strong><p class="p">Grants authority to issue service requests, such as restarting the server</p></li>
+</ul></dd>
+<dd class="dd ddexpand">The following table shows the levels of authority that are required when you use the <span class="ph">Eclipse Amlen</span> REST API to administer and monitor <span class="ph">Eclipse Amlen</span>:
+<table class="table" id="pdf_ad00393___datasimpletable_aby_y13_qfb"><caption><span class="table--title-label">Table 1. </span><span class="title">Authorities required for REST API methods for administering and monitoring <span class="ph">Eclipse Amlen</span>.</span></caption><colgroup><col><col><col><col></colgroup><thead class="thead">
+<tr class="row">
+<th class="entry" id="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__1">REST method</th>
+<th class="entry" id="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__2">Domain</th>
+<th class="entry" id="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__3">Objects/Actions</th>
+<th class="entry" id="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__4">Required Authority</th>
+</tr>
+</thead><tbody class="tbody">
+<tr class="row">
+<td class="entry" headers="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__1">POST</td>
+<td class="entry" headers="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__2">/ima/v1/configuration</td>
+<td class="entry" headers="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__3">All configuration objects</td>
+<td class="entry" headers="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__4">Configure</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__1">GET</td>
+<td class="entry" headers="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__2">/ima/v1/configuration</td>
+<td class="entry" headers="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__3"> All configuration objects</td>
+<td class="entry" headers="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__4">Configure, View, Monitor, or Manage</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__1">DELETE</td>
+<td class="entry" headers="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__2">/ima/v1/configuration</td>
+<td class="entry" headers="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__3">Nameable composite configuration objects</td>
+<td class="entry" headers="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__4">Configure</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__1">PUT</td>
+<td class="entry" headers="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__2">ima/v1/file</td>
+<td class="entry" headers="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__3">Upload files such as certificate</td>
+<td class="entry" headers="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__4">Configure or Manage</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__1">GET</td>
+<td class="entry" headers="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__2">ima/v1/monitor</td>
+<td class="entry" headers="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__3">Server, memory, store, endpoint, connection, subscription </td>
+<td class="entry" headers="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__4">Configure, View, Monitor, or Manage</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__1">POST</td>
+<td class="entry" headers="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__2">ima/v1/service</td>
+<td class="entry" headers="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__3">start, stop, restart, import, export, commit, rollback, forget, remove, close, trace,
+license</td>
+<td class="entry" headers="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__4">Manage or Configure</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__1">GET</td>
+<td class="entry" headers="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__2">ima/v1/service</td>
+<td class="entry" headers="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__3">status</td>
+<td class="entry" headers="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__4">Configure, View, Monitor, or Manage</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__1">DELETE</td>
+<td class="entry" headers="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__2">ima/v1/service</td>
+<td class="entry" headers="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__3">Subscription, MQTTClient, client set</td>
+<td class="entry" headers="pdf_ad00393___datasimpletable_aby_y13_qfb__entry__4">Configure</td>
+</tr>
+</tbody></table></dd>
+
+</dl>You must specify at least one of the following filters:<dl class="dl">
+
+<dt class="dt dlterm">ClientAddress</dt>
+<dd class="dd">Specifies the client IP addresses that are allowed to connect to <span class="ph">Eclipse Amlen</span>.</dd>
+<dd class="dd ddexpand">The IP address can contain an asterisk (*), or a comma-separated list of IPv4 or IPv6 addresses or ranges. For example, 192.0.2.32, 192.0.0.0, 192.0.2.0-192.0.2.100. The range must be specified from low to high.</dd>
+<dd class="dd ddexpand">However, each IPv6 address must be enclosed in brackets <code class="ph codeph">[ ]</code> either when expressed singly or in a range of addresses. IPv6 addresses cannot contain asterisks.</dd>
+<dd class="dd ddexpand">The maximum number of client addresses that you can specify is 20.</dd>
+<dd class="dd ddexpand">To use the default value, where all client IP addresses are allowed to connect, omit <code class="ph codeph">"ClientAddress":"<em class="ph i">IP_Address</em>"</code> or specify <code class="ph codeph">"ClientAddress":"<em class="ph i">*</em>"</code>.</dd>
+
+
+<dt class="dt dlterm">UserID</dt>
+<dd class="dd">Specifies the messaging user ID that is allowed to connect to <span class="ph">Eclipse Amlen</span>.</dd>
+<dd class="dd ddexpand">You can use an asterisk (*) at the end of the value to match 0 or more characters.</dd>
+<dd class="dd ddexpand">To use the default value, where all user ID values are allowed to connect, omit <code class="ph codeph">"UserID": "<em class="ph i">UserID</em>"</code>.</dd>
+
+
+<dt class="dt dlterm">GroupID</dt>
+<dd class="dd">Specifies the messaging group that is allowed to connect to <span class="ph">Eclipse Amlen</span>.</dd>
+<dd class="dd ddexpand">You can use an asterisk (*) at the end of the value to match 0 or more characters.</dd>
+<dd class="dd ddexpand">To use the default value, where all user ID values are allowed to connect, omit <code class="ph codeph">"GroupID":"<var class="keyword varname">GroupID</var>"</code>.</dd>
+
+
+<dt class="dt dlterm">CommonNames</dt>
+<dd class="dd">Specifies the client certificate common name that must be used to connect to <span class="ph">Eclipse Amlen</span>.</dd>
+<dd class="dd ddexpand">You can use an asterisk (*) at the end of the value to match 0 or more characters.</dd>
+<dd class="dd ddexpand">To use the default value, where all user ID values are allowed to connect, omit <code class="ph codeph">"CommonNames": "<var class="keyword varname">CommonNames</var>"</code>. </dd>
+
+</dl></div>
+</li>
+</ol>
+</div></div></section>
+<section class="example">       <p class="p">The following example shows a POST method to create
+a configuration policy called         "MyConfigurationPolicy" by using
+cURL:</p>       <pre class="pre codeblock"><code>
+curl -X POST  \
+   -H 'Content-Type: application/json'  \
+   -d  '{    
+         "ConfigurationPolicy": {       
+           "MyConfigurationPolicy": {
+             "Description": "Demonstration configuration policy ",            
+             "ActionList":  "Configure,View,Monitor,Manage",
+             "GroupID": "Group1",
+             "ClientAddress": "9.3.179.*",            
+             "UserID": "IMAUser"
+            }
+          }
+        }
+      '  \
+http://127.0.0.1:9089/ima/v1/configuration/</code></pre>       <p class="p">The
+following example shows an example response to the POST method:</p> 
+     <pre class="pre codeblock"><code>
+{        
+  "Version": "v1",
+  "Code": "CWLNA6011",
+  "Message": "The requested configuration change has completed successfully."
+}
+</code></pre>     </section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Administering/ad00394_.html" title="System administrators can configure the admin endpoint, configuration policies, and set the admin superuser ID and password by using REST Administration APIs.">Configuring the admin endpoint by using REST Administration APIs</a></div></div></nav></article></main></body></html>

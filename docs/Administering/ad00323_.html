@@ -1,0 +1,84 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can create and update endpoints, connection policies, messaging policy types, and message hubs by using REST Administration APIs."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Creating and updating a message hub by using REST Administration APIs</title></head><body id="ad00323_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a><ul><li><a href="../Administering/ad00361_.html">Configuring message hubs by using the Amlen WebUI</a></li><li><a href="../Administering/ad00322_.html">Configuring message hubs by using REST Administration APIs</a><ul><li class="active"><a href="../Administering/ad00323_.html">Creating and updating a message hub by using REST Administration APIs</a><ul><li><a href="../Administering/ad00327_.html">Creating and updating a connection policy by using REST Administration APIs</a></li><li><a href="../Administering/ad00450_.html">Creating and updating a messaging policy type by using REST Administration APIs</a></li><li><a href="../Administering/ad00369_.html">Creating and updating an endpoint by using REST Administration APIs</a></li></ul></li></ul></li></ul></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Creating and updating a message hub by using <span class="ph">REST Administration APIs</span></h1>
+
+<div class="body taskbody"><p class="shortdesc">System administrators can create and update endpoints, connection policies, messaging
+    policy types, and message hubs by using <span class="ph">REST Administration APIs</span>.</p>
+<section class="section context"><p class="p">You can create a message hub or update an existing message hub by using a <span class="ph">REST Administration API</span>, or by using the
+          <span class="ph">Amlen WebUI</span>. For more
+        information about using the <span class="ph">Amlen WebUI</span> to create a message
+        hub, see <a class="xref" href="ad00361_.html" title="System administrators and messaging administrators can configure message hubs by using the Message Hubs page in the Amlen WebUI.">Configuring message hubs by using the Amlen WebUI</a>.</p>
+      <p class="p">You can use the <span class="ph">Eclipse Amlen</span>
+        REST API POST method to create or update one or more message hubs. If the message hub that
+        is specified in the request does not exist in the <span class="ph">Eclipse Amlen</span> configuration table,
+        then the message hub is created. Otherwise the message hub configuration is updated.</p><p class="p">For more information about the components you must specify to create a message hub, including
+        naming restrictions, see <a class="xref" href="ad00360_.html" title="You can configure messaging hubs either by using the Amlen WebUI or by using REST Administration APIs.">Configuring message hubs</a>.</p></section>
+<section><ol class="ol steps"><li class="li step stepexpand">
+        <span class="ph cmd">To create or update a message hub, use the <span class="ph">Eclipse Amlen</span> REST API POST method
+          with the following <span class="ph">Eclipse Amlen</span>
+          configuration URI:</span>
+        <div class="itemgroup info">
+          <p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/configuration/</code></p>
+        </div>
+      </li><li class="li step stepexpand">
+        <span class="ph cmd">Provide MessageHub object configuration data in the payload of the POST method by using the following schema. <span class="keyword parmname">Content-type</span> is set to <kbd class="ph userinput">application/json</kbd>.  Ensure that capitalization and double quotation marks are used as shown. </span>
+        <div class="itemgroup info"><pre class="pre codeblock"><code>
+{    
+   "MessageHub": {
+     "&lt;NameOfMessageHub&gt;": {
+       "Description": "string"
+     }
+   }
+}</code></pre>Where:<dl class="dl">
+          
+            <dt class="dt dlterm"><var class="keyword varname">NameOfMessageHub</var></dt>
+            <dd class="dd">Required.</dd>
+            <dd class="dd ddexpand">Specifies the name of the message hub. </dd>
+            <dd class="dd ddexpand">The name must not have leading or trailing spaces and cannot contain control characters, commas, double quotation marks, backslashes, or equal signs. The first character must not be a number or any of the following special characters: <p class="p"><code class="ph codeph">! # $ % &amp; ' ( ) * + - . / : ; &lt; &gt; ? @</code></p></dd>
+            <dd class="dd ddexpand">After the message hub is created, you cannot change this name.</dd>
+          
+          
+            <dt class="dt dlterm">Description</dt>
+            <dd class="dd">Optional.</dd>
+            <dd class="dd ddexpand">Specifies a description for the message hub.</dd>
+            <dd class="dd ddexpand">If you do not want a description, omit <code class="ph codeph">"Description":"<em class="ph i">description</em>"</code>.</dd>
+          
+          </dl></div>
+      </li></ol></section>
+<section class="example">
+      <p class="p">The following example shows a POST method to create a message hub called "MyHub" by using cURL:</p>
+      
+      <pre class="pre codeblock"><code>
+curl -X POST \
+   -H 'Content-Type: application/json'  \
+   -d  '{  
+            "MessageHub":  { 
+              "MyHub":  {
+                 "Description": "Message Hub to service demo clients."
+               }
+           }   
+       }    
+    '  \
+http://127.0.0.1:9089/ima/v1/configuration/</code></pre>
+      <p class="p">The following example shows an example response to the POST method:</p>
+      <pre class="pre codeblock"><code>
+{        
+  "Version": "v1",
+  "Code": "CWLNA6011",
+  "Message": "The requested configuration change has completed successfully."
+}
+</code></pre>
+    </section>
+<section class="section postreq"><p class="p">When you create a message hub, you must also create at least one endpoint. The endpoint must have
+        at least one connection policy, and at least one type of messaging policy. When you create
+        the endpoint, you must specify the connection policies and types of  messaging policy that
+        are associated with the endpoint. Therefore, you must create the connection policies and
+        messaging policy types before you create the endpoint.</p><div class="p">You
+must complete the following tasks to finish the message hub configuration:<ol class="ol">
+<li class="li"><a class="xref" href="ad00327_.html" title="System administrators can create and update connection policies by using REST Administration APIs.">Create connection policies</a>.</li>
+<li class="li"><a class="xref" href="ad00450_.html" title="You can use the Eclipse Amlen REST API POST method to create or update one or more types of messaging policy object. There are three types of messaging policy; topic policy, subscription policy and queue policy. If the type of messaging policy that is specified in the request does not exist in the Eclipse Amlen configuration, then the policy is created. Otherwise, the existing policy configuration is updated.">Create messaging policy type</a>.</li>
+<li class="li"><a class="xref" href="ad00369_.html" title="System administrators can create and update endpoints by using REST Administration APIs.">Create endpoints</a>.</li>
+</ol></div></section>
+</div>
+</article></main></body></html>

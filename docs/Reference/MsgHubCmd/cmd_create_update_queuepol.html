@@ -1,0 +1,162 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content=""><link rel="stylesheet" type="text/css" href="../../commonltr.css"><link rel="stylesheet" type="text/css" href="../../doc.css"><title>Create or update a queue policy</title></head><body id="cmd_create_update_queuepol"><nav role="toc"><ul><li><a href="../../welcome.html">Welcome</a></li><li><a href="../../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../../Overview/ov00000_.html">Product overview</a></li><li><a href="../../Planning/pl00001_.html">Planning</a></li><li><a href="../../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../../Administering/ad00000_.html">Administering</a></li><li><a href="../../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../../Security/se00000_.html">Security</a></li><li><a href="../../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../../Reference/re00000_.html">Reference</a><ul><li><a href="../../Reference/intro.html">REST API Reference</a><ul><li><a href="../../Reference/cmd_delete_config.html">Delete configuration objects</a></li><li><a href="../../Reference/cmd_show_config.html">Show configuration details of nameable configuration objects</a></li><li><a href="../../Reference/cmd_show_config_fix.html">Show configuration details of fixed-name configuration objects</a></li><li><a href="../../Reference/cmd_REST_file_put.html">Copy a file from the local machine to Eclipse Amlen  </a></li><li><a href="../../Reference/AdminEndpointCmd/adminendpoint.html">Admin endpoint REST Administration APIs</a></li><li><a href="../../Reference/ApplianceCmd/appliancesettingcommands.html">Server REST Administration APIs</a></li><li><a href="../../Reference/ClusterCmd/clustercommands.html">Cluster REST Administration APIs</a></li><li><a href="../../Reference/SecurityCmd/securitycommands.html">Security REST Administration APIs</a></li><li><a href="../../Reference/MsgHubCmd/messagehubcommands.html">Message hub REST Administration APIs</a><ul><li><a href="../../Reference/MsgHubCmd/cmd_create_update_conpol.html">Create or update a connection policy</a></li><li><a href="../../Reference/MsgHubCmd/cmd_create_update_endpoint.html">Create or update an endpoint</a></li><li><a href="../../Reference/MsgHubCmd/cmd_create_update_msghub.html">Create or update a message hub</a></li><li><a href="../../Reference/MsgHubCmd/cmd_create_update_topicpol.html">Create or update a topic policy</a></li><li><a href="../../Reference/MsgHubCmd/cmd_create_update_subscriptionpol.html">Create or update a subscription policy</a></li><li class="active"><a href="../../Reference/MsgHubCmd/cmd_create_update_queuepol.html">Create or update a queue policy</a></li></ul></li><li><a href="../../Reference/QueueCmd/QueueCmd.html">Queue REST Administration APIs</a></li><li><a href="../../Reference/MQConnCmd/mqconnectivitycommands.html">MQ Connectivity  REST Administration APIs</a></li><li><a href="../../Reference/HACmd/HAcommands.html">High availability REST Administration APIs</a></li><li><a href="../../Reference/BackupCmd/backupandrestorecommands.html">Backup and restore commands</a></li><li><a href="../../Reference/MonitorCmd/monitoringandreportingcommands.html">REST Monitoring APIs</a></li><li><a href="../../Reference/XATranCmd/xatransactioncommands.html">XA transaction REST Administration APIs</a></li><li><a href="../../Reference/SNMPCmd/snmpcommands.html">SNMP REST Administration APIs</a></li><li><a href="../../Reference/ProtocolPluginCmd/ProtocolPluginCmd.html">Protocol plug-in REST Administration APIs</a></li><li><a href="../../Reference/SpecialCmd/spepcom.html">Special purpose REST Administration APIs</a></li></ul></li><li><a href="../../Reference/_Topics/sy10530_.html">Digital certificates</a></li><li><a href="../../Reference/_Topics/re00003_.html">Supported cipher lists</a></li><li><a href="../../Reference/_Topics/re00001_.html">Classless Inter-Domain Routing</a></li></ul></li><li><a href="../../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Create or update a queue policy</h1>
+
+
+
+
+
+
+<div class="body refbody"><p class="shortdesc"></p>
+<section class="section"><h2 class="title sectiontitle">Purpose</h2>Creates or updates a queue policy. A queue policy is a type of messaging policy that is used to control which clients can send to, receive from, or browse a specified queue. </section>
+<section class="section"><h2 class="title sectiontitle">URI</h2>
+
+<p class="p">Use the<span class="ph">Eclipse Amlen</span> REST API POST method with the
+        following <span class="ph">Eclipse Amlen</span> configuration URI:</p>
+<p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/configuration/</code></p>
+</section>
+<section class="section"><h2 class="title sectiontitle">Object configuration data</h2><div class="p">Provide QueuePolicy object configuration data in the payload of the POST method by using the following schema. <span class="keyword parmname">Content-type</span> is set to <kbd class="ph userinput">application/json</kbd>: <pre class="pre codeblock"><code>
+{    
+   "QueuePolicy": {
+     "&lt;NameOfQueuePolicy&gt;": {
+       "Description": "string",
+       "Queue": "string",
+       "ActionList": "string",
+       "MaxMessageTimeToLive": "string",
+       "ClientID": "string",
+       "UserID": "string",
+       "GroupID": "string",
+       "CommonNames": "string",
+       "ClientAddress": "string",
+       "Protocol": "string"             
+    }
+  }
+}</code></pre></div>Where:<dl class="dl">
+      
+        <dt class="dt dlterm">NameOfQueuePolicy</dt>
+        <dd class="dd">Required.</dd>
+        <dd class="dd ddexpand">Specifies the name of the queue policy.</dd>
+        <dd class="dd ddexpand">The name must not have leading or trailing spaces and cannot contain control characters, commas, double quotation marks, backslashes, or equal signs. The first character must not be a number or any of the following special characters: ! # $ % &amp; ' ( ) * + - . / : ; &lt; &gt; ? @</dd>
+        <dd class="dd ddexpand">After the queue policy is created, this name cannot be changed.</dd>
+      
+      
+        <dt class="dt dlterm">Description</dt>
+        <dd class="dd">Optional.</dd>
+        <dd class="dd ddexpand">Specifies a description for the queue policy.</dd>
+        <dd class="dd ddexpand">If you do not want a description, omit "Description": "description".</dd>
+      
+      
+        <dt class="dt dlterm">Queue</dt>
+        <dd class="dd">Required if you are creating a queue policy.</dd>
+        <dd class="dd ddexpand">Specifies the queue or queues that the queue policy applies to.</dd>
+        <dd class="dd ddexpand">You can use an asterisk (*) as a wildcard. You must take care when you use a wildcard to ensure that you do not grant greater authority to topics than intended. For more information about how wildcard characters can be used, see <a class="xref" href="../../Overview/ov00032.html">Wildcards</a>.</dd>
+        <dd class="dd ddexpand">The dollar sign ($) and asterisk (*) have special meanings in the Queue field. To use these characters as literals, use <code class="ph codeph">${$}</code> for a dollar sign, and use <code class="ph codeph">${*}</code> for an asterisk.</dd>
+        <dd class="dd ddexpand">You can use variable substitution in the queue field to ensure that only clients with specific user IDs, group IDs, client IDs, or client certificate common names can access a queue. The variables are:<ul class="ul">
+          <li class="li"><code class="ph codeph">${UserID}</code> for the user ID. </li>
+          <li class="li"><code class="ph codeph">${GroupID}</code> for the group ID.</li>
+          <li class="li"><code class="ph codeph">${ClientID}</code> for the client ID. </li>
+          <li class="li"><code class="ph codeph">${CommonName}</code> for the client certificate common name. </li>
+          </ul></dd>
+        <dd class="dd ddexpand">For example, if a queue name in a queue policy is <code class="ph codeph">${ClientID}</code>, then a client with an ID of <code class="ph codeph">client_a</code> can access queue<code class="ph codeph"> client_a.</code> A client with an ID of <code class="ph codeph">client_b</code> cannot access queue <code class="ph codeph">client_a</code>, but can access queue <code class="ph codeph">client_b</code>. </dd>
+      
+      
+        <dt class="dt dlterm">ActionList</dt>
+        <dd class="dd">Required if you are creating a queue policy.</dd>
+        <dd class="dd ddexpand">Specifies which messaging actions can be used by clients that connect to endpoints associated with this queue policy.</dd>
+        <dd class="dd ddexpand">You can specify the following values for a queue policy. To specify more than one, separate each value with a comma:<ul class="ul">
+          <li class="li"><strong class="ph b"><code class="ph codeph">Send</code></strong><p class="p">Allows clients to send messages to the queue that is specified in the queue policy.</p></li>
+          <li class="li"><strong class="ph b"><code class="ph codeph">Receive</code></strong><p class="p">Allows clients to receive messages from the queue that is specified in the queue policy.</p></li>
+          <li class="li"><strong class="ph b"><code class="ph codeph">Browse</code></strong><p class="p">Allows clients to browse messages on the queue that is specified in the queue policy.</p></li>
+          </ul></dd>
+      
+      
+        <dt class="dt dlterm">MaxMessageTimeToLive</dt>
+        <dd class="dd">Optional.</dd>
+        <dd class="dd ddexpand">Specifies the maximum time, in seconds, that a published message that is associated with the queue policy can exist for in <span class="ph">Eclipse Amlen</span>.</dd>
+        <dd class="dd ddexpand">The value must be either <code class="ph codeph">unlimited</code> or in the range 1-2147483647.</dd>
+        <dd class="dd ddexpand">The default value is <code class="ph codeph">unlimited</code> and means that messages will not expire unless the publishing application specifies a time for messages to exist for.</dd>
+        <dd class="dd ddexpand">This value is applied only when the topic policy includes an action of send.</dd>
+        <dd class="dd ddexpand">Ensure that client and server times are synchronized in order to minimize the possibility of expired messages being received. </dd>
+      
+      </dl><p class="p">Specify at least one of the following filters:</p><dl class="dl">
+      
+        <dt class="dt dlterm">ClientID</dt>
+        <dd class="dd">Specifies the client ID that is allowed to use the messaging actions that are specified in the queue policy. The client ID is allowed to use the messaging actions only on the queues that are specified in the policy.</dd>
+        <dd class="dd ddexpand">You can use an asterisk (*) at the end of the value to match 0 or more characters.</dd>
+        <dd class="dd ddexpand">To use the default value, where all client ID values are allowed to use the actions, omit <code class="ph codeph">"ClientID":"<var class="keyword varname">ClientID</var>"</code>.</dd>
+      
+      
+        <dt class="dt dlterm">UserID</dt>
+        <dd class="dd">Specifies the messaging user ID that is allowed to use the messaging actions that are specified in the queue policy. The messaging user ID is allowed to use the messaging actions only on the queues that are specified in the policy.</dd>
+        <dd class="dd ddexpand">You can use an asterisk (*) at the end of the value to match 0 or more characters.</dd>
+        <dd class="dd ddexpand">To use the default value, where all user ID values are allowed to use the actions, omit <code class="ph codeph">"UserID": "<var class="keyword varname">UserID</var>"</code>.</dd>
+      
+      
+        <dt class="dt dlterm">GroupID</dt>
+        <dd class="dd">Specifies the messaging group that is allowed to use the messaging actions that are specified in the queue policy. The messaging group is allowed to use the messaging actions only on the queues that are specified in the policy.</dd>
+        <dd class="dd ddexpand">You can use an asterisk (*) at the end of the value to match 0 or more characters.</dd>
+        <dd class="dd ddexpand">To use the default value, where all groups are allowed to use the actions, omit <code class="ph codeph">"GroupID": "<var class="keyword varname">GroupID</var>"</code>.</dd>
+      
+      
+        <dt class="dt dlterm">CommonNames</dt>
+        <dd class="dd">Specifies the client certificate common name that must be used for a client to be allowed to use the actions that are specified in the queue policy. The client certificate common name allows clients to use the messaging actions only on the queues that are specified in the policy.</dd>
+        <dd class="dd ddexpand">You can use an asterisk (*) at the end of the value to match 0 or more characters.</dd>
+        <dd class="dd ddexpand">To use the default value, where all client certificates are allowed to use the actions, omit <code class="ph codeph">"CommonNames": "<var class="keyword varname">CommonNames</var>"</code>.</dd>
+      
+      
+        <dt class="dt dlterm">ClientAddress</dt>
+        <dd class="dd">Specifies the client IP addresses that are allowed to use the messaging actions that are specified in the queue policy. The client IP addresses are allowed to use the messaging actions only on the queues that are specified in the policy.</dd>
+        <dd class="dd ddexpand">The IP address can contain an asterisk (*), or a comma-separated list of IPv4 or IPv6 addresses or ranges. For example, 192.0.2.32, 192.0.0.0, 192.0.2.0-192.0.2.100. The range must be specified from low to high.</dd>
+        <dd class="dd ddexpand">However, each IPv6 address must be enclosed in brackets <code class="ph codeph">[ ]</code> either when expressed singly or in a range of addresses. IPv6 addresses cannot contain asterisks.</dd>
+        <dd class="dd ddexpand">The maximum number of client addresses that you can specify is 20.</dd>
+        <dd class="dd ddexpand">To use the default value, where all client IP addresses are allowed to connect, omit <code class="ph codeph">"ClientAddress":"<em class="ph i">IP_Address</em>"</code> or specify <code class="ph codeph">"ClientAddress":"<em class="ph i">*</em>"</code>.</dd>
+      
+      
+        <dt class="dt dlterm">Protocol</dt>
+        <dd class="dd">Specifies which protocols are allowed to use the actions that are specified in the queue policy on the queues that are specified in the policy.</dd>
+        <dd class="dd ddexpand">You can choose from JMS and any protocol plug-ins that have specified support for queues. To specify more than one value, separate each value with a comma. To select all protocols, specify a null value for Protocol or omit the parameter from the command.</dd>
+      
+      </dl></section>
+<section class="section"><h2 class="title sectiontitle">Usage Notes®</h2>
+
+<ul class="ul">
+        <li class="li">Capitalization and double quotation marks must be used as shown.</li>
+<li class="li">Each of the filters, <span class="keyword parmname">ClientAddress</span>, <span class="keyword parmname">ClientID</span>, <span class="keyword parmname">UserID</span>, <span class="keyword parmname">GroupID</span>, <span class="keyword parmname">CommonNames</span>, and <span class="keyword parmname">Protocol</span>, is applied in combination. If you specify several filters, each condition must be met in order for the actions that are specified in the messaging policy to be allowed. For each filter that you do not specify, all values for that filter are allowed.<p class="p">For example, a queue policy is created that specifies: <code class="ph codeph">"ActionList": "Publish" "GroupID": "SILVER" "ClientID": "SIL*" "Protocol": "JMS"</code>. A client with User ID <code class="ph codeph">SIL1</code>, in group <code class="ph codeph">SILVER</code>, that is using JMS can publish messages. A client with a User ID <code class="ph codeph">SIL2</code>, in group <code class="ph codeph">GOLD</code>, that is using JMS cannot publish messages because not all of the filter conditions are met.</p></li>
+</ul>
+</section>
+<section class="section"><h2 class="title sectiontitle">Related <span class="ph">REST Administration APIs</span></h2>
+
+<ul class="ul">
+<li class="li"><a class="xref" href="cmd_create_update_msghub.html">Create or update a message hub</a></li>
+<li class="li"><a class="xref" href="cmd_create_update_conpol.html">Create or update a connection policy</a></li>
+<li class="li"><a class="xref" href="cmd_create_update_topicpol.html">Create or update a topic policy</a></li>
+<li class="li"><a class="xref" href="cmd_create_update_subscriptionpol.html">Create or update a subscription policy</a></li>
+<li class="li"><a class="xref" href="cmd_create_update_endpoint.html">Create or update an endpoint</a></li>
+        <li class="li"><a class="xref" href="../cmd_show_config.html">Show configuration details of nameable configuration objects</a></li>
+        <li class="li"><a class="xref" href="../cmd_delete_config.html">Delete configuration objects</a></li>
+</ul>
+</section>
+<section class="section"><h2 class="title sectiontitle">Example</h2>Creates a queue policy called "MyQueuePolicy" by using cURL:<pre class="pre codeblock"><code>
+curl -X POST  \
+   -H 'Content-Type: application/json'  \
+   -d  '{                          
+           "QueuePolicy": {   
+               "MyQueuePolicy": {
+                "Description": "Queue policy to authorize a client to send messages to and receive messages from a queue.",
+                "Queue": "*",
+                "ClientID": "*",
+                "ActionList": "Send,Receive"
+              }
+          }
+      }
+  '   \
+http://127.0.0.1:9089/ima/v1/configuration/</code></pre><div class="p">An example response to the POST method:<pre class="pre codeblock"><code>
+{        
+  "Version": "v1",
+  "Code": "CWLNA6011",
+  "Message": "The requested configuration change has completed successfully."
+}
+</code></pre></div></section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../../Reference/MsgHubCmd/messagehubcommands.html" title="The message hub REST APIs allow you to configure message hubs, endpoints, connection policies, and messaging policies. You can create, update, view, and delete message hubs, endpoints, connection policies, and messaging policies.">Message hub REST Administration APIs</a></div></div></nav></article></main></body></html>

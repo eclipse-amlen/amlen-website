@@ -1,0 +1,369 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="To configure inbound communication, define the properties of one or more ActivationSpec objects."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Configuring the Eclipse Amlen resource adapter for inbound communication</title></head><body id="configuringinboundcomms"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a><ul><li><a href="../Administering/ad00102_.html">MQ Connectivity</a></li><li><a href="../Administering/workingwithjmsra.html">Eclipse Amlen resource adapter</a><ul><li><a href="../Administering/installingra.html">Installing Eclipse Amlen resource adapter on WebSphere Application Server</a></li><li><a href="../Administering/upgradingra.html">Updating the Eclipse Amlen resource adapter on WebSphere Application Server</a></li><li><a href="../Administering/configuringra.html">Configuring Eclipse Amlen resource adapter for WebSphere Application Server</a><ul><li><a href="../Administering/configurationoftheraobject.html">Configuring the Eclipse Amlen ResourceAdapter object</a></li><li class="active"><a href="../Administering/configuringinboundcomms.html">Configuring the Eclipse Amlen resource adapter for inbound communication</a></li><li><a href="../Administering/ad00800_.html">Programmatically configuring the Eclipse Amlen resource adapter for inbound communication</a></li><li><a href="../Administering/configuringoutboundcomms.html">Configuring the Eclipse Amlen resource adapter for outbound communication</a></li><li><a href="../Administering/configuringadminobjs.html">Configuring the Eclipse Amlen resource adapter for administered objects</a></li><li><a href="../Administering/ratransactionoptions.html">Configuring transactions in the Eclipse Amlen resource adapter</a></li><li><a href="../Administering/ad00820.html">Tuning messaging performance for the Eclipse Amlen resource adapter in WebSphere Application Server</a></li></ul></li><li><a href="../Administering/tlssecurityforjmsra.html">Transport Layer Security for the Eclipse Amlen resource adapter</a></li><li><a href="../Administering/xaconsiderations.html">Working with XA transactions</a></li><li><a href="../Administering/adscenarios.html">Scenarios</a></li></ul></li><li><a href="../Administering/vm00001_.html">Using VMware vSphere to handle Eclipse Amlen failover</a></li></ul></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Configuring the <span class="ph">Eclipse Amlen</span> resource
+adapter for inbound communication</h1>
+
+<div class="body conbody"><p class="shortdesc">To configure inbound communication, define the properties
+of one or more ActivationSpec objects.</p>
+<p class="p">The properties of an ActivationSpec object determine how a Message-Driven
+bean (MDB) receives JMS messages from <span class="ph">Eclipse Amlen</span>. These properties
+are used to create all JMS objects that are necessary to receive messages,
+including connection, session, and consumer objects. </p>
+<div class="p">Complete the following steps to create and configure a new ActivationSpec
+by using the <span class="ph">WebSphere® Application
+Server</span> panels. <ol class="ol">
+<li class="li">Log on to the <span class="ph">WebSphere Application
+Server</span> administrative
+console.</li>
+<li class="li">Click <span class="ph menucascade"><span class="ph uicontrol">Resources</span><abbr title="and then"> &gt; </abbr><span class="ph uicontrol">Resource
+Adapters</span><abbr title="and then"> &gt; </abbr><span class="ph uicontrol">J2C activation specifications</span></span>. </li>
+<li class="li">Optional: Change the <span class="ph uicontrol">Scope</span> setting if required.
+The default setting is <code class="ph codeph">ALL</code>. </li>
+<li class="li">Click <span class="ph uicontrol">New</span> and complete the <span class="ph uicontrol">Name</span> field
+and the <span class="ph uicontrol">JNDI name</span> field for your activation
+specification.</li>
+<li class="li">Click <span class="ph uicontrol">Apply</span>.</li>
+<li class="li">Click the <span class="ph uicontrol">J2C activation specification custom properties</span> link
+in the <span class="keyword wintitle">Additional Properties</span> panel. You can then
+edit the properties of the ActivationSpec object. </li>
+<li class="li">Click <span class="ph uicontrol">Save</span> to save your changes.</li>
+</ol></div>
+<p class="p">Table 1 lists the properties of an ActivationSpec object that are
+used to configure the <span class="ph">Eclipse Amlen</span> resource
+adapter for inbound communication.</p>
+<table class="table"><caption><span class="table--title-label">Table 1. </span><span class="title">ActivationSpec object properties</span><span class="desc tabledesc">List of
+the properties of an ActivationSpec object that are used to configure
+the <span class="ph">Eclipse Amlen</span> resource
+adapter for inbound communication.<p class="p summary">properties
+of an ActivationSpec object that are used to configure the resource
+adapter.</p></span></caption><colgroup><col style="width:20.408163265306122%"><col style="width:8.16326530612245%"><col style="width:16.3265306122449%"><col style="width:12.244897959183673%"><col style="width:42.857142857142854%"></colgroup><thead class="thead">
+<tr class="row valign-bottom">
+<th class="entry" id="configuringinboundcomms__entry__1">Name of property</th>
+<th class="entry" id="configuringinboundcomms__entry__2">Type </th>
+<th class="entry" id="configuringinboundcomms__entry__3">Valid values</th>
+<th class="entry" id="configuringinboundcomms__entry__4">Default value</th>
+<th class="entry" id="configuringinboundcomms__entry__5">Description</th>
+</tr>
+</thead><tbody class="tbody">
+<tr class="row">
+<td class="entry" headers="configuringinboundcomms__entry__1">acknowledgeMode</td>
+<td class="entry" headers="configuringinboundcomms__entry__2">String</td>
+<td class="entry" headers="configuringinboundcomms__entry__3"><code class="ph codeph">Auto-acknowledge</code>, <code class="ph codeph">Dups-ok-acknowledge</code></td>
+<td class="entry" headers="configuringinboundcomms__entry__4"><code class="ph codeph">Auto-acknowledge</code></td>
+<td class="entry" headers="configuringinboundcomms__entry__5">The mode for acknowledging received messages.<p class="p">When <code class="ph codeph">Auto-acknowledge</code> is
+specified, the session automatically acknowledges each message that
+is received by the application. When <code class="ph codeph">Dups-ok-acknowledge</code> is
+specified, the session acknowledges the messages that are received
+by the application at times it selects.</p></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="configuringinboundcomms__entry__1">clientId </td>
+<td class="entry" headers="configuringinboundcomms__entry__2">String</td>
+<td class="entry" headers="configuringinboundcomms__entry__3">Any valid Unicode string</td>
+<td class="entry" headers="configuringinboundcomms__entry__4"><code class="ph codeph">null</code></td>
+<td class="entry" headers="configuringinboundcomms__entry__5"><p class="p">The client ID for this connection.</p><p class="p">Setting client ID is optional in most cases, but is required for non-shared, durable
+        subscriptions. If <span class="keyword parmname">clientId</span> is set, it must be unique for all
+        connections to an <span class="ph">Eclipse Amlen</span> server. If
+         <span class="keyword parmname">clientId</span> is not set (and is not required to be set), then the <span class="ph">Eclipse Amlen</span> JMS client automatically creates a client
+        ID. </p><p class="p">The <span class="ph">Eclipse Amlen</span> JMS client allows
+any valid Unicode string to be used as a client ID. However, you might
+prefer to use displayable characters. System generated client IDs
+start with an underscore (<q class="q">_</q>), therefore avoid using an underscore
+as an initial character to prevent conflicts. Client IDs that start
+with two underscores (<q class="q">__</q>) are reserved for system use. Therefore,
+you cannot use client IDs that start with two underscores.</p></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="configuringinboundcomms__entry__1">clientMessageCache  </td>
+<td class="entry" headers="configuringinboundcomms__entry__2">Numeric</td>
+<td class="entry" headers="configuringinboundcomms__entry__3"><code class="ph codeph">-1</code>, or <code class="ph codeph">0</code> and
+above</td>
+<td class="entry" headers="configuringinboundcomms__entry__4"><code class="ph codeph">-1</code> </td>
+<td class="entry" headers="configuringinboundcomms__entry__5"><p class="p">The maximum number of cached messages for
+each consumer. </p><p class="p"><span class="ph">Eclipse Amlen</span> has
+built-in default cache sizes. Use the default setting of <code class="ph codeph">-1</code> to
+access these default settings. When <code class="ph codeph">-1</code> is specified,
+the cache size is set to 1000 for unshared topic subscriptions and
+to 0 (no caching) otherwise.</p><p class="p">Using larger values for <span class="keyword parmname">clientMessageCache</span> can
+improve throughput.  However, in the cases of queues with multiple
+consumers, and shared topic subscriptions, use the value of <code class="ph codeph">0</code> to
+distribute messages evenly across consumers.  </p></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="configuringinboundcomms__entry__1">concurrentConsumers </td>
+<td class="entry" headers="configuringinboundcomms__entry__2">Numeric</td>
+<td class="entry" headers="configuringinboundcomms__entry__3">Value can be in the range of <code class="ph codeph">1</code> - <code class="ph codeph">100</code></td>
+<td class="entry" headers="configuringinboundcomms__entry__4"><code class="ph codeph">1</code></td>
+<td class="entry" headers="configuringinboundcomms__entry__5"><p class="p">The maximum number of consumers on this connection.</p><p class="p">For
+topics, this value must not exceed 1, unless <span class="keyword parmname">subscriptionShared</span> is
+set to <code class="ph codeph">Shared</code>.</p></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="configuringinboundcomms__entry__1">convertMessageType</td>
+<td class="entry" headers="configuringinboundcomms__entry__2">String</td>
+<td class="entry" headers="configuringinboundcomms__entry__3"><code class="ph codeph">auto</code>,  <code class="ph codeph">bytes</code>, <code class="ph codeph">text</code></td>
+<td class="entry" headers="configuringinboundcomms__entry__4"><code class="ph codeph">auto</code></td>
+<td class="entry" headers="configuringinboundcomms__entry__5"><p class="p">The action to take when a message is converted
+to JMS from a source that does not indicate the message type.</p><p class="p">If
+the message comes from JMS, then this property is not used. When <code class="ph codeph">bytes</code> is
+specified, then messages are converted to <code class="ph codeph">BytesMessage</code>.
+ When <code class="ph codeph">text</code> is specified, then messages are converted
+to <code class="ph codeph">TextMessage</code>.  When <code class="ph codeph">auto</code> is specified,
+then the  JMS client automatically determines whether to convert the
+message to <code class="ph codeph">BytesMessage</code> or to <code class="ph codeph">TextMessage</code>.</p> </td>
+</tr>
+<tr class="row">
+<td class="entry" headers="configuringinboundcomms__entry__1">destination</td>
+<td class="entry" headers="configuringinboundcomms__entry__2">String</td>
+<td class="entry" headers="configuringinboundcomms__entry__3">Any valid Unicode string</td>
+<td class="entry" headers="configuringinboundcomms__entry__4"><code class="ph codeph">null</code></td>
+<td class="entry" headers="configuringinboundcomms__entry__5"><p class="p">The name of the topic or queue from which
+messages are received.  </p><p class="p">Specify either the <span class="keyword parmname">destination</span> and <span class="keyword parmname">destinationType</span> properties
+or the <span class="keyword parmname">destinationLookup</span> property. If the <span class="keyword parmname">destinationLookup</span> property
+is set, then the values that are specified for the <span class="keyword parmname">destination</span> and <span class="keyword parmname">destinationType</span> 
+properties are ignored. </p></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="configuringinboundcomms__entry__1">destinationLookup </td>
+<td class="entry" headers="configuringinboundcomms__entry__2">String</td>
+<td class="entry" headers="configuringinboundcomms__entry__3">Any valid Unicode string</td>
+<td class="entry" headers="configuringinboundcomms__entry__4"><code class="ph codeph">null</code></td>
+<td class="entry" headers="configuringinboundcomms__entry__5"><p class="p">The name of a JNDI object that represents
+the <span class="ph">Eclipse Amlen</span> topic
+or queue from which messages are received.</p><p class="p">Specify either the <span class="keyword parmname">destination</span> and <span class="keyword parmname">destinationType</span> properties
+or the <span class="keyword parmname">destinationLookup</span> property. If the <span class="keyword parmname">destinationLookup</span> property
+is set, then the values that are specified for the <span class="keyword parmname">destination</span> and <span class="keyword parmname">destinationType</span> properties
+are ignored.</p><p class="p">To use <span class="keyword parmname">destinationLookup</span>,
+configure the administered object for this destination. For more information,
+see <a class="xref" href="configuringadminobjs.html" title="To configure destination objects for use in inbound and outbound communication, define the properties of an administered destination object.">Configuring the Eclipse Amlen resource adapter for administered objects</a>.</p></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="configuringinboundcomms__entry__1">destinationType </td>
+<td class="entry" headers="configuringinboundcomms__entry__2">String</td>
+<td class="entry" headers="configuringinboundcomms__entry__3"><code class="ph codeph">javax.jms.Topic</code>, <code class="ph codeph">javax.jms.Queue</code></td>
+<td class="entry" headers="configuringinboundcomms__entry__4"><code class="ph codeph">null</code></td>
+<td class="entry" headers="configuringinboundcomms__entry__5"><p class="p">The type of destination for a specified destination
+value.  </p><p class="p">This property and the <span class="keyword parmname">destination</span> property
+must be specified if the <span class="keyword parmname">destinationLookup</span> property
+is not set. If  the <span class="keyword parmname">destinationLookup</span> property
+is set, then the values that are specified for the <span class="keyword parmname">destination</span> and <span class="keyword parmname">destinationType</span> properties
+are ignored.</p></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="configuringinboundcomms__entry__1">enableRollback </td>
+<td class="entry" headers="configuringinboundcomms__entry__2">String</td>
+<td class="entry" headers="configuringinboundcomms__entry__3"><code class="ph codeph">true</code>, <code class="ph codeph">false</code></td>
+<td class="entry" headers="configuringinboundcomms__entry__4"><code class="ph codeph">false</code></td>
+<td class="entry" headers="configuringinboundcomms__entry__5"><p class="p">Specifies how messages are handled when <code class="ph codeph">onMessage()</code> fails
+and the MDB is configured to run with an unspecified transaction context.</p><p class="p">When
+a MDB runs in an unspecified transaction context, <span class="keyword parmname">enableRollback</span> determines
+how to handle a message if an exception is generated from the MDB <code class="ph codeph">onMessage()</code> method. </p><div class="p">A
+MDB runs with an unspecified transaction context when configured in
+one of the following ways: <ul class="ul">
+<li class="li">The MDB is configured with transaction-type, <code class="ph codeph">bean</code></li>
+<li class="li">The MDB is configured with transaction-type, <code class="ph codeph">container</code> and
+the transaction-attribute is <code class="ph codeph">NotSupported</code>.</li>
+</ul></div><p class="p">If set to <code class="ph codeph">false</code>, the message is consumed
+even if the MDB fails. If set to <code class="ph codeph">true</code>, the message
+is rolled back and redelivered if the MDB fails. </p><p class="p">If the MDB
+is configured with transaction-type <code class="ph codeph">container</code> and
+the  transaction-attribute is <code class="ph codeph">Required</code>, the <span class="keyword parmname">enableRollback</span> setting
+is ignored. </p></td>
+</tr>
+<tr class="row" id="configuringinboundcomms__MaxDeliveryFailuresNumeric-1Or0AndA">
+<td class="entry" headers="configuringinboundcomms__entry__1">maxDeliveryFailures</td>
+<td class="entry" headers="configuringinboundcomms__entry__2">Numeric</td>
+<td class="entry" headers="configuringinboundcomms__entry__3"><code class="ph codeph">-1</code>, or <code class="ph codeph">0</code> and
+above</td>
+<td class="entry" headers="configuringinboundcomms__entry__4"><code class="ph codeph">-1</code></td>
+<td class="entry" headers="configuringinboundcomms__entry__5"> <p class="p">The maximum number of <code class="ph codeph">onMessage()</code> failures
+that are allowed for the MDB. The message endpoint is paused after
+the specified failure count is reached. The default value of <code class="ph codeph">-1</code> indicates
+that the failure count is ignored and that the message endpoint is
+never paused.</p> <p class="p">The MDB is responsible for handling errors in
+the <code class="ph codeph">onMessage()</code> method. However, transient system
+issues might cause unexpected failures to occur. Configuring this
+value allows the message endpoint to be paused so that the WebSphere administrator can
+investigate and resolve any issues. After the issues are resolved,
+the message endpoint can be resumed. If system issues do not explain
+the unexpected failures in <code class="ph codeph">onMessage()</code>, then it is
+possible that the MDB does not handle poison messages. For more information
+about handling poison messages, see <a class="xref" href="../Developing/devjms_poisonmessages.html" title="A poison message is a message that a receiving application cannot process. You can handle poison messages in your Eclipse Amlen JMS application by using the JMSXDeliveryCount message property.">Poison messages</a>.</p><div class="p">The
+failure count is a cumulative value and it can include failures for
+more than one message. The count is reset to <code class="ph codeph">0</code> for
+an MDB only if both of the following conditions are true; <ul class="ul">
+<li class="li">A message is successfully processed in <code class="ph codeph">onMessage()</code>.</li>
+<li class="li">No failures occurred in <code class="ph codeph">onMessage()</code> during the
+previous 30 seconds.</li>
+</ul> </div><p class="p">If the specified destination is a topic, any message that is published while the MDB is paused is
+        lost unless the MDB is configured to use a durable subscription. If the MDB uses a durable
+        subscription or if the destination is a queue, it is important to restart the MDB promptly
+        after a pause. If the MDB is not restarted after a pause, a backlog of messages can
+        accumulate on the <span class="ph">Eclipse Amlen</span> server. </p> <div class="note note note_note"><span class="note__title">Note:</span> To
+resume the message endpoint in <span class="ph">WebSphere Application
+Server</span>, click <span class="ph uicontrol">Applications
+&gt; Application Types &gt; WebSphere enterprise applications</span> and
+then select the application name. On the <span class="keyword wintitle">application</span> panel,
+select the <span class="ph uicontrol">Runtime</span> tab. Then, select <span class="ph uicontrol">Manage
+message endpoints</span>.</div> </td>
+</tr>
+<tr class="row">
+<td class="entry" headers="configuringinboundcomms__entry__1">messageSelector </td>
+<td class="entry" headers="configuringinboundcomms__entry__2">String</td>
+<td class="entry" headers="configuringinboundcomms__entry__3">A selector that is composed of valid Unicode
+characters</td>
+<td class="entry" headers="configuringinboundcomms__entry__4"><code class="ph codeph">null</code></td>
+<td class="entry" headers="configuringinboundcomms__entry__5"><p class="p">A JMS message selector that specifies which
+messages are selected. The default value of <code class="ph codeph">null</code> indicates
+that all messages are selected.</p></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="configuringinboundcomms__entry__1">password </td>
+<td class="entry" headers="configuringinboundcomms__entry__2">String</td>
+<td class="entry" headers="configuringinboundcomms__entry__3">Any valid Unicode string</td>
+<td class="entry" headers="configuringinboundcomms__entry__4"><code class="ph codeph">null</code></td>
+<td class="entry" headers="configuringinboundcomms__entry__5"><p class="p">The password for user authentication with <span class="ph">Eclipse Amlen</span>. <span class="ph">Eclipse Amlen</span> uses this value
+if <span class="keyword parmname">user</span> is specified. </p></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="configuringinboundcomms__entry__1">port </td>
+<td class="entry" headers="configuringinboundcomms__entry__2">Numeric</td>
+<td class="entry" headers="configuringinboundcomms__entry__3">Value can be in the range of <code class="ph codeph">1</code> - <code class="ph codeph">65535</code></td>
+<td class="entry" headers="configuringinboundcomms__entry__4"><code class="ph codeph">0</code> <p class="p">This default value
+must be changed.</p></td>
+<td class="entry" headers="configuringinboundcomms__entry__5"><p class="p">The <span class="ph">Eclipse Amlen</span> TCP port to use
+for this connection. </p><p class="p">If there are multiple <span class="ph">Eclipse Amlen</span> servers in the
+         <span class="keyword parmname">server</span> properties list, then all servers use the same port. </p></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="configuringinboundcomms__entry__1">protocol </td>
+<td class="entry" headers="configuringinboundcomms__entry__2">String</td>
+<td class="entry" headers="configuringinboundcomms__entry__3"><code class="ph codeph">tcp</code>, <code class="ph codeph">tcps</code></td>
+<td class="entry" headers="configuringinboundcomms__entry__4"><code class="ph codeph">tcp</code></td>
+<td class="entry" headers="configuringinboundcomms__entry__5"><p class="p">The transmit protocol for communication with
+<span class="ph">Amlen</span>. </p><p class="p">A value of <code class="ph codeph">tcp</code> indicates a non-secure
+connection. A value of <code class="ph codeph">tcps</code> indicates a secure connection.
+ If a secure connection is specified, then you must ensure that the <span class="ph">WebSphere Application
+Server</span> is correctly
+configured.  For more information, see <a class="xref" href="tlssecurityforjmsra.html" title="To connect to Eclipse Amlen endpoints that are configured to accept secure connections, you must configure the Eclipse Amlen resource adapter to use secure connections.">Transport Layer Security for the Eclipse Amlen resource adapter</a>.</p></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="configuringinboundcomms__entry__1">securityConfiguration</td>
+<td class="entry" headers="configuringinboundcomms__entry__2">String</td>
+<td class="entry" headers="configuringinboundcomms__entry__3">Any valid Unicode string</td>
+<td class="entry" headers="configuringinboundcomms__entry__4"><code class="ph codeph">null</code></td>
+<td class="entry" headers="configuringinboundcomms__entry__5"><p class="p">The name of the WebSphere security configuration to use
+for this connection.  </p><p class="p">This value is only used if <span class="keyword parmname">protocol</span> is
+set to <code class="ph codeph">tcps</code>.  Use <span class="keyword parmname">securityConfiguration</span> only
+if you are not using the <span class="ph">WebSphere Application
+Server</span> default security
+configuration.  For more information, see <a class="xref" href="tlssecurityforjmsra.html" title="To connect to Eclipse Amlen endpoints that are configured to accept secure connections, you must configure the Eclipse Amlen resource adapter to use secure connections.">Transport Layer Security for the Eclipse Amlen resource adapter</a>.</p></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="configuringinboundcomms__entry__1">securitySocketFactory </td>
+<td class="entry" headers="configuringinboundcomms__entry__2">String</td>
+<td class="entry" headers="configuringinboundcomms__entry__3">Any valid Unicode string</td>
+<td class="entry" headers="configuringinboundcomms__entry__4"><code class="ph codeph">null</code></td>
+<td class="entry" headers="configuringinboundcomms__entry__5"><p class="p">The name of the security socket factory that
+is used for establishing secure connections.  </p><p class="p">This value is
+only used if <span class="keyword parmname">protocol</span> is set to <code class="ph codeph">tcps</code>.
+ Use <span class="keyword parmname">securitySocketFactory</span> only if you are not
+using the <span class="ph">WebSphere Application
+Server</span> default
+security socket factory. For more information, see <a class="xref" href="tlssecurityforjmsra.html" title="To connect to Eclipse Amlen endpoints that are configured to accept secure connections, you must configure the Eclipse Amlen resource adapter to use secure connections.">Transport Layer Security for the Eclipse Amlen resource adapter</a>.</p></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="configuringinboundcomms__entry__1">server</td>
+<td class="entry" headers="configuringinboundcomms__entry__2">String</td>
+<td class="entry" headers="configuringinboundcomms__entry__3">Any valid Unicode string</td>
+<td class="entry" headers="configuringinboundcomms__entry__4"><code class="ph codeph">null</code><p class="p">This default value
+must be changed.</p></td>
+<td class="entry" headers="configuringinboundcomms__entry__5"><p class="p">A space or comma delimited list of <span class="ph">Eclipse Amlen</span> host names or
+IP addresses. The resource adapter attempts to connect to each server
+in the list until a connection is established. </p></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="configuringinboundcomms__entry__1">subscriptionDurability </td>
+<td class="entry" headers="configuringinboundcomms__entry__2">String</td>
+<td class="entry" headers="configuringinboundcomms__entry__3"><code class="ph codeph">Durable</code>, <code class="ph codeph">NonDurable</code></td>
+<td class="entry" headers="configuringinboundcomms__entry__4"><code class="ph codeph">NonDurable</code></td>
+<td class="entry" headers="configuringinboundcomms__entry__5"><p class="p">Specifies whether a topic subscription is
+durable. This value is ignored if the destination is a queue. </p><p class="p">When
+set to <code class="ph codeph">Durable</code>, <span class="keyword parmname">subscriptionName</span> must
+be set. When set to <code class="ph codeph">Durable</code> with <span class="keyword parmname">subscriptionShared</span> set
+to <code class="ph codeph">NonShared</code>, then <span class="keyword parmname">clientId</span> must
+also be set. </p></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="configuringinboundcomms__entry__1">subscriptionName </td>
+<td class="entry" headers="configuringinboundcomms__entry__2">String</td>
+<td class="entry" headers="configuringinboundcomms__entry__3">Any valid Unicode string</td>
+<td class="entry" headers="configuringinboundcomms__entry__4"><code class="ph codeph">null</code></td>
+<td class="entry" headers="configuringinboundcomms__entry__5"><p class="p">The name for a durable or shared subscription.
+ </p><p class="p">This value must be set for any durable or shared subscription.
+This value is ignored if the destination is a queue, or if the subscription
+is a non-durable unshared subscription. </p></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="configuringinboundcomms__entry__1">subscriptionShared </td>
+<td class="entry" headers="configuringinboundcomms__entry__2">String</td>
+<td class="entry" headers="configuringinboundcomms__entry__3"><code class="ph codeph">Shared</code>, <code class="ph codeph">NonShared</code></td>
+<td class="entry" headers="configuringinboundcomms__entry__4"><code class="ph codeph">NonShared</code></td>
+<td class="entry" headers="configuringinboundcomms__entry__5"><p class="p">Specifies whether a subscription is shared
+between consumers or not.</p><p class="p">This value is ignored if the destination
+is a queue. If set to <code class="ph codeph">Shared</code>, then <span class="keyword parmname">subscriptionName</span> must
+be set.  If set to <code class="ph codeph">NonShared</code> with  <span class="keyword parmname">subscriptionDurability</span> set
+to <code class="ph codeph">Durable</code>, then <span class="keyword parmname">clientId</span> must
+be set.  </p></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="configuringinboundcomms__entry__1">traceLevel </td>
+<td class="entry" headers="configuringinboundcomms__entry__2">Numeric</td>
+<td class="entry" headers="configuringinboundcomms__entry__3"><code class="ph codeph">-1</code>, or value can be in the
+range of <code class="ph codeph">0</code> - <code class="ph codeph">9</code></td>
+<td class="entry" headers="configuringinboundcomms__entry__4"><code class="ph codeph">-1</code></td>
+<td class="entry" headers="configuringinboundcomms__entry__5"><p class="p">The level of trace detail that is provided
+in the <span class="ph">Eclipse Amlen</span> JMS
+client and resource adapter output for this connection.   </p><p class="p">When set to <code class="ph codeph">-1</code>, the trace level that
+is used for this connection is the ResourceAdapter <span class="keyword parmname">defaultTraceLevel</span> setting. </p><p class="p">For
+example, <span class="ph">WebSphere Application
+Server</span> is
+started with <span class="keyword parmname">defaultTraceLevel</span> set to <code class="ph codeph">4</code>.
+If an MDB is then started that uses an activation specification with <span class="keyword parmname">traceLevel</span> set
+to <code class="ph codeph">-1</code>, then the trace level for that MDB and associated
+activation specification is <code class="ph codeph">4</code>.</p><p class="p">At level <code class="ph codeph">0</code>,
+there is no trace. At level <code class="ph codeph">9</code>, there is a detailed
+debug trace. As the trace level is increased, more trace is shown.
+Use trace levels of <code class="ph codeph">5</code> or lower to minimize performance
+impact and generate a small amount of trace, including stack traces
+for all exceptions. Use trace levels of <code class="ph codeph">6</code> - <code class="ph codeph">9</code> for
+debugging. Higher log levels can result in a large amount of trace
+output and can affect performance.</p><div class="note note note_note"><span class="note__title">Note:</span> If the <span class="keyword parmname">defaultTraceLevel</span> is
+changed after the <span class="ph">WebSphere Application
+Server</span> is
+started, then any new or existing activation specifications and connection
+factories that are set to use <code class="ph codeph">-1</code> continue to receive
+and use the <span class="keyword parmname">defaultTraceLevel</span> that was in effect
+when the <span class="ph">WebSphere Application
+Server</span> started.
+The new <span class="keyword parmname">defaultTraceLevel</span> value is not used until
+the next time the application server is started. </div></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="configuringinboundcomms__entry__1">user </td>
+<td class="entry" headers="configuringinboundcomms__entry__2">String</td>
+<td class="entry" headers="configuringinboundcomms__entry__3">Any valid Unicode string</td>
+<td class="entry" headers="configuringinboundcomms__entry__4"><code class="ph codeph">null</code></td>
+<td class="entry" headers="configuringinboundcomms__entry__5"><p class="p">The user name for user authentication with <span class="ph">Eclipse Amlen</span>.  <span class="ph">Eclipse Amlen</span> always uses this
+value if it is provided, unless a security profile is attached to
+the endpoint with <span class="keyword parmname">UsePasswordAuthentication</span> set
+to <code class="ph codeph">False</code>. </p> </td>
+</tr>
+</tbody></table>
+<section class="section" id="configuringinboundcomms__Wildcardra"><h2 class="title sectiontitle">Wildcards</h2><p class="p">Wildcards are
+supported for inbound communication when you use topics. For more
+information about wildcards, see <a class="xref" href="../Overview/ov00032.html" title="Topic-based wildcards allow subscribers to subscribe to a group of topics that have similar topic strings.">Wildcards</a>.</p></section>
+</div>
+
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Administering/configuringra.html" title="To configure the Eclipse Amlen resource adapter for WebSphere Application Server, you must define a number of JCA resources.">Configuring Eclipse Amlen resource adapter for WebSphere Application Server</a></div></div></nav></article></main></body></html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content=""><link rel="stylesheet" type="text/css" href="../../commonltr.css"><link rel="stylesheet" type="text/css" href="../../doc.css"><title>Configure high availability</title></head><body id="cmd_update_highavailability"><nav role="toc"><ul><li><a href="../../welcome.html">Welcome</a></li><li><a href="../../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../../Overview/ov00000_.html">Product overview</a></li><li><a href="../../Planning/pl00001_.html">Planning</a></li><li><a href="../../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../../Administering/ad00000_.html">Administering</a></li><li><a href="../../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../../Security/se00000_.html">Security</a></li><li><a href="../../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../../Reference/re00000_.html">Reference</a><ul><li><a href="../../Reference/intro.html">REST API Reference</a><ul><li><a href="../../Reference/cmd_delete_config.html">Delete configuration objects</a></li><li><a href="../../Reference/cmd_show_config.html">Show configuration details of nameable configuration objects</a></li><li><a href="../../Reference/cmd_show_config_fix.html">Show configuration details of fixed-name configuration objects</a></li><li><a href="../../Reference/cmd_REST_file_put.html">Copy a file from the local machine to Eclipse Amlen  </a></li><li><a href="../../Reference/AdminEndpointCmd/adminendpoint.html">Admin endpoint REST Administration APIs</a></li><li><a href="../../Reference/ApplianceCmd/appliancesettingcommands.html">Server REST Administration APIs</a></li><li><a href="../../Reference/ClusterCmd/clustercommands.html">Cluster REST Administration APIs</a></li><li><a href="../../Reference/SecurityCmd/securitycommands.html">Security REST Administration APIs</a></li><li><a href="../../Reference/MsgHubCmd/messagehubcommands.html">Message hub REST Administration APIs</a></li><li><a href="../../Reference/QueueCmd/QueueCmd.html">Queue REST Administration APIs</a></li><li><a href="../../Reference/MQConnCmd/mqconnectivitycommands.html">MQ Connectivity  REST Administration APIs</a></li><li><a href="../../Reference/HACmd/HAcommands.html">High availability REST Administration APIs</a><ul><li><a href="../../Reference/HACmd/cmd_show_HAconfig.html">Show high availability configuration</a></li><li><a href="../../Reference/HACmd/cmd_status_HA.html">Show high availability status</a></li><li class="active"><a href="../../Reference/HACmd/cmd_update_highavailability.html">Configure high availability </a></li></ul></li><li><a href="../../Reference/BackupCmd/backupandrestorecommands.html">Backup and restore commands</a></li><li><a href="../../Reference/MonitorCmd/monitoringandreportingcommands.html">REST Monitoring APIs</a></li><li><a href="../../Reference/XATranCmd/xatransactioncommands.html">XA transaction REST Administration APIs</a></li><li><a href="../../Reference/SNMPCmd/snmpcommands.html">SNMP REST Administration APIs</a></li><li><a href="../../Reference/ProtocolPluginCmd/ProtocolPluginCmd.html">Protocol plug-in REST Administration APIs</a></li><li><a href="../../Reference/SpecialCmd/spepcom.html">Special purpose REST Administration APIs</a></li></ul></li><li><a href="../../Reference/_Topics/sy10530_.html">Digital certificates</a></li><li><a href="../../Reference/_Topics/re00003_.html">Supported cipher lists</a></li><li><a href="../../Reference/_Topics/re00001_.html">Classless Inter-Domain Routing</a></li></ul></li><li><a href="../../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Configure high availability </h1>
+
+
+
+
+
+
+<div class="body refbody"><p class="shortdesc"></p>
+<section class="section"><h2 class="title sectiontitle">Purpose</h2>Configures an <span class="ph">Eclipse Amlen</span> server to participate in a high availability (HA) pair.</section>
+<section class="section"><h2 class="title sectiontitle">URI</h2>
+
+<p class="p">Use the <span class="ph">Eclipse Amlen</span>
+        <span class="ph">REST API</span> POST method with the following <span class="ph">Eclipse Amlen</span> configuration URI:</p>
+<p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/configuration/</code></p>
+</section>
+<section class="section"><h2 class="title sectiontitle">Object configuration data</h2><div class="p">Provide HighAvailability object configuration data in the payload of the POST method by using the following schema. <span class="keyword parmname">Content-type</span> is set to <kbd class="ph userinput">application/json</kbd>: <pre class="pre codeblock"><code>
+{    
+   "HighAvailability": {
+      "Group": "string",
+      "EnableHA": true|false,
+      "StartupMode": "string",
+      "RemoteDiscoveryNIC": "string",
+      "LocalReplicationNIC": "string",
+      "LocalDiscoveryNIC": "string",
+      "DiscoveryTimeout": integer,
+      "HeartbeatTimeout": integer,
+      "PreferredPrimary": true|false,
+      "RemoteDiscoveryPort": integer,
+      "ReplicationPort": integer,
+      "ExternalReplicationPort": integer,
+      "ExternalReplicationNIC":  
+      "UseSecuredConnections": true|false             
+    }
+}</code></pre></div>Where:<dl class="dl">
+
+<dt class="dt dlterm">Group</dt>
+<dd class="dd">Required.</dd>
+<dd class="dd ddexpand">Specifies the group name of the HA pair.</dd>
+<dd class="dd ddexpand">The value must be the same on both servers in the pair. </dd>
+<dd class="dd ddexpand">The value can be a maximum of 128 characters.</dd>
+<dd class="dd ddexpand">When this value is set, replication and discovery addresses are not required.</dd>
+
+
+<dt class="dt dlterm">EnableHA: true|false</dt>
+<dd class="dd">Optional.</dd>
+<dd class="dd ddexpand">Specifies whether HA is enabled (true) or disabled (false).</dd>
+<dd class="dd ddexpand">The default value is false.</dd>
+
+
+<dt class="dt dlterm">StartupMode</dt>
+<dd class="dd">Optional.</dd>
+<dd class="dd ddexpand">Specifies the mode in which the node starts.</dd>
+<dd class="dd ddexpand">The value can be one of the following values:<ul class="ul">
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">AutoDetect</dt>
+<dd class="dd">AutoDetect means that, at start up, the nodes of the HA-Pair detect one another and automatically establish the HA-Pair. If the node cannot detect the other node in the HA-Pair, it does not start.</dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">StandAlone</dt>
+<dd class="dd">StandAlone is used to bring up a single node with the intention to later bring up another node that synchronizes with the first node and creates an HA-Pair. If another node is detected as the node starts, the node does not start.</dd>
+
+</dl>
+</li>
+</ul></dd>
+
+
+<dt class="dt dlterm">RemoteDiscoveryNIC</dt>
+<dd class="dd">Required if <code class="ph codeph">"EnableHA": true</code> is specified.</dd>
+<dd class="dd ddexpand">Specifies the IP address of the NIC that is used for HA discovery on the remote node in the HA pair.</dd>
+
+
+<dt class="dt dlterm">LocalReplicationNIC</dt>
+<dd class="dd">Required if <code class="ph codeph">"EnableHA": true</code> is specified.</dd>
+<dd class="dd ddexpand">Specifies the IPv4 or IPv6 address of the NIC that is used for HA replication on the local node in the HA pair.</dd>
+
+</dl><dl class="dl">
+
+<dt class="dt dlterm">LocalDiscoveryNIC</dt>
+<dd class="dd">Required if <code class="ph codeph">"EnableHA": true</code> is specified.</dd>
+<dd class="dd ddexpand">Specifies the IPv4 or IPv6 address of the NIC that is used for HA discovery on the local node in the HA pair.</dd>
+
+
+<dt class="dt dlterm">DiscoveryTimeout</dt>
+<dd class="dd">Optional.</dd>
+<dd class="dd ddexpand">Specifies the time in seconds that the node attempts to discover the HA pair node.</dd>
+<dd class="dd ddexpand">The value must be in the range 10-2147483647.</dd>
+<dd class="dd ddexpand">The default value is 600.</dd>
+
+
+<dt class="dt dlterm">HeartbeatTimeout</dt>
+<dd class="dd">Optional.</dd>
+<dd class="dd ddexpand">Specifies the time in seconds to detect that the other node in the HA pair has failed.</dd>
+<dd class="dd ddexpand">The value must be in the range 1-2147483647.</dd>
+<dd class="dd ddexpand">The default value is 10.</dd>
+
+
+<dt class="dt dlterm">PreferredPrimary: true|false</dt>
+<dd class="dd">Optional.</dd>
+<dd class="dd ddexpand">Specifies whether the node that the command is run on is the preferred primary when both nodes are started in auto-detect mode.</dd>
+<dd class="dd ddexpand">The default value is false.</dd>
+
+
+<dt class="dt dlterm">RemoteDiscoveryPort</dt>
+<dd class="dd">Optional.</dd>
+<dd class="dd ddexpand">Specifies the port number to be used for HA discovery on the remote node in the HA pair.</dd>
+<dd class="dd ddexpand">The value must be in the range 1024-65535.</dd>
+<dd class="dd ddexpand">By default, this value is not set.</dd>
+
+
+<dt class="dt dlterm">ReplicationPort</dt>
+<dd class="dd">Optional.</dd>
+<dd class="dd ddexpand">Specifies the port number to be used for HA replication on the local node in the HA pair.</dd>
+<dd class="dd ddexpand">The value must be in the range 1024-65535.</dd>
+<dd class="dd ddexpand">By default, this value is not set.</dd>
+
+
+<dt class="dt dlterm">ExternalReplicationPort</dt>
+<dd class="dd">Optional.</dd>
+<dd class="dd ddexpand">Specifies the external port number to be used for HA replication on the local node in the HA pair.</dd>
+<dd class="dd ddexpand">The value must be in the range 1024-65535.</dd>
+<dd class="dd ddexpand">By default, this value is not set.</dd>
+
+
+<dt class="dt dlterm">ExternalReplicationNIC</dt>
+<dd class="dd">Optional.</dd>
+<dd class="dd ddexpand">Specifies the IPv4 or IPv6 address of the NIC that is used for HA replication.</dd>
+
+
+<dt class="dt dlterm">UseSecuredConnections: true|false</dt>
+<dd class="dd">Optional.</dd>
+<dd class="dd ddexpand">Specifies whether to use Transport Layer Security for discovery and data channels between the nodes in the HA pair.</dd>
+<dd class="dd ddexpand">The default value is false.</dd>
+
+</dl></section>
+<section class="section"><h2 class="title sectiontitle">Usage Notes®</h2>
+
+<ul class="ul">
+<li class="li">Capitalization and double quotation marks must be used as shown.</li>
+<li class="li"><span class="keyword parmname">Group</span> is a required item.</li>
+<li class="li">Depending on the update that you make, you might need to restart the <span class="ph">Eclipse Amlen</span> server after you use the <span class="ph">REST API</span> POST method to update the HA configuration. <div class="p">You can restart the <span class="ph">Eclipse Amlen</span> server by using the <span class="ph">REST API</span> POST method with the following <span class="ph">Eclipse Amlen</span> configuration URI:<pre class="pre codeblock"><code>http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/service/restart</code></pre>Provide configuration data in the payload of the POST method by using the following schema.  Ensure that capitalization and double quotation marks are used as shown.<pre class="pre codeblock"><code>
+{    
+  "Service": "Server" 
+      
+}</code></pre></div></li>
+</ul>
+</section>
+<section class="section"><h2 class="title sectiontitle">Related <span class="ph">REST Administration APIs</span></h2>
+
+<ul class="ul">
+<li class="li"><a class="xref" href="cmd_show_HAconfig.html">Show high availability configuration</a></li>
+<li class="li"><a class="xref" href="cmd_status_HA.html">Show high availability status</a></li>
+</ul>
+</section>
+<section class="section"><h2 class="title sectiontitle">Example</h2>Updates the HA configuration by using cURL:<pre class="pre codeblock"><code>
+curl -X POST  \
+   -H 'Content-Type: application/json'  \
+   -d  '{    
+            "HighAvailability": {                  
+            "Group": "Group2", 
+            "EnableHA": true, 
+            "RemoteDiscoveryNIC": "192.0.4.2",
+            "LocalReplicationNIC": "192.0.2.6",
+            "LocalDiscoveryNIC": "192.0.3.2",                 
+            "PreferredPrimary": true 
+        }
+     }
+  '  \
+http://127.0.0.1:9089/ima/v1/configuration/</code></pre><div class="p">An example response to the POST method:<pre class="pre codeblock"><code>
+       {        
+         "Version": "v1",
+         "Code": "CWLNA6011",
+         "Message": "The requested configuration change has completed successfully."
+       }
+</code></pre></div></section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../../Reference/HACmd/HAcommands.html" title="The high availability (HA) REST Administration APIs allow you to configure HA. You can view and edit the current HA settings.">High availability REST Administration APIs</a></div></div></nav></article></main></body></html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="You can use messaging policies to authorize client messaging. There are three types of messaging policies: Topic policies, queue policies, and subscription policies."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Authorizing client messaging</title></head><body id="se00004_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a><ul><li><a href="../Security/se00010.html">Authentication</a></li><li><a href="../Security/se00011.html">Authorization</a><ul><li><a href="../Security/se00003_.html">Authorizing client connections</a></li><li class="active"><a href="../Security/se00004_.html">Authorizing client messaging</a><ul><li><a href="../Security/se00015_.html">Topic policy</a></li><li><a href="../Security/se00016_.html">Queue policy</a></li><li><a href="../Security/se00014_.html">Subscription policy</a></li><li><a href="../Security/se00018.html">Variable substitution in messaging policies</a></li></ul></li><li><a href="../Security/se00008_.html">OAuth</a></li></ul></li><li><a href="../Security/se00005_.html">Transport Layer Security</a></li></ul></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Authorizing client messaging</h1>
+
+<div class="body conbody"><p class="shortdesc">You can use messaging policies to authorize client messaging. There are three types of messaging policies: Topic policies, queue policies, and subscription policies. </p>
+<p class="p">Topic policies can be used to authorize publishing or subscribing to a topic. Queue policies can be used to authorize sending, receiving, or browsing a queue. Subscription policies can be used to authorize the creation and deletion of global-shared durable subscriptions, or the authorization of a subscriber to receive messages from a global-shared durable subscription. </p>
+<p class="p">When you create a messaging policy, you specify a set of allowed
+actions for a particular topic string, queue, or subscription. The
+messaging policy specifies which clients can use those actions, based
+on criteria such as client ID, or IP address.</p>
+<div class="p">All messaging policies for an endpoint are checked for authorization in the order that they are specified on the endpoint. The policies are checked either until authorization is granted, or all messaging policies are checked. Therefore, you cannot create a messaging policy that restricts the authority of particular clients if another messaging policy grants more authority to those clients. For example, two topic policies are defined in the following order:<ul class="ul">
+<li class="li">
+<pre class="pre codeblock"><code>Topic: *
+Action: Subscribe
+MaxMessages: 10</code></pre>
+</li>
+<li class="li">
+<pre class="pre codeblock"><code>Topic: A
+Action: Subscribe
+MaxMessages: 5</code></pre>
+</li>
+</ul>In this example, a subscription on topic <code class="ph codeph">B</code> allows 10 messages to be buffered at a time. A subscription on topic <code class="ph codeph">A</code> also allows 10 messages to be buffered at a time, as the more permissive messaging policy is defined first. To restrict the subscriptions on topic <code class="ph codeph">A</code> to buffer only five messages, you must change the order of the policies.</div>
+<p class="p">A messaging policy can be applied to more than one endpoint. The
+messaging policies that are associated with the endpoint that a client
+is connected to are applied after the connection policies are applied.</p>
+<div class="p">Any changes to the following messaging policy parameters affect
+all subscriptions currently using the policy:<ul class="ul">
+<li class="li">MaxMessages</li>
+<li class="li">MaxMessagesBehavior</li>
+<li class="li">DisconnectedClientNotification</li>
+<li class="li">MaxMessagesTimeToLive (for messages that are published or put
+after the change is made)</li>
+</ul></div>
+<section class="section" id="se00004___wildcards"><h2 class="title sectiontitle">Wildcard based destinations</h2><p class="p">You can grant messaging authorization to a wildcard based topic, queue, or global-shared durable subscription by using an asterisk (*) in the Topic, Queue, or Subscription field.</p> <div class="p">The wildcard character matches 0 or more characters, including topic-level separators. Therefore, a single wildcard can match more than one level in a multi-level topic name. For example, A*E matches all the following topic names:<ul class="ul">
+<li class="li"><code class="ph codeph">ARCHITECTURE</code></li>
+<li class="li"><code class="ph codeph">AN/APPLE</code></li>
+<li class="li"><code class="ph codeph">A/C/E</code></li>
+<li class="li"><code class="ph codeph">A/B/C/D/E</code></li>
+</ul>You must ensure that when you use wildcards in topic policies that the topic string has enough structure to limit the wildcard matching that occurs. For example, the following set of topic strings are used by an application:<ul class="ul">
+<li class="li"><code class="ph codeph">DEVICE/<var class="keyword varname">clientID</var>/LOCATION</code></li>
+<li class="li"><code class="ph codeph">DEVICE/<var class="keyword varname">clientID</var>/FAULT</code></li>
+<li class="li"><code class="ph codeph">DEVICE/<var class="keyword varname">clientID</var>/UPGRADE</code></li>
+</ul>The following topic strings are good choices for the Topic field of the topic policies:<ul class="ul">
+<li class="li"><code class="ph codeph">DEVICE/${ClientID}/*</code></li>
+<li class="li"><code class="ph codeph">DEVICE/${ClientID}/LOCATION</code></li>
+<li class="li"><code class="ph codeph">DEVICE/${ClientID}/FAULT</code></li>
+<li class="li"><code class="ph codeph">DEVICE/${ClientID}/UPGRADE</code></li>
+</ul>The following topic strings are too broad in scope to give enough control and partition the resources that are accessible by each client:<ul class="ul">
+<li class="li"><code class="ph codeph">DEVICE/*</code></li>
+<li class="li"><code class="ph codeph">*/${ClientID}/*</code></li>
+</ul></div><div class="p">In this example, the following topic string is used by an application to send notifications to mobile devices, where each user can have multiple devices:<ul class="ul">
+<li class="li"><code class="ph codeph">NOTIFY/<var class="keyword varname">UserID</var>/<var class="keyword varname">ClientID</var>/NOTIFICATION</code></li>
+</ul>The devices that receive the notification can be authorized by using a topic policy with a destination such as the following topic string:<ul class="ul">
+<li class="li"><code class="ph codeph">NOTIFY/${UserID}/${ClientID}/NOTIFICATION</code></li>
+</ul>The application that sends the notification can have a wider authorization, such as the following topic string:<ul class="ul">
+<li class="li"><code class="ph codeph">NOTIFY/*/*/NOTIFICATION</code></li>
+</ul></div></section>
+</div>
+
+</article></main></body></html>

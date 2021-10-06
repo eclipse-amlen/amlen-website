@@ -1,0 +1,128 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can create and update a CRL profile by using REST Administration APIs."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Creating and updating a CRL profile by using REST Administration APIs</title></head><body id="ad01327_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a><ul><li><a href="../Administering/ad01325_.html">Configuring certificate revocation lists by using REST Administration APIs </a><ul><li class="active"><a href="../Administering/ad01327_.html">Creating and updating a CRL profile by using REST Administration APIs</a></li><li><a href="../Administering/ad001329_.html">Viewing configuration details of a CRL profile by using REST Administration APIs</a></li><li><a href="../Administering/ad001328_.html">Deleting a CRL profile by using a REST Administration API</a></li></ul></li></ul></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+  <h1 class="title topictitle1" id="ariaid-title1">Creating and updating a CRL profile by using <span class="ph">REST Administration APIs</span></h1>
+  
+  <div class="body taskbody"><p class="shortdesc">System administrators can create and update a CRL profile by using <span class="ph">REST Administration APIs</span>.</p>
+    <section class="section prereq">
+      <p class="p">Only one CRL can exist inside a CRL profile. Before you can use a CRL profile, you must set
+        the <span class="keyword parmname">UseClientCertificate</span> property to <kbd class="ph userinput">true</kbd> in the
+        security profile that you want to associate with this CRLProfile. When you set
+          <span class="keyword parmname">UseClientCertificate</span> to <kbd class="ph userinput">true</kbd>, you must also
+        ensure that at least one trusted certificate is associated with the security profile. For
+        more information about configuring a security profile, see <a class="xref" href="ad00740_.html" title="A security profile is used by an endpoint to define authentication and Transport Layer Security (TLS) settings for that endpoint. To enable TLS for the endpoint, you must enable TLS in the security profile and the security profile must have an associated certificate profile that defines the server certificate that is used to control TLS. To create a security profile with TLS enabled, you must create the certificate profile before you create the security profile. You can configure security profiles either by using the Amlen WebUI or by using REST Administration APIs.">Configuring security profiles</a>. For
+        more information about configuring trusted certificates, see <a class="xref" href="ad00728_.html" title="You can authenticate clients based on certificates by uploading the trusted certificates to the Eclipse Amlen truststore. You can upload the trusted certificates by using the Amlen WebUI or by using REST Administration APIs.">Configuring trusted certificates</a>.</p>
+    </section>
+    <section><ol class="ol steps"><li class="li step stepexpand">
+        <span class="ph cmd">To create a CRL profile, use the <span class="ph">Eclipse Amlen</span> REST API POST method
+          with the following <span class="ph">Eclipse Amlen</span>
+          configuration URI:</span>
+        <div class="itemgroup info">
+          <p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/configuration/</code></p>
+        </div>
+      </li><li class="li step stepexpand">
+        <span class="ph cmd">Provide object configuration data in the payload of the POST method by using the
+          following schema. <span class="keyword parmname">Content-type</span> is set to
+            <kbd class="ph userinput">application/json</kbd>. Ensure that capitalization and double quotation
+          marks are used as shown. </span>
+        <div class="itemgroup info"><pre class="pre codeblock"><code>
+{  
+  "CRLProfile":{
+    "&lt;CRLProfName&gt;":{ 
+      "CRLSource": "String",  
+      "UpdateInterval": integer,
+      "RevalidateConnection": true|false,   
+      "Overwrite": true|false
+      }
+   }
+} 
+  </code></pre>Where:<dl class="dl">
+            
+              <dt class="dt dlterm"><var class="keyword varname">CRLProfName</var></dt>
+              <dd class="dd">Required.</dd>
+              <dd class="dd ddexpand">Specifies the name of the CRL profile. </dd>
+              <dd class="dd ddexpand">Before you can use a  CRL profile, you must set
+                  <span class="keyword parmname">UseClientCertificate</span> to <kbd class="ph userinput">true</kbd> in the
+                security profile that you want to associate with the CRL profile. When you set
+                  <span class="keyword parmname">UseClientCertificate</span> to <kbd class="ph userinput">true</kbd>, ensure
+                that at least one trusted certificate is associated with the security profile. </dd>
+              <dd class="dd ddexpand">The name can be a maximum of 256 alphanumeric characters. </dd>
+              <dd class="dd ddexpand">The name must not have leading or trailing spaces and cannot contain control
+                characters, commas, double quotation marks, backslashes, or equal signs.  </dd>
+            
+            
+              <dt class="dt dlterm">CRLSource</dt>
+              <dd class="dd">Required.</dd>
+              <dd class="dd ddexpand">Specifies the source of CRL file.</dd>
+              <dd class="dd ddexpand">The source can be a file that has been uploaded to the server or the source can be
+                a URL string.</dd>
+              <dd class="dd ddexpand">If the source is a URL, the format of the URL must be
+                  <code class="ph codeph">http://&lt;IPaddress&gt;/&lt;path to CRLfilename&gt;</code>. Only HTTP is
+                supported.</dd>
+              <dd class="dd ddexpand">Only one CRL file can exist inside a CRL profile. </dd>
+              <dd class="dd ddexpand">The maximum length is 2048.</dd>
+<dd class="dd ddexpand">
+<div class="p">
+<div class="note note note_note"><span class="note__title">Note:</span> If the file that contains the CRLs is larger than 4 MB, and is not available as a remote URL,
+you can copy the file to <code class="ph codeph">/tmp/userfiles</code> on <span class="ph">Eclipse Amlen</span> before you upload the file to the server. If the
+server is running in a container, you use the docker cp command <code class="ph codeph">cp /tmp/psk.csv
+/tmp/userfiles</code> to copy the file to <span class="ph">Eclipse Amlen</span>.
+<div class="p">You can then import the <code class="ph codeph">.psk</code> file to the server by using the following
+command:<pre class="pre codeblock"><code>curl -X POST http://localhost:9089/ima/v1/configuration -d '{"PreSharedKey":"psk.csv"}</code></pre>Do
+not provide a full path to the <code class="ph codeph">.psk</code> file in the payload. All file paths specified
+in the payload are relative to <span class="ph filepath">/tmp/userfiles</span>. Verify that the pre-shared key
+file is uploaded by using the following
+command:<pre class="pre codeblock"><code>curl -X GET http://localhost:9089/ima/v1/configuration/PreSharedKey {"Version":"v1", "PreSharedKey":"psk.csv"}</code></pre>
+</div></div>
+</div>
+</dd>
+            
+            
+              <dt class="dt dlterm">UpdateInterval</dt>
+              <dd class="dd">Specifies the interval in minutes to download a new copy of  the CRL if
+                  <span class="keyword parmname">CRLSource</span> is an URL.</dd>
+              <dd class="dd ddexpand">The default value is 60 minutes.</dd>
+            
+            
+              <dt class="dt dlterm">RevalidateConnection: true|false</dt>
+              <dd class="dd">Specifies whether all connections that are authorized by using the security
+                profile are re-validated when a new CRL file is uploaded or downloaded from
+                specified URL.</dd>
+              <dd class="dd ddexpand">The default value is false.</dd>
+            
+            
+              <dt class="dt dlterm">Overwrite: true|false</dt>
+              <dd class="dd">Specifies whether an existing certificate is overwritten.</dd>
+              <dd class="dd ddexpand">If you want to use a different source file or URL path, you must set this property
+                to true. </dd>
+            
+          </dl></div>
+      </li></ol></section>
+    <section class="example">
+      <p class="p">The following example shows a POST method to create a CRL profile by using cURL:</p>
+      <pre class="pre codeblock"><code> 
+curl -X POST \
+   -H  'Content-Type: application/json'  \
+   -d  '{                       
+           "CRLProfile": {   
+             "MyCRLProfile": {
+               "CRLSource": "file_crl.pem",
+               "UpdateInterval": 5,
+               "RevalidateConnection": false,
+               "Overwrite": false
+             }
+          }
+      }
+  '   \
+http://127.0.0.1:9089/ima/v1/configuration/</code></pre>
+      <p class="p">The following example shows an example response to the POST method:</p>
+      <pre class="pre codeblock"><code>
+{        
+  "Version": "v1",
+  "Code": "CWLNA6011",
+  "Message": "The requested configuration change has completed successfully."
+}
+</code></pre>
+    </section>
+  </div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Administering/ad01325_.html" title="System administrators can configure a certificate revocation list by using REST Administration APIs.">Configuring certificate revocation lists by using REST Administration APIs</a></div></div></nav></article></main></body></html>

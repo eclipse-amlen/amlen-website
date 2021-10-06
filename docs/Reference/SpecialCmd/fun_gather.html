@@ -1,0 +1,43 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="keywords" content="platform must-gather"><link rel="stylesheet" type="text/css" href="../../commonltr.css"><link rel="stylesheet" type="text/css" href="../../doc.css"><title>platform must-gather</title></head><body id="fungather"><nav role="toc"><ul></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">platform must-gather</h1>
+
+
+<div class="body refbody">
+<section class="section"><h2 class="title sectiontitle">Purpose</h2>System administrators can collect the must-gather diagnostic data
+   that is required for reporting a problem to IBM®
+   support.</section>
+<section class="section"><h2 class="title sectiontitle">Syntax</h2><span class="keyword cmdname">platform must-gather </span> <var class="keyword varname">filename</var> [ <var class="keyword varname">PDfilename</var> ]</section>
+<section class="section"><h2 class="title sectiontitle">Parameters</h2><dl class="dl">
+<dt class="dt dlterm"><var class="keyword varname">filename</var></dt>
+<dd class="dd">Specifies the name of the output file that contains all diagnostic
+data, in a compressed (.tgz) format.</dd>
+<dd class="dd ddexpand">Use either the <code class="ph codeph">.tgz</code> or the <code class="ph codeph">.tar.gz</code> suffix
+for the output file name.</dd>
+
+<dt class="dt dlterm"><var class="keyword varname">PDfilename</var></dt>
+<dd class="dd">Specifies the name of the text file that the output of the problem
+diagnostic commands is written to. This file contains the same output
+that is collected by the <span class="ph tt" style="font-family: monospace; ">platform collect-pd</span> command. If
+not specified, the default value is <span class="ph tt" style="font-family: monospace; ">collect-pd.txt</span>. If the
+output file exists, the file is overwritten.</dd>
+</dl></section>
+<section class="section"><h2 class="title sectiontitle">Usage Notes®</h2><ul class="ul">
+    <li class="li">This command must only be run by an administrator. </li>
+<li class="li">This command is used by IBM support.</li>
+<li class="li">The output might  include both clear text and obscured data that
+is intended to be read only by IBM support.</li>
+<li class="li">You must use the <span class="keyword cmdname">imaserver trace flush</span> command
+before you use the <span class="keyword cmdname">platform must-gather </span> command.</li>
+<li class="li">Output files that are produced by this command are automatically
+deleted during normal appliance restart or shutdown.</li>
+</ul></section>
+<section class="section"><h2 class="title sectiontitle">Example</h2>Collect diagnostic data to a file called <span class="ph tt" style="font-family: monospace; ">problem-data.tgz</span>. <pre class="pre codeblock"><code><span class="ph">admin@(none)&gt;</span> platform must-gather problem-data.tgz
+<span class="ph">admin@(none)&gt;</span> file list
+problem-data.tgz 3449276 bytes created Mar 27, 2012 11:15:48 AM
+collect-pd.txt 572878 bytes created Mar 27, 2012 11:15:48 AM
+<span class="ph">admin@(none)&gt;</span></code></pre></section>
+</div>
+
+</article></main></body></html>

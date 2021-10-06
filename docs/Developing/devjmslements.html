@@ -1,0 +1,55 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="This topic contains the different elements of a JMS messaging system."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Elements of a JMS application</title></head><body id="devjmslements"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a><ul><li><a href="../Developing/devconcepts.html">Messaging concepts</a></li><li><a href="../Developing/devmsgtypes.html">Natively supported message types</a></li><li><a href="../Developing/devmsgsize.html">Message size</a></li><li><a href="../Developing/devclientids.html">Client IDs</a></li><li><a href="../Developing/devclientservercert.html">Server certificates</a></li><li><a href="../Developing/devretainmsg.html">Developing retained message applications</a></li><li><a href="../Developing/devexpiredmsg.html">Expired messages</a></li><li><a href="../Developing/devsharedsubscriptions.html">Shared subscriptions</a></li><li><a href="../Developing/devmqttapp.html">Developing MQTT applications</a></li><li><a href="../Developing/devjmsapp.html">Developing JMS applications</a><ul><li><a href="../Developing/devjms_working.html">Working with Eclipse Amlen JMS</a></li><li><a href="../Developing/devjms_sampleapplications.html">Sample applications</a></li><li><a href="../Developing/devjms_writingjmsapplications.html">Writing JMS Applications</a><ul><li class="active"><a href="../Developing/devjmslements.html">Elements of a JMS application</a></li><li><a href="../Developing/devjms_producerapplicationbasics.html">Producer application basics</a></li><li><a href="../Developing/devjms_consumerapplicationbasics.html">Consumer application basics</a></li></ul></li><li><a href="../Developing/javadoc/com/ibm/ima/jms/package-summary.html">JMS API reference</a></li></ul></li><li><a href="../Developing/devplug-in.html">Developing a protocol plug-in</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li></ul></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Elements of a JMS application</h1>
+
+
+
+
+
+
+<div class="body refbody"><p class="shortdesc">This topic contains the different elements of a JMS messaging
+system.</p>
+<section class="section"><p class="p">A JMS application is composed of the following parts:</p><dl class="dl">
+
+<dt class="dt dlterm">JMS client</dt>
+<dd class="dd">An application or process that produces messages, consumes messages
+or both. </dd>
+
+<dt class="dt dlterm">Administered objects</dt>
+<dd class="dd">Preconfigured JMS objects created by an administrator for the
+use of clients. The two kinds of JMS administered objects are destinations
+and connection factories.<dl class="dl">
+<dt class="dt dlterm">Destination</dt>
+<dd class="dd">The object a client uses to specify the target of messages it
+produces and the source of messages it consumes. The Destination implementation
+in the <span class="ph">Eclipse Amlen</span> JMS
+client implements two destination interfaces: <ul class="ul">
+<li class="li">Topic</li>
+<li class="li">Queue</li>
+</ul></dd>
+
+<dt class="dt dlterm">Connection factory </dt>
+<dd class="dd">An object that a JMS client uses to create a connection with a
+JMS provider. The ConnectionFactory implementation in the <span class="ph">Eclipse Amlen</span> JMS client implements
+the three connection factory interfaces: <ul class="ul">
+<li class="li">ConnectionFactory</li>
+<li class="li">TopicConnectionFactory</li>
+<li class="li">QueueConnectionFactory</li>
+</ul></dd>
+</dl></dd>
+
+<dt class="dt dlterm">Message</dt>
+<dd class="dd">An object that contains the data being transferred between JMS
+clients.</dd>
+
+<dt class="dt dlterm">Message producer</dt>
+<dd class="dd">A JMS client that creates and sends messages.</dd>
+
+<dt class="dt dlterm">Message consumer</dt>
+<dd class="dd">A JMS client that receives messages.</dd>
+</dl><div class="note important note_important"><span class="note__title">Important:</span> The function
+of queues is not implemented within the JMS client for the Beta release. </div></section>
+</div>
+
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Developing/devjms_writingjmsapplications.html" title="JMS applications are written by using the interfaces in the javax.jms package. If you already have JMS applications that you would like to reuse with Eclipse Amlen, you can do so after you have created Eclipse Amlen JMS administered objects. Point-to-point (queue) messaging is not supported for the Beta release.">Writing JMS Applications</a></div></div></nav></article></main></body></html>

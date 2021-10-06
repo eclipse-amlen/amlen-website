@@ -1,0 +1,207 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can view connection level monitoring statistics by using REST Monitoring APIs."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Viewing connection level statistics by REST Monitoring APIs</title></head><body id="admin00012"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a><ul><li><a href="../Monitoring/admin00080.html">Cluster monitoring</a></li><li><a href="../Monitoring/admin00009.html">Connection Monitoring</a><ul><li><a href="../Monitoring/admin00014.html">Viewing connection level statistics by using the Amlen WebUI</a></li><li class="active"><a href="../Monitoring/admin00012.html">Viewing connection level statistics by REST Monitoring APIs</a></li></ul></li><li><a href="../Monitoring/admin00010.html">Endpoint Monitoring</a></li><li><a href="../Monitoring/admin00016.html">Topic Monitoring</a></li><li><a href="../Monitoring/admin00019.html">Queue Monitoring</a></li><li><a href="../Monitoring/admin00022.html">Subscription Monitoring</a></li><li><a href="../Monitoring/admin00025.html">MQTT Client Monitoring</a></li><li><a href="../Monitoring/admin00031.html">MQ Connectivity monitoring</a></li><li><a href="../Monitoring/admin00070.html">Viewing protocol plug-in monitoring statistics by using an external application</a></li><li><a href="../Monitoring/admin00028.html">Server Monitoring</a></li><li><a href="../Monitoring/admin00060.html">XA Transaction monitoring</a></li></ul></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Viewing connection level statistics by <span class="ph">REST Monitoring APIs</span></h1>
+
+<div class="body taskbody"><p class="shortdesc">System administrators can view connection level monitoring statistics by using <span class="ph">REST Monitoring APIs</span>.</p>
+<section class="section context"><p class="p">System administrators can view connection level statistics by using a <span class="ph">REST Monitoring API</span>, or by using
+        the <span class="ph">Amlen WebUI</span>. For more information about
+        using the <span class="ph">Amlen WebUI</span> to view connection level
+        statistics, see <a class="xref" href="admin00014.html" title="Use the connection monitor to view live, aggregated connection data, and to query the best and worst performing connections across several connection metrics.">Viewing connection level statistics by using the GUI</a>.</p></section>
+<section><div class="li stepsection">Connection level monitoring statistics can be created by using a <span class="ph">REST Monitoring API</span>. Connection
+        monitoring data is periodically collected and cached. The cache for connection monitoring
+        data is updated every 60 seconds. Therefore, the statistics that are produced can be up to
+        60 seconds out of date and might not be available immediately if the command is issued at
+          <span class="ph">Eclipse Amlen</span> server start time. To create
+        connection level monitoring statistics, complete the following steps:</div><ol class="ol steps"><li class="li step stepexpand">
+        <span class="ph cmd">Use the <span class="ph">Eclipse Amlen</span> REST API GET method with the following <span class="ph">Eclipse Amlen</span> configuration URI:</span>
+        <div class="itemgroup info">
+          <p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/monitor/&lt;Object Type&gt;</code></p>
+        </div>
+      </li><li class="li step stepexpand">
+        <span class="ph cmd">Provide query parameters requesting the statistics that you want returned in the JSON
+          payload. The following example uses cURL to create connection level-related
+          statistics:</span>
+        <div class="itemgroup info">
+          <pre class="pre codeblock"><code>curl -X GET http://127.0.0.1:9089/ima/v1/monitor/Connection?Endpoint=<var class="keyword varname">Endpoint</var>
+          %26StatType=<var class="keyword varname">StatType</var></code></pre>
+          <p class="p">where:</p>
+          <ul class="ul">
+            <li class="li">
+              <dl class="dl">
+                
+                  <dt class="dt dlterm">Endpoint</dt>
+                  <dd class="dd">Specifies the name of the endpoint. </dd>
+                
+              </dl>
+            </li>
+            <li class="li">
+              <dl class="dl">
+                
+                  <dt class="dt dlterm">StatType</dt>
+                  <dd class="dd">Specifies the type of data to order the results by.</dd>
+                  <dd class="dd ddexpand">This value can be one of the following values:<dl class="dl">
+                      
+                        <dt class="dt dlterm"> NewestConnection</dt>
+                        <dd class="dd">Newest Connections. </dd>
+                      
+                      
+                        <dt class="dt dlterm"> OldestConnection</dt>
+                        <dd class="dd">Oldest Connections.</dd>
+                      
+                      
+                        <dt class="dt dlterm"> HighestThroughputMsgs</dt>
+                        <dd class="dd">Highest throughput of messages. </dd>
+                      
+                      
+                        <dt class="dt dlterm">LowestThroughputMsgs</dt>
+                        <dd class="dd">Lowest throughput of messages. </dd>
+                      
+                      
+                        <dt class="dt dlterm"> HighestThroughputKB </dt>
+                        <dd class="dd">Highest throughput of data in KB/second.</dd>
+                      
+                      
+                        <dt class="dt dlterm"> LowestThroughputKB </dt>
+                        <dd class="dd">Lowest throughput of data in KB/second.</dd>
+                      
+                    </dl></dd>
+                  <dd class="dd ddexpand">The default value is <span class="keyword parmname">NewestConnection</span>.</dd>
+                
+              </dl>
+            </li>
+          </ul>
+          <div class="note note note_note"><span class="note__title">Note:</span> Connection data might be up to 60 seconds out of date.</div>
+        </div>
+      </li></ol></section>
+    <section class="section result">
+      <div class="p">The following fields are returned: <ul class="ul">
+          <li class="li">
+            <dl class="dl">
+              
+                <dt class="dt dlterm">Name</dt>
+                <dd class="dd">String</dd>
+                <dd class="dd ddexpand">The connection name. The CientId is commonly used.</dd>
+              
+            </dl>
+          </li>
+          <li class="li">
+            <dl class="dl">
+              
+                <dt class="dt dlterm">Protocol </dt>
+                <dd class="dd">String</dd>
+                <dd class="dd ddexpand">The name of the protocol.</dd>
+              
+            </dl>
+          </li>
+          <li class="li">
+            <dl class="dl">
+              
+                <dt class="dt dlterm">ClientAddr</dt>
+                <dd class="dd">String</dd>
+                <dd class="dd ddexpand">The client IP address.</dd>
+              
+            </dl>
+          </li>
+          <li class="li">
+            <dl class="dl">
+              
+                <dt class="dt dlterm">UserId </dt>
+                <dd class="dd">String</dd>
+                <dd class="dd ddexpand">The primary user ID.</dd>
+              
+            </dl>
+          </li>
+          <li class="li">
+            <dl class="dl">
+              
+                <dt class="dt dlterm">Endpoint </dt>
+                <dd class="dd">String</dd>
+                <dd class="dd ddexpand">The name of the endpoint.</dd>
+              
+            </dl>
+          </li>
+          <li class="li">
+            <dl class="dl">
+              
+                <dt class="dt dlterm">Port </dt>
+                <dd class="dd">Numeric</dd>
+                <dd class="dd ddexpand">The <span class="ph">Eclipse Amlen</span> server
+                  port.</dd>
+              
+            </dl>
+          </li>
+          <li class="li">
+            <dl class="dl">
+              
+                <dt class="dt dlterm">ConnectTime </dt>
+                <dd class="dd">Numeric</dd>
+                <dd class="dd ddexpand">Specifies the number of microseconds since the unix epoch.</dd>
+                <dd class="dd ddexpand">The time that the connection is created.</dd>
+              
+            </dl>
+          </li>
+          <li class="li">
+            <dl class="dl">
+              
+                <dt class="dt dlterm">Duration </dt>
+                <dd class="dd">Numeric</dd>
+                <dd class="dd ddexpand">The duration of the connection in nanoseconds.</dd>
+              
+            </dl>
+          </li>
+          <li class="li">
+            <dl class="dl">
+              
+                <dt class="dt dlterm">ReadBytes </dt>
+                <dd class="dd">Numeric</dd>
+                <dd class="dd ddexpand">The number of bytes read since connection time. </dd>
+              
+            </dl>
+          </li>
+          <li class="li">
+            <dl class="dl">
+              
+                <dt class="dt dlterm">ReadMsg </dt>
+                <dd class="dd">Numeric</dd>
+                <dd class="dd ddexpand">The number of messages read since connection time. </dd>
+              
+            </dl>
+          </li>
+          <li class="li">
+            <dl class="dl">
+              
+                <dt class="dt dlterm">WriteBytes </dt>
+                <dd class="dd">Numeric</dd>
+                <dd class="dd ddexpand">The number of bytes written since connection time. </dd>
+              
+            </dl>
+          </li>
+          <li class="li">
+            <dl class="dl">
+              
+                <dt class="dt dlterm">WriteMsg </dt>
+                <dd class="dd">Numeric</dd>
+                <dd class="dd ddexpand">The number of messages that are written since connection time. </dd>
+              
+            </dl>
+          </li>
+        </ul></div>
+    </section>
+<section class="example">
+      
+      <p class="p">The following example uses cURL to show how a GET method is used to create statistics about
+        connections ordered by the highest throughput of messages:</p>
+      <pre class="pre codeblock"><code>curl -X GET http://127.0.0.1:9089/ima/v1/monitor/Connection?Endpoint=DemoEndpoint%26StatType=HighestThroughputMsgs
+ 
+ 
+</code></pre>
+      <p class="p">The following example shows a successful example response to the GET method that was used
+        to create statistics about endpoints with the highest throughput of messages:</p>
+      <pre class="pre codeblock"><code>{ "Version":"v1", "Connection": [ { "Name":"DemoClientId","Protocol":"mqtt","ClientAddr":"9.20.230.65","UserId":"",
+"Endpoint":"DemoEndpoint","Port":16102,"ConnectTime":1446728129213566618,"Duration":160676522991,"ReadBytes":39,"ReadMsg":0,
+"WriteBytes":14,"WriteMsg":0} } ] }
+</code></pre>
+    </section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Monitoring/admin00009.html" title="View live, aggregated connection data, and query the best and worst performing connections across several connection metrics.">Connection Monitoring</a></div></div></nav></article></main></body></html>

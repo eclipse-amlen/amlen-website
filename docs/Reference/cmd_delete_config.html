@@ -1,0 +1,64 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content=""><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Delete configuration objects</title></head><body id="pdf_REST_delete_config"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a><ul><li><a href="../Reference/intro.html">REST API Reference</a><ul><li class="active"><a href="../Reference/cmd_delete_config.html">Delete configuration objects</a></li><li><a href="../Reference/cmd_show_config.html">Show configuration details of nameable configuration objects</a></li><li><a href="../Reference/cmd_show_config_fix.html">Show configuration details of fixed-name configuration objects</a></li><li><a href="../Reference/cmd_REST_file_put.html">Copy a file from the local machine to Eclipse Amlen  </a></li><li><a href="../Reference/AdminEndpointCmd/adminendpoint.html">Admin endpoint REST Administration APIs</a></li><li><a href="../Reference/ApplianceCmd/appliancesettingcommands.html">Server REST Administration APIs</a></li><li><a href="../Reference/ClusterCmd/clustercommands.html">Cluster REST Administration APIs</a></li><li><a href="../Reference/SecurityCmd/securitycommands.html">Security REST Administration APIs</a></li><li><a href="../Reference/MsgHubCmd/messagehubcommands.html">Message hub REST Administration APIs</a></li><li><a href="../Reference/QueueCmd/QueueCmd.html">Queue REST Administration APIs</a></li><li><a href="../Reference/MQConnCmd/mqconnectivitycommands.html">MQ Connectivity  REST Administration APIs</a></li><li><a href="../Reference/HACmd/HAcommands.html">High availability REST Administration APIs</a></li><li><a href="../Reference/BackupCmd/backupandrestorecommands.html">Backup and restore commands</a></li><li><a href="../Reference/MonitorCmd/monitoringandreportingcommands.html">REST Monitoring APIs</a></li><li><a href="../Reference/XATranCmd/xatransactioncommands.html">XA transaction REST Administration APIs</a></li><li><a href="../Reference/SNMPCmd/snmpcommands.html">SNMP REST Administration APIs</a></li><li><a href="../Reference/ProtocolPluginCmd/ProtocolPluginCmd.html">Protocol plug-in REST Administration APIs</a></li><li><a href="../Reference/SpecialCmd/spepcom.html">Special purpose REST Administration APIs</a></li></ul></li><li><a href="../Reference/_Topics/sy10530_.html">Digital certificates</a></li><li><a href="../Reference/_Topics/re00003_.html">Supported cipher lists</a></li><li><a href="../Reference/_Topics/re00001_.html">Classless Inter-Domain Routing</a></li></ul></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Delete configuration objects</h1>
+
+
+
+
+
+
+<div class="body refbody"><p class="shortdesc"></p>
+<section class="section"><h2 class="title sectiontitle">Purpose</h2>Deletes a configuration object. </section>
+<section class="section"><h2 class="title sectiontitle">URI</h2>
+
+<p class="p">Use the <span class="ph">Eclipse Amlen</span> REST API DELETE method with the following <span class="ph">Eclipse Amlen</span> configuration URI:</p>
+<p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/configuration/&lt;ObjectType&gt;/&lt;ObjectName&gt;</code></p>
+<div class="p">where: <ul class="ul">
+<li class="li"><strong class="ph b">ObjectType</strong><p class="p">Required.</p><p class="p">Specifies the type of configuration object.</p><div class="p">You can
+delete the following object types:<ul class="ul">
+<li class="li">CertificateProfile</li>
+<li class="li">ClientCertificate</li>
+<li class="li">ConfigurationPolicy</li>
+<li class="li">ConnectionPolicy</li>
+<li class="li">DestinationMappingRule</li>
+<li class="li">EndPoint</li>
+<li class="li">LTPAProfile</li>
+<li class="li">MessageHub</li>
+<li class="li">MQTTClient</li>
+<li class="li">OAuthProfile</li>
+<li class="li">Plugin</li>
+<li class="li">Queue. For more information about deleting a message queue, see <a class="xref" href="../Administering/ad00356_.html" title="System administrators can delete queues by using a REST Administration API.">Deleting a queue by using a REST Administration API</a>.</li>
+<li class="li">QueueManagerConnection</li>
+<li class="li">QueuePolicy</li>
+<li class="li">SecurityProfile</li>
+<li class="li">SubscriptionPolicy</li>
+<li class="li">TopicPolicy</li>
+<li class="li">TrustedCertificate</li>
+</ul></div></li>
+<li class="li"><strong class="ph b">ObjectName</strong><p class="p">Required.</p><p class="p">Specifies the type of configuration object.</p></li>
+</ul></div>
+</section>
+<section class="section"><h2 class="title sectiontitle">Usage Notes®</h2>
+
+<ul class="ul">
+<li class="li">You can use the <span class="ph">Eclipse Amlen</span> REST API DELETE method to delete configuration objects,                     including endpoints, connection policies, messaging policies, and message hubs.                     To delete a message hub, you must first delete the endpoints that are associated                     with the message hub. You can delete the connection policies and messaging                     policies, or keep them to use with another endpoint.</li>
+</ul>
+</section>
+<section class="section"><h2 class="title sectiontitle">Example</h2>
+
+<div class="p">Deletes a message hub called "MyHub" by using cURL: <pre class="pre codeblock"><code>curl -X DELETE http://127.0.0.1:9089/ima/v1/configuration/MessageHub/MyHub
+</code></pre></div>
+            <div class="note note note_note"><span class="note__title">Note:</span> All endpoints that are associated with a message hub must be deleted before you
+                can delete the message hub. In this delete example, the following message is
+                returned because an endpoint still exists on the message
+                hub:<pre class="pre codeblock"><code>
+{
+      "Version":"v1",
+      "Code":"CWLNA0438",
+      "Message":"MessageHub is in use. It still contains at least one endpoint."
+ }
+</code></pre></div>
+</section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Reference/intro.html" title="The REST API REST Administrative API reference section provides reference topics for the REST APIs that are available for Eclipse Amlen.">REST API Reference</a></div></div></nav></article></main></body></html>

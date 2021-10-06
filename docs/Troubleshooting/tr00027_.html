@@ -1,0 +1,188 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="There are several reasons why you might experience problems and unexpected behavior when you configure high availability (HA) in clusters of Eclipse Amlen servers."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>High availability problems in clusters</title></head><body id="tr00027_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a><ul><li><a href="../Troubleshooting/tr00000_.html">Log files</a></li><li><a href="../Troubleshooting/tr00006_.html">Maintenance mode</a></li><li><a href="../Troubleshooting/tr00001_.html">Common problems</a><ul><li><a href="../Troubleshooting/tr00002_.html">The application fails to connect</a></li><li><a href="../Troubleshooting/tr00008_.html">The application disconnects</a></li><li><a href="../Troubleshooting/tr00010_.html">The application fails to publish</a></li><li><a href="../Troubleshooting/tr00009_.html">The application fails to subscribe</a></li><li><a href="../Troubleshooting/tr00003_.html">Messages are not sent</a></li><li><a href="../Troubleshooting/tr00004_.html">Messages do not arrive</a></li><li><a href="../Troubleshooting/tr00005_.html">  MQ Connectivity problems</a></li><li><a href="../Troubleshooting/raisnotworking.html">Eclipse Amlen resource adapter is not working</a></li><li><a href="../Troubleshooting/tr00020_.html">LTPA validation fails</a></li><li><a href="../Troubleshooting/tr00012_.html">The Amlen WebUI is not working</a></li><li><a href="../Troubleshooting/tr00015_.html">High availability problems</a></li><li><a href="../Troubleshooting/tr00026_.html">Cluster problems</a><ul><li class="active"><a href="../Troubleshooting/tr00027_.html">High availability problems in clusters</a></li></ul></li><li><a href="../Troubleshooting/tr00021_.html">Dynamic policy update problems</a></li><li><a href="../Troubleshooting/tr00023_.html">SNMP problems</a></li><li><a href="../Troubleshooting/tr00024_.html">LDAP is not working</a></li><li><a href="../Troubleshooting/tr00031_.html">Problems during upgrade from IBM MessageSight version 1.2</a></li></ul></li><li><a href="../Troubleshooting/tr00030.html">Platform must-gather</a></li><li><a href="../Troubleshooting/admin_messagecatalog.html">Message catalog</a></li></ul></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">High availability problems in clusters</h1>
+
+
+
+
+<div class="body conbody"><p class="shortdesc">There are several reasons why you might experience problems and unexpected behavior when you configure high availability (HA) in clusters of <span class="ph">Eclipse Amlen</span> servers.</p>
+<section class="section">
+<div class="p">It is good practice, in the event of problems when configuring and using HA in clusters, to check: <ul class="ul">
+<li class="li">The cluster status and server status on both servers in the HA pair.</li>
+<li class="li">The cluster membership configuration on both servers in the HA pair.</li>
+</ul></div>
+</section>
+<section class="section" id="tr00027___scenario1"><h2 class="title sectiontitle">Error scenario 1: Did you attempt to enable clustering on an HA pair, and now one or both of your HA servers are in maintenance mode?</h2>
+
+<p class="p">Check the server status and HA status of your servers. Use the <span class="ph">Eclipse Amlen</span> REST API GET method with the following <span class="ph">Eclipse Amlen</span> service URI:</p>
+<p class="p"><code class="ph codeph">http://&lt;Server-IP:Port&gt;/ima/v1/service/status</code></p>
+<div class="p">Check the <code class="ph codeph">ErrorCode</code>, <code class="ph codeph">ErrorMessage</code>, <code class="ph codeph">ReasonCode</code>, and <code class="ph codeph">ReasonString</code> fields in the status information that is returned. The significant fields are highlighted in the following example of status information.  <pre class="pre codeblock"><code>{
+  "Version": "v1",
+  "Server": {
+    "Name": "examplesystem01.com:9089",
+    "UID": "lz3Qj3Kd",
+    "Status": "Running",
+    "State": 9,
+    "StateDescription": "Running (maintenance)",
+    "ServerTime": "2016-04-13T13:32:28.546Z",
+    "UpTimeSeconds": 94,
+    "UpTimeDescription": "0 days 0 hours 1 minutes 34 seconds",
+    "Version": "2.0 20160413-1109",
+    <strong class="ph b">"ErrorCode": 509,</strong>
+    <strong class="ph b">"ErrorMessage": "Store High-Availability error."</strong>
+  },
+  "Container": {
+    "UUID": "bb41d6d23772d9062d1eb7c7fe6864246bafae565b7ecae32972492e63c61006"
+  },
+  "HighAvailability": {
+    "Status": "Active",
+    "Enabled": true,
+    "Group": "mygroup01",
+    "NewRole": "UNSYNC_ERROR",
+    "OldRole": "UNSYNC",
+    "ActiveNodes": 1,
+    "SyncNodes": 0,
+    "PrimaryLastTime": "",
+    "PctSyncCompletion": -1,
+    <strong class="ph b">"ReasonCode": 1,</strong>
+    <strong class="ph b">"ReasonString": "Cluster.EnableClusterMembership - CONFIG_ERROR",</strong>
+    "RemoteServerName": ""
+</code></pre></div>
+<p class="p">A possible cause of this error condition is that cluster membership was enabled on the primary server in the HA pair but only one of the servers in the HA pair was restarted. </p>
+<p class="p">Restart both servers in the HA pair at the same time.</p>
+</section>
+<section class="section"><h2 class="title sectiontitle">Error scenario 2: Did you attempt to enable clustering on an HA pair, and now, after restarting servers, your HA servers are in maintenance mode?</h2>
+
+<p class="p">Check the status of your servers. Use the <span class="ph">Eclipse Amlen</span> REST API GET method with the following <span class="ph">Eclipse Amlen</span> service URI:</p>
+<p class="p"><code class="ph codeph">http://&lt;Server-IP:Port&gt;/ima/v1/service/status</code></p>
+<p class="p">On each server, check the <code class="ph codeph">ErrorCode</code>,  and <code class="ph codeph">ErrorMessage</code> fields in the status information that is returned. The significant fields are highlighted in the following example of status information.  </p>
+<div class="p">On the server that was the primary server in the HA pair:<pre class="pre codeblock"><code>{
+    "Version": "v1",
+    "Server": {
+        "Name": "examplesystem01:9089",
+        "UID": "DnAUsuJb",
+        "Status": "Running",
+        "State": 9,
+        "StateDescription": "Running (maintenance)",
+        "ServerTime": "2016-04-13T13:20:40.702Z",
+        "UpTimeSeconds": 515,
+        "UpTimeDescription": "0 days 0 hours 8 minutes 35 seconds",
+        "Version": "2.0 20160413-1109",
+        <strong class="ph b">"ErrorCode": 509,</strong>
+        <strong class="ph b">"ErrorMessage": "Store High-Availability error."</strong>
+    },
+    "Container": {
+        "UUID": "bb41d6d23772d9062d1eb7c7fe6864246bafae565b7ecae32972492e63c61006"
+    },
+    "HighAvailability": {
+        "Status": "Active",
+        "Enabled": true,
+        "Group": "mygroup02",
+        "NewRole": "UNSYNC_ERROR",
+        "OldRole": "UNSYNC",
+        "ActiveNodes": 1,
+        "SyncNodes": 0,
+        "PrimaryLastTime": "2016-04-13T13:05:02Z",
+        "PctSyncCompletion": -1,
+        "ReasonCode": 2,
+        "ReasonString": " - DISCOVERY_TIMEOUT",
+        "RemoteServerName": ""
+    },
+    "Cluster": {
+        "Status": "Initializing",
+        "Name": "MyCluster",
+        "Enabled": true,
+        "ConnectedServers": 0,
+        "DisconnectedServers": 0
+    },
+    "Plugin": {
+        "Status": "Inactive",
+        "Enabled": false
+    },
+    "MQConnectivity": {
+        "Status": "Inactive",
+        "Enabled": false
+    },
+    "SNMP": {
+        "Status": "Inactive",
+        "Enabled": false
+    }
+}
+
+</code></pre></div>
+<div class="p">On the standby server:<pre class="pre codeblock"><code>{
+    "Version": "v1",
+    "Server": {
+        "Name": "examplesystem02:9089",
+        "UID": "DnAUsuJb",
+        "Status": "Running",
+        "State": 9,
+        "StateDescription": "Running (maintenance)",
+        "ServerTime": "2016-04-13T19:22:50.403Z",
+        "UpTimeSeconds": 958,
+        "UpTimeDescription": "0 days 0 hours 15 minutes 58 seconds",
+        "Version": "2.0 20160413-1109",
+        <strong class="ph b">"ErrorCode": 112,</strong>
+        <strong class="ph b">"ErrorMessage": "The property value is not valid: Property: Cluster.ControlAddress Value: \"NULL\"."</strong>
+    },
+    "Container": {
+        "UUID": "b308915aa0525a62eaf70a8f5c08b508153caac4e6d1200eb0cd9d53396c8c62"
+    },
+    "HighAvailability": {
+        "Status": "Active",
+        "Enabled": true,
+        "Group": "mygroup02",
+        "NewRole": "UNSYNC",
+        "OldRole": "UNSYNC",
+        "ActiveNodes": 0,
+        "SyncNodes": 0,
+        "PrimaryLastTime": "",
+        "PctSyncCompletion": 0,
+        "ReasonCode": 0,
+        "RemoteServerName": ""
+    },
+    "Cluster": {
+        "Status": "Unavailable",
+        "Enabled": true
+    },
+    "Plugin": {
+        "Status": "Inactive",
+        "Enabled": false
+    },
+    "MQConnectivity": {
+        "Status": "Inactive",
+        "Enabled": false
+    },
+    "SNMP": {
+        "Status": "Inactive",
+        "Enabled": false
+    }
+}
+</code></pre></div>
+<p class="p">In this scenario, a value for the cluster control address had not been specified on the standby server before the cluster was enabled. A similar error scenario can occur if the cluster messaging address is not specified.</p>
+<p class="p">Ensure that values for control address and messaging address are specified on both members of the HA pair before you enable them for cluster membership.</p>
+<p class="p">Restart both servers in the HA pair.</p>
+</section>
+<section class="section"><h2 class="title sectiontitle">Error scenario 3: Did you attempt to disable clustering on an HA pair, and now, after restarting servers, your HA servers are in maintenance mode?</h2>
+
+<p class="p">Check the status of your servers. Use the <span class="ph">Eclipse Amlen</span> REST API GET method with the following <span class="ph">Eclipse Amlen</span> service URI:</p>
+<p class="p"><code class="ph codeph">http://&lt;Server-IP:Port&gt;/ima/v1/service/status</code></p>
+<div class="p">In this scenario, you are likely to see similar information as that described in <a class="xref" href="tr00027_.html#tr00027___scenario1">Error scenario 1</a> and you are likely to see the information on both of your servers. The significant server status fields and values are:<ul class="ul">
+<li class="li"><code class="ph codeph">"ErrorCode": 509,</code></li>
+<li class="li"><code class="ph codeph">"ErrorMessage": "Store High-Availability error."</code></li>
+</ul> The significant HA status fields and values are:<ul class="ul">
+<li class="li"><code class="ph codeph">"ReasonCode": 1,</code></li>
+<li class="li"><code class="ph codeph">"ReasonString": "Cluster.EnableClusterMembership - CONFIG_ERROR",</code></li>
+</ul></div>
+<p class="p">A possible cause of this error condition is that cluster membership was disabled on the primary server in the HA pair while the standby server was inactive.</p>
+<p class="p">Disable cluster membership on both servers in the HA pair. Restart both servers. </p>
+</section>
+        <section class="section"><h2 class="title sectiontitle">Error scenario 4: "ReasonString": "Store.TotalMemSizeMB_CONFIG_ERROR" is issued</h2>
+            
+            <p class="p"><code class="ph codeph">"ReasonString": "Store.TotalMemSizeMB - CONFIG_ERROR"</code> in HA status indicates that there is a mismatch between the memory configuration of the store of the nodes and, consequently, the nodes cannot form an HA pair. A possible scenario in which this error can arise is when you are using one node that is a Docker container that has a controlled memory configuration, and another node that has been installed as an RPM on the host OS which means that all the memory that is available on the machine is used.</p>
+            <p class="p">It is best practice to ensure that the two nodes in an HA pair are identical particularly with regard to the amount of memory available to them. </p>
+            <p class="p"></p>
+        </section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Troubleshooting/tr00026_.html" title="There are several reasons why you might experience problems and unexpected behavior when you configure and use clusters of Eclipse Amlen servers.">Cluster problems</a></div></div></nav></article></main></body></html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="The first time that you log into the Amlen WebUI, you are prompted to submit information about the first Eclipse Amlen server that you would like to manage."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Configuring your first Eclipse Amlen server to manage by using the Amlen WebUI</title></head><body id="ad00930"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a><ul><li class="active"><a href="../Administering/ad00930.html">Configuring your first Eclipse Amlen server to manage by using the Amlen WebUI</a></li><li><a href="../Administering/ad00931.html">Managing a list of Eclipse Amlen servers by using the Amlen WebUI</a></li><li><a href="../Administering/ad00932.html">Selecting an Eclipse Amlen server to manage by using the Amlen WebUI</a></li></ul></li><li><a href="../Administering/ad00100_.html">Working with external resources</a></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+    <h1 class="title topictitle1" id="ariaid-title1">Configuring your first <span class="ph">Eclipse Amlen</span> server to manage by
+        using the <span class="ph">Amlen WebUI</span></h1>
+    
+    
+    
+    
+    <div class="body taskbody"><p class="shortdesc">The first time that you log into the <span class="ph">Amlen WebUI</span>, you are prompted
+        to submit information about the first <span class="ph">Eclipse Amlen</span> server that you
+        would like to manage.</p>
+        <section class="section context">
+        <p class="p">You can use the <span class="keyword wintitle">Get started with IBM Watson IoT Platform - Message Gateway Web
+UI</span> page to enter configuration details for connecting to the <span class="ph">Eclipse Amlen</span> server that you want to manage. If you are the
+first user to start the Web UI application, this page appears after you accept the license by using
+a REST Administration API. Otherwise, this page appears the first time a new Web UI administrator
+logs in. For more information about accepting the license by using a REST Administration API, see
+<a class="xref" href="ad00793_.html" title="System administrators can change the configured licensed usage for Eclipse Amlen and accept the license by using a single REST Administration API.">Configuring the licensed usage for Eclipse Amlen and accepting the license by using REST Administration APIs</a>. </p>
+            <p class="p">If you want to manage more than one <span class="ph">Eclipse Amlen</span> server, you
+            can configure the <span class="ph">Amlen WebUI</span> to manage                 additional <span class="ph">Eclipse Amlen</span> servers by using the <span class="ph uicontrol">Server
+                    ID</span> menu after you log into the Web UI. </p>
+        </section>
+        <section><ol class="ol steps"><li class="li step stepexpand">
+                <span class="ph cmd">Log on to the <span class="ph">Amlen WebUI</span> page.
+                    If this is the first time that the <span class="ph">Amlen WebUI</span>
+                    application has been used, complete the following steps:</span>
+                <ol type="a" class="ol substeps">
+                    <li class="li substep">
+                        <span class="ph cmd">Log in by using the default user ID, <kbd class="ph userinput">admin</kbd> and
+                            default password, <kbd class="ph userinput">admin</kbd>.</span>
+                    </li>
+                </ol>
+            </li><li class="li step stepexpand">
+<span class="ph cmd">On the <span class="keyword wintitle">Get started with IBM Watson IoT Platform - Message Gateway Web UI</span>
+page, specify the connection configuration details for the first server that you want to manage. If
+your web browser application, the <span class="ph">Eclipse Amlen</span> server that
+you want to manage, and the <span class="ph">Eclipse Amlen</span> Web UI are running
+on your local host, and the <span class="ph">Eclipse Amlen</span> administration
+endpoint is listening on port 9089, you can go to step 3.</span>
+<ol type="a" class="ol substeps">
+<li class="li substep substepexpand">
+<span class="ph cmd">Enter the administration address. This value is the IP address or hostname that the
+administration endpoint of the <span class="ph">Eclipse Amlen</span> server is
+listening on.</span>
+</li>
+<li class="li substep substepexpand">
+<span class="ph cmd">Enter the administration port. This value is the port that the administration endpoint of the
+<span class="ph">Eclipse Amlen</span> server is listening on.</span>
+<div class="itemgroup info">The number must be in the range 1 to 65535 inclusive.</div>
+</li>
+<li class="li substep substepexpand">
+<span class="ph cmd">Optional. Select <span class="ph uicontrol">Send Web UI credentials</span>. If you select this option, the
+<span class="ph">Amlen WebUI</span> sends the <span class="ph">Eclipse Amlen</span> user ID and password to the administration
+endpoint. </span>
+</li>
+</ol>
+</li><li class="li step stepexpand">
+                <span class="ph cmd">Optional. Test your connection by clicking <span class="ph uicontrol">Test
+                        Connection</span>. </span>
+                <div class="itemgroup info"><div class="note note note_note"><span class="note__title">Note:</span> 
+                    <p class="p">The <span class="ph">Eclipse Amlen</span> server that you want to manage must be running for the test connection to succeed. </p>
+                    <div class="p">If the administration endpoint for the <span class="ph">Eclipse Amlen</span> server is using the default configuration, you might need to allow the administration endpoint certificate in order to successfully complete the test connection. To allow the administration endpoint certificate, choose one of the following options:<ul class="ul">
+                        <li class="li"> If you are using Firefox or Chrome, expand the error box that appears on screen and click the <span class="ph uicontrol">Click here</span> link. A new tab opens and prompts you to allow the certificate. After you allow the certificate, return to the <span class="ph">Amlen WebUI</span> tab and click the <span class="ph uicontrol">Test Connection</span> button again. The connection should succeed.</li>
+                        <li class="li">If you are using Internet Explorer, accept the prompts to allow the certificate. The connection should succeed.</li>
+                        </ul></div>
+                    </div>If the test connection fails, check that the <span class="ph">Eclipse Amlen</span> server is running and that the server host can be reached from the host where the Web UI is running.</div>
+            </li><li class="li step stepexpand">
+                <span class="ph cmd">Save your server configuration by clicking <span class="ph uicontrol">Save and
+                        Manage</span>. You must complete this step to access the <span class="ph">Amlen WebUI</span>
+                    function.</span>
+                <div class="itemgroup info">A message is displayed to confirm that the server is saved
+                    successfully.</div>
+            </li><li class="li step stepexpand">
+                <span class="ph cmd">Click <span class="ph uicontrol">Close</span>. </span>
+                <div class="itemgroup info">The address and port of the <span class="ph">Eclipse Amlen</span> server
+                    that you saved appears next to the <span class="ph uicontrol">Server</span> menu in the <span class="ph">Amlen WebUI</span>. </div>
+                <div class="itemgroup stepresult">You can now start managing and monitoring this <span class="ph">Eclipse Amlen</span> server.
+                </div>
+            </li></ol></section>
+        <section class="section postreq">
+            <p class="p">Use the <span class="ph">Amlen WebUI</span> to
+                begin configuring and monitoring the <span class="ph">Eclipse Amlen</span> server that
+                you specified.</p>
+        </section>
+    </div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Administering/ad00929.html" title="You can use a single Amlen WebUI instance to manage and monitor multiple Eclipse Amlen servers that are version 2.0 or higher. The first time that you log into the Amlen WebUI, you are prompted for information about the first Eclipse Amlen server that you would like to manage. After your first login, you can add, edit or remove Eclipse Amlen servers to your managed server list by using the Server menu in the Amlen WebUI.">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></div></div></nav></article></main></body></html>

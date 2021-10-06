@@ -1,0 +1,110 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can remove an inactive cluster member by using the Eclipse Amlen REST API POST method."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Removing an inactive cluster member by using a REST Administration API</title></head><body id="ad01111"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a><ul><li><a href="../Administering/ad01003_.html">Configuring cluster membership in a high availability pair by using the Amlen WebUI</a></li><li><a href="../Administering/ad00944_.html">Configuring cluster membership by using REST Administration APIs</a><ul><li><a href="../Administering/ad00942_.html">Configuring cluster membership by using REST Administration APIs</a></li><li><a href="../Administering/ad00946_.html">Configuring cluster membership of Eclipse Amlen servers in a high availability pair by using REST Administration APIs</a></li><li><a href="../Administering/ad00945_.html">Viewing the cluster status of an Eclipse Amlen server by using a REST Administration API</a></li><li class="active"><a href="../Administering/ad01111.html">Removing an inactive cluster member by using a REST Administration API</a></li></ul></li><li><a href="../Administering/ad00943_.html">Using omping to test multicast connectivity in clusters</a></li></ul></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+    <h1 class="title topictitle1" id="ariaid-title1">Removing an inactive cluster member by using a <span class="ph">REST Administration API</span></h1>
+    
+    
+    
+    
+    
+    
+    <div class="body taskbody"><p class="shortdesc">System administrators can remove an inactive cluster member by using the <span class="ph">Eclipse Amlen</span> REST API POST method. </p>
+        <section class="section prereq">
+            <p class="p">Use this command with caution. If you have a member that you no longer want to
+                participate in the cluster, disable cluster membership  by setting
+                    <span class="keyword parmname">EnableClusterMembership</span> to <kbd class="ph userinput">false</kbd> on
+                that member. If  you have a cluster member that is inactive and  cannot be
+                restarted, then other cluster members queue the messages and retained messages until
+                that member becomes active. Eventually, this might lead to a performance
+                degradation. In this case you might want  to permanently remove that member from the
+                cluster by using this command. This command results in the member being permanently
+                removed from the cluster. All messages that are queued to be sent to the inactive
+                member are permanently deleted from the system. Outbound messages from the inactive
+                member are also permanently deleted. For more information about disabling cluster
+                membership, see <a class="xref" href="ad00942_.html" title="System administrators can configure clusters by using a REST Administration API. The REST Administration API allows you to configure the cluster membership attributes of Eclipse Amlen servers.">Configuring cluster membership by using REST Administration APIs</a>.</p>
+        </section>
+        <section class="section context">
+            <p class="p">When a cluster member is not available for an extended period or is inactive, you can
+                remove that cluster member from the discovery list of all active cluster members to
+                avoid a potential impact on performance.  Only use this REST API if a cluster member
+                cannot be recovered. In all other instances, disable cluster membership on the
+                active member that you want to remove. </p>
+            <p class="p">You can query cluster members with a status of <kbd class="ph userinput">inactive</kbd> by
+                using <a class="xref" href="../Monitoring/admin00080.html" title="Cluster monitoring statistics allow you to establish how well the cluster is functioning by providing information about the cluster members and the flow of messages between the cluster members. Cluster monitoring statistics provide a set of statistics about each cluster member as they relate to the cluster member on which you are viewing the statistics.">Cluster monitoring</a>.</p>
+        </section>
+        <section><ol class="ol steps"><li class="li step stepexpand">
+                <span class="ph cmd">To remove an inactive cluster member, use the <span class="ph">Eclipse Amlen</span> REST API
+                    POST method with the following <span class="ph">Eclipse Amlen</span>
+                    configuration URI:</span>
+                <div class="itemgroup info">
+                    <p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/service/remove/inactiveClusterMember</code></p>
+                </div>
+            </li><li class="li step stepexpand">
+                <span class="ph cmd">Provide cluster member identification data in the payload of the POST method by
+                    using the following schema. Content-type is set to
+                        <kbd class="ph userinput">application/json</kbd>. Ensure that capitalization and
+                    double quotation marks are used as shown. </span>
+                <div class="itemgroup info">
+                    <pre class="pre codeblock"><code>
+    { 
+        "ServerName": "string", 
+        "ServerUID": "string"
+    }</code></pre>
+                </div>
+                <div class="itemgroup stepxmp">
+                    <p class="p">where:</p>
+                    <ul class="ul">
+                        <li class="li">
+                            <dl class="dl">
+                                
+                                    <dt class="dt dlterm">ServerName</dt>
+                                    <dd class="dd">Specifies the name of the server</dd>
+                                
+                            </dl>
+                        </li>
+                        <li class="li">
+                            <dl class="dl">
+                                
+                                    <dt class="dt dlterm">ServerUID</dt>
+                                    <dd class="dd">Specifies the UID of the server.</dd>
+                                    <dd class="dd ddexpand">The <span class="keyword parmname">ServerUID</span> is a unique identifier
+                                        that is assigned to a server when that server joins a
+                                        cluster. If a server leaves and then re-joins a cluster, the
+                                        server is assigned a new <span class="keyword parmname">ServerUID</span>. </dd>
+                                    <dd class="dd ddexpand">In an HA environment, the <span class="keyword parmname">ServerUID</span>
+                                        identifies the current Primary. A Primary and Standby can
+                                        have different server names, but both servers have the same
+                                            <span class="keyword parmname">ServerUID</span>.</dd>
+                                
+                            </dl>
+                        </li>
+                    </ul>
+                    <div class="note note note_note"><span class="note__title">Note:</span> You must specify both the <span class="keyword parmname">ServerName</span> and the
+                            <span class="keyword parmname">ServerUID</span>. For more information about viewing
+                            <span class="keyword parmname">ServerName</span> and  <span class="keyword parmname">ServerUID</span>
+                        values, see <a class="xref" href="../Monitoring/admin00082.html" title="System administrators can view cluster monitoring statistics by using REST Monitoring APIs.">Viewing cluster information by using REST Monitoring APIs</a>.</div>
+                </div>
+            </li></ol></section>
+        <section class="example">
+            <p class="p">The following example shows a POST method in cURL to remove an inactive remote
+                cluster member:</p>
+            <pre class="pre codeblock"><code>
+curl -X POST 
+    -H  'Content-Type: application/json'  \
+    -d '  { 
+            "ServerName":"ServerA",
+            "ServerUID":"mjvZxR6t" 
+          }
+       ' \
+http://10.10.33.11:9089/ima/v1/service/remove/inactiveClusterMember</code></pre>
+            <p class="p">The following example shows an example of response to the POST method:</p>
+            <pre class="pre codeblock"><code>
+    {          
+        "Version": "v1",  
+        "Code": "CWLNA6011",  
+        "Message": "The requested configuration change has completed successfully."
+    }</code></pre>
+        </section>
+    </div>
+    <nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Administering/ad00944_.html" title="System administrators can configure cluster membership by using REST Administration APIs.">Configuring cluster membership by using REST Administration APIs</a></div></div><div class="linklist reltasks"><strong>Related tasks</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="../Monitoring/admin00082.html" title="System administrators can view cluster monitoring statistics by using REST Monitoring APIs.">Viewing cluster information by using REST Monitoring APIs</a></li></ul></div></nav>
+</article></main></body></html>

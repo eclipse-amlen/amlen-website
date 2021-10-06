@@ -1,0 +1,165 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can restart and stop the Eclipse Amlen server by using REST Administration APIs."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Starting, restarting and stopping the Eclipse Amlen server by using REST Administration APIs</title></head><body id="ad00282_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a><ul><li><a href="../Administering/ad00210_.html">Network interface controllers</a></li><li><a href="../Administering/ad00380_.html">Configuring the server name</a></li><li><a href="../Administering/ad00290_.html">Configuring log files</a></li><li><a href="../Administering/ad00400_.html">Configuring your system for high availability</a></li><li><a href="../Administering/ad00790_.html">Configuring licensed usage and accepting the license for Eclipse Amlen  </a></li><li><a href="../Administering/ad00280_.html">Starting, stopping, restarting and viewing the status of the Eclipse Amlen server</a><ul><li><a href="../Administering/ad00281_.html">Restarting, stopping, and viewing the status of the Eclipse Amlen server by using the Amlen WebUI</a></li><li><a href="../Administering/ad00283_.html">Starting, stopping, restarting, and viewing the status of the Eclipse Amlen server by using REST Administration APIs</a><ul><li><a href="../Administering/ad00921_.html">Viewing the status of an Eclipse Amlen server and services by using REST Administration APIs</a></li><li class="active"><a href="../Administering/ad00282_.html">Starting, restarting and stopping the Eclipse Amlen server by using REST Administration APIs</a></li></ul></li></ul></li></ul></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Starting, restarting and stopping the <span class="ph">Eclipse Amlen</span>
+    server by using <span class="ph">REST Administration APIs</span></h1>
+
+<div class="body taskbody"><p class="shortdesc">System administrators can restart and stop the <span class="ph">Eclipse Amlen</span> server by using <span class="ph">REST Administration APIs</span>.</p>
+<section class="section context">You can restart and stop the server by using <span class="ph">REST Administration APIs</span> or by using the <span class="ph">Amlen WebUI</span>. For more information about using the
+        <span class="ph">Amlen WebUI</span> to restart and stop the server, see
+        <a class="xref" href="ad00281_.html" title="System administrators can view the status of the Eclipse Amlen server and restart and stop the server by using the Server Control page in the Amlen WebUI.">Restarting, stopping, and viewing the status of the Eclipse Amlen server by using the Amlen WebUI</a>. You can start the server by using docker or systemctl
+      commands.</section>
+<section><ol class="ol steps"><li class="li step stepexpand">
+        <span class="ph cmd">Check the status of the <span class="ph">Eclipse Amlen</span> server, by
+          using the <span class="ph">Eclipse Amlen</span> REST API GET method with
+          the following <span class="ph">Eclipse Amlen</span> service URI:</span>
+        <div class="itemgroup info">
+          <p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:port&gt;/ima/v1/service/status</code></p>
+        </div>
+        <ul class="ul choices">
+          <li class="li choice">If the server status is <code class="ph codeph">Running</code>, the server is running. You can
+            restart or stop the server by using REST Administration APIs.</li>
+          <li class="li choice">If the server status is <code class="ph codeph">Maintenance</code>, the server is in maintenance
+            mode. For more information about maintenance mode, see <a class="xref" href="../Troubleshooting/tr00006_.html" title="Maintenance mode is an Eclipse Amlen server state that allows a system administrator to complete a number of tasks. In maintenance mode, a system administrator can clean the server store, stop and start the server, and change the server state from Maintenance to Running.">Maintenance mode</a>.</li>
+        </ul>
+        <div class="itemgroup info">
+          <div class="note note note_note"><span class="note__title">Note:</span> If the server is not running, a failure to connect error is received in response to
+            the REST call. You can start the server by using docker or systemctl commands.</div>
+        </div>
+      </li><li class="li step stepexpand"><span class="ph cmd">Choose an appropriate action:</span>
+<ul class="ul choices">
+          <li class="li choice">To start the server in a Docker environment, use the  following
+                command:<p class="p"><code class="ph codeph">docker start <var class="keyword varname">&lt;container
+            name&gt;</var></code></p></li>
+          <li class="li choice">To start the server on a Host OS, use the following command:<p class="p"><code class="ph codeph">systemctl
+                start imaserver</code></p></li>
+          <li class="li choice">To restart the server use the <span class="ph">Eclipse Amlen</span>
+            REST API POST method with the following <span class="ph">Eclipse Amlen</span> service
+                URI:<p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:port&gt;/ima/v1/service/restart</code></p><ul class="ul">
+              <li class="li">
+                <div class="p">To restart the server in maintenance mode, provide configuration data in the
+                  payload of the POST method by using the following schema: <pre class="pre codeblock"><code>
+{    
+  "Service": "Server", 
+      "Maintenance": "start"|"stop"
+}</code></pre>Where:<dl class="dl">
+                    
+                      <dt class="dt dlterm">Maintenance: "start"|"stop"</dt>
+                      <dd class="dd">Optional.</dd>
+                      <dd class="dd ddexpand">If this option is set to <kbd class="ph userinput">start</kbd>, the server comes up
+                        in maintenance mode on restart. If set to <kbd class="ph userinput">stop</kbd>, the
+                        server comes up in production mode on restart. </dd>
+                    
+                  </dl></div>
+              </li>
+              <li class="li">
+                <div class="p">To restart the server and to specify whether the store is cleaned as part of the
+                  shutdown process, provide configuration data in the payload of the POST method by
+                  using the following schema: <pre class="pre codeblock"><code>
+{    
+  "Service": "Server", 
+      "CleanStore": true|false
+}</code></pre>Where:<dl class="dl">
+                    
+                      <dt class="dt dlterm">CleanStore: true|false</dt>
+                      <dd class="dd">Optional.</dd>
+                      <dd class="dd ddexpand">
+                        <div class="p">If this option is set to <kbd class="ph userinput">true</kbd>, then the store is
+                          cleaned as part of the shutdown process. The server does not need to be in
+                          maintenance mode for the store to be cleaned.<div class="note note note_note"><span class="note__title">Note:</span> You cannot clean the
+                            store of an <span class="ph">Eclipse Amlen</span> server
+                            that is a member of a cluster.</div></div>
+                      </dd>
+                    
+                  </dl></div>
+              </li>
+            </ul></li>
+<li class="li choice">To stop the server, use the <span class="ph">Eclipse Amlen</span> REST API
+            POST method with the following <span class="ph">Eclipse Amlen</span>
+            service
+                  URI:<p class="p"><code class="ph codeph"><code class="ph codeph">http://&lt;admin-endpoint-IP:port&gt;/ima/v1/service/stop</code></code></p></li>
+</ul>
+</li></ol></section>
+    <section class="example">
+      <div class="p">The following example uses cURL to show how a GET method is used to view the status of the
+        server:<pre class="pre codeblock"><code>curl -X GET http://127.0.0.1:9089/ima/v1/service/status</code></pre></div>
+      <div class="p">The following example shows a successful example response to the GET method used to view the status of the server:<pre class="pre codeblock"><code>
+{
+  "Version":"v1",
+  "Server": {
+    "Name": "TestSystem:9089",
+    "UID": "aFWxYf32",
+    "Status": "Running",
+    "State": 1,
+    "StateDescription": "Running (production)",
+    "ServerTime": "2016-03-04T14:46:53.081Z",
+    "UpTimeSeconds": 4134,
+    "UpTimeDescription": "0 days 1 hours 8 minutes 54 seconds",
+    "Version": "2.0 20160304-0400",
+    "ErrorCode": 0,
+    "ErrorMessage": ""
+  },
+  "Container": {
+    "UUID":"034c91ce828a4f5c2c21d7cd7f04628368b63bd308825ec2d9dab5096ff04ca0"
+  },
+  "HighAvailability": {
+    "Status": "Inactive",
+    "Enabled": false
+  },
+  "Cluster": {
+    "Status": "Inactive",
+    "Enabled": false
+  },
+  "Plugin": {
+    "Status": "Inactive",
+    "Enabled": false
+  },
+  "MQConnectivity": {
+    "Status": "Active",
+    "Enabled": true
+  },
+  "SNMP": {
+    "Status": "Active",
+    "Enabled": true
+  }
+}
+
+</code></pre></div>
+      <div class="p">The following example uses cURL to show how a POST method is used to restart the server in
+        production mode without cleaning the
+        store:<pre class="pre codeblock"><code>
+curl -X POST \
+   -H  'Content-Type: application/json'  \
+   -d  '{                       
+         "Service": "Server",       
+           "CleanStore": false
+        }
+  '   \
+http://127.0.0.1:9089/ima/v1/service/restart
+</code></pre></div>
+      <div class="p">An example response to the POST
+        method:<pre class="pre codeblock"><code>{           
+          "Version": "v1",   
+            "Code": "CWLNA6011",   
+            "Message": "The requested configuration change has completed successfully ."
+          }</code></pre></div>
+      <div class="p">The following example uses cURL to show how a POST method is used to stop the
+        server:<pre class="pre codeblock"><code>
+curl -X POST \
+   -H  'Content-Type: application/json'  \
+   -d  '{                       
+         "Service": "Server" 
+        }
+  '   \
+http://127.0.0.1:9089/ima/v1/service/stop
+</code></pre></div>
+      <div class="p">An example response to the POST
+        method:<pre class="pre codeblock"><code>{           
+          "Version": "v1",   
+            "Code": "CWLNA6011",   
+            "Message": "The requested configuration change has completed successfully ."
+          }</code></pre></div>
+    </section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Administering/ad00283_.html" title="System administrators can view the status of the Eclipse Amlen server and start, stop, and restart the server by using REST Administration APIs.">Starting, stopping, restarting, and viewing the status of the Eclipse Amlen server by using REST Administration APIs</a></div></div><div class="linklist relconcepts"><strong>Related concepts</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="ad00280_.html" title="You can restart, stop and view the status of the Eclipse Amlen server by using REST Administration APIs or by using the Amlen WebUI.">Starting, stopping, restarting and viewing the status of the Eclipse Amlen server</a></li><li class="linklist"><a class="link" href="ad00200_.html" title="System administrators can administer the server by using the Amlen WebUI, or by using REST Administration APIs.">Server administration</a></li></ul></div></nav>
+</article></main></body></html>

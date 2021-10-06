@@ -1,0 +1,229 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="Secure the administration (admin) endpoint on Eclipse Amlen V2.0 so that only connections over TLS are accepted."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Configuring the administration endpoint to accept connections over TLS</title></head><body id="ad00056_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a><ul><li><a href="../Administering/ad00391_.html">Configuring the admin endpoint by using the Amlen WebUI</a></li><li><a href="../Administering/ad00394_.html">Configuring the admin endpoint by using REST Administration APIs</a><ul><li><a href="../Administering/ad00392_.html">Configuring the admin endpoint by using a REST Administration API</a></li><li class="active"><a href="../Administering/ad00056_.html">Configuring the administration endpoint to accept connections over TLS</a></li><li><a href="../Administering/ad00393_.html">Creating and updating a configuration policy by using REST Administration APIs</a></li><li><a href="../Administering/ad00397_.html">Setting and viewing the admin superuser ID by using REST Administration APIs</a></li><li><a href="../Administering/ad00396_.html">Setting the admin superuser password by using REST Administration APIs</a></li></ul></li></ul></li><li><a href="../Administering/ad00200_.html">Server administration</a></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Configuring the administration endpoint to accept connections over TLS</h1>
+
+<div class="body taskbody"><p class="shortdesc">Secure the administration (admin) endpoint on <span class="ph">Eclipse Amlen</span> V2.0 so that only connections over TLS are
+accepted. </p>
+<section class="section prereq">
+<div class="p">The admin endpoint is a special endpoint that listens on the server that handles incoming
+connections from administrative REST API clients. By default, the admin endpoint is not secured.
+Complete the following steps to secure the admin endpoint so that only connections from clients that
+pass in the correct server certificate and key are accepted.<div class="note note note_note"><span class="note__title">Note:</span> If a problem occurs during the
+following process, the admin endpoint might get corrupted and no longer work. Messaging clients
+would still work, but you would not be able to administer your <span class="ph">Eclipse Amlen</span> server - either by using the REST API or by using
+the Web UI. Therefore, you might want to back up your server before securing the admin endpoint. The
+only way to recover the admin endpoint is to stop the server, delete all configuration information,
+and restart. Resetting the server to the default configuration results in the loss of all custom
+data. </div></div>
+</section>
+<section class="section context">
+<p class="p">The following table shows the files that are required to secure the admin endpoint, and provides
+names for the files that are used in our example:</p>
+<div class="p">
+<table class="table" id="ad00056___datasimpletable_d5h_dph_qfb"><caption><span class="table--title-label">Table 1. </span><span class="title">Files required to secure an admin endpoint.</span></caption><colgroup><col><col></colgroup><thead class="thead">
+<tr class="row">
+<th class="entry" id="ad00056___datasimpletable_d5h_dph_qfb__entry__1">File</th>
+<th class="entry" id="ad00056___datasimpletable_d5h_dph_qfb__entry__2">Example name</th>
+</tr>
+</thead><tbody class="tbody">
+<tr class="row">
+<td class="entry" headers="ad00056___datasimpletable_d5h_dph_qfb__entry__1">CA certificate file</td>
+<td class="entry" headers="ad00056___datasimpletable_d5h_dph_qfb__entry__2">rootCA-crt.pem</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00056___datasimpletable_d5h_dph_qfb__entry__1"><span class="ph">Amlen</span> server certificate file</td>
+<td class="entry" headers="ad00056___datasimpletable_d5h_dph_qfb__entry__2">msserver-crt.pem</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00056___datasimpletable_d5h_dph_qfb__entry__1"><span class="ph">Amlen</span> server key file</td>
+<td class="entry" headers="ad00056___datasimpletable_d5h_dph_qfb__entry__2">msserver-key.pem</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00056___datasimpletable_d5h_dph_qfb__entry__1"><span class="ph">Amlen</span> server certificate file (msserver-cert.pem) combined with the CA certificate
+file (rootCA-crt.pem) into a single certificate file</td>
+<td class="entry" headers="ad00056___datasimpletable_d5h_dph_qfb__entry__2">server-trust-chain.pem</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00056___datasimpletable_d5h_dph_qfb__entry__1">Client certificate file</td>
+<td class="entry" headers="ad00056___datasimpletable_d5h_dph_qfb__entry__2">msclient-crt.pem</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00056___datasimpletable_d5h_dph_qfb__entry__1">Client key file </td>
+<td class="entry" headers="ad00056___datasimpletable_d5h_dph_qfb__entry__2">msclient-key.pem</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00056___datasimpletable_d5h_dph_qfb__entry__1">Client certificate and key file combined into a pkcs12 file</td>
+<td class="entry" headers="ad00056___datasimpletable_d5h_dph_qfb__entry__2">*.p12</td>
+</tr>
+</tbody></table>
+</div>
+</section>
+<section><ol class="ol steps"><li class="li step stepexpand">
+<span class="ph cmd">Upload the <span class="ph">Eclipse Amlen</span> server certificate file. The
+following example shows a PUT method to upload the certificate file by using cURL: </span>
+<div class="itemgroup info">
+<p class="p"><code class="ph codeph">curl -X PUT -T msserver-crt.pem <a class="xref" href="http://localhost:9089/ima/v1/file/msserver-crt-admin.pem" target="_blank" rel="external noopener">http://localhost:9089/ima/v1/file/msserver-crt-admin.pem</a></code></p>
+</div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Upload the <span class="ph">Eclipse Amlen</span> server key file. The following
+example shows a PUT method to upload the server key file by using cURL: </span>
+<div class="itemgroup info">
+<p class="p"><code class="ph codeph">curl -X PUT -T msserver-key.pem <a class="xref" href="http://localhost:9089/ima/v1/file/msserver-key-admin.pem" target="_blank" rel="external noopener">http://localhost:9089/ima/v1/file/msserver-key-admin.pem</a></code></p>
+</div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Upload the CA certificate file. The following example shows a PUT method to upload the CA
+certificate file by using cURL: </span>
+<div class="itemgroup info">
+<p class="p"><code class="ph codeph">curl -X PUT -T rootCA-crt.pem <a class="xref" href="http://localhost:9089/ima/v1/file/rootCA-crt-admin.pem" target="_blank" rel="external noopener">http://localhost:9089/ima/v1/file/rootCA-crt-admin.pem</a></code></p>
+</div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Create the "SecureAdmin" certificate profile called for the <span class="ph">Eclipse Amlen</span> server. The following example shows a POST method
+to create the certificate profile by using cURL: </span>
+<div class="itemgroup info">
+<p class="p"><code class="ph codeph">curl -X POST <a class="xref" href="http://localhost:9089/ima/v1/configuration" target="_blank" rel="external noopener">http://localhost:9089/ima/v1/configuration</a> -d
+'{"CertificateProfile":{"SecureAdmin":{"Certificate":"msserver-crt-admin.pem","Key":"msserver-key-admin.pem"}}}'</code></p>
+</div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Create the "SecureAdminSecProfile" SecurityProfile. The following example shows a POST method
+to create the security profile by using cURL: </span>
+<div class="itemgroup info">
+<p class="p"><code class="ph codeph">curl -X POST <a class="xref" href="http://localhost:9089/ima/v1/configuration" target="_blank" rel="external noopener">http://localhost:9089/ima/v1/configuration</a> -d
+'{"SecurityProfile":{"SecureAdminSecProf":{"MinimumProtocolMethod":"TLSv1.2","UseClientCertificate":true,"Ciphers":"Fast","UsePasswordAuthentication":false,"CertificateProfile":"SecureAdmin"}}}'</code></p>
+</div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Add the CA certificate as a TrustedCertificate for the SecureAdminSecProf security profile. The
+following example shows a POST method to add the CA certificate as a TrustedCertificate by using
+cURL: </span>
+<div class="itemgroup info">
+<p class="p"><code class="ph codeph">curl -X POST <a class="xref" href="http://localhost:9089/ima/v1/configuration" target="_blank" rel="external noopener">http://localhost:9089/ima/v1/configuration</a> -d
+'{"TrustedCertificate":[{"TrustedCertificate":"rootCA-crt-admin.pem","SecurityProfileName":"SecureAdminSecProf","Overwrite":true}]}'</code></p>
+</div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Set the "SecureAdminSecProfile" as the SecurityProfile for the admin endpoint. The following
+example shows a POST method to set the security profile for the admin endpoint by using cURL: </span>
+<div class="itemgroup info">
+<p class="p"><code class="ph codeph">curl -X POST <a class="xref" href="http://localhost:9089/ima/v1/configuration" target="_blank" rel="external noopener">http://localhost:9089/ima/v1/configuration</a> -d '{ "AdminEndpoint": {
+"SecurityProfile": "SecureAdminSecProf" }}'</code></p>
+<p class="p">After the command completes, the admin endpoint accepts only TLS connections. If  the TLS is not
+correctly configured, you cannot connect to the admin endpoint.</p>
+</div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Test that you can connect to the secure admin endpoint. The following example shows a GET
+method to test the connection by using cURL: </span>
+<div class="itemgroup info">
+<p class="p"><code class="ph codeph">curl -k --cacert /path/to/server-trust-chain.pem --cert /path/to/msclient-crt.pem --key
+/path/to/msclient-key.pem -X GET <a class="xref" href="https://localhost:9089/ima/v1/service/status" target="_blank" rel="external noopener">https://localhost:9089/ima/v1/service/status</a></code></p>
+<p class="p">Once the admin endpoint is secured to listen only for TLS connections, the URL for all REST calls
+must start with <code class="ph codeph">https</code>, as shown in the previous example.</p>
+<p class="p">If you are using valid CA signed certificates, your browser can connect to the new TLS-only admin
+endpoint. If you are not using CA signed certifcates, you must import the
+<span class="ph filepath">msclient.p12</span> file into your browser as a trusted certificate. For example, if
+you are using Firefox, select <span class="ph menucascade"><span class="ph uicontrol">Edit</span><abbr title="and then"> &gt; </abbr><span class="ph uicontrol">Preferences</span><abbr title="and then"> &gt; </abbr><span class="ph uicontrol">Advanced</span><abbr title="and then"> &gt; </abbr><span class="ph uicontrol">Certificates</span><abbr title="and then"> &gt; </abbr><span class="ph uicontrol">View Certificates</span><abbr title="and then"> &gt; </abbr><span class="ph uicontrol">Your Certificates</span><abbr title="and then"> &gt; </abbr><span class="ph uicontrol">Import</span></span>.</p>
+</div>
+</li></ol></section>
+<section class="example">
+<p class="p">Use following commands to create the files that are used in this example. Replace variable names
+with the appropriate value for your configuration. </p>
+<div class="note note note_note"><span class="note__title">Note:</span> Do not use the following commands to create certificates for  production environments.</div>
+<div class="p">
+<pre class="pre codeblock"><code>cat &gt; ext.cfg &lt;&lt;EOF
+[ req ]
+attributes              = req_attributes
+distinguished_name      = req_distinguished_name
+req_extensions          = v3_ca
+prompt                  = no
+[ req_attributes ]
+[ v3_ca ]
+subjectKeyIdentifier    = hash
+authorityKeyIdentifier  = keyid:always,issuer
+basicConstraints        = CA:true
+[ req_distinguished_name ]
+countryName                 = US
+stateOrProvinceName                 = <var class="keyword varname">state_code</var>
+localityName                        = <var class="keyword varname">city_name</var>
+organizationalUnitName              = <var class="keyword varname">organization</var>
+commonName                          = <var class="keyword varname">descriptive_name</var>
+emailAddress                        = <var class="keyword varname">email</var>
+EOF
+
+cat &gt; srvext.cfg &lt;&lt;EOF
+[ req ]
+req_extensions          = v3_req
+[ v3_req ]
+subjectAltName          = DNS:<var class="keyword varname">server_hostname</var>
+EOF
+
+openssl genrsa -out rootCA-key.pem 2048
+openssl genrsa -out msCA-key.pem 2048
+openssl genrsa -out msserver-key.pem 2048
+openssl genrsa -out msclient-key.pem 2048
+openssl req -new -x509 -days 3650 -subj <var class="keyword varname">subject_CA_dn</var> -extensions v3_ca -set_serial 1 -key rootCA-key.pem -out rootCA-crt.pem
+openssl req -new -days 3650 -subj <var class="keyword varname">subject_messagegateway_team_dn</var> -key msCA-key.pem -out msCA-crt.csr
+openssl x509 -days 3650 -in msCA-crt.csr -out msCA-crt.pem -req -CA rootCA-crt.pem -CAkey rootCA-key.pem -set_serial 3 -extensions v3_ca -extfile ext.cfg
+openssl req -new -days 3650 -subj <var class="keyword varname">messagegateway_server_subject_dn</var> -key msserver-key.pem -out msserver-crt.csr
+openssl x509 -days 3650 -in msserver-crt.csr -out msserver-crt.pem -req -CA rootCA-crt.pem -CAkey rootCA-key.pem -extensions v3_req -extfile srvext.cfg -set_serial 2
+openssl req -new -days 3650 -subj <var class="keyword varname">messagegateway_client_subject_dn</var> -key msclient-key.pem -out msclient-crt.csr
+openssl x509 -days 3650 -in msclient-crt.csr -out msclient-crt.pem -req -CA rootCA-crt.pem -CAkey rootCA-key.pem -extensions v3_req -set_serial 4
+openssl pkcs12 -export -inkey msclient-key.pem -in msclient-crt.pem -out msclient.p12 -passout pass:
+
+cat msserver-crt.pem &gt; server-trust-chain.pem
+cat rootCA-crt.pem &gt;&gt; server-trust-chain.pem
+</code></pre>
+</div>
+<p class="p">The following table provides example values for the file names that are required to secure an
+admin endpoint:</p>
+<div class="p">
+<table class="table" id="ad00056___datasimpletable_vzh_vph_qfb"><caption><span class="table--title-label">Table 2. </span><span class="title">Files required to secure an admin endpoint.</span></caption><colgroup><col><col></colgroup><thead class="thead">
+<tr class="row">
+<th class="entry" id="ad00056___datasimpletable_vzh_vph_qfb__entry__1">File</th>
+<th class="entry" id="ad00056___datasimpletable_vzh_vph_qfb__entry__2">Example value</th>
+</tr>
+</thead><tbody class="tbody">
+<tr class="row">
+<td class="entry" headers="ad00056___datasimpletable_vzh_vph_qfb__entry__1">subject_CA_dn</td>
+<td class="entry" headers="ad00056___datasimpletable_vzh_vph_qfb__entry__2">/<code class="ph codeph">C=US/ST=TX/L=City/O=Company/OU=Corporate/CN=Company Corporate </code></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00056___datasimpletable_vzh_vph_qfb__entry__1">subject_messagegateway_team_dn</td>
+<td class="entry" headers="ad00056___datasimpletable_vzh_vph_qfb__entry__2"><code class="ph codeph">/C=US/ST=TX/L=City/O=Company/OU=MessageGateway/CN=MessageGateway
+Team</code></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00056___datasimpletable_vzh_vph_qfb__entry__1">messagegateway_server_subject_dn</td>
+<td class="entry" headers="ad00056___datasimpletable_vzh_vph_qfb__entry__2"><code class="ph codeph">/C=US/ST=TX/L=City/O=Company/OU=MessageGateway/CN=MessageGateway Team
+(server)</code></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00056___datasimpletable_vzh_vph_qfb__entry__1">messagegateway_client_subject_dn</td>
+<td class="entry" headers="ad00056___datasimpletable_vzh_vph_qfb__entry__2"><code class="ph codeph">/C=US/ST=TX/L=City/O=Company/OU=MessageGateway/CN=MessageGateway Team (msclient)
+</code></td>
+</tr>
+</tbody></table>
+</div>
+<div class="p">where:<dl class="dl">
+
+<dt class="dt dlterm">subject_CA_dn</dt>
+<dd class="dd">might be set to the following values:
+<code class="ph codeph">/C=US/ST=TX/L=City/O=Company/OU=Corporate/CN=Company Corporate </code></dd>
+
+
+<dt class="dt dlterm">subject_messagegateway_team_dn</dt>
+<dd class="dd">might be set to the following values:
+<code class="ph codeph">/C=US/ST=TX/L=City/O=Company/OU=MessageGateway/CN=MessageGateway Team</code></dd>
+
+
+<dt class="dt dlterm">messagegateway_server_subject_dn</dt>
+<dd class="dd">might be set to the following values:
+<code class="ph codeph">/C=US/ST=TX/L=City/O=Company/OU=MessageGateway/CN=MessageGateway Team (server)</code></dd>
+
+
+<dt class="dt dlterm">messagegateway_client_subject_dn</dt>
+<dd class="dd">might be set to the following values:
+<code class="ph codeph">/C=US/ST=TX/L=City/O=Company/OU=MessageGateway/CN=MessageGateway Team (msclient)
+</code></dd>
+
+</dl></div>
+</section>
+</div>
+</article></main></body></html>

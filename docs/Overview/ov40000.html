@@ -1,0 +1,98 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="Eclipse Amlen might experience outages both planned and unplanned. High availability (HA) pertains to the ability of messaging services to withstand outages and continue providing processing capability."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>High availability</title></head><body id="ov40000"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a><ul><li><a href="../Overview/ov00002_.html">Architecture Overview</a></li><li><a href="../Overview/ov60000_.html">Eclipse Amlen in Containers</a></li><li><a href="../Overview/ov00050.html">Supported protocols</a></li><li><a href="../Bridge/br00000.html">   Amlen Bridge</a></li><li><a href="../Overview/ov00003_.html">Key Concepts</a><ul><li><a href="../Overview/ov20000.html">Point-to-point messaging</a></li><li><a href="../Overview/ov00030.html">Publish/Subscribe</a></li><li><a href="../Planning/ov00102_.html">Message delivery</a></li><li><a href="../Planning/ov00101_.html">Messaging patterns</a></li><li><a href="../Overview/ov00060.html">Message hubs, endpoints, and policies</a></li><li><a href="../Overview/ov00150_.html">Clustering in Eclipse Amlen</a></li><li><a href="../Overview/ov00140_.html">Disconnected client notifications</a></li><li><a href="../Overview/ov00070.html">MQ Connectivity</a></li><li class="active"><a href="../Overview/ov40000.html">High availability</a></li><li><a href="../Bridge/br00001.html">   Amlen Bridge concepts</a></li></ul></li><li><a href="../Overview/accessibility_topic.html">Accessibility features for Eclipse Amlen</a></li><li><a href="../Overview/notices.html">Notices</a></li></ul></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">High availability</h1>
+
+
+
+<div class="body conbody"><p class="shortdesc"><span class="ph">Eclipse Amlen</span> might
+experience outages both planned and unplanned. High availability (HA)
+pertains to the ability of messaging services to withstand outages
+and continue providing processing capability. </p>
+<p class="p">The HA nature of <span class="ph">Eclipse Amlen</span> is
+its ability to withstand software or hardware outages so that it is
+available as much of the time as possible. These outages might be
+planned events, such as maintenance and backups, and unplanned events,
+such as software failures, hardware failures, power failures, and
+disasters.</p>
+<div class="p">For <span class="ph">Eclipse Amlen</span>, a pair of servers is identified as:<dl class="dl">
+    
+     <dt class="dt dlterm">Primary</dt>
+     <dd class="dd">The server that is processing messages.</dd>
+    
+    
+     <dt class="dt dlterm">Standby</dt>
+     <dd class="dd">The server to which the primary server is replicated.</dd>
+    
+   </dl></div>
+<p class="p">The store of the primary server is replicated to the standby server. The standby server uses the
+   replicated data to construct a store that is identical to the store of the active server. The
+   standby server monitors the health of the active server. On failure of the active server, the
+   standby server activates itself by constructing the <span class="ph">Eclipse Amlen</span> server state from the data in the store. </p>
+<section class="section"><h2 class="title sectiontitle">The primary node fails and the standby node becomes
+the new primary node</h2><p class="p">In this scenario, the primary node experiences a failure. The standby node takes over as the new
+                primary node. When the old primary restarts, it becomes the new standby node. </p><p class="p">The expectation is that the content of the store and configuration of Server A is preserved and
+                that Server B is restarted. No user response is required as failure is detected by
+                exceeding the heartbeat timeout. After the heartbeat timeout is exceeded, Server B
+                initiates the recovery and then becomes the primary. If  Server A is restarted,
+                there is a discovery timeout for Server A to wait for Server B to finish the
+                recovery process. It is assumed that Server A was not configured with StartupMode =
+                StandAlone. If so, when Server A restarts, it goes into maintenance mode as there is
+                already a primary server (Server B) running.</p></section>
+<section class="section"><h2 class="title sectiontitle">Replication</h2><p class="p">After the primary and standby nodes are connected and configured, the primary node continually
+                replicates both the message store and server configuration information to the
+                standby node. If the primary node fails, the standby node has the latest data that
+                is needed for applications to continue messaging services. The standby node does not
+                accept connections from application clients or provide messaging services until a
+                failover operation occurs, which is described in the next section.</p></section>
+<section class="section"><h2 class="title sectiontitle">Failover</h2><p class="p">If the standby node detects that
+the primary node failed or is unreachable, it performs failover processing
+by using information that was replicated from the primary node.  Then,
+the standby acts as the primary node to continue messaging services.
+ Applications that were connected to the original primary node, can
+then connect to the standby node.</p></section>
+<section class="section"><h2 class="title sectiontitle">Synchronization</h2><p class="p">When a failed primary node is restarted, it is reconnected as a standby node. The running primary
+    node performs a synchronization operation to replicate message store and server configuration
+    information from the primary to ensure that the new standby has the latest information to resume
+    messaging services. After synchronization, the primary node continues to provide messaging
+    services, and the standby is ready to take over in case the primary fails.</p><div class="note note note_note"><span class="note__title">Note:</span> <ul class="ul">
+<li class="li">During synchronization, do not make any configuration changes on the node that is restarting and
+      becoming the primary. </li>
+<li class="li">There is a period in the synchronization operation during which messaging services are suspended
+      on both the primary and standby nodes. This suspension can affect applications that are
+      connected or trying to connect to the server. Therefore you must ensure that you carefully
+      schedule any planned outages of the primary or standby node to minimize the impact of
+      synchronization. For example, you might want to start the standby node when the number of
+      incoming messages on the primary node is low. Starting the standby node when the load on the
+      primary node is low means that messaging on the primary node is paused for just a few seconds.
+      This pause is typically less than 5 seconds. If you synchronize the standby node while the
+      load on the primary node is high, messaging on the primary node might be paused for a longer
+      period. This period is typically 15 - 30 seconds.</li>
+<li class="li">During synchronization, configuration change requests are blocked
+to ensure that configuration is consistent between the primary and
+standby node. Only the following configuration changes are allowed
+during synchronization: <ul class="ul">
+<li class="li"><span class="keyword cmdname">HighAvailability</span> requests. </li>
+<li class="li">Log commands and <span class="keyword cmdname">TraceLevel</span> requests. </li>
+<li class="li"><span class="keyword cmdname">LDAP</span> requests.</li>
+</ul>If the standby note is stopped and started again while the primary
+node is running, any other configuration change requests fail. The
+following error message is displayed: <pre class="pre codeblock"><code>HighAvalibility node synchronization process is in progress. Configuration changes are not allowed at this time.</code></pre>After
+the HA nodes are synchronized, the configuration change request can
+complete. </li>
+</ul></div></section>
+<section class="section"><h2 class="title sectiontitle">Split brain</h2><p class="p">In an HA pair, there can be
+only one primary node providing messaging operations.  If the member
+acting as a primary detects that the other server is acting as a primary,
+it results in a <dfn class="term">split brain</dfn> condition.</p><div class="p">When the HA pair detects it is in a split brain situation, both nodes are put into maintenance mode, and the administrator must select which member to operate as the primary and the standby nodes. There are situations in which only one node will go down: <ul class="ul">
+                <li class="li">While the standby is in the process of becoming a primary, the original primary is able to reconnect to the standby. The standby detects that the primary is still active and goes into maintenance mode. It must be restarted in order to resynchronize and become a standby again. </li>
+                <li class="li">When cluster membership is enabled,  the cluster component might detect that there are two servers with the same ServerUID in the cluster. Both nodes of an HA pair use the same ServerUID. In such cases the cluster component terminates the original primary. </li>
+                </ul></div>
+            <p class="p">Split brain situations are infrequent. You might see a split brain situation after simultaneous outages of both the primary and standby when they are both restarted. </p></section>
+<section class="section"><h2 class="title sectiontitle">Application development for high availability</h2><p class="p">Applications that are developed to use with an HA pair of servers can connect to the standby node
+    if failover occurs because of an outage of the primary node. Applications must be aware of both
+    the primary and standby nodes to take advantage of this.</p><p class="p">For information about
+developing JMS applications for HA, see <a class="xref" href="../Developing/devjms_hasamples.html" title="The HATopicPublisher and HADurableSubscriber applications demonstrate how to enable JMS client applications to use Eclipse Amlen high availability features.">The HATopicPublisher and HADurableSubscriber applications</a>.</p></section>
+</div>
+<nav role="navigation" class="related-links"><div class="linklist relconcepts"><strong>Related concepts</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="../Administering/ad00400_.html" title="To recover from outages that might include planned events (such as maintenance and backups) and unplanned events (such as software failures, hardware failures, power failures, and disasters) you can configure an Eclipse Amlen server to serve as a backup.">Configuring your system for high availability</a></li></ul></div></nav>
+</article></main></body></html>

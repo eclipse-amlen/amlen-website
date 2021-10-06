@@ -1,0 +1,284 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can upgrade their IBM IoT MessageSight version 1.2 systems to an Eclipse Amlen version 0.1 environment by migrating the configuration and store from an IBM IoT MessageSight version 1.2 physical or virtual appliance to a running Eclipse Amlen version 0.1 environment. The upgrade process requires the use of high availability (HA) servers."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Upgrading to Eclipse Amlen version 0.1: server configuration and store</title></head><body id="up00018_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a><ul><li><a href="../Upgrading/up00014_.html">Upgrading and rolling back the software level of Eclipse Amlen</a></li><li><a href="../Upgrading/up00021_.html">Upgrading from IBM Watson IoT Platform Message Gateway to Eclipse Amlen</a></li><li><a href="../Upgrading/up00020_.html">Upgrading from IBM IoT MessageSight v2 (or above) to Eclipse Amlen</a></li><li><a href="../Upgrading/up00015_.html">Upgrading from IBM IoT MessageSight version 1.2</a><ul><li><a href="../Upgrading/up00016_.html">Planning to upgrade to Eclipse Amlen version 0.1 from IBM IoT MessageSight version 1.2</a></li><li><a href="../Upgrading/up00017_.html">Upgrading to Eclipse Amlen version 0.1: server configuration only</a></li><li class="active"><a href="../Upgrading/up00018_.html">Upgrading to Eclipse Amlen version 0.1: server configuration and store</a></li><li><a href="../Upgrading/up00019_.html">Upgrading to Eclipse Amlen version 0.1: taking a backup of the IBM IoT MessageSight version 1.2 configuration and store</a></li></ul></li></ul></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Upgrading to <span class="ph">Eclipse Amlen</span> version <span class="ph">0.1</span>:
+server configuration and store</h1>
+
+
+
+
+
+
+<div class="body taskbody"><p class="shortdesc">System administrators can upgrade their <span class="ph">IBM® IoT MessageSight</span> version 1.2 systems to an <span class="ph">Eclipse Amlen</span> version <span class="ph">0.1</span> environment by migrating the
+configuration and store from an <span class="ph">IBM IoT MessageSight</span> version 1.2 physical or virtual appliance to a
+running <span class="ph">Eclipse Amlen</span> version <span class="ph">0.1</span> environment. The
+upgrade process requires the use of high availability (HA) servers. </p>
+<section class="section prereq">
+<ul class="ul">
+<li class="li">Contact IBM Support to review and verify your upgrade plan.</li>
+<li class="li">It is best practice to take a backup of the <span class="ph">IBM IoT MessageSight</span> version 1.2 production system store to test the upgrade
+process before you perform the upgrade process. For instructions for taking a backup of the <span class="ph">IBM IoT MessageSight</span> production system store, see <a class="xref" href="up00019_.html" title="Before you migrate the IBM IoT MessageSight version 1.2 configuration file and store to a running Eclipse Amlen version 0.1 server, it is best practice to take a backup of the production server store and copy it to a test environment to test the upgrade process.">Upgrading to Eclipse Amlen version 0.1: taking a backup of the IBM IoT MessageSight version 1.2 configuration and store</a>.</li>
+<li class="li">The <span class="ph">IBM IoT MessageSight</span> version 1.2 server must be at the latest interim fix
+level. A list of interim fixes is available here: <a class="xref" href="http://www-01.ibm.com/support/docview.wss?uid=swg21973411" target="_blank" rel="external noopener">Fixes released for IBM MessageSight</a>.</li>
+<li class="li">The <span class="ph">Eclipse Amlen</span> version <span class="ph">0.1</span> server to which you are migrating the
+configuration and store must be installed and configured and have no configured objects.</li>
+<li class="li">Communication over TCP/IP must be possible between the <span class="ph">IBM IoT MessageSight</span> version 1.2 server and the <span class="ph">Eclipse Amlen</span> version <span class="ph">0.1</span> server.</li>
+<li class="li">HA is enabled and configured on the <span class="ph">IBM IoT MessageSight</span>
+server as part of the upgrade process. The primary server is used for the upgrade process. If you
+need to configure HA, or change the current HA configuration, you must be prepared for a server
+outage and restart.</li>
+</ul>
+</section>
+<section class="section context">
+<p class="p">The server configuration and the contents of the server store are migrated from an <span class="ph">IBM IoT MessageSight</span> version 1.2 physical or virtual appliance to a running <span class="ph">Eclipse Amlen</span> version <span class="ph">0.1</span> environment. The store contains buffered
+messages, retained messages, subscriptions, and topics. It contains all persistent messages and
+objects that have been dynamically created by clients. Use this method if you need to preserve the
+contents of the server store when you upgrade from <span class="ph">IBM IoT MessageSight</span> version 1.2 to <span class="ph">Eclipse Amlen</span> version <span class="ph">0.1</span>.</p>
+</section>
+<section><ol class="ol steps"><li class="li step stepexpand">
+<span class="ph cmd">Configure the <span class="ph">IBM IoT MessageSight</span> version 1.2 server to replicate by using TCP.</span>
+<ul class="ul choices">
+<li class="li choice">If the server is a physical appliance, issue the following
+command:<pre class="pre codeblock"><code>advanced-pd-options _setconfig imaserver 
+ReplicationProtocol 1'</code></pre>and
+restart the server by issuing the following
+commands:<pre class="pre codeblock"><code>imaserver stop
+imaserver start</code></pre></li>
+<li class="li choice">If the server is a virtual appliance, it is already configured to replicate by using
+TCP.</li>
+</ul>
+</li><li class="li step stepexpand" id="up00018___step2">
+<span class="ph cmd">If HA is not already configured and enabled on the <span class="ph">IBM IoT MessageSight</span> version 1.2  server, configure and enable HA. </span>
+<div class="itemgroup info">For more information about configuring HA on the <span class="ph">IBM IoT MessageSight</span> version 1.2 server, see <a class="xref" href="https://www.ibm.com/support/knowledgecenter/SSCGGQ_1.2.0/com.ibm.ism.doc/Administering/ad00400_.html" target="_blank" rel="external noopener">Configuring your system for high availability</a>. An example
+command follows:
+<pre class="pre codeblock"><code>imaserver create HighAvailability "EnableHA"= "True"  "StartupMode"="StandAlone"
+"Group"="TestGroup1"  "RemoteDiscoveryNIC"=10.78.54.140"
+"LocalReplicationNIC"="10.77.207.15"  "LocalDiscoveryNIC"="10.78.54.137"</code></pre></div>
+<ol type="a" class="ol substeps">
+<li class="li substep substepexpand">
+<span class="ph cmd">Ensure that the value of the <span class="keyword parmname">LocalDiscoveryNIC</span> field on the <span class="ph">IBM IoT MessageSight</span> version 1.2 server is the same as the value of the
+<span class="keyword parmname">RemoteDiscoveryNIC</span> field on the <span class="ph">Eclipse Amlen</span> version <span class="ph">0.1</span> server. </span>
+</li>
+<li class="li substep substepexpand">
+<span class="ph cmd">Ensure that the value of the <span class="keyword parmname">StartupMode</span> is <code class="ph codeph">Standalone</code> so
+that the primary server can become available even though the standby server is not available.</span>
+</li>
+<li class="li substep substepexpand">
+<span class="ph cmd">Restart the server by issuing the following commands:</span>
+<div class="itemgroup info">
+<pre class="pre codeblock"><code>imaserver stop 
+imaserver start</code></pre>
+</div>
+</li>
+<li class="li substep substepexpand">
+<span class="ph cmd">After the server restart, check that the HA status of the server by issuing the following
+command:</span>
+<div class="itemgroup info">
+<pre class="pre codeblock"><code>imaserver harole</code></pre>
+</div>
+</li>
+</ol>
+</li><li class="li step stepexpand">
+<span class="ph cmd">If HA is already configured and enabled on the <span class="ph">IBM IoT MessageSight</span> server, check that the value of the
+<span class="keyword parmname">LocalDiscoveryNIC</span> field on the <span class="ph">IBM IoT MessageSight</span> version 1.2 server is the same as the value of the
+<span class="keyword parmname">RemoteDiscoveryNIC</span> field on the <span class="ph">Eclipse Amlen</span> version <span class="ph">0.1</span> server. </span>
+<ul class="ul choices">
+<li class="li choice">If you changed the HA configuration, restart the server by issuing the following
+commands:<pre class="pre codeblock"><code>imaserver stop 
+imaserver start</code></pre>and then check the status of the
+server by issuing the following command:<pre class="pre codeblock"><code>imaserver harole 
+ </code></pre></li>
+<li class="li choice">If you have not changed HA configuration, you do not need to restart the server.</li>
+</ul>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Configure the <span class="ph">Eclipse Amlen</span> version <span class="ph">0.1</span> server for HA.</span>
+<div class="itemgroup info">For more information about configuring HA on the <span class="ph">Eclipse Amlen</span> version <span class="ph">0.1</span> server, see <a class="xref" href="http://www.ibm.com/support/knowledgecenter/SSWMAJ_2.0.0/com.ibm.ism.doc/Administering/ad00400_.html" target="_blank" rel="external noopener">Configuring your system for high availability</a>. </div>
+<div class="itemgroup info">
+<div class="p">If HA was already configured on the <span class="ph">IBM IoT MessageSight</span>
+version 1.2 server and the <span class="ph">Eclipse Amlen</span> version <span class="ph">0.1</span> server is reusing the IP addresses of the
+previous standby server, the values of the <span class="keyword parmname">Group</span> field must be the same. The
+following example shows that the <span class="ph">Eclipse Amlen</span>
+version <span class="ph">0.1</span> server is reusing the IP
+address of the previous standby and is using the same value of the <span class="keyword parmname">Group</span> field
+as the <span class="ph">IBM IoT MessageSight</span> version 1.2 server as configured in the example command in
+<a class="xref" href="up00018_.html#up00018___step2">step
+2</a>:<pre class="pre codeblock"><code>curl -X POST http://10.78.54.140:9089/ima/v1/configuration -d '{ "HighAvailability": {    
+"EnableHA": true, "StartupMode":  "AutoDetect", <strong class="ph b">"LocalDiscoveryNIC":"10.78.54.140"</strong>,
+<strong class="ph b">"RemoteDiscoveryNIC":"10.78.54.137"</strong>,  <strong class="ph b">"LocalReplicationNIC":"10.77.207.15"</strong>,
+<strong class="ph b">"Group":"TestGroup1"</strong> }}' </code></pre>
+</div>
+</div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Check HA configuration on the <span class="ph">Eclipse Amlen</span>
+version <span class="ph">0.1</span> server by using the REST API
+GET method. </span>
+<div class="itemgroup info">For
+example:<pre class="pre codeblock"><code>curl -X GET http:// 10.78.54.140:9089/ima/v1/configuration/HighAvailability</code></pre></div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Check the response from the REST API GET method to ensure that the <span class="keyword parmname">EnableHA</span> field is set to <code class="ph codeph">true</code>, the <span class="keyword parmname">StartupMode</span> field is set to <code class="ph codeph">AutoDetect</code>, and the values in the <span class="keyword parmname">RemoteDiscoveryNIC</span>, <span class="keyword parmname">LocalReplicationNIC</span>, and <span class="keyword parmname">LocalDiscoveryNIC</span> fields are correct.</span>
+<div class="itemgroup info">For example:<pre class="pre codeblock"><code>
+{
+  "Version": "v1",
+  "HighAvailability": {
+    <strong class="ph b">"EnableHA": true,</strong>
+    "Group": "TestGroup1",
+    <strong class="ph b">"StartupMode": "AutoDetect",</strong>
+    "PreferredPrimary": false,
+    "DiscoveryTimeout": 600,
+    "HeartbeatTimeout": 10,
+    <strong class="ph b">"RemoteDiscoveryNIC": "10.10.11.11",
+    "LocalReplicationNIC": "10.10.11.12",
+    "LocalDiscoveryNIC": "10.10.11.13",</strong>
+    "ExternalReplicationNIC": "",
+    "ExternalReplicationPort": 0,
+    "ReplicationPort": 0,
+    "RemoteDiscoveryPort": 0,
+    "UseSecuredConnections": false
+  }
+}</code></pre></div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Restart the <span class="ph">Eclipse Amlen</span> version <span class="ph">0.1</span> server with the
+<span class="keyword parmname">CleanStore</span> field set to <code class="ph codeph">true</code> by using the REST API POST
+method.</span>
+<div class="itemgroup info">For
+example:<pre class="pre codeblock"><code>curl -X POST http://10.78.54.140:9089/ima/v1/service/restart -d
+'{"Service":"Server","CleanStore":true}'</code></pre></div>
+<div class="itemgroup stepresult">The server starts as the standby server.</div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Check the HA status of the <span class="ph">Eclipse Amlen</span>
+version <span class="ph">0.1</span> server by using the REST API
+GET method in 2 calls.</span>
+<div class="itemgroup info">For
+example:<pre class="pre codeblock"><code>curl -X GET http://10.78.54.140:9089/ima/v1/configuration/HighAvailability
+
+curl -X GET http://10.78.54.140:9089/ima/v1/service/status</code></pre></div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Check the response from the REST API GET method to ensure that the HA <span class="keyword parmname">Status</span> field is set to <code class="ph codeph">Active</code>, and the <span class="keyword parmname">NewRole</span> field is set to <code class="ph codeph">AutoDetect</code></span>
+<div class="itemgroup info">For
+example:<pre class="pre codeblock"><code>
+{
+  "Version":"v1",
+  "Server": {
+    "Name": "ima-server:9089",
+    "UID": "o7AVNFjE",
+    "Status": "Running",
+    "State": 10,
+    "StateDescription": "Standby",
+    "ServerTime": "2018-08-22T19:32:57.168Z",
+    "UpTimeSeconds": 340,
+    "UpTimeDescription": "0 days 0 hours 5 minutes 40 seconds",
+    "Version": "5.0 20180820-0334",
+    "ErrorCode": 0,
+    "ErrorMessage": ""
+  },
+  "Container": {
+    "UUID":""
+  },
+  "HighAvailability": {
+    <strong class="ph b">"Status": "Active",</strong>
+    "Enabled": false,
+    "Group": "TestGroup1",
+    <strong class="ph b">"NewRole": "STANDBY",</strong>
+    "OldRole": "UNSYNC",
+    "ActiveNodes": 2,
+    "SyncNodes": 2,
+    "PrimaryLastTime": "",
+    "PctSyncCompletion": -1,
+    "ReasonCode": 0,
+    "RemoteServerName":"https://10.10.10.10:9087"
+  },
+  "Cluster": {
+    "Status": "Inactive",
+    "Enabled": false
+  },
+  "Plugin": {
+    "Status": "Inactive",
+    "Enabled": false
+  },
+  "MQConnectivity": {
+    "Status": "Inactive",
+    "Enabled": false
+  },
+  "SNMP": {
+    "Status": "Inactive",
+    "Enabled": false
+  }
+}
+</code></pre></div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Disable HA on the <span class="ph">Eclipse Amlen</span> version <span class="ph">0.1</span> server to force the server to start in
+maintenance mode so that the configuration can be checked.</span>
+<div class="itemgroup info">Use the REST API POST method to disable HA. For
+example:<pre class="pre codeblock"><code>curl -X POST http://10.78.54.140:9089/ima/v1/configuration -d '{ "HighAvailability": {
+"EnableHA": false, "StartupMode":  "AutoDetect", "LocalDiscoveryNIC":"10.78.54.140",
+"RemoteDiscoveryNIC":"10.78.54.137",  "LocalReplicationNIC":"10.77.207.15",
+"Group":"TestGroup1" }}'</code></pre></div>
+<div class="itemgroup stepresult">The server restarts automatically in maintenance mode.</div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Review and update the migrated configuration. </span>
+<div class="itemgroup info">In particular, review and fix:<ul class="ul">
+<li class="li">Endpoint configuration, particularly if your endpoints were listening on specific interfaces. If
+such explicit interfaces are different, the upgrade process cannot update the configuration to the
+new values. </li>
+<li class="li">Existing LDAP configuration which might need to be changed.</li>
+<li class="li">Other configuration items that might need to be amended for the new environment.</li>
+</ul></div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Restart the <span class="ph">Eclipse Amlen</span> version <span class="ph">0.1</span> server so that it starts in production
+mode.</span>
+<div class="itemgroup info">For
+example:<pre class="pre codeblock"><code>curl -X POST http://10.78.54.140:9089/ima/v1/service/restart -d '{ "Service":"Server" }'</code></pre></div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Check the status of the server to verify the success of the upgrade process by using the REST API GET method.</span>
+<div class="itemgroup info">For example:<pre class="pre codeblock"><code>curl -X GET http://10.78.54.140:9089/ima/v1/service/status</code></pre></div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Check the response from the REST API GET method to ensure that the server <span class="keyword parmname">Status</span> field is set to <code class="ph codeph">Running</code>, the <span class="keyword parmname">StateDescription</span> field is <code class="ph codeph">Running (production)</code>, the HA <span class="keyword parmname">Status</span> field is set to <code class="ph codeph">Inactive</code>, and the HA <span class="keyword parmname">Enabled</span> field is set to <code class="ph codeph">false</code>.</span>
+<div class="itemgroup info">For
+example:<pre class="pre codeblock"><code>
+{
+  "Version":"v1",
+  "Server": {
+    "Name": "mar078:9089",
+    "UID": "AKOkJc1Z",
+    <strong class="ph b">"Status": "Running",</strong>
+    "State": 1,
+    <strong class="ph b">"StateDescription": "Running (production)",</strong>
+    "ServerTime": "2018-08-22T21:05:59.667Z",
+    "UpTimeSeconds": 5569,
+    "UpTimeDescription": "0 days 1 hours 32 minutes 49 seconds",
+    "Version": "5.0 20180820-0334",
+    "ErrorCode": 0,
+    "ErrorMessage": ""
+  },
+  "Container": {
+    "UUID":""
+  },
+  "HighAvailability": {
+    <strong class="ph b">"Status": "Inactive",</strong>
+    <strong class="ph b">"Enabled": false</strong>
+  },
+  "Cluster": {
+    "Status": "Inactive",
+    "Enabled": false
+  },
+  "Plugin": {
+    "Status": "Inactive",
+    "Enabled": false
+  },
+  "MQConnectivity": {
+    "Status": "Inactive",
+    "Enabled": false
+  },
+  "SNMP": {
+    "Status": "Inactive",
+    "Enabled": false
+  }
+}
+</code></pre></div>
+</li></ol></section>
+<section class="section postreq">The <span class="ph">Eclipse Amlen</span> version <span class="ph">0.1</span> server is ready for messaging traffic. You
+can now switch messaging traffic from <span class="ph">IBM IoT MessageSight</span>
+version 1.2 to the <span class="ph">Eclipse Amlen</span> version <span class="ph">0.1</span> environment.</section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Upgrading/up00015_.html" title="System administrators can upgrade to Eclipse Amlen version 0.1 from IBM IoT MessageSight version 1.2.">Upgrading from IBM IoT MessageSight version 1.2</a></div></div><div class="linklist relconcepts"><strong>Related concepts</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="up00016_.html" title="System administrators can select one of two methods to upgrade IBM IoT MessageSight version 1.2 to Eclipse Amlen version 0.1. Compare the two methods and understand the advantages and disadvantages of each method.">Planning to upgrade to Eclipse Amlen version 0.1 from IBM IoT MessageSight version 1.2</a></li></ul></div><div class="linklist reltasks"><strong>Related tasks</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="up00017_.html" title="System administrators can upgrade their IBM IoT MessageSight version 1.2 systems to Eclipse Amlen version 0.1 by exporting and importing the server configuration file. The server configuration file is exported from an IBM IoT MessageSight version 1.2 physical or virtual appliance and imported into a running Eclipse Amlen version 0.1 environment.">Upgrading to Eclipse Amlen version 0.1: server configuration only</a></li><li class="linklist"><a class="link" href="up00019_.html" title="Before you migrate the IBM IoT MessageSight version 1.2 configuration file and store to a running Eclipse Amlen version 0.1 server, it is best practice to take a backup of the production server store and copy it to a test environment to test the upgrade process.">Upgrading to Eclipse Amlen version 0.1: taking a backup of the IBM IoT MessageSight version 1.2 configuration and store</a></li></ul></div></nav>
+</article></main></body></html>

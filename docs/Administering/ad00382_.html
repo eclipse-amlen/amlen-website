@@ -1,0 +1,93 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can set and view the configured name of a server by using REST Administration APIs."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Configuring the server name by using REST Administration APIs</title></head><body id="ad00382_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a><ul><li><a href="../Administering/ad00210_.html">Network interface controllers</a></li><li><a href="../Administering/ad00380_.html">Configuring the server name</a><ul><li><a href="../Administering/ad00381_.html">Configuring the server name by using the Amlen WebUI</a></li><li class="active"><a href="../Administering/ad00382_.html">Configuring the server name by using REST Administration APIs</a></li></ul></li><li><a href="../Administering/ad00290_.html">Configuring log files</a></li><li><a href="../Administering/ad00400_.html">Configuring your system for high availability</a></li><li><a href="../Administering/ad00790_.html">Configuring licensed usage and accepting the license for Eclipse Amlen  </a></li><li><a href="../Administering/ad00280_.html">Starting, stopping, restarting and viewing the status of the Eclipse Amlen server</a></li></ul></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Configuring the server name by using <span class="ph">REST Administration APIs</span></h1>
+
+<div class="body taskbody"><p class="shortdesc">System administrators can set and view the configured name of a server by using <span class="ph">REST Administration APIs</span>. </p>
+<section class="section context">You can configure a server name by using a <span class="ph">REST Administration API</span>, or by using the <span class="ph">Amlen WebUI</span>. For more information about using the <span class="ph">Amlen WebUI</span> to configure a server name, see <a class="xref" href="ad00381_.html" title="System administrators can view and configure the Eclipse Amlen server name by using the Server Control page in the Amlen WebUI.">Configuring the server name by using the Amlen WebUI</a>. <p class="p">If the <span class="ph">Eclipse Amlen</span> server is an active cluster member, do not change <span class="keyword parmname">ServerName</span>.</p></section>
+<section><ul class="ul steps-unordered"><li class="li step stepexpand">
+<span class="ph cmd">To set the server name, use the <span class="ph">Eclipse Amlen</span> REST API POST method. </span>
+<ol class="ol substeps">
+<li class="li substep substepexpand">
+<span class="ph cmd">Use the following <span class="ph">Eclipse Amlen</span> configuration URI:</span>
+<div class="itemgroup info">
+<p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/configuration</code></p>
+</div>
+</li>
+<li class="li substep substepexpand">
+<span class="ph cmd">Provide ServerName object configuration data in the payload of the POST method by using the following schema. <span class="keyword parmname">Content-type</span> is set to <kbd class="ph userinput">application/json</kbd>. </span>
+<div class="itemgroup info"><pre class="pre codeblock"><code>
+{    
+  "ServerName": "string",
+  "Version": "v1"
+}</code></pre>Where:<ul class="ul">
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">ServerName</dt>
+<dd class="dd">Specifies the server name.</dd>
+<dd class="dd ddexpand">The maximum length of the name is 64 characters.</dd>
+<dd class="dd ddexpand">Names can contain characters in the ranges a-z, A-Z, 0-9 and the special character - only. </dd>
+<dd class="dd ddexpand">The default value of ServerName is a string that has the following format: <code class="ph codeph">&lt;<var class="keyword varname">server_node_name</var>&gt;:&lt;admin-endpoint-port&gt;</code>. This default value does not change when the admin-endpoint port is changed. </dd>
+
+</dl>
+</li>
+</ul></div>
+</li>
+</ol>
+</li><li class="li step stepexpand">
+        <span class="ph cmd">To view the server name, use the <span class="ph">Eclipse Amlen</span> REST API GET method with the following <span class="ph">Eclipse Amlen</span> configuration URI:</span>
+        <div class="itemgroup info">
+          <p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/configuration/ServerName</code></p>
+        </div>
+      </li></ul></section>
+<section class="example">
+   <p class="p">The following example shows a POST method to set the server name to "myServer.TestSystem" by
+        using cURL:</p>
+   <pre class="pre codeblock"><code>
+curl -X POST \
+   -H  'Content-Type: application/json'  \
+   -d  '{                       
+           "ServerName":"myServer.TestSystem:9089"
+        }
+       '   \
+http://127.0.0.1:9089/ima/v1/configuration/</code></pre>
+   <p class="p">The following example shows an example response to the POST method: </p>
+   <pre class="pre codeblock"><code>
+{        
+  "Version": "v1",
+  "Code": "CWLNA6011",
+  "Message": "The requested configuration change has completed successfully."
+}
+</code></pre>
+   <p class="p">The following example shows a GET method to view the server name by using cURL:</p>
+   <pre class="pre codeblock"><code>
+curl -X GET http://127.0.0.1:9089/ima/v1/configuration/ServerName</code></pre>
+   <p class="p">The following example shows an example response to the GET method:</p>
+   <pre class="pre codeblock"><code>
+{
+  "ServerName": "myServer.TestSystem:9089",
+  "Version": "v1"
+}
+</code></pre>
+   <p class="p">The following example shows a POST method to set the server name to the default value by using
+        cURL:</p>
+   <pre class="pre codeblock"><code>
+curl -X POST \
+   -H  'Content-Type: application/json'  \
+   -d  '{                       
+           "ServerName": null
+        }
+       '   \
+http://127.0.0.1:9089/ima/v1/configuration/</code></pre>
+   <p class="p">The following example shows an example response to the GET method:</p>
+   <pre class="pre codeblock"><code>
+{
+  "ServerName": "ServerA.mycompany.com:9089",
+  "Version": "v1"
+}
+</code></pre>
+  </section>
+</div>
+<nav role="navigation" class="related-links"><div class="linklist relconcepts"><strong>Related concepts</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="ad00380_.html" title="You can configure the server name either by using the Amlen WebUI or by using REST Administration APIs.">Configuring the server name</a></li><li class="linklist"><a class="link" href="ad00200_.html" title="System administrators can administer the server by using the Amlen WebUI, or by using REST Administration APIs.">Server administration</a></li></ul></div><div class="linklist reltasks"><strong>Related tasks</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="ad00392_.html" title="System administrators can configure the admin endpoint by using a REST Administration API.">Configuring the admin endpoint by using a REST Administration API</a></li></ul></div></nav>
+</article></main></body></html>

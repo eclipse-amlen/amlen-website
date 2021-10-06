@@ -1,0 +1,107 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="To use JMS applications with Eclipse Amlen, you must first create Eclipse Amlen administered objects for JMS."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Creating administered objects</title></head><body id="devjms_creatingadministeredobjects"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a><ul><li><a href="../Developing/devconcepts.html">Messaging concepts</a></li><li><a href="../Developing/devmsgtypes.html">Natively supported message types</a></li><li><a href="../Developing/devmsgsize.html">Message size</a></li><li><a href="../Developing/devclientids.html">Client IDs</a></li><li><a href="../Developing/devclientservercert.html">Server certificates</a></li><li><a href="../Developing/devretainmsg.html">Developing retained message applications</a></li><li><a href="../Developing/devexpiredmsg.html">Expired messages</a></li><li><a href="../Developing/devsharedsubscriptions.html">Shared subscriptions</a></li><li><a href="../Developing/devmqttapp.html">Developing MQTT applications</a></li><li><a href="../Developing/devjmsapp.html">Developing JMS applications</a><ul><li><a href="../Developing/devjms_working.html">Working with Eclipse Amlen JMS</a><ul><li class="active"><a href="../Developing/devjms_creatingadministeredobjects.html">Creating administered objects</a><ul><li><a href="../Developing/devjms_connectionfactoryproperties.html">ConnectionFactory properties</a></li><li><a href="../Developing/devjms_destinationproperties.html">Destination properties</a></li></ul></li><li><a href="../Developing/sharedsubscriptionsinjms.html">Shared subscriptions in JMS</a></li><li><a href="../Developing/devjms_poisonmessages.html">Poison messages</a></li><li><a href="../Developing/securingjmsconnections.html">Securing Eclipse Amlen JMS client by using Java runtime environment global properties</a></li><li><a href="../Developing/devjms_underjavasecuritymanager.html">Running Eclipse Amlen JMS client applications under the Java Security Manager</a></li><li><a href="../Developing/exceptionhandling.html">Exception Handling</a></li><li><a href="../Developing/devjms_usingjmsclienttracetacilities.html">Using client trace facilities</a></li></ul></li><li><a href="../Developing/devjms_sampleapplications.html">Sample applications</a></li><li><a href="../Developing/devjms_writingjmsapplications.html">Writing JMS Applications</a></li><li><a href="../Developing/javadoc/com/ibm/ima/jms/package-summary.html">JMS API reference</a></li></ul></li><li><a href="../Developing/devplug-in.html">Developing a protocol plug-in</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li></ul></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Creating administered objects</h1>
+
+
+
+
+
+
+<div class="body taskbody"><p class="shortdesc">To use JMS applications with <span class="ph">Eclipse Amlen</span>, you must first
+create <span class="ph">Eclipse Amlen</span> administered
+objects for JMS.</p>
+<section><ol class="ol steps"><li class="li step stepexpand" id="devjms_creatingadministeredobjects__createadmino"><span class="ph cmd">Create the administered object.</span><div class="itemgroup info">Use
+the <span class="keyword apiname">ImaJmsFactory</span> class to create the <span class="ph">Eclipse Amlen</span> administered
+objects for JMS. Use the methods in this class to create connection
+factory and destination objects for your JMS applications.</div></li><li class="li step stepexpand"><span class="ph cmd">Configure the administered object. </span><div class="itemgroup info">Use the <span class="keyword apiname">ImaProperties</span> interface
+to configure the connection factory and destination objects. Cast
+the administered object created in step <a class="xref" href="#devjms_creatingadministeredobjects__createadmino">1</a> to <span class="keyword apiname">ImaProperties</span>.
+Then use the appropriate put methods to set either <span class="keyword apiname">ConnectionFactory</span> properties
+or <span class="keyword apiname">Destination</span> properties.</div></li><li class="li step stepexpand"><span class="ph cmd">Validate the configured administered object.</span><div class="itemgroup info">Once
+all desired properties have been set, use the <span class="keyword apiname">ImaProperties</span> validate
+method to assure the administered object is correctly configured.</div>
+</li><li class="li step stepexpand"><span class="ph cmd">Store the configured administered objects in a JNDI repository.</span>
+</li></ol></section>
+<section class="example"><ul class="ul">
+<li class="li">The following example creates and configures a connection factory administered object.<pre class="pre screen">// Create the connection factory using the ImaJmsFactory class
+ConnectionFactory cf = ImaJmsFactory.createConnectionFactory();
+
+// Cast the connection factory object to ImaProperties
+ImaProperties props = (ImaProperties)cf;
+
+// Set the properties
+// You must configure the connection port where the <span class="ph">Eclipse Amlen</span> is listening for
+// connections from JMS clients
+props.put("Port", "1883");
+
+// You must also configure the host names (or IP addresses) where the <span class="ph">Eclipse Amlen</span> is running
+// For high availability configurations, include the list of host names (or IP addresses)
+props.put("Server", "server1.company.com, server2.company.com");
+
+// If you are using secure connections, then you must set Protocol to tcps
+props.put("Protocol", "tcps");
+
+// Validate the configured object. A null return means that the properties are valid.
+ImaJmsException [] errstr = props.validate(ImaProperties.WARNINGS);
+if (errstr == null) {
+    // If there are no errors, store the object in a JNDI repository
+    InitialContext ctx;
+    Hashtable env = new Hashtable();
+    env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+    env.put(Context.PROVIDER_URL, "ldap://server3.company.com/o=jndiTest");
+    try {
+        ctx = new InitialContext(env);
+
+        // Bind the connection factory to a name
+        ctx.rebind("ConnName", cf);
+    } catch (Exception e) {
+        System.out.println("Unable to open an initial context: " + e);
+    }
+} else {
+    // Display the validation errors
+    for (int i=0;  i&lt;errstr.length; i++)
+        System.out.println(""+errstr[i]);
+}</pre></li>
+<li class="li">The following example creates and configures a destination administered
+object:<pre class="pre screen">// Create the destination using the ImaJmsFactory class
+// This example creates a topic destination.
+// A queue destination can be created with createQueue(String name)
+Topic topicdest = ImaJmsFactory.createTopic("mytopic");
+
+// Cast the destination object to ImaProperties
+ImaProperties props = (ImaProperties)topicdest;
+
+// Optional - Set the properties
+// The only required property for a destination is name and that property value is
+// set automatically with createTopic
+// For this example, we will not set any properties
+
+// As a best practice, validate the object. A null return means that the properties are valid.
+ImaJmsException [] errstr = props.validate(ImaProperties.WARNINGS);
+if (errstr == null) {
+    // If there are no errors, store the object in a JNDI repository
+    InitialContext ctx;
+    Hashtable env = new Hashtable();
+    env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+    env.put(Context.PROVIDER_URL, "ldap://server3.company.com/o=jndiTest");
+    try {
+        ctx = new InitialContext(env);
+
+        // Bind the connection factory to a name
+        ctx.rebind("ConnName", cf);
+    } catch (Exception e) {
+        System.out.println("Unable to open an initial context: " + e);
+    }
+} else {
+    // Display the validation errors
+    for (int i=0; i&lt;errstr.length; i++)
+        System.out.println(""+errstr[i]);
+}</pre></li>
+</ul></section>
+<section class="section postreq"><p class="p">For an example of an application that creates <span class="ph">Eclipse Amlen</span> administered
+objects for JMS, see the JMSSampleAdmin application in <a class="xref" href="devjms_sampleapplications.html" title="There are four sample applications for JMS: JMSSampleAdmin, JMSSample, HATopicPublisher, and HADurableSubscriber. These sample applications are in the com.ibm.ima.samples.jms package.">Sample applications</a>. </p></section>
+</div>
+<nav role="navigation" class="related-links"><ul class="ullinks"><li class="link ulchildlink"><strong><a href="../Developing/devjms_connectionfactoryproperties.html">ConnectionFactory properties</a></strong><br>ConnectionFactory properties are used to create the <span class="ph">Eclipse Amlen</span> JMS client Connection object. </li><li class="link ulchildlink"><strong><a href="../Developing/devjms_destinationproperties.html">Destination properties</a></strong><br>Destination properties are used when you are creating an <span class="ph">Eclipse Amlen</span> JMS client MessageConsumer or MessageProducer. </li></ul><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Developing/devjms_working.html" title="The following topics cover specific Eclipse Amlen JMS client features, including the creation of administered objects and capabilities that can add value.">Working with Eclipse Amlen JMS</a></div></div><div class="linklist relref"><strong>Related reference</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="devjms_connectionfactoryproperties.html" title="ConnectionFactory properties are used to create the Eclipse Amlen JMS client Connection object.">ConnectionFactory properties</a></li><li class="linklist"><a class="link" href="devjms_destinationproperties.html" title="Destination properties are used when you are creating an Eclipse Amlen JMS client MessageConsumer or MessageProducer.">Destination properties</a></li></ul></div></nav>
+
+</article></main></body></html>

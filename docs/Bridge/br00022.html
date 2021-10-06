@@ -1,0 +1,45 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="The current state of the Bridge can be monitored by using the GET /admin/forwarder REST API."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Monitoring</title></head><body id="br00022.dita"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a><ul><li><a href="../Bridge/br00026.html">Installing  Amlen Bridge  </a></li><li><a href="../Bridge/br00012.html">Post installation user actions</a></li><li><a href="../Bridge/br00020.html">File paths</a></li><li><a href="../Bridge/br00021.html">Updating the Bridge configuration</a></li><li class="active"><a href="../Bridge/br00022.html">Monitoring</a></li><li><a href="../Bridge/br00023.html">Administrative REST interfaces</a></li></ul></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Monitoring</h1>
+
+<div class="body conbody"><p class="shortdesc">The current state of the Bridge can be monitored by using the GET /admin/forwarder REST
+API. </p>
+<p class="p">The API returns the state and statistics for a single forwarder or for a selection of
+forwarders.</p>
+<p class="p">If you use the <code class="ph codeph">/admin/forwarder</code> API, then the state of all forwarders is returned. </p><p class="p">If you use 
+<code class="ph codeph">/admin/forwarder/name</code>, then the state of the named forwarder is used. </p><p class="p">If the name contains an
+asterisk, then the state of all matching forwarders is returned.</p>
+<p class="p">The following status values can be used:</p><ul class="ul">
+<li class="li"><kbd class="ph userinput">Config</kbd>: there was no attempt to start the forwarder.</li>
+<li class="li"><kbd class="ph userinput">Wait</kbd>: the forwarder is waiting for a reconnect.</li>
+<li class="li"><kbd class="ph userinput">Opening</kbd>: the forwarder is in the process of opening
+connections.</li>
+<li class="li"><kbd class="ph userinput">Active</kbd>: the forwarder is actively receiving and sending
+messages.</li>
+<li class="li"><kbd class="ph userinput">Failed</kbd>: the connection is not restarted until a configuration
+change is made.</li>
+</ul>
+<div class="p">For example, run the following command and replace the status value as required:
+<pre class="pre codeblock"><code>
+{ 
+"m2w": {
+    "Status": "Active",
+    "Enabled": 1,
+    "Source": "MyServer",
+    "Destination": "WIoTP",
+    "SourceBytes": 115944,
+    "SourceMsgs": 614,
+    "DestBytes": 125768,
+    "DestMsgs": 614
+}
+}
+</code></pre>
+</div>
+<p class="p">If the Bridge is not able to connect successfully, it provides a human-readable reason string and
+a reason code (<code class="ph codeph">SourceRC</code> or <code class="ph codeph">Destruct</code>, or both). The reason code
+corresponds to a message from the product. For example, <code class="ph codeph">destRC=92</code> corresponds to
+message ID <code class="ph codeph">CWLNA0092</code>. Search the documentation for the message ID for more
+information.</p>
+</div>
+</article></main></body></html>

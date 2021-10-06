@@ -1,0 +1,69 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="In Eclipse Amlen, message size equals the payload plus any part of the properties that exceeds 200 bytes."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Message size</title></head><body id="devmsgsize"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a><ul><li><a href="../Developing/devconcepts.html">Messaging concepts</a></li><li><a href="../Developing/devmsgtypes.html">Natively supported message types</a></li><li class="active"><a href="../Developing/devmsgsize.html">Message size</a></li><li><a href="../Developing/devclientids.html">Client IDs</a></li><li><a href="../Developing/devclientservercert.html">Server certificates</a></li><li><a href="../Developing/devretainmsg.html">Developing retained message applications</a></li><li><a href="../Developing/devexpiredmsg.html">Expired messages</a></li><li><a href="../Developing/devsharedsubscriptions.html">Shared subscriptions</a></li><li><a href="../Developing/devmqttapp.html">Developing MQTT applications</a></li><li><a href="../Developing/devjmsapp.html">Developing JMS applications</a></li><li><a href="../Developing/devplug-in.html">Developing a protocol plug-in</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li></ul></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Message size</h1>
+
+
+
+
+
+
+<div class="body conbody"><p class="shortdesc">In <span class="ph">Eclipse Amlen</span>,
+message size equals the payload plus any part of the properties that
+exceeds 200 bytes.</p>
+<p class="p">In MQTT, the only thing in the properties is the name of the topic
+(plus 4 to 7 bytes of overhead). In JMS, the properties consist of
+the optional header fields including the topic name and user properties.</p>
+<section class="section">
+<table class="table"><caption><span class="table--title-label">Table 1. </span><span class="title">Limits for JMS and MQTT</span></caption><colgroup><col><col></colgroup><thead class="thead">
+<tr class="row">
+<th class="entry" id="devmsgsize__entry__1">Limit</th>
+<th class="entry" id="devmsgsize__entry__2">Description</th>
+</tr>
+</thead><tbody class="tbody">
+<tr class="row">
+<td class="entry" headers="devmsgsize__entry__1">clientID</td>
+<td class="entry" headers="devmsgsize__entry__2">max=1024 characters</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="devmsgsize__entry__1">queue/topic name</td>
+<td class="entry" headers="devmsgsize__entry__2">max=65535 bytes of UTF8</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="devmsgsize__entry__1">topic name</td>
+<td class="entry" headers="devmsgsize__entry__2">max=65535 bytes of UTF8. Cannot have more than 32 levels
+of topics.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="devmsgsize__entry__1">message size</td>
+<td class="entry" headers="devmsgsize__entry__2">The maximum size message that can be sent is determined by
+the Max Message Size parameter on the endpoint, which cannot be larger
+than 256MB. The default is 4MB. This includes the properties if they
+exceed 200 bytes.<div class="note restriction note_restriction"><span class="note__title">Restriction:</span> The properties of a message
+cannot exceed 16MB</div></td>
+</tr>
+<tr class="row">
+<td class="entry" headers="devmsgsize__entry__1">Property names</td>
+<td class="entry" headers="devmsgsize__entry__2">Must not exceed 32750 bytes if used in a selector.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="devmsgsize__entry__1">Constants</td>
+<td class="entry" headers="devmsgsize__entry__2">Must not exceed 32750 bytes if used in a selector.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="devmsgsize__entry__1">Selector</td>
+<td class="entry" headers="devmsgsize__entry__2">Cannot have more than 255 levels of nested parentheses.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="devmsgsize__entry__1">Selection rule</td>
+<td class="entry" headers="devmsgsize__entry__2">Cannot have more than 32 levels of operators</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="devmsgsize__entry__1">System time for both client and server</td>
+<td class="entry" headers="devmsgsize__entry__2">Must be in the range between the years 1970 and 2261.<div class="note note note_note"><span class="note__title">Note:</span> Expiration
+might not work correctly if the client and server times are not synchronized.</div></td>
+</tr>
+</tbody></table>
+</section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Developing/develop_guide.html" title="You can develop your own client applications to use with Eclipse Amlen.">Developing client applications</a></div></div></nav></article></main></body></html>

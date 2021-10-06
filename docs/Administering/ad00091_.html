@@ -1,0 +1,305 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="To send messages between IBM MQ and Eclipse Amlen, you must configure a server connection channel."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Configuring the IBM MQ server connection channel</title></head><body id="ad00091_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a><ul><li><a href="../Administering/ad00102_.html">MQ Connectivity</a><ul><li><a href="../Administering/ad00092_.html">MQ Connectivity throughput and message order</a></li><li><a href="../Administering/ad00101_.html">MQ Connectivity message persistence</a></li><li><a href="../Administering/ad00132_.html">MQ Connectivity retained messages</a></li><li><a href="../Administering/ad00103_.html">MQ Connectivity and high availability</a></li><li><a href="../Administering/ad00104_.html">MQ Connectivity security</a></li><li class="active"><a href="../Administering/ad00091_.html">Configuring the IBM MQ server connection channel</a><ul><li><a href="../Administering/ad00093_.html">Configuring the IBM MQ server connection channel on z/OS</a></li><li><a href="../Administering/ad00108_.html">Configuring MQ Connectivity security by using self-signed certificates</a></li><li><a href="../Administering/ad00109_.html">Configuring MQ Connectivity security by using CA certificates</a></li></ul></li><li><a href="../Administering/ad00105_.html">Configuring the MQ Connectivity SSL key repository</a></li><li><a href="../Administering/ad00113_.html">Configuring queue manager connections</a></li><li><a href="../Administering/ad00110_.html">Configuring destination mapping rules</a></li><li><a href="../Administering/ad00129_.html">Starting, restarting, stopping, and viewing the status of MQ Connectivity</a></li><li><a href="../Administering/ad00111_.html">MQ Connectivity scenarios</a></li></ul></li><li><a href="../Administering/workingwithjmsra.html">Eclipse Amlen resource adapter</a></li><li><a href="../Administering/vm00001_.html">Using VMware vSphere to handle Eclipse Amlen failover</a></li></ul></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Configuring the <span class="ph">IBM MQ</span> server
+connection channel</h1>
+
+<div class="body taskbody"><p class="shortdesc">To send messages between <span class="ph">IBM® MQ</span> and <span class="ph">Eclipse Amlen</span>, you must configure
+a server connection channel. </p>
+<section class="section context"> <p class="p">This task details the steps that are required to configure
+the <span class="ph">IBM MQ</span> server
+connection channel on distributed platforms. For more information
+about how to configure the server connection channel on z/OS®, see <a class="xref" href="ad00093_.html" title="To send messages between IBM MQ and Eclipse Amlen, you must configure a server connection channel. Follow these steps to configure a server connection channel on z/OS.">Configuring the IBM MQ server connection channel on z/OS</a>.</p><div class="p">You
+can use an existing server connection channel, but a new channel provides
+the following benefits:<ul class="ul">
+<li class="li">Active <span class="ph">Eclipse Amlen</span> channels
+can be easily identified on the <span class="ph">IBM MQ</span> queue manager.</li>
+<li class="li">The connection between <span class="ph">Eclipse Amlen</span> and <span class="ph">IBM MQ</span> can be explicitly
+secured.</li>
+<li class="li">CHLAUTH records can be created to map the user ID of the <span class="ph">Eclipse Amlen</span> requests to an
+appropriate user ID on the <span class="ph">IBM MQ</span> system.</li>
+</ul></div><p class="p">These steps take place on the <span class="ph">IBM MQ</span> system.</p></section>
+<section><ol class="ol steps"><li class="li step stepexpand"><span class="ph cmd">Create a server-connection channel for the queue manager, by using the <span class="keyword cmdname">DEFINE
+CHANNEL</span> MQSC command:</span><div class="itemgroup info"><ul class="ul">
+<li class="li">To create a server-connection channel for an unsecured <span class="ph">Eclipse Amlen</span> connection:<p class="p"><code class="ph codeph">runmqsc
+<var class="keyword varname">qmgrName</var></code></p><p class="p"><code class="ph codeph">DEFINE CHANNEL(<var class="keyword varname">channelName</var>)
+CHLTYPE(SVRCONN) TRPTYPE(TCP)</code></p></li>
+<li class="li">To create a server-connection channel for an SSL secured <span class="ph">Eclipse Amlen</span> connection:<p class="p"><code class="ph codeph">runmqsc
+<var class="keyword varname">qmgrName</var></code></p><p class="p"><code class="ph codeph">DEFINE CHANNEL(<var class="keyword varname">channelName</var>)
+CHLTYPE(SVRCONN) TRPTYPE(TCP) SSLCIPH(<var class="keyword varname">SSLCipherSpec</var>)</code></p></li>
+</ul><div class="note note note_note"><span class="note__title">Note:</span> When you create the server-connection channel, ensure that you specify a value of at
+least 1 for the <span class="keyword parmname">SHARECNV</span> parameter. </div><p class="p"><span class="ph">Eclipse Amlen</span> uses the server-connection channel to connect to
+<span class="ph">IBM MQ</span>.</p>For more information about the
+<span class="keyword cmdname">DEFINE CHANNEL</span> command and the options available, including the valid values of
+<var class="keyword varname">SSLCipherSpec</var>, see <a class="xref" href="http://www-01.ibm.com/support/knowledgecenter/SSFKSJ_7.5.0/com.ibm.mq.ref.adm.doc/q085520_.htm" target="_blank" rel="external noopener">DEFINE CHANNEL</a> in the <span class="ph">IBM MQ</span> documentation.</div>
+</li><li class="li step stepexpand"><span class="ph cmd">Make a note of the server-connection channel name, and which queue manager the channel is
+associated with. If applicable, make a note of the <var class="keyword varname">SSLCipherSpec</var> value
+used.</span><div class="itemgroup info">
+<p class="p">The name of the server-connection channel is used when you create a queue manager connection by
+using either the <span class="ph">Amlen WebUI</span>, or the <span class="ph">Eclipse Amlen</span> REST Administration APIs. The name is also used
+when you authorize <span class="ph">Eclipse Amlen</span> to connect to <span class="ph">IBM MQ</span>.</p>
+</div></li><li class="li step stepexpand"><span class="ph cmd">If you are not using an existing listener definition, then
+define and start a listener on the queue manager by using the <span class="keyword cmdname">DEFINE
+LISTENER</span> MQSC command:</span><div class="itemgroup info"><p class="p"><code class="ph codeph">runmqsc <var class="keyword varname">qmgrName</var></code></p><p class="p"><code class="ph codeph">DEFINE
+LISTENER (<var class="keyword varname">listenerName</var>) TRPTYPE(TCP) CONTROL(QMGR)
+PORT(<var class="keyword varname">portNumber</var>)</code></p><p class="p"><code class="ph codeph">START LISTENER
+(<var class="keyword varname">listenerName</var>)</code></p><p class="p">The listener enables
+the server to detect incoming network requests from <span class="ph">Eclipse Amlen</span>. Each queue manager
+on the same system must listen on a different port number.</p><p class="p">For more information about the <span class="keyword cmdname">DEFINE LISTENER</span> MQSC command and the options available, see <a class="xref" href="http://www-01.ibm.com/support/knowledgecenter/SSFKSJ_7.5.0/com.ibm.mq.ref.adm.doc/q085630_.htm" target="_blank" rel="external noopener">DEFINE LISTENER</a> in the <span class="ph">IBM MQ</span> documentation.</p></div>
+</li><li class="li step stepexpand" id="ad00091___MakeANoteOfThePortNumberOfTheListen"><span class="ph cmd">Make a note of
+the port number of the listener, and which queue manager the listener
+is associated with.</span></li><li class="li step stepexpand"><span class="ph cmd">If you are using an SSL connection, you must configure <span class="ph">Eclipse Amlen</span> security by creating
+key repositories and certificates:</span>
+<ul class="ul choices">
+<li class="li choice">For a step-by-step guide to configuring <span class="ph">Eclipse Amlen</span> security by using
+self-signed certificates, see <a class="xref" href="ad00108_.html" title="You can configure security between Eclipse Amlen and IBM MQ by using self-signed certificates to secure the connection.">Configuring MQ Connectivity security by using self-signed certificates</a>.</li>
+<li class="li choice">For a step-by-step guide to configuring <span class="ph">Eclipse Amlen</span> security by using
+CA certificates, see <a class="xref" href="ad00109_.html" title="You can configure security between Eclipse Amlen and IBM MQ by using CA certificates to secure the connection.">Configuring MQ Connectivity security by using CA certificates</a>.</li>
+</ul>
+</li></ol><div class="li stepsection"><p class="p">By default, <span class="ph">Eclipse Amlen</span> attempts to connect
+to <span class="ph">IBM MQ</span> by using
+the user ID <code class="ph codeph">admin</code>. You can make the connection more
+secure. The following steps use a CHLAUTH rule to secure the server
+connection channel. The steps also map the <span class="ph">Eclipse Amlen</span> user ID to a
+user ID on the <span class="ph">IBM MQ</span> system:</p></div><ol class="ol steps" start="6"><li class="li step stepexpand"><span class="ph cmd">Authorize <span class="ph">Eclipse Amlen</span> to
+connect securely to the <span class="ph">IBM MQ</span> queue manager:</span>
+<ol type="a" class="ol substeps">
+<li class="li substep substepexpand" id="ad00091___1"><span class="ph cmd">Obtain a user ID on the system your queue manager
+is running on. The user ID must not be a privileged administrative
+user. This user ID is the authority under which <span class="ph">Eclipse Amlen</span> runs on the queue
+manager.</span></li>
+<li class="li substep substepexpand" id="ad00091___2"><span class="ph cmd">Create a channel authentication record for each <span class="ph">Eclipse Amlen</span> IP address. Each
+channel authentication record must allow only the <span class="ph">Eclipse Amlen</span> server IP address
+to use the server-connection channel that was created to connect <span class="ph">IBM MQ</span> and <span class="ph">Eclipse Amlen</span>:</span><div class="itemgroup info"><p class="p"><code class="ph codeph">runmqsc <var class="keyword varname">qmgrName</var></code></p><p class="p"><code class="ph codeph">SET
+CHLAUTH(<var class="keyword varname">ChannelName</var>) TYPE(ADDRESSMAP) ADDRESS(<var class="keyword varname">IPAddress</var>)
+MCAUSER('<var class="keyword varname">userIDcreatedInStepa</var>')</code></p>Where:<dl class="dl">
+
+<dt class="dt dlterm"><var class="keyword varname">ChannelName</var></dt>
+<dd class="dd">Specifies the server-connection channel name that was created
+to connect <span class="ph">IBM MQ</span> and <span class="ph">Eclipse Amlen</span>.</dd>
+
+<dt class="dt dlterm"><var class="keyword varname">IPAddress</var></dt>
+<dd class="dd">Specifies the IP address of <span class="ph">Eclipse Amlen</span>.</dd>
+
+<dt class="dt dlterm"><var class="keyword varname">userIDcreatedInStepa</var></dt>
+<dd class="dd">Specifies the user ID created in step <a class="xref" href="ad00091_.html#ad00091___1">a</a> that
+is the authority under which <span class="ph">Eclipse Amlen</span> runs on the queue
+manager.</dd>
+</dl></div></li>
+<li class="li substep substepexpand" id="ad00091___4"><span class="ph cmd">Grant general <span class="ph">IBM MQ</span> access to the <span class="ph">Eclipse Amlen</span> user ID created
+in step <a class="xref" href="ad00091_.html#ad00091___1">a</a>:</span><div class="itemgroup info"><p class="p"><code class="ph codeph">runmqsc <var class="keyword varname">qmgrName</var></code></p><p class="p"><code class="ph codeph">SET
+AUTHREC OBJTYPE(QMGR) PRINCIPAL('<var class="keyword varname">userIDcreatedInStepa</var>')
+AUTHADD(CONNECT, INQ, DSP)</code></p>Where:<dl class="dl">
+<dt class="dt dlterm"><var class="keyword varname">userIDcreatedInStepa</var></dt>
+<dd class="dd">Specifies the user ID created in step <a class="xref" href="ad00091_.html#ad00091___1">a</a> that
+is the authority under which <span class="ph">Eclipse Amlen</span> runs on the queue
+manager.</dd>
+</dl></div></li>
+<li class="li substep substepexpand"><span class="ph cmd">Grant authority for the user ID created in step <a class="xref" href="ad00091_.html#ad00091___1">a</a> to issue requests to <span class="ph">IBM MQ</span>:</span><div class="itemgroup info"><p class="p"><code class="ph codeph">runmqsc <var class="keyword varname">qmgrName</var></code></p><p class="p"><code class="ph codeph">SET
+AUTHREC PROFILE('SYSTEM.DEFAULT.MODEL.QUEUE') OBJTYPE(QUEUE) PRINCIPAL('<var class="keyword varname">userIDcreatedInStepa</var>')
+AUTHADD(DSP, GET)</code></p><p class="p"><code class="ph codeph">SET AUTHREC PROFILE('SYSTEM.ADMIN.COMMAND.QUEUE')
+OBJTYPE(QUEUE) PRINCIPAL('<var class="keyword varname">userIDcreatedInStepa</var>')
+AUTHADD(DSP, PUT)</code></p>Where:<dl class="dl">
+<dt class="dt dlterm"><var class="keyword varname">userIDcreatedInStepa</var></dt>
+<dd class="dd">Specifies the user ID created in step <a class="xref" href="ad00091_.html#ad00091___1">a</a> that
+is the authority under which <span class="ph">Eclipse Amlen</span> runs on the queue
+manager.</dd>
+</dl></div></li>
+<li class="li substep substepexpand"><span class="ph cmd">Grant authority for the user ID created in step <a class="xref" href="ad00091_.html#ad00091___1">a</a> to create a <span class="ph">IBM MQ</span> queue for <span class="ph">Eclipse Amlen</span> synchronization
+records.</span><div class="itemgroup info"><p class="p">To synchronize the transfer of messages between <span class="ph">Eclipse Amlen</span> and <span class="ph">IBM MQ</span>, a queue is created
+with a name that starts <code class="ph codeph">SYSTEM.IMA</code>. This queue is
+used to store messages as they are transferred between <span class="ph">Eclipse Amlen</span> and <span class="ph">IBM MQ</span>.</p><p class="p"><code class="ph codeph">runmqsc <var class="keyword varname">qmgrName</var></code></p><p class="p"><code class="ph codeph">SET
+AUTHREC PROFILE('SYSTEM.IMA.*') OBJTYPE(QUEUE) PRINCIPAL('<var class="keyword varname">userIDcreatedInStepa</var>')
+AUTHADD(CRT, PUT, GET, BROWSE)</code></p><p class="p"><code class="ph codeph">SET AUTHREC
+PROFILE('SYSTEM.DEFAULT.LOCAL.QUEUE') OBJTYPE(QUEUE) PRINCIPAL('<var class="keyword varname">userIDcreatedInStepa</var>')
+AUTHADD(DSP)</code></p>Where:<dl class="dl">
+<dt class="dt dlterm"><var class="keyword varname">userIDcreatedInStepa</var></dt>
+<dd class="dd">Specifies the user ID created in step <a class="xref" href="ad00091_.html#ad00091___1">a</a> that
+is the authority under which <span class="ph">Eclipse Amlen</span> runs on the queue
+manager.</dd>
+</dl></div></li>
+<li class="li substep substepexpand" id="ad00091___5"><span class="ph cmd">For each mapping rule that maps to or from a <span class="ph">IBM MQ</span> topic, you must
+create a topic object and grant specific authorities to it. For each
+mapping rule that maps to or from a <span class="ph">IBM MQ</span> queue, you must
+create the queue and grant specific authorities to it.</span><div class="itemgroup info"><ul class="ul">
+<li class="li">For queues, use the <span class="ph">IBM MQ</span> MQSC commands <span class="keyword cmdname">DEFINE QLOCAL</span> and <span class="keyword cmdname">SET AUTHREC</span>:<p class="p"><code class="ph codeph">runmqsc <var class="keyword varname">qmgrName</var></code></p><p class="p"><code class="ph codeph">DEFINE QLOCAL(<var class="keyword varname">queueName</var>)</code></p><p class="p"><code class="ph codeph">SET AUTHREC PROFILE(<var class="keyword varname">queueName</var>) OBJTYPE(QUEUE) PRINCIPAL('<var class="keyword varname">userIDcreatedInStepa</var>') AUTHADD(<var class="keyword varname">authorization</var>)</code></p>Where:<dl class="dl">
+
+<dt class="dt dlterm"><var class="keyword varname">queueName</var></dt>
+<dd class="dd">Specifies the name of the <span class="ph">IBM MQ</span> queue.</dd>
+
+
+<dt class="dt dlterm"><var class="keyword varname">userIDcreatedInStepa</var></dt>
+<dd class="dd">Specifies the user ID created in step <a class="xref" href="ad00091_.html#ad00091___1">a</a> that is the authority under which <span class="ph">Eclipse Amlen</span> runs on the queue manager.</dd>
+
+
+<dt class="dt dlterm"><var class="keyword varname">authorization</var></dt>
+<dd class="dd">Specifies the put and get authorities to give to the queue. This value can be one of the following values:<ul class="ul">
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">PUT</dt>
+<dd class="dd">Grants put authority.</dd>
+<dd class="dd ddexpand">This authority is needed when the destination of a destination mapping rule is a <span class="ph">IBM MQ</span> queue.</dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">GET</dt>
+<dd class="dd">Grants get authority.</dd>
+<dd class="dd ddexpand">This authority is needed when the source of a destination mapping rule is a <span class="ph">IBM MQ</span> queue.</dd>
+
+</dl>
+</li>
+</ul></dd>
+
+</dl></li>
+<li class="li">For topics, use the <span class="ph">IBM MQ</span> MQSC commands <span class="keyword cmdname">DEFINE TOPIC</span> and <span class="keyword cmdname">SET AUTHREC</span>: <p class="p"><code class="ph codeph">runmqsc <var class="keyword varname">qmgrName</var></code></p><p class="p"><code class="ph codeph">DEFINE TOPIC(<var class="keyword varname">topicObjectName</var>) TOPICSTR(<var class="keyword varname">topicString</var>)</code></p><p class="p"><code class="ph codeph">SET AUTHREC PROFILE(<var class="keyword varname">topicObjectName</var>) OBJTYPE(TOPIC) PRINCIPAL('<var class="keyword varname">userIDcreatedInStepa</var>') AUTHADD(<var class="keyword varname">authorization</var>)</code></p>Where:<dl class="dl">
+
+<dt class="dt dlterm"><var class="keyword varname">topicObjectName</var></dt>
+<dd class="dd">Specifies the name of the <span class="ph">IBM MQ</span> topic object.</dd>
+
+
+<dt class="dt dlterm"><var class="keyword varname">topicString</var></dt>
+<dd class="dd">Specifies the topic string that you want to set authorization for.</dd>
+
+
+<dt class="dt dlterm"><var class="keyword varname">userIDcreatedInStepa</var></dt>
+<dd class="dd">Specifies the user ID created in step <a class="xref" href="ad00091_.html#ad00091___1">a</a> that is the authority under which <span class="ph">Eclipse Amlen</span> runs on the queue manager.</dd>
+
+
+<dt class="dt dlterm"><var class="keyword varname">authorization</var></dt>
+<dd class="dd">Specifies the publish and subscribe authorities to give to the topic. This value can be one of the following values: <ul class="ul">
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm"><code class="ph codeph">PUB, DSP</code></dt>
+<dd class="dd">Grants publish authority.</dd>
+<dd class="dd ddexpand">The display (DSP) authority allows <span class="ph">Eclipse Amlen</span> to inquire about the attributes of the topic object. This authority is necessary for <span class="ph">Eclipse Amlen</span> to publish messages.</dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm"><code class="ph codeph">SUB, CTRL</code></dt>
+<dd class="dd">Grants subscribe and control authority. </dd>
+<dd class="dd ddexpand">The control (CTRL) authority allows <span class="ph">Eclipse Amlen</span> to delete the <span class="ph">Eclipse Amlen</span> subscriptions on <span class="ph">IBM MQ</span>. The authority to delete subscriptions is required when the <span class="ph">Eclipse Amlen</span> server is restarted.</dd>
+
+</dl>
+</li>
+</ul></dd>
+
+</dl></li>
+</ul>For more information about <span class="keyword cmdname">DEFINE TOPIC</span>, <span class="keyword cmdname">DEFINE QLOCAL</span>, and <span class="keyword cmdname">SET AUTHREC</span>, see the <span class="ph">IBM MQ</span> documentation topics <a class="xref" href="http://www-01.ibm.com/support/knowledgecenter/SSFKSJ_7.5.0/com.ibm.mq.ref.adm.doc/q085710_.htm" target="_blank" rel="external noopener">DEFINE QLOCAL</a>, <a class="xref" href="http://www-01.ibm.com/support/knowledgecenter/SSFKSJ_7.5.0/com.ibm.mq.ref.adm.doc/q085770_.htm" target="_blank" rel="external noopener">DEFINE TOPIC</a>, and <a class="xref" href="http://www-01.ibm.com/support/knowledgecenter/SSFKSJ_7.5.0/com.ibm.mq.ref.adm.doc/q086620_.htm" target="_blank" rel="external noopener">SET AUTHREC</a>.<div class="note note note_note"><span class="note__title">Note:</span> It is possible to get an <code class="ph codeph">MQRC_NOT_AUTHORIZED</code> error when you attempt to publish or subscribe to a <span class="ph">IBM MQ</span> topic at or below a topic node that has a retained message. This error occurs after the queue manager is restarted. To resolve this problem, contact your IBM service representative about the <span class="ph">IBM MQ</span> APAR IV45712.</div></div></li>
+<li class="li substep substepexpand" id="ad00091___7"><span class="ph cmd">For each <span class="ph">IBM MQ</span> topic object
+that you create, you must decide what happens when a message cannot
+be delivered to a subscriber. For persistent messages, you must set
+the <span class="keyword parmname">PMSGDLV</span> attribute of the topic object. For
+non-persistent messages, you must set the <span class="keyword parmname">NPMSGDLV</span> attribute
+of the topic object. There are four possible values for these attributes:</span>
+<div class="itemgroup info"><ul class="ul">
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">ALLAVAIL</dt>
+<dd class="dd">The message is delivered to all subscribers that are able to receive it. No error is reported
+            for any subscribers that do not receive the message. Therefore, the <span class="ph">Eclipse Amlen</span> server does not know whether some
+            subscribers do not receive the message, and does not try to send the message again. If
+            there is only one subscriber, and that subscriber cannot receive the message, then the
+            message is discarded, even if it is a persistent message.</dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">ALL</dt>
+<dd class="dd">The message must be delivered to all subscribers. If a message is not delivered, the
+            corresponding destination mapping rule is disabled and rolls back any messages that are
+            in transit. The mapping rule does not operate, but all the messages are stored on the
+            server.</dd>
+<dd class="dd ddexpand">When the destination mapping rule is disabled, the <span class="ph">Amlen WebUI</span> reports the reason as <code class="ph codeph">MQRC_PUBLICATION_FAILURE</code>. This error typically occurs when there is a problem with the subscriber queue. The queue might be full, or the message might be larger than the<span class="keyword parmname"> MAXMSGL</span> attribute of the queue.</dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">ALLDUR</dt>
+<dd class="dd">The message must be delivered to all durable subscribers. If a durable subscriber is not available to receive the message, the corresponding destination mapping rule is disabled.</dd>
+<dd class="dd ddexpand">When the destination mapping rule is disabled, the <span class="ph">Amlen WebUI</span> reports the reason as <code class="ph codeph">MQRC_PUBLICATION_FAILURE</code>. This error typically occurs when there is a problem with the subscriber queue. The queue might be full, or the message might be larger than the<span class="keyword parmname"> MAXMSGL</span> attribute of the queue.</dd>
+
+</dl>
+</li>
+<li class="li">
+<dl class="dl">
+
+<dt class="dt dlterm">ASPARENT</dt>
+<dd class="dd">The behavior of the topic object is defined by the parent topic.</dd>
+
+</dl>
+</li>
+</ul>You can use the <span class="keyword cmdname">ALTER TOPIC</span> MQSC command to set the attribute values. For more information, see <a class="xref" href="http://www-01.ibm.com/support/knowledgecenter/SSFKSJ_7.5.0/com.ibm.mq.ref.adm.doc/q085430_.htm" target="_blank" rel="external noopener">ALTER TOPIC</a>, in the <span class="ph">IBM MQ</span> v7.5 documentation.</div>
+</li>
+</ol>
+</li></ol><div class="li stepsection">If you are configuring connection between <span class="ph">Eclipse Amlen</span> and <span class="ph">IBM MQ</span> version 8.0,
+avoid authentication of <span class="ph">Eclipse Amlen</span> in <span class="ph">IBM MQ</span>:</div><ol class="ol steps" start="7"><li class="li step stepexpand"><span class="ph cmd">Either use an unprivileged user ID, or amend the authentication
+configuration of the queue manager. You can amend the <span class="keyword parmname">CHCKCLNT</span> attribute
+in the CHLAUTH record. However, it is not recommended to allow general
+unauthenticated access to <span class="ph">IBM MQ</span>.</span></li></ol></section>
+<section class="example"><p class="p">This example demonstrates the <span class="ph">IBM MQ</span> setup to allow
+messages to be forwarded from <span class="ph">Eclipse Amlen</span> to a <span class="ph">IBM MQ</span> topic <code class="ph codeph">MQROOT/LEVEL1</code>.
+This example does not use a secure SSL connection.</p><ol class="ol">
+<li class="li">Create a server-connection channel that is called <code class="ph codeph">SYSTEM.MSG.SVRCONN</code> for <code class="ph codeph">QM1</code>,
+by using the <span class="keyword cmdname">DEFINE CHANNEL</span> MQSC command:<p class="p"><code class="ph codeph">runmqsc
+QM1</code></p><p class="p"><code class="ph codeph">DEFINE CHANNEL(SYSTEM.MSG.SVRCONN) CHLTYPE(SVRCONN)
+TRPTYPE(TCP)</code></p></li>
+<li class="li">The server-connection channel name is <code class="ph codeph">SYSTEM.MSG.SVRCONN</code>,
+and it is associated with <code class="ph codeph">QM1</code>.</li>
+<li class="li">Start a listener <code class="ph codeph">MSGLISTENER</code> on port <code class="ph codeph">1414</code> for
+queue manager <code class="ph codeph">QM1</code>:<p class="p"><code class="ph codeph">runmqsc QM1</code></p><p class="p"><code class="ph codeph">DEFINE
+LISTENER (MSGLISTENER) TRPTYPE(TCP) CONTROL(QMGR) PORT(1414)</code></p><p class="p"><code class="ph codeph">START
+LISTENER (MSGLISTENER)</code></p></li>
+<li class="li">The port number is <code class="ph codeph">1414</code>, and it is associated
+with <code class="ph codeph">QM1</code>.</li>
+<li class="li">Authorize <span class="ph">Eclipse Amlen</span> to
+connect securely to the <span class="ph">IBM MQ</span> queue manager:<ol class="ol" type="a">
+<li class="li">Obtain a user ID on the system <code class="ph codeph">QM1</code> is running
+on. In this example, the user ID <code class="ph codeph">MSG</code> is used.</li>
+<li class="li">Create a channel authentication record that allows only the <span class="ph">Eclipse Amlen</span> IP address <code class="ph codeph">192.0.2.1</code> to
+use the server-connection channel <code class="ph codeph">SYSTEM.MSG.SVRCONN</code>:<p class="p"><code class="ph codeph">runmqsc
+QM1</code></p><p class="p"><code class="ph codeph">SET CHLAUTH(SYSTEM.MSG.SVRCONN) TYPE(ADDRESSMAP)
+ADDRESS(192.0.2.1) MCAUSER('MSG')</code></p></li>
+<li class="li">Grant general <span class="ph">IBM MQ</span> access
+to the user ID <code class="ph codeph">MSG</code>:<p class="p"><code class="ph codeph">runmqsc QM1</code></p><p class="p"><code class="ph codeph">SET
+AUTHREC OBJTYPE(QMGR) PRINCIPAL('MSG') AUTHADD(CONNECT, INQ, DSP)</code></p></li>
+<li class="li">Grant authority for the user ID <code class="ph codeph">MSG</code> to issue
+requests to <span class="ph">IBM MQ</span>:<p class="p"><code class="ph codeph">runmqsc
+QM1</code></p><p class="p"><code class="ph codeph">SET AUTHREC PROFILE('SYSTEM.DEFAULT.MODEL.QUEUE')
+OBJTYPE(QUEUE) PRINCIPAL('MSG') AUTHADD(DSP, GET)</code></p><p class="p"><code class="ph codeph">SET
+AUTHREC PROFILE('SYSTEM.ADMIN.COMMAND.QUEUE') OBJTYPE(QUEUE) PRINCIPAL('MSG')
+AUTHADD(DSP, PUT)</code></p></li>
+<li class="li">Grant authority for the user ID <code class="ph codeph">MSG</code> to create
+a <span class="ph">IBM MQ</span> queue for <span class="ph">Eclipse Amlen</span> synchronization
+records:<p class="p"><code class="ph codeph">runmqsc QM1</code></p><p class="p"><code class="ph codeph">SET AUTHREC
+PROFILE('SYSTEM.IMA.*') OBJTYPE(QUEUE) PRINCIPAL('MSG') AUTHADD(CRT,
+PUT, GET, BROWSE)</code></p><p class="p"><code class="ph codeph">SET AUTHREC PROFILE('SYSTEM.DEFAULT.LOCAL.QUEUE')
+OBJTYPE(QUEUE) PRINCIPAL('MSG') AUTHADD(DSP)</code></p></li>
+<li class="li">Grant publish authority to <code class="ph codeph">MQROOT/LEVEL1</code>: <p class="p"><code class="ph codeph">runmqsc
+QM1</code></p><p class="p"><code class="ph codeph">DEFINE TOPIC(MSGTOPIC.QM1) TOPICSTR(MQROOT/LEVEL1)</code></p><p class="p"><code class="ph codeph">SET
+AUTHREC PROFILE(MSGTOPIC.QM1) OBJTYPE(TOPIC) PRINCIPAL('MSG') AUTHADD(PUB,
+DSP)</code></p></li>
+</ol></li>
+</ol></section>
+<section class="section postreq"><p class="p">After you configure the <span class="ph">IBM MQ</span> server connection
+channel, you must configure the <span class="ph">Eclipse Amlen</span> queue manager
+connections and destination mapping rules.</p><p class="p">If you are creating a secured connection, you must enter the same
+<var class="keyword varname">SSLCipherSpec</var> value for the <span class="keyword parmname">SSLCipherSpec</span> variable as you
+specified when you created the server-connection channel.</p><p class="p">For more information
+about configuring queue manager connections, see <a class="xref" href="ad00113_.html" title="To connect Eclipse Amlen to IBM MQ queue managers, you must create queue manager connections. Each queue manager connection specifies the connection details for one queue manager.">Configuring queue manager connections</a>.</p><p class="p">For more information about configuring
+destination mapping rules, see <a class="xref" href="ad00110_.html" title="To send messages between Eclipse Amlen and IBM MQ, you must create destination mapping rules. Destination mapping rules are created by associating an Eclipse Amlen topic or queue with a IBM MQ topic or queue. You can create a maximum of 64 destination mapping rules.">Configuring destination mapping rules</a>.</p></section>
+</div>
+
+</article></main></body></html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="You can enable cluster membership of Eclipse Amlen servers in a high availability (HA) pair by using the Amlen WebUI."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Enabling cluster membership of Eclipse Amlen servers in a high availability pair</title></head><body id="ad00949_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a><ul><li><a href="../Administering/ad01003_.html">Configuring cluster membership in a high availability pair by using the Amlen WebUI</a><ul><li><a href="../Administering/ad00941_.html">Configuring cluster membership by using the Amlen WebUI  </a></li><li><a href="../Administering/ad01004_.html">Configuring cluster membership in a high availability pair by using the Amlen WebUI</a><ul><li class="active"><a href="../Administering/ad00949_.html">Enabling cluster membership of Eclipse Amlen servers in a high availability pair</a></li><li><a href="../Administering/ad00950_.html">Disabling cluster membership of Eclipse Amlen servers in a high availability pair</a></li></ul></li><li><a href="../Administering/ad00951.html">Removing an inactive cluster member by using the Amlen WebUI  </a></li><li><a href="../Administering/ad00952.html">Viewing message flow by using the Amlen WebUI  </a></li></ul></li><li><a href="../Administering/ad00944_.html">Configuring cluster membership by using REST Administration APIs</a></li><li><a href="../Administering/ad00943_.html">Using omping to test multicast connectivity in clusters</a></li></ul></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Enabling cluster membership of <span class="ph">Eclipse Amlen</span> servers in a
+high availability pair</h1>
+
+
+
+
+
+
+<div class="body taskbody"><p class="shortdesc">You can enable cluster membership of <span class="ph">Eclipse Amlen</span> servers in a
+high availability (HA) pair by using the  <span class="ph">Amlen WebUI</span>.</p>
+<section class="section context"> <p class="p">System administrators can enable cluster membership of <span class="ph">Eclipse Amlen</span> servers in an
+HA pair by using the <span class="ph">Amlen WebUI</span>, or by using <span class="ph">REST Administration APIs</span>. For more
+information about using <span class="ph">REST Administration APIs</span> to enable
+cluster membership of servers in an HA pair, see <a class="xref" href="ad00947_.html" title="You can enable cluster membership of Eclipse Amlen servers in a high availability (HA) pair by using REST Administration APIs.">Enabling cluster membership of Eclipse Amlen servers in a high availability pair by using REST Administration APIs</a>.</p> <p class="p">In this scenario, Server A is
+the primary node and Server B is the standby node in the HA pair.</p> </section>
+<section><ol class="ol steps"><li class="li step stepexpand"><span class="ph cmd">Configure cluster membership values that relate to addresses
+and ports on Server B. Do not enable cluster membership on Server
+B.</span>
+<ol type="a" class="ol substeps">
+<li class="li substep substepexpand"><span class="ph cmd">Ensure that you are managing Server B. In the <span class="ph uicontrol">Cluster</span> menu,
+select <span class="ph uicontrol">Join/Leave</span></span></li>
+<li class="li substep substepexpand"><span class="ph cmd">Click <span class="ph uicontrol">Edit</span> in the <span class="ph uicontrol">Configuration</span> panel.</span>
+</li>
+<li class="li substep substepexpand"><span class="ph cmd">Specify the cluster configuration: </span><div class="itemgroup info"> <ol class="ol" type="i">
+<li class="li">Type the control address of Server B into the <span class="ph uicontrol">Control
+Address</span> field.</li>
+<li class="li">Ensure that the other cluster membership configuration parameters
+that are necessary for Server A and B to identify and connect to the
+other members of the cluster are set, for example, if Server A is
+using external addresses or ports. For more information about the
+parameters that you can set to configure cluster membership on a server,
+see <a class="xref" href="ad00940_.html" title="You can configure Eclipse Amlen servers in clusters to increase the maximum messaging throughput or the maximum number of concurrent connections beyond the capacity of a single Eclipse Amlen server. All Eclipse Amlen servers in a cluster share a common topic tree.">Configuring the cluster membership of an Eclipse Amlen server</a>.</li>
+</ol> </div></li>
+<li class="li substep substepexpand"><span class="ph cmd">Click <span class="ph uicontrol">Save</span></span></li>
+</ol>
+<div class="itemgroup info"> <div class="note note note_note"><span class="note__title">Note:</span>  <p class="p">You cannot update the values for the following fields
+on a Standby server:</p> <ul class="ul">
+<li class="li"><span class="ph uicontrol">Cluster Name</span></li>
+<li class="li"><span class="ph uicontrol">Cluster Membership</span></li>
+<li class="li"><span class="ph uicontrol">Discovery Server List</span></li>
+</ul> </div> </div></li><li class="li step stepexpand"><span class="ph cmd">Configure and enable cluster membership on Server A. </span>
+<ol type="a" class="ol substeps">
+<li class="li substep substepexpand"><span class="ph cmd">Ensure that you are managing Server A. In the <span class="ph uicontrol">Cluster</span> menu,
+select <span class="ph uicontrol">Join/Leave</span></span></li>
+<li class="li substep substepexpand"><span class="ph cmd">Click <span class="ph uicontrol">Edit</span> in the <span class="ph uicontrol">Configuration</span> panel.</span>
+</li>
+<li class="li substep substepexpand"><span class="ph cmd">Specify the cluster configuration: </span><div class="itemgroup info"> <ol class="ol" type="i">
+<li class="li">Type the name of the cluster that Server A is to join in the <span class="ph uicontrol">Cluster
+Name</span> field. This must be the same name as the name of
+the cluster that you specified for Server B to join.</li>
+<li class="li">Type the control address of Server A into the <span class="ph uicontrol">Control
+Address</span> field.</li>
+<li class="li">Ensure that the other cluster membership configuration parameters
+that are necessary for Server A and B to identify and connect to the
+other members of the cluster are set, for example, if Server B is
+using external addresses or ports. For more information about the
+parameters that you can set to configure cluster membership on a server,
+see <a class="xref" href="ad00940_.html" title="You can configure Eclipse Amlen servers in clusters to increase the maximum messaging throughput or the maximum number of concurrent connections beyond the capacity of a single Eclipse Amlen server. All Eclipse Amlen servers in a cluster share a common topic tree.">Configuring the cluster membership of an Eclipse Amlen server</a>.</li>
+</ol> </div></li>
+<li class="li substep substepexpand"><span class="ph cmd">Select the <span class="ph uicontrol">Enabled</span> check box.</span>
+</li>
+<li class="li substep substepexpand"><span class="ph cmd">Click <span class="ph uicontrol">Save</span></span></li>
+<li class="li substep substepexpand"><span class="ph cmd">Click <span class="ph uicontrol">Restart later</span></span></li>
+</ol>
+</li><li class="li step stepexpand" id="ad00949___restartboth"><span class="ph cmd">Restart both servers.</span><div class="itemgroup info">Restart
+Server B first.</div>
+<ol type="a" class="ol substeps">
+<li class="li substep"><span class="ph cmd">Ensure that you are managing Server B. In the <span class="ph uicontrol">Server</span> menu,
+select <span class="ph uicontrol">Server Control</span></span></li>
+<li class="li substep"><span class="ph cmd">Click <span class="ph uicontrol">Restart the server</span>, and
+then click <span class="ph uicontrol">Restart</span></span></li>
+<li class="li substep"><span class="ph cmd">Switch to managing Server A. In the <span class="ph uicontrol">Server</span> menu,
+select <span class="ph uicontrol">Server Control</span></span></li>
+<li class="li substep"><span class="ph cmd">Click <span class="ph uicontrol">Restart the server</span>, and
+then click <span class="ph uicontrol">Restart</span></span></li>
+</ol>
+</li><li class="li step stepexpand"><span class="ph cmd">After your servers have restarted, verify the status of
+your servers.</span><div class="itemgroup info">If either server is in maintenance mode,
+repeat step <a class="xref" href="ad00949_.html#ad00949___restartboth">3</a>.</div>
+<ol type="a" class="ol substeps">
+<li class="li substep"><span class="ph cmd">On Server A, check the <span class="ph uicontrol">Status</span> drop-down
+list and verify that the status displays the values <span class="ph uicontrol">High
+Availability: Primary node</span> and <span class="ph uicontrol">Cluster: Active</span></span>
+</li>
+<li class="li substep"><span class="ph cmd">In the <span class="ph uicontrol">Cluster</span> menu, click <span class="ph uicontrol">Status</span></span>
+</li>
+<li class="li substep"><span class="ph cmd">In the <span class="ph uicontrol">Cluster Status Data</span> pane,
+ensure that the other members of the cluster are visible in the table. </span>
+</li>
+<li class="li substep"><span class="ph cmd">On Server B, check the <span class="ph uicontrol">Status</span> drop-down
+list and verify that the status displays the values <span class="ph uicontrol">High
+Availability: Standby node</span> and <span class="ph uicontrol">Cluster: Standby</span></span>
+</li>
+</ol>
+</li></ol></section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Administering/ad01004_.html" title="System administrators can configure cluster membership in high availability (HA) pairs by using the Amlen WebUI.">Configuring cluster membership in a high availability pair by using the Amlen WebUI</a></div></div></nav></article></main></body></html>

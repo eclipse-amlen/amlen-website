@@ -1,0 +1,41 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators and messaging administrators can configure an LDAP server connection by using the User Authentication page in the Amlen WebUI."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Configuring an LDAP server by using the Amlen WebUI</title></head><body id="ad00372_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a><ul><li class="active"><a href="../Administering/ad00372_.html">Configuring an LDAP server by using the Amlen WebUI</a></li><li><a href="../Administering/ad00373_.html">Configuring an LDAP server by using REST Administration APIs</a></li></ul></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Configuring an LDAP server by using the <span class="ph">Amlen WebUI</span></h1>
+
+<div class="body taskbody"><p class="shortdesc">System administrators and messaging administrators can configure an LDAP server
+    connection by using the <span class="ph uicontrol">User Authentication</span> page in the <span class="ph">Amlen WebUI</span>.</p>
+<section class="section context"><p class="p">You can configure an LDAP server connection by using the <span class="ph">Amlen WebUI</span>, or by using <span class="ph">REST Administration APIs</span>. For more information about using <span class="ph">REST Administration APIs</span> to configure an LDAP server connection, see <a class="xref" href="ad00373_.html" title="System administrators can configure an LDAP server for messaging users and groups by using REST Administration APIs.">Configuring an LDAP server by using REST Administration APIs</a>.</p>For more information about the components that you must specify when you configure an LDAP server connection, see <a class="xref" href="ad00370_.html" title="You can configure messaging users and groups by using an LDAP server. You can configure the LDAP server either by using the Amlen WebUI, or by using REST Administration APIs.">Configuring LDAP for user authentication</a>.</section>
+<section><ol class="ol steps"><li class="li step stepexpand">
+        <span class="ph cmd">Go to the <span class="ph uicontrol">User Authentication</span> page in one of the following
+          ways:</span>
+        <ul class="ul choices">
+          <li class="li choice">From the <span class="ph uicontrol">Home</span> tab, click <span class="ph uicontrol">LDAP
+Configuration</span> in the <span class="ph uicontrol">Configure IBM Watson IoT Platform - Message Gateway to
+accept connections</span> pane.</li>
+          <li class="li choice">From the <span class="ph uicontrol">Server</span> menu, click <span class="ph uicontrol">User
+              Authentication</span>.</li>
+        </ul>
+      </li><li class="li step stepexpand"><span class="ph cmd">Choose an action:</span><div class="itemgroup info"><p class="p">From the <span class="ph uicontrol">External
+LDAP</span> pane:</p></div>
+<ul class="ul choices">
+<li class="li choice">To edit an external LDAP server connection, click the <span class="ph uicontrol">Edit</span>
+            icon.</li>
+<li class="li choice">To enable the use of LDAP servers to manage messaging users and groups, click
+              <span class="ph uicontrol">Enable LDAP</span>.<p class="p">This option is only available if LDAP is
+              disabled. If you enable LDAP, you cannot edit, or delete the <span class="ph">Eclipse Amlen</span> messaging users and
+            groups.</p></li>
+<li class="li choice">To disable the use of an LDAP server to manage messaging and
+groups, click <span class="ph uicontrol">Disable LDAP</span>.<p class="p">This option is
+only available if LDAP is enabled.</p></li>
+<li class="li choice">To test an LDAP server connection, select the LDAP server
+connection, and select <span class="ph uicontrol">Test connection</span> from
+the <span class="ph uicontrol">Other Actions</span> list.</li>
+     <li class="li choice">To reset an LDAP server connection, select the LDAP server connection, and select
+       <span class="ph uicontrol">Reset</span> from the <span class="ph uicontrol">Other Actions</span> list.</li>
+</ul>
+<div class="itemgroup info"><div class="p"><div class="note note note_note"><span class="note__title">Note:</span> If you update the LDAP certificate, the new LDAP settings
+will be used the next time a client or connection is authenticated
+or authorized.</div></div></div></li></ol></section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Administering/ad00370_.html" title="You can configure messaging users and groups by using an LDAP server. You can configure the LDAP server either by using the Amlen WebUI, or by using REST Administration APIs.">Configuring LDAP for user authentication</a></div></div></nav></article></main></body></html>

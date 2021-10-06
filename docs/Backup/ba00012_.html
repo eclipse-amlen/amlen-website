@@ -1,0 +1,91 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can create a backup of the Amlen WebUI server by using REST Administration APIs."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Creating a backup of the Amlen WebUI</title></head><body id="ba00012_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a><ul><li><a href="../Backup/ba00001_.html">Creating a backup of the Eclipse Amlen messaging server</a></li><li><a href="../Backup/ba00002_.html">Restoring the Eclipse Amlen server from a backup in the same environment</a></li><li class="active"><a href="../Backup/ba00012_.html">Creating a backup of the Amlen WebUI</a></li><li><a href="../Backup/ba00013_.html">Restoring the Amlen WebUI from a backup</a></li><li><a href="../Backup/ba00004_.html">Backup and restore in a high availability environment</a></li></ul></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Creating a backup of the <span class="ph">Amlen WebUI</span></h1>
+
+
+
+
+
+
+<div class="body taskbody"><p class="shortdesc">System administrators can create a backup of the <span class="ph">Amlen WebUI</span> server by using <span class="ph">REST Administration APIs</span>.</p>
+<section class="section prereq">
+<ul class="ul">
+<li class="li">To ensure consistency of the backup, stop the <span class="ph">Amlen WebUI</span> before you perform the backup.</li>
+</ul>
+</section>
+<section class="section context">
+<p class="p">System administrators can create a backup that can be used to restore the <span class="ph">Amlen WebUI</span> configuration. The configuration data is located in your file system.and can be backed up by using standard system tools. If you are using the <span class="ph">Amlen WebUI</span> in a Docker environment, you can use standard Docker commands to create the backup.</p>
+</section>
+<section><ol class="ol steps"><li class="li step">
+<span class="ph cmd">Stop the <span class="ph">Amlen WebUI</span>:</span>
+<ul class="ul choices">
+<li class="li choice">If you are using the <span class="ph">Amlen WebUI</span> in a Docker environment, use the following command:<pre class="pre codeblock"><code>docker stop &lt;<var class="keyword varname">WebUI container name</var>&gt;</code></pre></li>
+<li class="li choice">If you are running the <span class="ph">Amlen WebUI</span> directly on
+            the host operating system (OS), use the following command:
+            <pre class="pre codeblock"><code>systemctl stop imawebui</code></pre></li>
+</ul>
+</li><li class="li step">
+<span class="ph cmd">Back up the <span class="ph">Amlen WebUI</span> files:</span>
+<ul class="ul choices">
+<li class="li choice">If you are using the <span class="ph">Amlen WebUI</span> in a Docker environment, use either of the following commands:<pre class="pre codeblock"><code>docker export </code></pre>or <pre class="pre codeblock"><code>docker save </code></pre></li>
+<li class="li choice">If you are running the <span class="ph">Amlen WebUI</span> directly on the host OS, use your standard system tools to back up the contents of the following files and directories:<ul class="ul">
+<li class="li"><span class="ph filepath">/opt/ibm/imawebui/openldap/config/users.ldif</span></li>
+<li class="li"><span class="ph filepath">/opt/ibm/imawebui/openldap/config </span></li>
+<li class="li"><span class="ph filepath">/var/messagesight/webui/openldap-data </span></li>
+<li class="li"><span class="ph filepath">/var/messagesight/webui/wlp/usr/servers/ISMWebUI/properties.xml</span></li>
+<li class="li"><span class="ph filepath">/var/messagesight/webui/wlp/usr/servers/ISMWebUI/resources/security</span></li>
+</ul></li>
+</ul>
+</li><li class="li step">
+<span class="ph cmd">Restart the <span class="ph">Amlen WebUI</span>: </span>
+<ul class="ul choices">
+<li class="li choice">If you are using the <span class="ph">Amlen WebUI</span> in a Docker environment, use the following command:<pre class="pre codeblock"><code>docker start &lt;<var class="keyword varname">WebUI container name</var>&gt;</code></pre></li>
+<li class="li choice">If you are running the <span class="ph">Amlen WebUI</span> directly on
+            the host OS, use the following
+            command:<pre class="pre codeblock"><code>systemctl start imawebui</code></pre></li>
+</ul>
+</li></ol></section>
+<section class="example">
+<p class="p">The following example shows creating a backup of the <span class="ph">Amlen WebUI</span> when it is in a Docker environment:</p>
+<div class="p">
+<pre class="pre screen">[admin@localhost ~]$ sudo docker stop IMAWEBUI
+IMAWEBUI
+[admin@localhost ~]$ sudo docker commit IMAWEBUI imawebui:backup
+2a17d852237170f4f21fc77ce62bdda7ac3db69ec8129eb620cd6dfedc3fad76
+[admin@localhost ~]$ sudo docker save -o imawebui-20151211.tar imawebui:backup
+[admin@localhost ~]$ sudo docker rmi imawebui:backup
+Untagged: imawebui:backup
+Deleted: 2a17d852237170f4f21fc77ce62bdda7ac3db69ec8129eb620cd6dfedc3fad76
+</pre>
+</div>
+<p class="p">The following example shows creating a backup of the <span class="ph">Amlen WebUI</span> when it is running directly on the host OS:</p>
+<pre class="pre screen">[admin@localhost ~]$ sudo /opt/ibm/wlp/bin/server stop ISMWebUI
+Stopping server ISMWebUI.
+Server ISMWebUI stopped.
+
+[admin@localhost ~]$ sudo zip -r -P &lt;password&gt; imawebui-20151211.zip /opt/ibm/imawebui/openldap/config 
+/opt/ibm/imawebui/openldap-data /opt/ibm/wlp/usr/servers/ISMWebUI/properties.xml /opt/ibm/wlp/usr/servers/ISMWebUI/resources/security
+  adding: opt/ibm/imawebui/openldap/config/ (stored 0%)
+  adding: opt/ibm/imawebui/openldap/config/slapd.conf (deflated 55%)
+  adding: opt/ibm/imawebui/openldap/config/users.ldif (deflated 70%)
+  adding: opt/ibm/imawebui/openldap-data/ (stored 0%)
+  adding: opt/ibm/imawebui/openldap-data/DB_CONFIG (stored 0%)
+  adding: opt/ibm/imawebui/openldap-data/__db.001 (deflated 99%)
+  adding: opt/ibm/imawebui/openldap-data/__db.002 (deflated 97%)
+  adding: opt/ibm/imawebui/openldap-data/__db.003 (deflated 98%)
+  adding: opt/ibm/imawebui/openldap-data/alock (deflated 98%)
+  adding: opt/ibm/imawebui/openldap-data/dn2id.bdb (deflated 99%)
+  adding: opt/ibm/imawebui/openldap-data/id2entry.bdb (deflated 100%)
+  adding: opt/ibm/imawebui/openldap-data/log.0000000001 (deflated 100%)
+  adding: opt/ibm/wlp/usr/servers/ISMWebUI/properties.xml (deflated 62%)
+  adding: opt/ibm/wlp/usr/servers/ISMWebUI/resources/security/ (stored 0%)
+  adding: opt/ibm/wlp/usr/servers/ISMWebUI/resources/security/ltpa.keys (deflated 31%)
+  adding: opt/ibm/wlp/usr/servers/ISMWebUI/resources/security/key.jks (deflated 5%)
+[admin@localhost ~]$ sudo /opt/ibm/wlp/bin/server start ISMWebUI
+Starting server ISMWebUI.
+Server ISMWebUI started with process ID 8248.
+</pre>
+</section>
+</div>
+</article></main></body></html>

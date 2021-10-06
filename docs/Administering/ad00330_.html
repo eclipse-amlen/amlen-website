@@ -1,0 +1,49 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="You can configure a remote syslog-compatible log server to act as a single, centralized repository for all log messages that are forwarded from the following Eclipse Amlen logs: imaserver-default.log, imaserver-connection.log, imaserver-security.log, imaserver-admin.log, and imaserver-mqconnectivity.log."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Configuring a remote syslog server</title></head><body id="ad00330_"><nav role="toc"><ul></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Configuring a remote syslog server</h1>
+
+<div class="body conbody"><p class="shortdesc">You can configure a remote syslog-compatible log server
+to act as a single, centralized repository for all log messages that
+are forwarded from the following <span class="ph">Eclipse Amlen</span> logs: <code class="ph codeph"><span class="ph">imaserver</span>-default.log</code>, <code class="ph codeph"><span class="ph">imaserver</span>-connection.log</code>, <code class="ph codeph"><span class="ph">imaserver</span>-security.log</code>, <code class="ph codeph"><span class="ph">imaserver</span>-admin.log</code>,
+and <code class="ph codeph"><span class="ph">imaserver</span>-mqconnectivity.log</code>.</p>
+<p class="p">All messages logged to these files are forwarded to a remote syslog server when log message forwarding is enabled. The <code class="ph codeph">webui-messages*.log</code> files are not forwarded. </p>
+<div class="p">When log messages are forwarded, a facility keyword is applied
+to each message according to the <span class="ph">Eclipse Amlen</span> log file which
+contains the forwarded message, as follows:
+<table class="table"><caption><span class="table--title-label">Table 1. </span><span class="title">Facility keywords are applied to log messages
+that are forwarded to a remote syslog server. The facility keyword
+is based on the <span class="ph">Eclipse Amlen</span> log
+file which contains the forwarded message. The first column details
+the <span class="ph">Eclipse Amlen</span> log file,
+and the second column details the facility keyword.</span></caption><colgroup><col><col></colgroup><thead class="thead">
+<tr class="row">
+<th class="entry" id="ad00330___entry__1"><span class="ph">Eclipse Amlen</span> log file </th>
+<th class="entry" id="ad00330___entry__2">Facility keyword</th>
+</tr>
+</thead><tbody class="tbody">
+<tr class="row">
+<td class="entry" headers="ad00330___entry__1"><code class="ph codeph"><span class="ph">imaserver</span>-default.log</code></td>
+<td class="entry" headers="ad00330___entry__2">kern</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00330___entry__1"><code class="ph codeph"><span class="ph">imaserver</span>-connection.log</code></td>
+<td class="entry" headers="ad00330___entry__2">local0</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00330___entry__1"><code class="ph codeph"><span class="ph">imaserver</span>-security.log</code></td>
+<td class="entry" headers="ad00330___entry__2">authpriv</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00330___entry__1"><code class="ph codeph"><span class="ph">imaserver</span>-admin.log</code></td>
+<td class="entry" headers="ad00330___entry__2">cron</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="ad00330___entry__1"><code class="ph codeph"><span class="ph">imaserver</span>-mqconnectivity.log</code></td>
+<td class="entry" headers="ad00330___entry__2">local1</td>
+</tr>
+</tbody></table>
+You can use the facility keyword to filter the log
+messages on the remote syslog server.</div>
+</div>
+</article></main></body></html>

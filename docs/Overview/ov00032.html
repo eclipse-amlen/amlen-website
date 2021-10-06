@@ -1,0 +1,345 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="Topic-based wildcards allow subscribers to subscribe to a group of topics that have similar topic strings."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Wildcards</title></head><body id="ov00032"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a><ul><li><a href="../Overview/ov00002_.html">Architecture Overview</a></li><li><a href="../Overview/ov60000_.html">Eclipse Amlen in Containers</a></li><li><a href="../Overview/ov00050.html">Supported protocols</a></li><li><a href="../Bridge/br00000.html">   Amlen Bridge</a></li><li><a href="../Overview/ov00003_.html">Key Concepts</a><ul><li><a href="../Overview/ov20000.html">Point-to-point messaging</a></li><li><a href="../Overview/ov00030.html">Publish/Subscribe</a><ul><li><a href="../Overview/ov30010.html">Subscribers and Subscriptions</a></li><li><a href="../Overview/ov00031.html">Topic Strings</a></li><li class="active"><a href="../Overview/ov00032.html">Wildcards</a></li><li><a href="../Overview/ov00033.html">Retained messages</a></li></ul></li><li><a href="../Planning/ov00102_.html">Message delivery</a></li><li><a href="../Planning/ov00101_.html">Messaging patterns</a></li><li><a href="../Overview/ov00060.html">Message hubs, endpoints, and policies</a></li><li><a href="../Overview/ov00150_.html">Clustering in Eclipse Amlen</a></li><li><a href="../Overview/ov00140_.html">Disconnected client notifications</a></li><li><a href="../Overview/ov00070.html">MQ Connectivity</a></li><li><a href="../Overview/ov40000.html">High availability</a></li><li><a href="../Bridge/br00001.html">   Amlen Bridge concepts</a></li></ul></li><li><a href="../Overview/accessibility_topic.html">Accessibility features for Eclipse Amlen</a></li><li><a href="../Overview/notices.html">Notices</a></li></ul></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Wildcards</h1>
+
+<div class="body conbody"><p class="shortdesc">Topic-based wildcards allow subscribers to subscribe to
+a group of topics that have similar topic strings. </p>
+<section class="section"><p class="p">Three characters have special meaning in publish/subscribe.
+These characters are the forward slash (<code class="ph codeph">/</code>), the number
+sign (<code class="ph codeph">#</code>), and the plus sign (<code class="ph codeph">+</code>).
+For more information about the forward slash (<code class="ph codeph">/</code>),
+see <a class="xref" href="ov00031.html" title="Use a topic string to label information that is published as a topic. The topic string is the identifier that is used by the publisher to publish messages. A subscriber can subscribe to a topic, or group of topics by using that identifier. Subscribe to a group of topics that have similar topic strings by using topic-based wildcards.">Topic
+Strings</a>.</p><p class="p">In JMS topics, these characters are allowed
+anywhere in a topic string, but use them with caution. </p><p class="p">In MQTT
+topics,  the number sign (<code class="ph codeph">#</code>), and the plus sign (<code class="ph codeph">+</code>)
+cannot be used in publish topics. In subscribe topics, the number
+sign (<code class="ph codeph">#</code>) can only be used as the last character in
+the topic string, and must be the only character in that level.</p><dl class="dl">
+
+<dt class="dt dlterm">The number sign (<code class="ph codeph">#</code>)</dt>
+<dd class="dd"><p class="p">Used in combination with <code class="ph codeph">'/'</code> to construct
+a multilevel wildcard in subscriptions. Take care using <code class="ph codeph">'#'</code> next
+to <code class="ph codeph">'/'</code> in topic strings that are used to name published
+JMS topics. </p></dd>
+
+<dt class="dt dlterm">The plus sign (<code class="ph codeph">+</code>)</dt>
+<dd class="dd"><p class="p">Used in combination with <code class="ph codeph">'/'</code> to construct
+a single-level wildcard in subscriptions. </p></dd>
+</dl><p class="p">The multilevel wildcard and single level wildcard
+can be used for subscriptions, but they cannot be used within a topic
+by the publisher of a message.</p><div class="p">The topic-based wildcard scheme
+allows you to select publications grouped by topic level. You can
+choose for <em class="ph i">each level in the topic hierarchy</em>, whether the string
+in the subscription for that topic level must exactly match the string
+in the publication or not. For example the subscription, <code class="ph codeph">Sport/+/Finals</code> selects
+all the topics,<ul class="sl simple" compact>
+<li class="sli">"Sport/Tennis/Finals"</li>
+<li class="sli">"Sport/Basketball/Finals"</li>
+<li class="sli">"Sport/Swimming/Finals"</li>
+</ul></div><p class="p">There are two types of wildcard:</p><dl class="dl">
+<dt class="dt dlterm">Multilevel wildcard</dt>
+<dd class="dd"><ul class="ul">
+<li class="li">The multilevel wildcard is used in subscriptions.</li>
+<li class="li">The multilevel wildcard character <code class="ph codeph">'#'</code> is used
+to match any number of levels within a topic. For example, using the
+example topic tree, if you subscribe to <code class="ph codeph">'Sport/Tennis/#'</code>,
+you receive messages on topics <code class="ph codeph">'Sport/Tennis'</code>, and <code class="ph codeph">'Sport/Tennis/Finals'</code>.</li>
+<li class="li">The multilevel wildcard can represent zero or more levels. Therefore, <code class="ph codeph">'Sport/#'</code> can
+also match the singular <code class="ph codeph">'Sport'</code>, where <code class="ph codeph">'#'</code> represents
+zero levels. The topic level separator is meaningless in this context,
+because there are no levels to separate.</li>
+<li class="li">The multilevel wildcard is only effective when specified on its
+own or next to the topic level separator character.  Therefore, <code class="ph codeph">'#'</code> and <code class="ph codeph">'Sport/#'</code> are
+valid topics where the <code class="ph codeph">'#'</code> character is treated as
+a wildcard. For JMS topics, although <code class="ph codeph">'Sport#'</code> is
+also a valid topic string, the <code class="ph codeph">'#'</code> character is not
+regarded as a wildcard and does not have any special meaning. See <a class="xref" href="ov00032.html#ov00032__nw">When topic-based wildcards are not wild</a> for
+more information. For MQTT topics, the multilevel wildcard can only
+be used as the last character in the topic string, and must be the
+only character in that level. </li>
+</ul></dd>
+
+<dt class="dt dlterm">Single level wildcard</dt>
+<dd class="dd"><ul class="ul">
+<li class="li">The single wildcard is used in subscriptions. </li>
+<li class="li">The single-level wildcard character <code class="ph codeph">'+'</code> matches
+one, and only one, topic level. For example, <code class="ph codeph">'Sport/+'</code> matches <code class="ph codeph">'Sport/Tennis'</code>,
+but not <code class="ph codeph">'Sport/Tennis/Finals'</code>. Because the single-level
+wildcard matches only a single level, <code class="ph codeph">'Sport/+'</code> does
+not match <code class="ph codeph">'Sport'</code>.</li>
+<li class="li">For JMS and MQTT topics, the single-level wildcard can be used
+at any level in the topic tree. The single-level wildcard must be
+specified next to the topic level separator, except when it is specified
+on its own.  Therefore, <code class="ph codeph">'+'</code> and <code class="ph codeph">'Sport/+'</code> are
+valid topics where the <code class="ph codeph">'+'</code> character is treated as
+a wildcard. For JMS topics, although <code class="ph codeph">'Sport+'</code> is
+a valid topic string, the <code class="ph codeph">'+'</code> character is not regarded
+as a wildcard and does not have any special meaning. For more information,
+see the section <a class="xref" href="ov00032.html#ov00032__nw">When topic-based wildcards are not wild</a>.</li>
+</ul></dd>
+</dl></section>
+<div class="example"><h2 class="title sectiontitle">Examples of using wildcards</h2><p class="p">The following
+examples on the use of wildcards, builds on the example provided in <a class="xref" href="ov00031.html" title="Use a topic string to label information that is published as a topic. The topic string is the identifier that is used by the publisher to publish messages. A subscriber can subscribe to a topic, or group of topics by using that identifier. Subscribe to a group of topics that have similar topic strings by using topic-based wildcards.">topic
+strings</a>.</p><ul class="sl simple" compact>
+<li class="sli">"Sport"</li>
+<li class="sli">"Sport/Tennis"</li>
+<li class="sli">"Sport/Basketball"</li>
+<li class="sli">"Sport/Swimming"</li>
+<li class="sli">"Sport/Tennis/Finals"</li>
+<li class="sli">"Sport/Basketball/Finals"</li>
+<li class="sli">"Sport/Swimming/Finals"</li>
+</ul><p class="p">If you want to subscribe to all Tennis topics,  you can use
+the number sign <code class="ph codeph">'#'</code>, or the plus sign <code class="ph codeph">'+'</code>.</p><ul class="sl simple" compact>
+<li class="sli">"Sport/Tennis/#" (this will receive "Sport/Tennis" and "Sport/Tennis/Finals")</li>
+<li class="sli">"Sport/Tennis/+" (this will receive "Sport/Tennis/Finals" but
+not "Sport/Tennis")</li>
+</ul><p class="p">For JMS topics, if you want to subscribe to all Finals topics,
+you can use the number sign <code class="ph codeph">'#'</code>, or the plus sign <code class="ph codeph">'+'</code>.</p><ul class="sl simple" compact>
+<li class="sli">"Sport/#/Finals"</li>
+<li class="sli">"Sport/+/Finals"</li>
+</ul><p class="p">For MQTT topics, if you want to subscribe to all Finals topics,
+you can use the plus sign <code class="ph codeph">'+'</code> .</p><ul class="sl simple" compact>
+<li class="sli">"Sport/+/Finals"</li>
+</ul></div>
+<section class="section" id="ov00032__nw"><h2 class="title sectiontitle">When topic-based wildcards are not wild</h2><p class="p">The
+wildcard characters <code class="ph codeph">'+'</code> and <code class="ph codeph">'#'</code> have
+no special meaning when they are mixed with other characters (including
+themselves) in a topic level.</p><p class="p">For JMS topics, this means that
+topics that contain <code class="ph codeph">'+'</code> or <code class="ph codeph">'#'</code> together
+with other characters in a topic level can be published.</p><p class="p">Consider
+the following two JMS topics:</p><ol class="ol">
+<li class="li">level0/level1/+/level4/#</li>
+<li class="li">level0/level1/#+/level4/level#</li>
+</ol><p class="p">In the first example, the characters <code class="ph codeph">'+'</code> and <code class="ph codeph">'#'</code> are
+treated as wildcards and are therefore not valid in a topic string
+that is to be published to but are valid in a subscription.</p><p class="p">In
+the second example, the characters <code class="ph codeph">'+'</code> and <code class="ph codeph">'#'</code> are
+not treated as wildcards, and therefore the topic string can be both
+published and subscribed to.</p><p class="p">For MQTT topics, consider the following
+examples:</p><ol class="ol">
+<li class="li">level0/level1/+/level4/#</li>
+<li class="li">level0/level1/#/level4/level+</li>
+</ol><p class="p">In the first example, the characters <code class="ph codeph">'+'</code> and <code class="ph codeph">'#'</code> are
+treated as a wildcards and are therefore not valid in a topic string
+that is to be published to, but is valid in a subscription.</p><p class="p">In
+the second example, the character <code class="ph codeph">'+'</code> is not the
+only character in a topic level. The character <code class="ph codeph">'#'</code> is
+not the last character in the topic string. Therefore the topic string
+cannot be published or subscribed to.</p></section>
+<div class="example"><p class="p">The following table provides examples of topic strings,
+and shows whether these strings are valid for MQTT and JMS publish/subscribe.</p><table class="table" id="ov00032__exStrings"><caption><span class="table--title-label">Table 1. </span><span class="title">Topic string validity</span><span class="desc tabledesc"><p class="p summary">Topic string validity for MQTT and JMS publish/subscribe.</p></span></caption><colgroup><col><col><col><col><col></colgroup><thead class="thead">
+<tr class="row valign-bottom">
+<th class="entry align-center" id="ov00032__exStrings__entry__1">Topic string</th>
+<th class="entry align-center" id="ov00032__exStrings__entry__2">	MQTT subscribe</th>
+<th class="entry align-center" id="ov00032__exStrings__entry__3">	MQTT publish</th>
+<th class="entry align-center" id="ov00032__exStrings__entry__4">JMS subscribe</th>
+<th class="entry align-center" id="ov00032__exStrings__entry__5">JMS publish</th>
+</tr>
+</thead><tbody class="tbody">
+<tr class="row">
+<td class="entry align-left" headers="ov00032__exStrings__entry__1">#</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__2">Yes</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__3">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__4">Yes</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__5">No</td>
+</tr>
+<tr class="row">
+<td class="entry align-left" headers="ov00032__exStrings__entry__1">+</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__2">Yes</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__3">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__4">Yes</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__5">No</td>
+</tr>
+<tr class="row">
+<td class="entry align-left" headers="ov00032__exStrings__entry__1">/#</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__2">Yes</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__3">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__4">Yes</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__5">No</td>
+</tr>
+<tr class="row">
+<td class="entry align-left" headers="ov00032__exStrings__entry__1">/+</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__2">Yes</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__3">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__4">Yes</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__5">No</td>
+</tr>
+<tr class="row">
+<td class="entry align-left" headers="ov00032__exStrings__entry__1">##</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__2">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__3">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__4">Yes (not wild)</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__5">Yes (not wild)</td>
+</tr>
+<tr class="row">
+<td class="entry align-left" headers="ov00032__exStrings__entry__1">++</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__2">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__3">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__4">Yes (not wild)</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__5">Yes (not wild)</td>
+</tr>
+<tr class="row">
+<td class="entry align-left" headers="ov00032__exStrings__entry__1">#/#</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__2">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__3">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__4">Yes</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__5">No</td>
+</tr>
+<tr class="row">
+<td class="entry align-left" headers="ov00032__exStrings__entry__1">+/+</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__2">Yes</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__3">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__4">Yes</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__5">No</td>
+</tr>
+<tr class="row">
+<td class="entry align-left" headers="ov00032__exStrings__entry__1">topic#</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__2">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__3">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__4">Yes (not wild)</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__5">Yes (not wild)</td>
+</tr>
+<tr class="row">
+<td class="entry align-left" headers="ov00032__exStrings__entry__1">topic+</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__2">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__3">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__4">Yes (not wild)</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__5">Yes (not wild)</td>
+</tr>
+<tr class="row">
+<td class="entry align-left" headers="ov00032__exStrings__entry__1">topic/#</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__2">Yes</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__3">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__4">Yes</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__5">No</td>
+</tr>
+<tr class="row">
+<td class="entry align-left" headers="ov00032__exStrings__entry__1">topic/+</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__2">Yes</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__3">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__4">Yes</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__5">No</td>
+</tr>
+<tr class="row">
+<td class="entry align-left" headers="ov00032__exStrings__entry__1">topic##</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__2">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__3">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__4">Yes (not wild)</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__5">Yes (not wild)</td>
+</tr>
+<tr class="row">
+<td class="entry align-left" headers="ov00032__exStrings__entry__1">topic++</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__2">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__3">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__4">Yes (not wild)</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__5">Yes (not wild)</td>
+</tr>
+<tr class="row">
+<td class="entry align-left" headers="ov00032__exStrings__entry__1">topic/##</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__2">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__3">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__4">Yes (not wild)</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__5">Yes (not wild)</td>
+</tr>
+<tr class="row">
+<td class="entry align-left" headers="ov00032__exStrings__entry__1">topic/++</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__2">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__3">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__4">Yes (not wild)</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__5">Yes (not wild)</td>
+</tr>
+<tr class="row">
+<td class="entry align-left" headers="ov00032__exStrings__entry__1">topic#/#</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__2">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__3">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__4">Yes</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__5">No</td>
+</tr>
+<tr class="row">
+<td class="entry align-left" headers="ov00032__exStrings__entry__1">topic+/+</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__2">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__3">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__4">Yes</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__5">No</td>
+</tr>
+<tr class="row">
+<td class="entry align-left" headers="ov00032__exStrings__entry__1">topic/#/#</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__2">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__3">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__4">Yes</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__5">No</td>
+</tr>
+<tr class="row">
+<td class="entry align-left" headers="ov00032__exStrings__entry__1">topic/+/+</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__2">Yes</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__3">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__4">Yes</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__5">No</td>
+</tr>
+<tr class="row">
+<td class="entry align-left" headers="ov00032__exStrings__entry__1">#topic</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__2">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__3">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__4">Yes (not wild)</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__5">Yes (not wild)</td>
+</tr>
+<tr class="row">
+<td class="entry align-left" headers="ov00032__exStrings__entry__1">+topic</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__2">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__3">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__4">Yes (not wild)</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__5">Yes (not wild)</td>
+</tr>
+<tr class="row">
+<td class="entry align-left" headers="ov00032__exStrings__entry__1">#/topic</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__2">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__3">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__4">Yes</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__5">No</td>
+</tr>
+<tr class="row">
+<td class="entry align-left" headers="ov00032__exStrings__entry__1">+/topic</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__2">Yes</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__3">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__4">Yes</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__5">No</td>
+</tr>
+<tr class="row">
+<td class="entry align-left" headers="ov00032__exStrings__entry__1">/#topic</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__2">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__3">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__4">Yes (not wild)</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__5">Yes (not wild)</td>
+</tr>
+<tr class="row">
+<td class="entry align-left" headers="ov00032__exStrings__entry__1">/+topic</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__2">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__3">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__4">Yes (not wild)</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__5">Yes (not wild)</td>
+</tr>
+<tr class="row">
+<td class="entry align-left" headers="ov00032__exStrings__entry__1">/</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__2">Yes</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__3">Yes</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__4">Yes</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__5">Yes </td>
+</tr>
+<tr class="row">
+<td class="entry align-left" headers="ov00032__exStrings__entry__1">topic/#/topic</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__2">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__3">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__4">Yes</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__5">No</td>
+</tr>
+<tr class="row">
+<td class="entry align-left" headers="ov00032__exStrings__entry__1">top+ic</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__2">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__3">No</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__4">Yes (not wild)</td>
+<td class="entry align-left" headers="ov00032__exStrings__entry__5">Yes (not wild)</td>
+</tr>
+</tbody></table></div>
+</div>
+</article></main></body></html>

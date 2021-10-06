@@ -1,0 +1,133 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="Customers in Austin, Texas, have smart thermostats that enable them to use their phones to set their air conditioning and receive notifications from their thermostats."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Scenario 1: Using smart phones to control air conditioning remotely</title></head><body id="pdf_sc00007_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a><ul><li><a href="../Scenarios/sc00008_.html">Configuring your environment for the cluster scenarios</a><ul><li class="active"><a href="../Scenarios/sc00007_.html">Scenario 1: Using smart phones to control air conditioning remotely</a></li><li><a href="../Scenarios/sc00009_.html">Scenario 2: Viewing message flow across a cluster </a></li></ul></li><li><a href="../Scenarios/sc00006_.html">Scenario: Fan-out broadcast</a></li><li><a href="../Scenarios/sc00002_.html">Scenario: Fan-in per device notification</a></li><li><a href="../Scenarios/sc00003_.html">Scenario: Fan-out per device notification</a></li><li><a href="../Scenarios/sc00004_.html">Scenario: Fan-out per device request-reply</a></li><li><a href="../Scenarios/sc00005_.html">Scenario: Fan-in per device request-reply</a></li></ul></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Scenario 1: Using smart phones to control air conditioning remotely</h1>
+
+
+
+
+<div class="body conbody"><p class="shortdesc">Customers in Austin, Texas, have smart thermostats that enable them to use their phones
+        to set their air conditioning and receive notifications from their thermostats.</p>
+<section class="section"><h2 class="title sectiontitle">Background to this scenario</h2>
+
+<p class="p">Austin Metro Power® Company instituted a new program enabling them to send emergency requests to                 their customers to avoid a brownout. The company has the ability to send messages                 requesting power usage reductions. The customer's smart thermostats can then                 automatically reduce power usage when the emergency requests are received.</p>
+</section>
+<section class="section"><h2 class="title sectiontitle">Planning and implementing the scenario</h2>
+
+<p class="p">Use the following information to help you plan and implement your <span class="ph">Eclipse Amlen</span> cluster
+                using REST APIs.</p>
+<dl class="dl">
+
+<dt class="dt dlterm">Understanding the clustering architecture</dt>
+<dd class="dd">
+<p class="p">In this scenario, three servers are used to represent a thermostat, a phone, and the data center                             of the fictional Austin Metro Power Company. These three servers are                             configured as a cluster. This scenario tests that the cluster can                             deliver directives and responses and have them display correctly on                             other nodes of the cluster.</p>
+</dd>
+
+
+<dt class="dt dlterm">Setting up your cluster for this scenario</dt>
+<dd class="dd">
+<p class="p">You can configure your<span class="ph">Eclipse Amlen</span>
+                            cluster by using REST APIs. For information about setting up your
+                            cluster for this scenario, see <a class="xref" href="sc00008_.html" title="You can set up your environment so that you can test cluster scenarios 1 and 2. Use these scenarios to help you to understand clustering and message flow, and to get up and running quickly.">Configuring your environment for the cluster scenarios</a>.</p></dd>
+
+</dl>
+</section>
+<section class="section"><h2 class="title sectiontitle">Testing the scenario</h2>
+
+<p class="p">This scenario tests that the cluster can deliver directives and responses and have them display
+correctly on other nodes of the cluster.</p>
+<div class="p">This scenario requires a three-node cluster system:<ul class="sl simple">
+<li class="sli"><span class="ph">Eclipse Amlen</span> Server 1, representing
+                        the customer's thermostat.</li>
+<li class="sli"><span class="ph">Eclipse Amlen</span> Server 2, representing
+                        the customer's phone.</li>
+<li class="sli"><span class="ph">Eclipse Amlen</span> Server 3, representing
+                        the power company.</li>
+</ul></div>
+<p class="p">A sample MQTT client can be found at MQTT Helper. To demonstrate the messaging capabilities of
+your solution, enter your server, port, client ID, and topic.</p>
+<div class="p">
+<ol class="ol">
+<li class="li">Enable the DemoEndpoint which uses port 16102 on all three servers.</li>
+<li class="li">Launch an instance of the MQTT Helper application in three separate browser instances. These
+                        instances will connect to <span class="ph">Eclipse Amlen</span>
+                        Server's 1, 2, and 3. </li>
+<li class="li">Follow these steps to set up the thermostat node:<ol class="ol" type="a">
+<li class="li">In browser 1, enter the server IP and Port of server 1, then click
+                                    <span class="ph uicontrol">Connect</span>.</li>
+<li class="li">In the same browser instance, enter <code class="ph codeph">/JimsThermo/Directives/#</code> as the topic, and
+click <span class="ph uicontrol">Subscribe</span>.</li>
+<li class="li">In the same browser instance, enter <code class="ph codeph">/AustinMetroPowerCompany/Requests/#</code> as the
+topic, and click <span class="ph uicontrol">Subscribe</span>.</li>
+</ol>The thermostat node will now listen for directives, send responses, and change its temperature
+setting. </li>
+<li class="li">To set up the phone node, follow these steps:<ol class="ol" type="a">
+<li class="li">In your second instance of MQTT Helper, enter the server IP and port of server 2 and click
+<span class="ph uicontrol">Connect</span>.</li>
+<li class="li">In the same browser instance, enter <code class="ph codeph">/JimsThermo/Responses/#</code> for the topic and
+click <span class="ph uicontrol">Subscribe</span>.</li>
+</ol>The phone node will now be able to send and receive directives and responses to and from the
+thermostat.</li>
+<li class="li">To set up the Austin Metro Power Company data center, follow these steps:<ol class="ol" type="a">
+                            <li class="li">In your third instance of MQTT Helper, enter the server IP and port
+                                of server 3 and click <span class="ph uicontrol">Connect</span>.</li>
+                            <li class="li">In the same browser instance, enter
+                                    <code class="ph codeph">/AustinMetroPowerCompany/Responses/#</code> as the
+                                topic and click <span class="ph uicontrol">Subscribe</span>.</li>
+                        </ol><p class="p">The power company node will now be able to send emergency requests
+                            to the thermostat node, and receive responses.</p><p class="p">Now that you have
+                            connected the phone, the thermostat and the data center to different
+                            servers in the cluster, you can publish directives, requests and
+                            responses, and watch them be received by subscribers who are connected
+                            to different servers in the cluster.</p><p class="p">In this scenario, Jim left
+                            hurriedly for work on Monday morning, and forgot to adjust his
+                            air-conditioning temperature before leaving home. His parents are
+                            visiting, and he wants his home to be comfortable for them. From his
+                            remote work location, Jim sends a directive to his thermostat to set the
+                            air-conditioning temperature to 22°C (72°F). The thermostat receives the
+                            directive and responds accordingly to set the temperature to 22°C
+                            (72°F). The thermostat then publishes a response notifying Jim that the
+                            temperature has been set to 22°C (72°F). Jim's phone receives the
+                            response from Jim's thermostat.</p></li>
+<li class="li">To see this process in action, follow these steps:<ol class="ol" type="a">
+                            <li class="li">In browser 2, which simulates Jim's phone, enter
+                                    <code class="ph codeph">/JimsThermo/Directives/AirConditioning</code> as the
+                                topic, <code class="ph codeph">Set AC to 22°C (72°F)</code> as the payload, and
+                                click <span class="ph uicontrol">Publish</span>.</li>
+                            <li class="li">In browser 1, which simulates the thermostat, observe that the
+                                message arrives at the thermostat.</li>
+                            <li class="li">In the same browser instance, enter
+                                    <code class="ph codeph">/JimsThermo/Responses/JimsDirectives</code> as the
+                                topic, and <code class="ph codeph">AC set at 22°C (72°F) per Jim's request</code>
+                                for the payload and click <span class="ph uicontrol">Publish</span>.</li>
+                            <li class="li">In browser 2, observe that the response arrives on Jim's phone.</li>
+                        </ol><p class="p">This process demonstrates that devices connected to different
+                            servers can communicate messages across the cluster.</p><p class="p">In the next                             portion of this scenario, it's the hottest day of the year, and by                             afternoon, power use is approaching critical levels. The Austin Metro                             Power Company begins sending requests to their customer's thermostats to                             reduce air conditioning usage in order to avoid a brownout.</p><p class="p">Jim's                             thermostat receives the directive from the Austin Metro Power Company to                             increase the temperature. The thermostat then publishes a response,                             notifying Jim and the Austin Metro Power Company that the temperature                             has been set to 27°C (80°F) in response to a power reduction request                             from Austin Metro Power Company. Jim's phone and Austin Metro Power                             Company both receive the response from Jim's thermostat.</p></li>
+<li class="li">To demonstrate how this process might work, follow these steps:<ol class="ol" type="a">
+<li class="li">In browser 3, the Austin Metro Power Company data center, enter <code class="ph codeph">/AustinMetroPowerCompany/Requests/</code> as the topic, and <code class="ph codeph">Brownouts possible.
+Emergency request to reduce power usage now!! Please raise the temperature to 27°C (80°F).</code>
+as the payload, and click <span class="ph uicontrol">Publish</span>.</li>
+<li class="li">In browser 1, simulating the thermostat, observe the message from the Austin Metro Power Company arriving at the thermostat.</li>
+<li class="li">In the same browser instance, enter
+<code class="ph codeph">/AustinMetroPowerCompany/Responses/JimsThermo</code> as the topic, and <code class="ph codeph">Thermostat
+set to 27°C (80°F) following Austin Metro Power Request</code> as the payload and click
+<span class="ph uicontrol">Publish</span>.</li>
+<li class="li">In the same browser instance, enter
+<code class="ph codeph">/JimsThermo/Responses/AustinMetroPowerCompanyRequest</code> as the topic, and
+<code class="ph codeph">Thermostat set to 27°C (80°F) following Austin Metro Power Request</code> as the payload,
+and click <span class="ph uicontrol">Publish</span>.</li>
+<li class="li">In browser 2, simulating the phone, observe that the phone receives the message
+                                    <code class="ph codeph">Thermostat set to 27°C (80°F) following Austin Metro
+                                    Power Request</code> from the thermostat.</li>
+<li class="li">In browser 3, observe that the Austin Metro Power Company receives the message                                     <code class="ph codeph">Thermostat set to 27°C (80°F) following Austin Metro
+                                    Power Request</code> from the thermostat.</li>
+</ol></li>
+<li class="li">Now that you have seen the previous scenario work, you can continue to
+                        play around in this environment. Connect and subscribe any or all devices to
+                        different members of the cluster and repeat Step 6 or 7, verifying that you
+                        see the messages flow as you expect them to.</li>
+</ol>
+</div>
+</section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Scenarios/sc00008_.html" title="You can set up your environment so that you can test cluster scenarios 1 and 2. Use these scenarios to help you to understand clustering and message flow, and to get up and running quickly.">Configuring your environment for the cluster scenarios</a></div></div></nav></article></main></body></html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="Eclipse Amlen can store messages to assure delivery to clients and devices that might not be connected. The amount of storage is limited, and if it fills, the server rejects new messages."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Capacity planning</title></head><body id="pl00002_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a><ul><li><a href="../Planning/pl00030.html">Installation planning</a></li><li><a href="../Planning/ov00101_.html">Messaging patterns</a></li><li><a href="../Planning/pl00010.html">Messaging planning</a></li><li><a href="../Planning/clusteringconsiderations.html">Clustering considerations</a></li><li class="active"><a href="../Planning/pl00002_.html">Capacity planning</a></li><li><a href="../Planning/pl00004.html">Performance planning</a></li><li><a href="../Planning/ov40001.html">High availability planning</a></li><li><a href="../Planning/pl00020.html">Connecting to an existing infrastructure</a></li></ul></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Capacity planning</h1>
+
+<div class="body conbody"><p class="shortdesc"><span class="ph">Eclipse Amlen</span> can store messages to assure
+  delivery to clients and devices that might not be connected. The amount of storage is limited, and
+  if it fills, the server rejects new messages.</p>
+<p class="p"><span class="ph">Eclipse Amlen</span> is designed
+to deliver large amounts of data that flows quickly through the server.
+When clients are disconnected, the server buffers the messages and
+delivers them when the clients reconnect. The server keeps only a
+single copy of each message, regardless of how many clients there
+are to receive the message. Therefore, even when data does not flow
+quickly through the server, <span class="ph">Eclipse Amlen</span> can handle significant
+workloads.</p>
+<p class="p">When large numbers of messages are buffered on the server, <span class="ph">Eclipse Amlen</span> ensures that
+enough memory remains available to continue delivering the buffered
+messages. If the memory usage goes above a certain threshold, <span class="ph">Eclipse Amlen</span> starts to reject
+requests to prevent the memory from becoming full. The memory usage
+threshold varies depending on the type of request. For example, the
+threshold for accepting new messages is lower than the threshold to
+create a subscription. This difference is so that it remains possible
+to receive messages even when the server is close to capacity. After
+the memory usage falls below the threshold, the server starts accepting
+requests again.</p>
+<p class="p"><span class="ph">Eclipse Amlen</span> uses a
+combination of persistent memory and disks to store persistent data
+for recovery. The disk capacity is much larger than the memory, and
+in most situations the disks have plenty of unused capacity. However,
+if the data on the disk is written sparsely, it is possible for the
+disks to fill. If the disk fills completely, the server stops immediately
+and can be started only in maintenance mode. In this situation, you
+must contact IBM® support for
+assistance.</p>
+<div class="p">Consider the following requirements:<ul class="ul">
+<li class="li">The maximum number of concurrently connected devices per GB of memory that is allocated to <span class="ph">Eclipse Amlen</span> is 4 K.</li>
+<li class="li">The store partition must be at least four times the size of the memory allocated to the <span class="ph">Eclipse Amlen</span> server. For example, on a <span class="ph">Eclipse Amlen</span> container or host with 32 GB of memory, the store disk must be at least 128 GB. If the amount of memory is a fractional value, you must round the value up to the next integer before multiplying by 4. For example, if the amount of memory is 7.5 GB, then 32 GB of disk space is required.</li>
+<li class="li">If you are using <span class="ph">Eclipse Amlen</span>, you must have a minimum of 16 GB of memory and 4 CPUs. </li>
+</ul></div>
+<p class="p">System administrators can use the <span class="ph">Amlen WebUI</span> or <span class="ph">REST Monitoring APIs</span> to track the memory and disk usage of <span class="ph">Eclipse Amlen</span>. For more information, see <a class="xref" href="../Monitoring/admin00028.html" title="View information about Eclipse Amlen statistics for the memory, and store (persistent memory and disk).">Server Monitoring</a>.</p>
+<p class="p">Consider the message throughput, reliability, and typical client
+availability of your solution, and customize your approach to avoid
+situations where messages are rejected.</p>
+</div>
+
+</article></main></body></html>

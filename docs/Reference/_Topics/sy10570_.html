@@ -1,0 +1,77 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="The Distinguished Name (DN) uniquely identifies an entity in an X.509 certificate."><meta name="keywords" content="digital certificate, Distinguished Name (DN), Distinguished Name (DN), introduction, DN, X.509 standard, DN identifies entity"><link rel="stylesheet" type="text/css" href="../../commonltr.css"><link rel="stylesheet" type="text/css" href="../../doc.css"><title>Distinguished Names</title></head><body id="sy10570_"><nav role="toc"><ul><li><a href="../../welcome.html">Welcome</a></li><li><a href="../../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../../Overview/ov00000_.html">Product overview</a></li><li><a href="../../Planning/pl00001_.html">Planning</a></li><li><a href="../../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../../Administering/ad00000_.html">Administering</a></li><li><a href="../../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../../Security/se00000_.html">Security</a></li><li><a href="../../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../../Reference/re00000_.html">Reference</a><ul><li><a href="../../Reference/intro.html">REST API Reference</a></li><li><a href="../../Reference/_Topics/sy10530_.html">Digital certificates</a><ul><li><a href="../../Reference/_Topics/sy10540_.html">What is in a digital certificate</a></li><li><a href="../../Reference/_Topics/sy10560_.html">Certificate Authorities</a></li><li class="active"><a href="../../Reference/_Topics/sy10570_.html">Distinguished Names</a></li><li><a href="../../Reference/_Topics/sy10590_.html">Obtaining personal certificates from a certificate authority</a></li></ul></li><li><a href="../../Reference/_Topics/re00003_.html">Supported cipher lists</a></li><li><a href="../../Reference/_Topics/re00001_.html">Classless Inter-Domain Routing</a></li></ul></li><li><a href="../../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Distinguished Names</h1>
+
+
+<div class="body conbody"><p class="shortdesc">The Distinguished Name (DN) uniquely identifies
+an entity in an X.509 certificate.</p>
+<div class="p">The following attribute types are commonly found in the DN: <dl class="dl">
+
+<dt class="dt dlterm">SERIALNUMBER</dt>
+<dd class="dd">Certificate serial number</dd>
+
+<dt class="dt dlterm">MAIL</dt>
+<dd class="dd">Email address</dd>
+
+<dt class="dt dlterm">E</dt>
+<dd class="dd">Email address (Deprecated in preference to MAIL)</dd>
+
+<dt class="dt dlterm">UID or USERID</dt>
+<dd class="dd">User identifier</dd>
+
+<dt class="dt dlterm">CN</dt>
+<dd class="dd">Common Name</dd>
+
+<dt class="dt dlterm">T</dt>
+<dd class="dd">Title</dd>
+
+<dt class="dt dlterm">OU</dt>
+<dd class="dd">Organizational Unit name</dd>
+
+<dt class="dt dlterm">DC</dt>
+<dd class="dd">Domain component</dd>
+
+<dt class="dt dlterm">O</dt>
+<dd class="dd">Organization name</dd>
+
+<dt class="dt dlterm">STREET</dt>
+<dd class="dd">Street / First line of address</dd>
+
+<dt class="dt dlterm">L</dt>
+<dd class="dd">Locality name</dd>
+
+<dt class="dt dlterm">ST (or SP or S)</dt>
+<dd class="dd">State or Province name</dd>
+
+<dt class="dt dlterm">PC</dt>
+<dd class="dd">Postal code / zip code</dd>
+
+<dt class="dt dlterm">C</dt>
+<dd class="dd">Country</dd>
+
+<dt class="dt dlterm">UNSTRUCTUREDNAME</dt>
+<dd class="dd">Host name</dd>
+
+<dt class="dt dlterm">UNSTRUCTUREDADDRESS</dt>
+<dd class="dd">IP address</dd>
+
+<dt class="dt dlterm">DNQ</dt>
+<dd class="dd">Distinguished name qualifier</dd>
+</dl>The X.509 standard defines other attributes that do
+not typically form part of the DN but can provide optional extensions
+to the digital certificate.</div>
+<div class="p">The X.509 standard provides for a DN to be specified in a string
+format. For example: <pre class="pre codeblock"><code>
+CN=John Smith, OU=Test, O=IBM, C=GB
+</code></pre></div>
+<p class="p">The Common Name (CN) can describe an individual user or any other
+entity, for example a server.</p>
+<p class="p">The DN can contain multiple OU and DC attributes. Only one instance
+of each of the other attributes is permitted. The order of the OU
+entries is significant: the order specifies a hierarchy of Organizational
+Unit names, with the highest-level unit first. The order of the DC
+entries is also significant.</p>
+</div>
+
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../../Reference/_Topics/sy10530_.html" title="Digital certificates protect against impersonation, certifying that a public key belongs to a specified entity. They are issued by a Certificate Authority.">Digital certificates</a></div></div></nav></article></main></body></html>

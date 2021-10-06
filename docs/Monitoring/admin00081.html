@@ -1,0 +1,42 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="Use the cluster status view to see statistics about the cluster, the cluster members, and messaging activity between this server and the remote cluster members."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Viewing cluster information by using the Amlen WebUI</title></head><body id="admin00081"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a><ul><li><a href="../Monitoring/admin00080.html">Cluster monitoring</a><ul><li class="active"><a href="../Monitoring/admin00081.html">Viewing cluster information by using the Amlen WebUI</a></li><li><a href="../Monitoring/admin00082.html">Viewing cluster information by using REST Monitoring APIs</a></li></ul></li><li><a href="../Monitoring/admin00009.html">Connection Monitoring</a></li><li><a href="../Monitoring/admin00010.html">Endpoint Monitoring</a></li><li><a href="../Monitoring/admin00016.html">Topic Monitoring</a></li><li><a href="../Monitoring/admin00019.html">Queue Monitoring</a></li><li><a href="../Monitoring/admin00022.html">Subscription Monitoring</a></li><li><a href="../Monitoring/admin00025.html">MQTT Client Monitoring</a></li><li><a href="../Monitoring/admin00031.html">MQ Connectivity monitoring</a></li><li><a href="../Monitoring/admin00070.html">Viewing protocol plug-in monitoring statistics by using an external application</a></li><li><a href="../Monitoring/admin00028.html">Server Monitoring</a></li><li><a href="../Monitoring/admin00060.html">XA Transaction monitoring</a></li></ul></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Viewing cluster information by using the <span class="ph">Amlen WebUI</span></h1>
+
+
+
+
+
+
+<div class="body taskbody"><p class="shortdesc">Use the cluster status view to see statistics about the cluster, the cluster members, and messaging activity between this server and the remote cluster members. </p>
+<section class="section context">
+<p class="p">You can view cluster and cluster member statistics by using the <span class="ph">Amlen WebUI</span>, or by using <span class="ph">REST Monitoring API</span>. For more information about using a <span class="ph">REST Monitoring API</span> to view connection monitor statistics, see <a class="xref" href="admin00082.html" title="System administrators can view cluster monitoring statistics by using REST Monitoring APIs.">Viewing cluster information by using REST Monitoring APIs</a>. </p>
+</section>
+<section><div class="ol steps"><div class="li step p">
+<span class="ph cmd">From the <span class="ph">Amlen WebUI</span>, navigate to the <span class="keyword wintitle">Cluster Status</span> page by selecting <span class="ph menucascade"><span class="ph uicontrol">Cluster</span><abbr title="and then"> &gt; </abbr><span class="ph uicontrol">Status</span></span>.</span>
+<ul class="ul choices">
+<li class="li choice">
+<p class="p">To view information about the rate of message throughput for the <span class="ph">Eclipse Amlen</span> server on which you are viewing cluster monitoring statistics, complete the following step:</p>
+<ol class="ol" type="a">
+<li class="li">From the <span class="keyword wintitle">Cluster Status</span> page, go to the Throughput Chart pane.<div class="p">The Throughput Chart displays the rate of message traffic into and from the cluster:<ul class="ul">
+<li class="li">Local incoming and outgoing rates relate to messages that are received from or sent to messaging client applications (MQTT or JMS applications).</li>
+<li class="li">Remote incoming and outgoing rates relate to messages that are received from or sent to other <span class="ph">Eclipse Amlen</span> servers in the cluster </li>
+</ul></div></li>
+</ol>
+</li>
+<li class="li choice">To view information about the cluster status of the cluster member on which you are viewing cluster monitoring statistics, complete the following step:<ol class="ol" type="a">
+<li class="li">From the <span class="keyword wintitle">Cluster Status</span> page, go to the <span class="keyword wintitle">Cluster Status
+                                    Data</span> pane.<p class="p">The cluster information about the server
+                                    on which you are viewing the cluster monitoring statistics is
+                                    displayed.</p></li>
+</ol></li>
+<li class="li choice">To view information about the other cluster members, complete the following step:<ol class="ol" type="a">
+<li class="li">From the <span class="keyword wintitle">Cluster Status</span> page, go to the <span class="keyword wintitle">Cluster Status
+Data</span> pane and view the cluster member table.<p class="p">For details about the data presented in
+the table, see <a class="xref" href="admin00080.html" title="Cluster monitoring statistics allow you to establish how well the cluster is functioning by providing information about the cluster members and the flow of messages between the cluster members. Cluster monitoring statistics provide a set of statistics about each cluster member as they relate to the cluster member on which you are viewing the statistics.">Cluster monitoring</a>.</p></li>
+<li class="li">Optional. By clicking on a cluster member in the first column of the table, you can start to manage that cluster member. If the server is already in the list of servers that are administered by the <span class="ph">Amlen WebUI</span>, the link takes you to the cluster status page of that server. If the server is not in the list of servers that are administered by the <span class="ph">Amlen WebUI</span>, you are prompted to provide configuration information for the other cluster member before you can start to manage it.</li>
+</ol></li>
+</ul>
+</div></div></section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Monitoring/admin00080.html" title="Cluster monitoring statistics allow you to establish how well the cluster is functioning by providing information about the cluster members and the flow of messages between the cluster members. Cluster monitoring statistics provide a set of statistics about each cluster member as they relate to the cluster member on which you are viewing the statistics.">Cluster monitoring</a></div></div></nav></article></main></body></html>

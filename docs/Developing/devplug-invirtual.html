@@ -1,0 +1,123 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="You can debug your protocol plug-in by running the plug-in server and your plug-in on your Eclipse Amlen server."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Debugging a protocol plug-in by running the plug-in server and the plug-in on the Eclipse Amlen server</title></head><body id="devplug-invirtual"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a><ul><li><a href="../Developing/devconcepts.html">Messaging concepts</a></li><li><a href="../Developing/devmsgtypes.html">Natively supported message types</a></li><li><a href="../Developing/devmsgsize.html">Message size</a></li><li><a href="../Developing/devclientids.html">Client IDs</a></li><li><a href="../Developing/devclientservercert.html">Server certificates</a></li><li><a href="../Developing/devretainmsg.html">Developing retained message applications</a></li><li><a href="../Developing/devexpiredmsg.html">Expired messages</a></li><li><a href="../Developing/devsharedsubscriptions.html">Shared subscriptions</a></li><li><a href="../Developing/devmqttapp.html">Developing MQTT applications</a></li><li><a href="../Developing/devjmsapp.html">Developing JMS applications</a></li><li><a href="../Developing/devplug-in.html">Developing a protocol plug-in</a><ul><li><a href="../Developing/devplug-indebug.html">Debug environments for the Eclipse Amlen protocol plug-in SDK</a><ul><li><a href="../Developing/devplug-ineclipse.html">Debugging a protocol plug-in by running the plug-in server in Eclipse</a></li><li class="active"><a href="../Developing/devplug-invirtual.html">Debugging a protocol plug-in by running the plug-in server and the plug-in on the Eclipse Amlen server</a></li></ul></li></ul></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li></ul></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Debugging a protocol plug-in by running the plug-in server and the plug-in on the <span class="ph">Eclipse Amlen</span> server</h1>
+
+<div class="body taskbody"><p class="shortdesc">You can debug your protocol plug-in by running the plug-in server and your plug-in on your <span class="ph">Eclipse Amlen</span> server.</p>
+<section class="section prereq"><p class="p">Download and extract the contents of the SDK bundle. Then,
+follow the instructions in <span class="ph filepath">ImaTools/ImaPlugin/README.txt</span> to
+import the sample plug-in projects that are provided with the SDK
+bundle.</p></section>
+<section class="section context"><p class="p">After the first phase of development is finished, you must test your production protocol plug-in by installing it and running it on your <span class="ph">Eclipse Amlen</span> server. If you encounter unexpected problems while you run in that environment, you can use the second debugging approach to connect to the plug-in server that runs on the server. When you debug during this phase, you must create a new plug-in zip file and reinstall it on the <span class="ph">Eclipse Amlen</span> server each time that you make updates to your plug-in classes.</p><p class="p">For
+more information about how to debug your protocol plug-in in the first
+phase of development, see <a class="xref" href="devplug-ineclipse.html" title="You can debug your protocol plug-in by running the plug-in server in Eclipse.">Debugging a protocol plug-in by running the plug-in server in Eclipse</a>.</p></section>
+<section><ol class="ol steps"><li class="li step">
+<span class="ph cmd">Deploy the plug-in on the <span class="ph">Eclipse Amlen</span> server and configure the server to enable remote debugging from Eclipse:</span>
+<ol type="a" class="ol substeps">
+<li class="li substep substepexpand">
+<span class="ph cmd">Create a standard .zip archive file with the <code class="ph codeph">plugin.json</code> descriptor file and the JAR files that implement the plug-in. For more information, see <a class="xref" href="devplug-in.html" title="You can use protocol plug-ins to add industry-specific messaging protocols to Eclipse Amlen in a controlled way that does not compromise the security of the server environment. The protocol plug-in can also support existing sensors that are not able to change to MQTT. You can write your own protocol plug-ins to use with Eclipse Amlen by using the Eclipse Amlen protocol plug-in SDK. The protocol plug-in facility is not available in high availability environments.">Developing a protocol plug-in</a>.</span>
+</li>
+<li class="li substep substepexpand">
+<span class="ph cmd">Install the plug-in .zip file on your <span class="ph">Eclipse Amlen</span> server. For more information, see <a class="xref" href="../Administering/dv00010.html" title="The protocol plug-in provides the ability to extend the protocols that are supported by the Eclipse Amlen server. You can configure protocol plug-ins by using REST Administration APIs.">Configuring protocol plug-ins</a>.</span>
+</li>
+<li class="li substep substepexpand">
+<span class="ph cmd">Ensure that the <code class="ph codeph">PluginDebugServer</code> property is not set by using the <span class="ph">Eclipse Amlen</span> REST API POST method with the following <span class="ph">Eclipse Amlen</span> configuration URI:</span>
+<div class="itemgroup info">
+<p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/configuration/</code></p>
+<div class="p">Provide PluginDebugServer object configuration data in the payload of the POST method by using the following schema. <span class="keyword parmname">Content-type</span> is set to <kbd class="ph userinput">application/json</kbd>. Ensure that capitalization and double quotation marks are used as shown. <pre class="pre codeblock"><code>
+{    
+  "PluginDebugServer": ""
+}</code></pre></div>
+</div>
+</li>
+<li class="li substep substepexpand">
+<span class="ph cmd">Set the <code class="ph codeph">PluginDebugPort</code> property to the port that Eclipse is using for remote debugging by using the <span class="ph">Eclipse Amlen</span> REST API POST method with the following <span class="ph">Eclipse Amlen</span> configuration URI:</span>
+<div class="itemgroup info">
+<p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/configuration/</code></p>
+<div class="p">Provide PluginDebugPort object configuration data in the payload of the POST method by using the following schema. <span class="keyword parmname">Content-type</span> is set to <kbd class="ph userinput">application/json</kbd>. Ensure that capitalization and double quotation marks are used as shown. <pre class="pre codeblock"><code>
+{    
+  "PluginDebugPort": 8000
+}</code></pre></div>
+<div class="note note note_note"><span class="note__title">Note:</span> The value that is specified for the <code class="ph codeph">PluginDebugPort</code> must match the port value that is specified for the Eclipse remote debugger configuration in Step 2e.</div>
+<div class="note tip note_tip"><span class="note__title">Tip:</span> You can check the value of the <code class="ph codeph">PluginDebugPort</code> object by using the <span class="ph">Eclipse Amlen</span> REST API GET method with the following <span class="ph">Eclipse Amlen</span> configuration URI:<div class="p">
+<pre class="pre codeblock"><code>http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/configuration/PluginDebugPort</code></pre>
+</div></div>
+</div>
+</li>
+<li class="li substep substepexpand">
+<span class="ph cmd">Stop and restart the server by using the <span class="ph">Eclipse Amlen</span> REST API POST method with the following <span class="ph">Eclipse Amlen</span> configuration URI:</span>
+<div class="itemgroup info">
+<p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:port&gt;/ima/v1/service/restart</code></p>
+<div class="p">Provide configuration data in the payload of the POST method by using the following schema. <span class="keyword parmname">Content-type</span> is set to <kbd class="ph userinput">application/json</kbd>. Ensure that capitalization and double quotation marks are used as shown. <pre class="pre codeblock"><code>
+{    
+  "Service": "Server"
+}</code></pre></div>
+</div>
+</li>
+</ol>
+</li><li class="li step">
+<span class="ph cmd">Start the Eclipse remote Java™ debugger for the plug-in server that runs on the <span class="ph">Eclipse Amlen</span> server.</span>
+<ol type="a" class="ol substeps">
+<li class="li substep substepexpand">
+<span class="ph cmd">In Eclipse, from the <span class="ph uicontrol">Run</span> menu, select <span class="ph uicontrol">Debug Configurations...</span></span>
+</li>
+<li class="li substep substepexpand">
+<span class="ph cmd">Right-click <span class="ph uicontrol">Remote Java Application</span> and select <span class="ph uicontrol">New</span></span>
+</li>
+<li class="li substep substepexpand">
+<span class="ph cmd">In the <span class="ph uicontrol">Name</span> field, enter <code class="ph codeph">ImaPluginOnMessageGateway</code></span>
+</li>
+<li class="li substep substepexpand">
+<span class="ph cmd">In the <span class="ph uicontrol">Host</span> field, enter the IP address of the server</span>
+</li>
+<li class="li substep substepexpand">
+<span class="ph cmd">In the <span class="ph uicontrol">Port</span> field, enter <code class="ph codeph">8000</code></span>
+<div class="itemgroup info">
+<div class="note note note_note"><span class="note__title">Note:</span> This port value must match the <code class="ph codeph">PluginDebugPort</code> that was set for the <span class="ph">Eclipse Amlen</span> server in step 1d.</div>
+</div>
+</li>
+<li class="li substep substepexpand">
+<span class="ph cmd">Select the <span class="ph uicontrol">Source</span> tab and click <span class="ph uicontrol">Add</span></span>
+</li>
+<li class="li substep substepexpand">
+<span class="ph cmd">Select <span class="ph uicontrol">Java Project</span> and click <span class="ph uicontrol">OK</span></span>
+</li>
+<li class="li substep substepexpand">
+<span class="ph cmd">Select the project where the plug-in that you want to debug is and click <span class="ph uicontrol">OK</span></span>
+</li>
+<li class="li substep substepexpand">
+<span class="ph cmd">Click <span class="ph uicontrol">Apply</span></span>
+</li>
+<li class="li substep substepexpand">
+<span class="ph cmd">Click <span class="ph uicontrol">Debug</span></span>
+</li>
+</ol>
+</li><li class="li step"><span class="ph cmd">Set breakpoints in your plug-in source code and debug it
+by using the client applications for the protocol that is implemented
+in your plug-in.</span></li><li class="li step"><strong>Optional: </strong><span class="ph cmd">If you stop the <span class="ph">Eclipse Amlen</span> server after you start debugging, or if you stop the remote Java debugger, you must restart both processes:</span>
+<ol type="a" class="ol substeps">
+<li class="li substep substepexpand">
+<span class="ph cmd">On the <span class="ph">Eclipse Amlen</span> server, stop and restart the server by using the <span class="ph">Eclipse Amlen</span> REST API POST method with the following <span class="ph">Eclipse Amlen</span> configuration URI:</span>
+<div class="itemgroup info">
+<p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:port&gt;/ima/v1/service/restart</code></p>
+<div class="p">Provide configuration data in the payload of the POST method by using the following schema. <span class="keyword parmname">Content-type</span> is set to <kbd class="ph userinput">application/json</kbd>. Ensure that capitalization and double quotation marks are used as shown. <pre class="pre codeblock"><code>
+{    
+  "Service": "Server"
+}</code></pre></div>
+</div>
+</li>
+<li class="li substep substepexpand"><span class="ph cmd">In Eclipse, from the <span class="ph uicontrol">Run</span> menu,
+select<span class="ph uicontrol"> Debug Configurations..</span></span></li>
+<li class="li substep substepexpand"><span class="ph cmd">Find <span class="ph uicontrol">Remote Java Application</span> and
+select <code class="ph codeph">ImaPlugInOnMessageGateway</code>. Then, click <span class="ph uicontrol">Debug</span>.</span>
+</li>
+</ol>
+</li></ol></section>
+<section class="section postreq"><ul class="ul">
+<li class="li">When you complete this phase of debugging, reset the <code class="ph codeph">PluginDebugPort</code> object on the <span class="ph">Eclipse Amlen</span> server. Use the <span class="ph">Eclipse Amlen</span> REST API POST method with the following <span class="ph">Eclipse Amlen</span> configuration URI:<p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/configuration/</code></p><div class="p">Provide PluginDebugPort object configuration data in the payload of the POST method by using the following schema. <span class="keyword parmname">Content-type</span> is set to <kbd class="ph userinput">application/json</kbd>. Ensure that capitalization and double quotation marks are used as shown. <pre class="pre codeblock"><code>
+{    
+  "PluginDebugPort": 0
+}</code></pre></div></li>
+</ul></section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Developing/devplug-indebug.html" title="You can debug the protocol plug-in that you are developing in two ways. You can choose to run the protocol plug-in server in Eclipse, or you can run the plug-in server and the plug-in on your Eclipse Amlen server.">Debug environments for the Eclipse Amlen protocol plug-in SDK</a></div></div></nav></article></main></body></html>

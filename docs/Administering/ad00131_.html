@@ -1,0 +1,129 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can start, restart and stop the MQ Connectivity process by using REST Administration APIs."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Starting, restarting and stopping the MQ Connectivity process by using REST Administration APIs</title></head><body id="ad00131_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a><ul><li><a href="../Administering/ad00102_.html">MQ Connectivity</a><ul><li><a href="../Administering/ad00092_.html">MQ Connectivity throughput and message order</a></li><li><a href="../Administering/ad00101_.html">MQ Connectivity message persistence</a></li><li><a href="../Administering/ad00132_.html">MQ Connectivity retained messages</a></li><li><a href="../Administering/ad00103_.html">MQ Connectivity and high availability</a></li><li><a href="../Administering/ad00104_.html">MQ Connectivity security</a></li><li><a href="../Administering/ad00091_.html">Configuring the IBM MQ server connection channel</a></li><li><a href="../Administering/ad00105_.html">Configuring the MQ Connectivity SSL key repository</a></li><li><a href="../Administering/ad00113_.html">Configuring queue manager connections</a></li><li><a href="../Administering/ad00110_.html">Configuring destination mapping rules</a></li><li><a href="../Administering/ad00129_.html">Starting, restarting, stopping, and viewing the status of MQ Connectivity</a><ul><li><a href="../Administering/ad00130_.html">Restarting, stopping, and viewing the status of MQ Connectivity by using the Amlen WebUI  </a></li><li><a href="../Administering/ad00135_.html">Starting, restarting, stopping, and viewing the status of the MQ Connectivity process by using REST Administration APIs</a><ul><li><a href="../Administering/ad00134_.html">Viewing the status of the MQ Connectivity process by using a REST Administration API</a></li><li class="active"><a href="../Administering/ad00131_.html">Starting, restarting and stopping the MQ Connectivity process by using REST Administration APIs</a></li></ul></li></ul></li><li><a href="../Administering/ad00111_.html">MQ Connectivity scenarios</a></li></ul></li><li><a href="../Administering/workingwithjmsra.html">Eclipse Amlen resource adapter</a></li><li><a href="../Administering/vm00001_.html">Using VMware vSphere to handle Eclipse Amlen failover</a></li></ul></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Starting, restarting and stopping the <span class="ph">MQ Connectivity</span> process by using <span class="ph">REST Administration APIs</span></h1>
+
+<div class="body taskbody"><p class="shortdesc">System administrators can start, restart and stop the <span class="ph">MQ Connectivity</span> process by using <span class="ph">REST Administration APIs</span>.</p>
+<section class="section context"><p class="p">When the <span class="ph">MQ Connectivity</span> process is stopped, the
+        durable subscriptions that are used to receive published messages remain active. Therefore,
+        any messages that are published while the <span class="ph">MQ Connectivity</span> process is stopped are delivered as
+        soon as the process is restarted. As the messages are buffered, the maximum messages limit
+        of the destination mapping rules might be reached. This limit prevents publishers from
+        sending any more messages. If you do not want this behavior, or if you are stopping the <span class="ph">MQ Connectivity</span> process for a long time, disable all
+        the destination mapping rules before you stop the process. For more information about
+        disabling destination mapping rules, see <a class="xref" href="ad00114_.html" title="System administrators and messaging administrators can configure destination mapping rules by using the MQ Connectivity page in the Amlen WebUI.">Configuring destination mapping rules by using the Amlen WebUI</a>.</p><p class="p">You can start, restart and stop the <span class="ph">MQ Connectivity</span>
+        process by using <span class="ph">REST Administration APIs</span>. You can restart
+        and stop the <span class="ph">MQ Connectivity</span> process by using the
+          <span class="ph">Amlen WebUI</span>. For more information about using
+        the <span class="ph">Amlen WebUI</span>, see <a class="xref" href="ad00130_.html" title="System administrators can view the status of the MQ Connectivity process, and restart and stop the process by using the Server Control page in the Amlen WebUI.">Restarting, stopping, and viewing the status of MQ Connectivity by using the Amlen WebUI</a>.</p></section>
+<section><ol class="ol steps"><li class="li step stepexpand">
+        <span class="ph cmd">Check the status of the <span class="ph">MQ Connectivity</span>
+          process by using the <span class="ph">Eclipse Amlen</span> REST API GET
+          method with the following <span class="ph">Eclipse Amlen</span> service
+          URI:</span>
+        <div class="itemgroup info">
+          <p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:port&gt;/ima/v1/service/status/MQConnectivity</code></p>
+          <ul class="ul">
+            <li class="li">If the status is <code class="ph codeph">Active</code>, the <span class="ph">MQ Connectivity</span> process is running. You can
+              stop the process.</li>
+            <li class="li">If the status is <code class="ph codeph">Inactive</code>, the <span class="ph">MQ Connectivity</span> process is not running. You
+              can start or restart the MQ Connectivity process. To start the <span class="ph">MQ Connectivity</span> process, MQConnectivity must
+              be enabled or the process will fail to start. Setting
+                <span class="keyword parmname">MQConnectivityEnabled</span> to <kbd class="ph userinput">true</kbd>
+              automatically starts the <span class="ph">MQ Connectivity</span>
+                process.<p class="p">To enable MQ Connectivity, use the <span class="ph">Eclipse Amlen</span> REST API POST method with the
+                following <span class="ph">Eclipse Amlen</span> configuration
+                URI:</p><p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:port&gt;/ima/v1/configuration</code></p><div class="p">You
+                can provide configuration data in the payload of the POST method by using the
+                following schema:
+              <pre class="pre codeblock"><code>
+{
+   "MQConnectivityEnabled": true
+ }</code></pre></div></li>
+          </ul>
+        </div>
+      </li><li class="li step stepexpand"><span class="ph cmd">Choose an appropriate action:</span>
+<ul class="ul choices">
+     <li class="li choice">To start the <span class="ph">MQ Connectivity</span> process by
+            restarting the server, use the <span class="ph">Eclipse Amlen</span> REST
+            API POST method with the following <span class="ph">Eclipse Amlen</span>
+            configuration
+                URI:<p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:port&gt;/ima/v1/service/restart</code></p><p class="p">Provide
+              object configuration data in the payload of the POST method by using the following
+              schema. <span class="keyword parmname">Content-type</span> is set to
+                <kbd class="ph userinput">application/json</kbd>:
+              </p><pre class="pre codeblock"><code>
+{ "Service": "Server" }</code></pre><p class="p">When the server restarts, MQ
+              Connectivity also restarts if it is enabled.</p><p class="p">If the server does not start, check
+              the logs for messages. For more information about the log files, see <a class="xref" href="../Troubleshooting/tr00000_.html" title="There are various system logs that you can use to help with problem determination and troubleshooting. You can set the logging level, change the log location, and view log location information by using REST Administration APIs.">Log files</a>.</p></li>
+     <li class="li choice"> To start the <span class="ph">MQ Connectivity</span> process,
+            without restarting the server, use the <span class="ph">Eclipse Amlen</span> REST API POST method with the
+            following <span class="ph">Eclipse Amlen</span> service
+                URI:<p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:port&gt;/ima/v1/service/start</code></p><div class="p">You
+              can provide configuration data in the payload of the POST method by using the
+              following schema: <pre class="pre codeblock"><code>
+{"Service":"MQConnectivity"}
+ </code></pre></div></li>
+          <li class="li choice"> To restart the <span class="ph">MQ Connectivity</span> process,
+            without restarting the server, use the <span class="ph">Eclipse Amlen</span> REST API POST method with the
+            following <span class="ph">Eclipse Amlen</span> service
+                URI:<p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:port&gt;/ima/v1/service/restart</code></p><div class="p">You
+              can provide configuration data in the payload of the POST method by using the
+              following schema: <pre class="pre codeblock"><code>
+{"Service":"MQConnectivity"}
+ </code></pre></div></li>
+     <li class="li choice">To stop the <span class="ph">MQ Connectivity</span> process without
+            stopping the server, use the <span class="ph">Eclipse Amlen</span> REST
+            API POST method with the following <span class="ph">Eclipse Amlen</span>
+            service
+              URI:<p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:port&gt;/ima/v1/service/stop</code></p><div class="p">You
+              can provide configuration data in the payload of the POST method by using the
+              following schema: <pre class="pre codeblock"><code>
+{"Service":"MQConnectivity"}
+ </code></pre></div></li>
+</ul>
+</li></ol></section>
+    <section class="example">
+      <p class="p">The following example uses cURL to show the status of the MQ Connectivity process:</p>
+      <pre class="pre codeblock"><code>curl -X GET http://127.0.0.1:9089/ima/v1/service/status/MQConnectivity
+ 
+ </code></pre>
+      <p class="p">The following example shows a successful example response to the GET method:</p>
+      <pre class="pre codeblock"><code>
+{    
+  "Version":"v1",    
+    "MQConnectivity": {
+     "Status": "Active",     
+     "Enabled": true    
+    } 
+}
+</code></pre>
+      <p class="p">The following example uses cURL to stop the MQ Connectivity process:</p>
+      <pre class="pre codeblock"><code>
+curl -X POST \
+   -H 'Content-Type: application/json'  \
+   -d  '{     
+         "Service":"MQConnectivity"
+      }
+ '  \
+http://127.0.0.1:9089/ima/v1/service/stop
+ 
+ </code></pre>
+      <p class="p">Check the status of the MQ Connectivity process after running the POST method:</p>
+      <pre class="pre codeblock"><code>curl -X GET http://127.0.0.1:9089/ima/v1/service/status/MQConnectivity
+ 
+ </code></pre>
+      <p class="p">The following example shows a successful example response to the GET method:</p>
+      <pre class="pre codeblock"><code>
+{
+  "Version":"v1",
+  "MQConnectivity": {
+    "Status": "Inactive",
+    "Enabled": true
+  }
+}
+
+</code></pre>
+    </section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Administering/ad00135_.html" title="System administrators can view the status of the MQ Connectivity process, and start, restart and stop the MQ Connectivity process by using REST Administration APIs.">Starting, restarting, stopping, and viewing the status of the MQ Connectivity process by using REST Administration APIs</a></div></div></nav></article></main></body></html>

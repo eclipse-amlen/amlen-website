@@ -1,0 +1,59 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="The Eclipse Amlen JMS client can run with the Java Security Manager enabled. To successfully run applications with the Security Manager enabled, you must configure your JVM with a suitable policy definition file."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Running Eclipse Amlen JMS client applications under the Java Security Manager</title></head><body id="devjms_underjavasecuritymanager"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a><ul><li><a href="../Developing/devconcepts.html">Messaging concepts</a></li><li><a href="../Developing/devmsgtypes.html">Natively supported message types</a></li><li><a href="../Developing/devmsgsize.html">Message size</a></li><li><a href="../Developing/devclientids.html">Client IDs</a></li><li><a href="../Developing/devclientservercert.html">Server certificates</a></li><li><a href="../Developing/devretainmsg.html">Developing retained message applications</a></li><li><a href="../Developing/devexpiredmsg.html">Expired messages</a></li><li><a href="../Developing/devsharedsubscriptions.html">Shared subscriptions</a></li><li><a href="../Developing/devmqttapp.html">Developing MQTT applications</a></li><li><a href="../Developing/devjmsapp.html">Developing JMS applications</a><ul><li><a href="../Developing/devjms_working.html">Working with Eclipse Amlen JMS</a><ul><li><a href="../Developing/devjms_creatingadministeredobjects.html">Creating administered objects</a></li><li><a href="../Developing/sharedsubscriptionsinjms.html">Shared subscriptions in JMS</a></li><li><a href="../Developing/devjms_poisonmessages.html">Poison messages</a></li><li><a href="../Developing/securingjmsconnections.html">Securing Eclipse Amlen JMS client by using Java runtime environment global properties</a></li><li class="active"><a href="../Developing/devjms_underjavasecuritymanager.html">Running Eclipse Amlen JMS client applications under the Java Security Manager</a></li><li><a href="../Developing/exceptionhandling.html">Exception Handling</a></li><li><a href="../Developing/devjms_usingjmsclienttracetacilities.html">Using client trace facilities</a></li></ul></li><li><a href="../Developing/devjms_sampleapplications.html">Sample applications</a></li><li><a href="../Developing/devjms_writingjmsapplications.html">Writing JMS Applications</a></li><li><a href="../Developing/javadoc/com/ibm/ima/jms/package-summary.html">JMS API reference</a></li></ul></li><li><a href="../Developing/devplug-in.html">Developing a protocol plug-in</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li></ul></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Running <span class="ph">Eclipse Amlen</span> JMS
+client applications under the Java Security
+Manager</h1>
+
+<div class="body conbody"><p class="shortdesc">The <span class="ph">Eclipse Amlen</span> JMS
+client can run with the Java™ Security
+Manager enabled. To successfully run applications with the Security
+Manager enabled, you must configure your JVM with a suitable policy
+definition file.</p>
+<p class="p"></p>
+<p class="p">The simplest way to configure your JVM  is to change the policy
+file that is supplied with the JRE. On most systems, this file is
+stored in the path <code class="ph codeph">lib/security/java.policy</code>, relative
+to your JRE directory. You can edit policy files by using your preferred
+editor or by using the <code class="ph codeph">policytool</code> program that is
+supplied with your JRE.</p>
+<div class="p">The <span class="ph filepath">imaclientjms.jar</span> file must be configured
+with the authority to complete the following tasks;<ul class="ul">
+<li class="li">Create sockets</li>
+<li class="li">Read various properties from the environment</li>
+</ul></div>
+<div class="p">The following information provides an example of a policy file
+entry that allows the <span class="ph">Eclipse Amlen</span> JMS
+client to run successfully under the default security manager. <pre class="pre codeblock"><code>grant codeBase "file:IMACLIENT_INSTALLATION_PATH/ImaClient/jms/lib/imaclientjms.jar" {
+  permission java.net.SocketPermission "IMASERVER:IMAPORT", "connect";
+  permission java.util.PropertyPermission "IMATraceLevel", "read";
+  permission java.util.PropertyPermission "IMATraceFile", "read";
+  permission java.io.FilePermission "IMACLIENT_TRACE_FILE", "write";
+};</code></pre></div>
+<div class="p">Using the example that is provided, complete the following steps: <ul class="ul">
+<li class="li">Replace the string <code class="ph codeph">IMACLIENT_INSTALLATION_PATH</code> with
+the location where the <span class="ph">Eclipse Amlen</span> JMS
+client is installed on your system.</li>
+<li class="li">Replace the string <code class="ph codeph">IMASERVER</code> with the host name for <span class="ph">Eclipse Amlen</span> server.</li>
+<li class="li">Replace <code class="ph codeph">IMAPORT</code> with the port number you that
+you want to use for connections.</li>
+<li class="li">Replace <code class="ph codeph">IMACLIENT_TRACE_FILE</code> with a file name
+if you want to specify a file for trace output. The value that you
+assign to <code class="ph codeph">IMACLIENT_TRACE_FILE</code> must match the file
+name that you specify for <code class="ph codeph">IMATraceFile</code> when you run
+a client application.</li>
+</ul></div>
+<p class="p">You can specify multiple entries for <span class="keyword parmname">java.net.SocketPermission</span> and
+for <span class="keyword parmname"> java.io.FilePermission</span>. Specify one line
+for each host/port pair, or for each file name.  You can optionally
+specify <kbd class="ph userinput">*</kbd> for <code class="ph codeph">IMASERVER:IMAPORT</code> and
+for <code class="ph codeph">IMACLIENT_TRACE_FILE</code>.  However, use <kbd class="ph userinput">*</kbd> with
+caution as this value grants access to all possible values.</p>
+<p class="p">This example of a policy file entry enables the <span class="ph">Eclipse Amlen</span> JMS
+client to work correctly under the security manager. You might need
+to enable your own code to run correctly before your applications
+work. The sample code that is shipped with <span class="ph">Eclipse Amlen</span> JMS
+client is not specifically enabled for use with the security manager.</p>
+</div>
+
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Developing/devjms_working.html" title="The following topics cover specific Eclipse Amlen JMS client features, including the creation of administered objects and capabilities that can add value.">Working with Eclipse Amlen JMS</a></div></div></nav></article></main></body></html>

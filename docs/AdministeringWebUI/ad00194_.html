@@ -1,0 +1,42 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can start and stop the Amlen WebUI by using the following docker commands."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Starting and stopping the Amlen WebUI process in a Docker environment</title></head><body id="ad00194_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a><ul><li><a href="../AdministeringWebUI/se00001_.html">Eclipse Amlen Web UI users and roles</a></li><li><a href="../AdministeringWebUI/ad00300_.html">Configuring Eclipse Amlen Web UI users</a></li><li><a href="../AdministeringWebUI/ad00199_.html">The Amlen WebUI</a><ul><li><a href="../AdministeringWebUI/ad00197_.html">Changing the Amlen WebUI address</a></li><li><a href="../AdministeringWebUI/ad00198_.html">Changing the Amlen WebUI timeout</a></li><li><a href="../AdministeringWebUI/ad00193_.html">Changing the HTTP read timeout</a></li><li><a href="../AdministeringWebUI/ad00195_.html">Changing the Amlen WebUI authentication cache timeout</a></li><li><a href="../AdministeringWebUI/ad00196_.html">Changing the Amlen WebUI security certificate</a></li><li class="active"><a href="../AdministeringWebUI/ad00194_.html">Starting and stopping the Amlen WebUI process in a Docker environment</a></li><li><a href="../AdministeringWebUI/ad00294_.html">Starting and stopping the Amlen WebUI process on a host OS</a></li></ul></li></ul></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Starting and stopping the <span class="ph">Amlen WebUI</span> process in
+  a Docker environment</h1>
+
+<div class="body taskbody"><p class="shortdesc">System administrators can start and stop the <span class="ph">Amlen WebUI</span> by using the following docker
+  commands.</p>
+<section class="section context"><p class="p">If something goes wrong with the <span class="ph">Amlen WebUI</span>, you might
+want to stop and start the <span class="ph">Amlen WebUI</span> process to
+resolve the issue.</p></section>
+<section><ul class="ul steps-unordered"><li class="li step stepexpand"><span class="ph cmd">To view the current status of the <span class="ph">Amlen WebUI</span> process, enter
+the following command:</span><div class="itemgroup info"><p class="p"><code class="ph codeph">docker ps</code></p></div>
+</li><li class="li step stepexpand">
+        <span class="ph cmd">To see if the <span class="ph">Amlen WebUI</span>container exists
+          but is not currently running, enter the following command:</span>
+        <div class="itemgroup info">
+          <p class="p"><code class="ph codeph">docker ps -a</code></p>
+        </div>
+      </li><li class="li step stepexpand">
+        <span class="ph cmd">To create the <span class="ph">Amlen WebUI</span> container and
+          start it for the first time, enter the following command:</span>
+        <div class="itemgroup info">
+          <p class="p"><code class="ph codeph">docker run --cap-add SYS_ADMIN --net=host -P -it --name imawebui
+          --env-file=imawebui-docker.env -m 2g -d imawebui:2.0</code></p>
+        </div>
+      </li><li class="li step stepexpand">
+        <span class="ph cmd">To stop an existing <span class="ph">Amlen WebUI</span> container
+          that is running in a Docker environment, use the following command:</span>
+        <div class="itemgroup info">
+          <pre class="pre codeblock"><code>docker stop <var class="keyword varname">&lt;WebUI container name&gt;</var></code></pre>
+        </div>
+      </li><li class="li step stepexpand">
+        <span class="ph cmd">To start an existing <span class="ph">Amlen WebUI</span> container
+          that is not running in a Docker environment, use the following command:</span>
+        <div class="itemgroup info">
+          <pre class="pre codeblock"><code>docker start <var class="keyword varname">&lt;WebUI container name&gt;</var></code></pre>
+        </div>
+      </li></ul></section>
+</div>
+<nav role="navigation" class="related-links"><div class="linklist relconcepts"><strong>Related concepts</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="../Troubleshooting/tr00012_.html" title="There are several common reasons why the Amlen WebUI might not work.">The Amlen WebUI is not working</a></li></ul></div><div class="linklist reltasks"><strong>Related tasks</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="../Backup/ba00013_.html" title="System administrators can use standard system tools to restore the Amlen WebUI from a backup.">Restoring the Amlen WebUI from a backup</a></li></ul></div></nav>
+</article></main></body></html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can remove an inactive cluster member by using the Cluster menu options in the Amlen WebUI."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Removing an inactive cluster member by using the Amlen WebUI</title></head><body id="ad00941_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a><ul><li><a href="../Administering/ad01003_.html">Configuring cluster membership in a high availability pair by using the Amlen WebUI</a><ul><li><a href="../Administering/ad00941_.html">Configuring cluster membership by using the Amlen WebUI  </a></li><li><a href="../Administering/ad01004_.html">Configuring cluster membership in a high availability pair by using the Amlen WebUI</a></li><li class="active"><a href="../Administering/ad00951.html">Removing an inactive cluster member by using the Amlen WebUI  </a></li><li><a href="../Administering/ad00952.html">Viewing message flow by using the Amlen WebUI  </a></li></ul></li><li><a href="../Administering/ad00944_.html">Configuring cluster membership by using REST Administration APIs</a></li><li><a href="../Administering/ad00943_.html">Using omping to test multicast connectivity in clusters</a></li></ul></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+    <h1 class="title topictitle1" id="ariaid-title1">Removing an inactive cluster member by using the <span class="ph">Amlen WebUI</span>
+    </h1>
+    
+    
+    
+    
+    
+    
+    <div class="body taskbody"><p class="shortdesc">System administrators can remove an inactive cluster member by using the
+            <span class="ph uicontrol">Cluster</span> menu options in the <span class="ph">Amlen WebUI</span>.</p>
+        <section class="section prereq">
+            <p class="p">Only take this action if you have a cluster member that is inactive and cannot be
+                restarted. Removal of an inactive cluster member results in that member being
+                permanently removed from the cluster. All messages that are queued to be sent to the
+                inactive member are permanently deleted from the system. Outbound messages from the
+                inactive member are also permanently deleted. If you have a member that you no
+                longer want to participate in the cluster, disable cluster membership by using the
+                    <span class="ph uicontrol">Cluster Membership</span> page. For more information about
+                disabling cluster membership, see <a class="xref" href="ad00941_.html" title="System administrators can configure cluster membership of Eclipse Amlen servers by using the Cluster Membership page in the Amlen WebUI.">Configuring cluster membership by using the Amlen WebUI</a>.</p>
+        </section>
+        <section class="section context">
+            <p class="p">When a cluster member is not available for an extended period or is inactive, you can
+                remove that cluster member from the discovery list of all active cluster members to
+                avoid a potential impact on performance. Only use this REST API if a cluster member
+                cannot be recovered. In all other instances, disable cluster membership on the
+                active member that you want to remove. </p>
+            <p class="p">You can query cluster members with a status of <kbd class="ph userinput">inactive</kbd> by
+                using <a class="xref" href="../Monitoring/admin00080.html" title="Cluster monitoring statistics allow you to establish how well the cluster is functioning by providing information about the cluster members and the flow of messages between the cluster members. Cluster monitoring statistics provide a set of statistics about each cluster member as they relate to the cluster member on which you are viewing the statistics.">Cluster monitoring</a>.</p>
+        </section>
+        <section><div class="ol steps"><div class="li step p">
+                <span class="ph cmd">To remove an inactive cluster member, complete the following steps:</span>
+                <ol type="a" class="ol substeps">
+                    <li class="li substep">
+                        <span class="ph cmd">Go to the <span class="ph uicontrol">Cluster Status</span> page by selecting <span class="ph menucascade"><span class="ph uicontrol">Cluster</span><abbr title="and then"> &gt; </abbr><span class="ph uicontrol">Status</span></span>.</span>
+                    </li>
+                    <li class="li substep">
+                        <span class="ph cmd">Select the server that you want to remove from the <span class="keyword wintitle">Cluster
+                                Status Data</span> table.</span>
+                    </li>
+                    <li class="li substep">
+                        <span class="ph cmd">Click <span class="ph uicontrol">Delete</span> to remove the inactive cluster
+                            member. </span>
+                    </li>
+                </ol>
+            </div></div></section>
+    </div>
+    <nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Administering/ad01003_.html">Configuring cluster membership in a high availability pair by using the Amlen WebUI</a></div></div><div class="linklist relconcepts"><strong>Related concepts</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="ad00940_.html" title="You can configure Eclipse Amlen servers in clusters to increase the maximum messaging throughput or the maximum number of concurrent connections beyond the capacity of a single Eclipse Amlen server. All Eclipse Amlen servers in a cluster share a common topic tree.">Configuring the cluster membership of an Eclipse Amlen server</a></li></ul></div></nav>
+</article></main></body></html>

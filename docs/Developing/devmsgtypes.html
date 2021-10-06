@@ -1,0 +1,61 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="This section outlines the messages types that are natively supported for Eclipse Amlen and provides an explanation of each type."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Natively supported message types</title></head><body id="supported_msg"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a><ul><li><a href="../Developing/devconcepts.html">Messaging concepts</a></li><li class="active"><a href="../Developing/devmsgtypes.html">Natively supported message types</a></li><li><a href="../Developing/devmsgsize.html">Message size</a></li><li><a href="../Developing/devclientids.html">Client IDs</a></li><li><a href="../Developing/devclientservercert.html">Server certificates</a></li><li><a href="../Developing/devretainmsg.html">Developing retained message applications</a></li><li><a href="../Developing/devexpiredmsg.html">Expired messages</a></li><li><a href="../Developing/devsharedsubscriptions.html">Shared subscriptions</a></li><li><a href="../Developing/devmqttapp.html">Developing MQTT applications</a></li><li><a href="../Developing/devjmsapp.html">Developing JMS applications</a></li><li><a href="../Developing/devplug-in.html">Developing a protocol plug-in</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li></ul></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Natively supported message types</h1>
+
+<div class="body conbody"><p class="shortdesc">This section outlines the messages types that are natively
+supported for <span class="ph">Eclipse Amlen</span> and
+provides an explanation of each type.</p>
+<p class="p"><span class="ph">Eclipse Amlen</span> natively
+supports the following type of messages: </p>
+<div class="p"><ul class="ul">
+<li class="li">IMA message <p class="p">An IMA message consists of
+a small header, a properties area, and a body (or payload) area. The
+physical representation of this message varies by component and protocol.
+  The message header is very small an consists only of small fixed
+size items such as persistence, reliability, redelivery count, and
+message type.  The engine allows any number of areas, but all messages
+in <span class="ph">Eclipse Amlen</span> create
+exactly two areas, properties and body. Each of these areas is or
+arbitrary length.  The properties are stored in a concise format which
+is designed to minimize the size and allow for easy sequential read
+and append, but not for random access or editing. The system properties
+(such as the Topic name or JMS header fields) are kept along with
+the user properties. System properties have numeric IDs, and user
+properties have names.  The body or payload of the message is just
+a blob, but there is a header field of message type which indicates
+how to interpret the body. The server does not interpret the body
+in any way if the source and destination protocols are the same. 
+The message header within the engine is defined in the server_utils
+include file ismmessage.h .</p></li>
+<li class="li">MQTT message<div class="p"> The MQTT message is defined by the MQTT protocol specification as the PUBLISH
+message. (See the <a class="xref" href="http://public.dhe.ibm.com/software/dw/webservices/ws-mqtt/mqtt-v3r1.html" target="_blank" rel="external noopener">MQTT protocol specification</a> document to review the specification.) It consists
+of a single-byte header, an optional two-byte message ID, a topic name, and the message payload. The
+header is a single byte containing the qualities of service (QoS) (0-2), retain flag, and dup flag.
+The message ID is used for QoS&gt;0 but is only used for communications between client and server. It
+is not really a part of the message. The topic is a UTF-8 string, and the body is a blob of bytes.
+When an MQTT message is received, the MQTT protocol adds the topic name as a system property into
+the message. The recipient of the message is de-coupled from the originator of the message. This is
+useful as the consumer of the data only receives the messages when they are interested in a
+particular type of message and can subscribe or unsubscribe at any point from a message feed without
+affecting the message sender.<div class="note note note_note"><span class="note__title">Note:</span> A server can delete a retained message if it receives a message
+with a zero-length payload and the Retain flag set on the same topic.</div></div></li>
+<li class="li">JMS message<div class="p">JMS message consists of a number of header fields, user properties, and a body. The
+            body is defined by its message type which is one of the header fields. The properties
+            are keyword, type, value tuples. A number of the header fields are arbitrary length
+            strings. JMS supports six message types or interfaces. In addition to the base
+            interface, Message, five subinterfaces are also supported; BytesMessage, MapMessage,
+            ObjectMessage, StreamMessage, and TextMessage. In <span class="ph">Eclipse Amlen</span>, all JMS text messages are a UTF-8
+            representation of the body string. Map messages and stream messages use the concise
+            encoding that is also used for properties. All property names and string values are also
+            in UTF-8.<div class="note note note_note"><span class="note__title">Note:</span> Only use JMS ObjectMessages if you are certain that the message comes
+              from a trusted source. Using JMS ObjectMessages from other sources exposes the
+              environment in which you run the JMS client to denial of service or authorization
+              takeover. As it is difficult to ensure that the sender is trusted in JMS, you might
+              choose not to use JMS ObjectMessages. If you receive a JMS ObjectMessage, do not
+              invoke getObject() on the message.</div></div>
+        </li>
+</ul></div>
+</div>
+
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Developing/develop_guide.html" title="You can develop your own client applications to use with Eclipse Amlen.">Developing client applications</a></div></div></nav></article></main></body></html>

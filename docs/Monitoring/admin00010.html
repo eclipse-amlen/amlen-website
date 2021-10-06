@@ -1,0 +1,74 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="Monitor the performance of individual endpoints, in terms of connection activity and throughput across a specified time frame."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Endpoint Monitoring</title></head><body id="admin00010"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a><ul><li><a href="../Monitoring/admin00080.html">Cluster monitoring</a></li><li><a href="../Monitoring/admin00009.html">Connection Monitoring</a></li><li class="active"><a href="../Monitoring/admin00010.html">Endpoint Monitoring</a><ul><li><a href="../Monitoring/admin00015.html">Viewing endpoint level statistics by using the Amlen WebUI</a></li><li><a href="../Monitoring/admin00013.html">Viewing endpoint level statistics by using REST Monitoring APIs</a></li><li><a href="../Monitoring/admin00040.html">Viewing endpoint level statistics by using an external application</a></li></ul></li><li><a href="../Monitoring/admin00016.html">Topic Monitoring</a></li><li><a href="../Monitoring/admin00019.html">Queue Monitoring</a></li><li><a href="../Monitoring/admin00022.html">Subscription Monitoring</a></li><li><a href="../Monitoring/admin00025.html">MQTT Client Monitoring</a></li><li><a href="../Monitoring/admin00031.html">MQ Connectivity monitoring</a></li><li><a href="../Monitoring/admin00070.html">Viewing protocol plug-in monitoring statistics by using an external application</a></li><li><a href="../Monitoring/admin00028.html">Server Monitoring</a></li><li><a href="../Monitoring/admin00060.html">XA Transaction monitoring</a></li></ul></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Endpoint Monitoring</h1>
+
+<div class="body conbody"><p class="shortdesc">Monitor the performance of individual endpoints, in terms
+of connection activity and throughput across a specified time frame. </p>
+<section class="section"><h2 class="title sectiontitle">Endpoint Chart</h2><div class="note note note_note"><span class="note__title">Note:</span> The endpoint chart displays a snapshot
+of data for a particular time interval, and might not show spikes
+that occur.  For durations less than 1 hour, the charts are based
+on snapshots taken every 5 seconds. For longer durations, the charts
+are based on snapshots taken every minute.</div><div class="p">Use the endpoint chart to view time-series charts for a particular endpoint, metric, and time
+    duration. <div class="note note note_note"><span class="note__title">Note:</span> 
+     <p class="p">Any endpoint that has a name that starts with an exclamation point character (!) is an
+      internal pre-configured endpoint. Examples of internal pre-configured endpoints include
+       <code class="ph codeph">!MQConnectivityEndpoint</code> and <code class="ph codeph">!ForwarderEndpoint</code>. The
+       <code class="ph codeph">!ForwarderEndpoint</code>  is used to connect servers in a cluster. The
+      configuration of internal pre-configured endpoints cannot be changed. </p>
+    </div></div><p class="p">You can view information about the
+following metrics over a specified duration:</p><ul class="ul">
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Active connections </dt>
+<dd class="dd">The number of clients that are connected to an endpoint over a
+time period. This number increases and decreases over time as clients
+connect, and disconnect from an endpoint.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Cumulative failed connections</dt>
+<dd class="dd">The number of unexpected disconnects. If you have an endpoint
+with a high number of failed connections, then you might want to do
+more analysis of that particular endpoint to ascertain whether there
+is a problem.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Throughput (msg) </dt>
+<dd class="dd">Throughput of messages that are sent and received for all connections
+that use a particular endpoint.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Throughput (bytes) </dt>
+<dd class="dd">Throughput of data that is sent and received for all connections
+that use a particular endpoint. </dd>
+</dl></li>
+</ul></section>
+<section class="section"><h2 class="title sectiontitle">Endpoint Data</h2><p class="p">Use endpoint data to view
+aggregated data for individual endpoints. </p><p class="p">You can view information
+about the following metrics over a specified duration:</p><ul class="ul">
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Connections established</dt>
+<dd class="dd">The number of clients that successfully connected to an endpoint
+over a time period. If no new connections are established between
+the last hour and the last 6 hours, then the value for these fields
+remains the same.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Cumulative failed connections</dt>
+<dd class="dd">The number of unexpected disconnects. If you have an endpoint
+with a high number of failed connections, then you might want to do
+more analysis of that particular endpoint to ascertain whether there
+is a problem.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Throughput (msg) </dt>
+<dd class="dd">Aggregated throughput of messages for all connections that use
+a particular endpoint.</dd>
+</dl></li>
+<li class="li"><dl class="dl">
+<dt class="dt dlterm">Throughput (bytes)</dt>
+<dd class="dd">Aggregated throughput of data for all connections that use a particular
+endpoint.</dd>
+</dl></li>
+</ul></section>
+</div>
+<nav role="navigation" class="related-links"><ul class="ullinks"><li class="link ulchildlink"><strong><a href="../Monitoring/admin00015.html">Viewing endpoint level statistics by using the Amlen WebUI</a></strong><br>Use the endpoint monitor to view live, aggregated endpoint data, and to query the best and worst performing connections across several connection metrics.</li><li class="link ulchildlink"><strong><a href="../Monitoring/admin00013.html">Viewing endpoint level statistics by using REST Monitoring APIs</a></strong><br>System administrators can view monitoring statistics by using <span class="ph">REST Monitoring APIs</span>.</li><li class="link ulchildlink"><strong><a href="../Monitoring/admin00040.html">Viewing endpoint level statistics by using an external application</a></strong><br> External monitoring applications can access endpoint data that is published by <span class="ph">Eclipse Amlen</span> by subscribing to the <span class="ph">Eclipse Amlen</span> topic <span class="ph filepath">$SYS/ResourceStatistics/Endpoint</span>.</li></ul><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Monitoring/admin00008_.html" title="Monitoring provides a picture of the health of Eclipse Amlen. You can monitor Eclipse Amlen to understand how it is being used, and watch for potential problems.">Monitoring and reporting</a></div></div></nav></article></main></body></html>

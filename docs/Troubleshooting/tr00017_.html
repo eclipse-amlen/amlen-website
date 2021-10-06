@@ -1,0 +1,42 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can change the server state from Maintenance to Running, or from Running to Maintenance, by using the Server Control page in the Amlen WebUI."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Changing the server state by using the Amlen WebUI</title></head><body id="tr00017_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a><ul><li><a href="../Troubleshooting/tr00000_.html">Log files</a></li><li><a href="../Troubleshooting/tr00006_.html">Maintenance mode</a><ul><li><a href="../Troubleshooting/tr00007_.html">Changing the server state</a><ul><li class="active"><a href="../Troubleshooting/tr00017_.html">Changing the server state by using the Amlen WebUI</a></li><li><a href="../Troubleshooting/tr00016_.html">Changing the server state by using REST Administration APIs</a></li></ul></li><li><a href="../Troubleshooting/tr00013_.html">Cleaning the store</a></li></ul></li><li><a href="../Troubleshooting/tr00001_.html">Common problems</a></li><li><a href="../Troubleshooting/tr00030.html">Platform must-gather</a></li><li><a href="../Troubleshooting/admin_messagecatalog.html">Message catalog</a></li></ul></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Changing the server state by using the <span class="ph">Amlen WebUI</span></h1>
+
+<div class="body taskbody"><p class="shortdesc">System administrators can change the server state from <code class="ph codeph">Maintenance</code> to
+      <code class="ph codeph">Running</code>, or from <code class="ph codeph">Running</code> to <code class="ph codeph">Maintenance</code>, by
+    using the <span class="ph uicontrol">Server Control</span> page in the <span class="ph">Amlen WebUI</span>.</p>
+<section class="section context"><p class="p">For more information about maintenance mode, see <a class="xref" href="tr00006_.html" title="Maintenance mode is an Eclipse Amlen server state that allows a system administrator to complete a number of tasks. In maintenance mode, a system administrator can clean the server store, stop and start the server, and change the server state from Maintenance to Running.">Maintenance mode</a>.</p><p class="p">You change the server state from <code class="ph codeph">Maintenance</code> to <code class="ph codeph">Running</code>, or
+        from <code class="ph codeph">Running</code> to <code class="ph codeph">Maintenance</code>, by using the <span class="ph">Amlen WebUI</span>, or by using REST Administration APIs.
+        For more information about using REST Administration APIs to change the server state, see
+          <a class="xref" href="tr00016_.html" title="System administrators can change the server state from Maintenance to Running, or from Running to Maintenance, by using REST Administration APIs.">Changing the server state by using REST Administration APIs</a>.</p></section>
+<section><ol class="ol steps"><li class="li step">
+        <span class="ph cmd">Go to the <span class="ph uicontrol">Server Control</span> page by selecting <span class="ph uicontrol">Server
+            Control</span> from the <span class="ph uicontrol">Server</span> menu.</span>
+      </li><li class="li step">
+        <span class="ph cmd">Check the status of the server in the <span class="ph uicontrol">Status</span> field of the
+            <span class="ph uicontrol">IBM Watson IoT Platform - Message Gateway Server</span> pane:</span>
+        <ul class="ul choices">
+          <li class="li choice">If the server status is <code class="ph codeph">Running</code>, the server is running in
+            production mode.</li>
+          <li class="li choice">If the server status is <code class="ph codeph">Maintenance</code>, the server is in maintenance
+            mode.</li>
+        </ul>
+      </li><li class="li step">
+        <span class="ph cmd">Choose an action:</span>
+        <ul class="ul choices">
+          <li class="li choice">Change the server state from <code class="ph codeph">Running</code>, to
+              <code class="ph codeph">Maintenance</code> mode by clicking <span class="ph uicontrol">Start
+            maintenance</span>. </li>
+          <li class="li choice">Change the server state from <code class="ph codeph">Maintenance</code> mode, to
+              <code class="ph codeph">Running</code> by clicking <span class="ph uicontrol">Stop maintenance</span>. </li>
+          <li class="li choice">Restart the server by clicking <span class="ph uicontrol">Restart the server</span>.</li>
+          <li class="li choice">Stop the server by clicking <span class="ph uicontrol">Stop the server</span>. <div class="note note note_note"><span class="note__title">Note:</span> If you
+              stop the server, you can only restart the server by using a docker or systemctl
+              command. You cannot restart the server by using the <span class="ph">Amlen WebUI</span> or by using REST Administration
+              APIs.</div></li>
+        </ul>
+      </li></ol></section>
+</div>
+
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Troubleshooting/tr00007_.html" title="System administrators can change the server state from Maintenance to Running, or from Running to Maintenance. The server state can be changed by using either REST Administration APIs or the Amlen WebUI.">Changing the server state</a></div></div></nav></article></main></body></html>

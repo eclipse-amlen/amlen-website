@@ -1,0 +1,54 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can view and configure the Eclipse Amlen admin endpoint by using the Server tab in the Amlen WebUI."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Configuring the admin endpoint by using the Amlen WebUI</title></head><body id="pdf_ad00391_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a><ul><li class="active"><a href="../Administering/ad00391_.html">Configuring the admin endpoint by using the Amlen WebUI</a></li><li><a href="../Administering/ad00394_.html">Configuring the admin endpoint by using REST Administration APIs</a></li></ul></li><li><a href="../Administering/ad00200_.html">Server administration</a></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+    <h1 class="title topictitle1" id="ariaid-title1">Configuring the admin endpoint by using the <span class="ph">Amlen WebUI</span></h1>
+    
+    
+    
+    
+    
+    
+    <div class="body taskbody"><p class="shortdesc">System administrators can view and configure the <span class="ph">Eclipse Amlen</span> admin endpoint by using the <span class="ph uicontrol">Server</span> tab in the <span class="ph">Amlen WebUI</span>.</p>
+        <section class="section context">
+            <p class="p">You can configure the admin endpoint by using the <span class="ph">Amlen WebUI</span>, or by using the <span class="ph">REST Administration API</span>. For more information about using the <span class="ph">REST Administration API</span> to configure the admin endpoint, see <a class="xref" href="ad00394_.html" title="System administrators can configure the admin endpoint, configuration policies, and set the admin superuser ID and password by using REST Administration APIs.">Configuring the admin endpoint by using REST Administration APIs</a>.</p>
+        </section>
+        <section><ol class="ol steps"><li class="li step stepexpand">
+                <span class="ph cmd">Go to the <span class="ph uicontrol">Admin Endpoint Configuration</span> page:</span>
+                <ul class="ul choices">
+                    <li class="li choice">From the <span class="ph uicontrol">Server</span> menu, click <span class="ph uicontrol">Admin Endpoint</span>.</li>
+                </ul>
+            </li><li class="li step stepexpand">
+                <span class="ph cmd">In the <span class="ph uicontrol">Admin Superuser</span> section, review the admin
+                    superuser ID.</span>
+                <ul class="ul choices">
+                    <li class="li choice">To change the admin superuser ID, click <span class="ph uicontrol">Change User
+                            ID</span> and specify the user ID that you require.</li>
+                    <li class="li choice">To change the admin superuser password, click <span class="ph uicontrol">Change
+                            Password</span> and specify and confirm the password that you
+                        require.</li>
+                </ul>
+            </li><li class="li step stepexpand">
+                <span class="ph cmd">In the <span class="ph uicontrol">Admin Endpoint</span> section, click
+                        <span class="ph uicontrol">Edit</span> to change the values for IP address, port, and
+                    security profile, and to add, delete, and change the order of configuration
+                    policies.</span>
+                <div class="itemgroup info">
+                    <div class="note note note_note"><span class="note__title">Note:</span> If you change the port number and continue to use the default server name, the server name that appears in the <span class="ph uicontrol">Server</span> menu continues to contain the <code class="ph codeph">9089</code> string. In order to simplify administration, consider changing the server name to remove the <code class="ph codeph">9089</code> string. Go to the <span class="ph uicontrol">Server Control</span> page by selecting <span class="ph uicontrol">Server Control</span> from the <span class="ph uicontrol">Server</span> menu and then click <span class="ph uicontrol">Edit</span> in the <span class="ph uicontrol">Server name</span> field.</div>
+                </div>
+            </li><li class="li step stepexpand">
+                <span class="ph cmd">In the <span class="ph uicontrol">Configuration Policies</span> section, add, delete, and
+                    edit configuration policies.</span>
+                <ul class="ul choices">
+                    <li class="li choice">To add a configuration policy, click the <span class="ph uicontrol">Add</span>
+                        icon.</li>
+                    <li class="li choice">To delete a configuration policy, select the policy and click the
+                            <span class="ph uicontrol">Delete</span> icon.</li>
+                    <li class="li choice">To edit a configuration policy, select the policy and click the
+                            <span class="ph uicontrol">Edit</span> icon.</li>
+                </ul>
+            </li><li class="li step stepexpand">
+                <span class="ph cmd">Click <span class="ph uicontrol">Save</span> to save any changes that you make.</span>
+            </li></ol></section>
+    </div>
+    <nav role="navigation" class="related-links"><div class="linklist relconcepts"><strong>Related concepts</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="ad00390_.html" title="You can configure the administration (admin) endpoint either by using the Amlen WebUI or by using the REST Administration API.">Configuring the administration endpoint</a></li></ul></div></nav>
+</article></main></body></html>

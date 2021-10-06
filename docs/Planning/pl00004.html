@@ -1,0 +1,27 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="To optimize performance, review the guidelines in this section and plan your solution accordingly."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Performance planning</title></head><body id="pl00004"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a><ul><li><a href="../Planning/pl00030.html">Installation planning</a></li><li><a href="../Planning/ov00101_.html">Messaging patterns</a></li><li><a href="../Planning/pl00010.html">Messaging planning</a></li><li><a href="../Planning/clusteringconsiderations.html">Clustering considerations</a></li><li><a href="../Planning/pl00002_.html">Capacity planning</a></li><li class="active"><a href="../Planning/pl00004.html">Performance planning</a></li><li><a href="../Planning/ov40001.html">High availability planning</a></li><li><a href="../Planning/pl00020.html">Connecting to an existing infrastructure</a></li></ul></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Performance planning</h1>
+
+<div class="body conbody"><p class="shortdesc">To optimize performance, review the guidelines in this
+section and plan your solution accordingly.</p>
+<div class="p">There are a number of factors that can influence the rate of message
+throughput. Consider the following information when you plan your
+solution. <ul class="ul">
+<li class="li">If you are planning a deployment in which connection bursts of
+more than 10K connections per second are possible, then you might
+want to load balance the connections across two endpoints. Two endpoints
+are sufficient support these large bursts of connections. </li>
+<li class="li">To scale beyond 1 million connected devices, use more than one <span class="ph">Eclipse Amlen</span> instance.</li>
+<li class="li">For applications that publish large numbers of QoS 1 or QoS 2 messages, consider increasing the inflight message ID window to 128 or higher to avoid blocking while awaiting an available message ID. For JMS publishers that publish persistent messages, the send operation is blocking with a inflight window of 1 message. As a result, the network RTT between ACTIVE and STANDBY members of a <span class="ph">Eclipse Amlen</span> high availability pair can significantly impact the throughput of JMS publishers that publish persistent messages.</li>
+<li class="li">For optimal performance, do not design consumer clients that create
+more than 100 subscriptions. If a consumer client must subscribe to
+many topics, use wildcard subscriptions to reduce the total number
+of subscriptions that are made. </li>
+<li class="li">For optimal performance, ensure that applications that receive or send large amounts of data are configured to distribute the load over multiple connections.</li>
+<li class="li">For optimal performance, ensure that policies that authorize the most frequent actions appear at the top of the ordered list of policies on an endpoint. For example, ensure that a policy that authorizes a publish that occurs once every second appears above a policy that authorizes a subscribe that occurs once every minute. To avoid excessive amounts of time being spent in processing authorization checks, restrict the number of policies in your system to a figure in the low tens.</li>
+</ul></div>
+</div>
+
+    <nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Planning/pl00001_.html" title="When you plan your Eclipse Amlen solution, you must make a number of decisions to ensure your solution works effectively.">Planning</a></div></div><div class="linklist relconcepts"><strong>Related concepts</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="pl00002_.html" title="Eclipse Amlen can store messages to assure delivery to clients and devices that might not be connected. The amount of storage is limited, and if it fills, the server rejects new messages.">Capacity planning</a></li></ul></div></nav>
+</article></main></body></html>

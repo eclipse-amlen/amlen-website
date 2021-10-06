@@ -1,0 +1,97 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="To recover from outages that might include planned events (such as maintenance and backups) and unplanned events (such as software failures, hardware failures, power failures, and disasters) you can configure an Eclipse Amlen server to serve as a backup."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Configuring your system for high availability</title></head><body id="ad00400"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a><ul><li><a href="../Administering/ad00210_.html">Network interface controllers</a></li><li><a href="../Administering/ad00380_.html">Configuring the server name</a></li><li><a href="../Administering/ad00290_.html">Configuring log files</a></li><li class="active"><a href="../Administering/ad00400_.html">Configuring your system for high availability</a><ul><li><a href="../Administering/ad00909_.html">Configuring HA </a></li><li><a href="../Administering/ad00416_.html">High availability scenarios</a></li></ul></li><li><a href="../Administering/ad00790_.html">Configuring licensed usage and accepting the license for Eclipse Amlen  </a></li><li><a href="../Administering/ad00280_.html">Starting, stopping, restarting and viewing the status of the Eclipse Amlen server</a></li></ul></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Configuring your system for high availability</h1>
+
+<div class="body conbody"><p class="shortdesc">To recover from outages that might include planned events (such as maintenance and
+  backups) and unplanned events (such as software failures, hardware failures, power failures, and
+  disasters) you can configure an <span class="ph">Eclipse Amlen</span> server to
+  serve as a backup.</p>
+<p class="p">You might want to configure your system for high availability (HA) in case the primary server
+   experiences a failure. If your server is configured to be highly available, the standby server
+   automatically takes over as the new primary server if the original primary server fails. After
+   the original primary is available again, it acts as the standby server. </p>
+<section class="section"><h2 class="title sectiontitle">Connecting a pair of servers for high availability</h2>Servers are identified as<dl class="dl">
+                  
+                        <dt class="dt dlterm">Primary</dt>
+                        <dd class="dd">The server that is processing messages.</dd>
+                  
+                  
+                        <dt class="dt dlterm">Standby</dt>
+                        <dd class="dd">The backup server to which the primary server is replicated.</dd>
+                  
+                  </dl></section>
+<section class="section"><h2 class="title sectiontitle">Configuring server parameters to support HA</h2><p class="p">To use the HA feature, you must enable high availability and assign a group name on both servers.
+    You must consider the values that you want to assign to the following parameters before you
+    configure a pair of servers for HA:</p><dl class="dl">
+<dt class="dt dlterm">Group</dt>
+<dd class="dd">Group is used to identify which server to pair with. The value must be the same on both servers.
+      The maximum length of this value is 128 characters.</dd>
+
+<dt class="dt dlterm">Startup mode</dt>
+<dd class="dd">A node can be set in either <dfn class="term">auto-detect</dfn> or <dfn class="term">stand-alone</dfn> mode. <ul class="ul">
+<li class="li">In auto-detect mode, two nodes must be started. The nodes automatically
+try to detect one another and establish an HA pair. </li>
+<li class="li">Use stand-alone mode only when you are starting a single node.
+Stand-alone mode is used to bring up a single node with the intention
+to later bring up another node that synchronizes with the first node
+and creates an HA pair.</li>
+</ul></dd>
+</dl><dl class="dl">
+<dt class="dt dlterm">Local Discovery Address, Local Replication Address and Remote Discovery Address</dt>
+<dd class="dd">In an HA environment, you must have two network interfaces for each server - a replication
+      interface and a discovery interface.</dd>
+<dd class="dd ddexpand">The remote discovery address is the IP address of the discovery interface on the remote node in
+      the HA pair.</dd>
+<dd class="dd ddexpand">The local discovery and local replication addresses are the IP addresses of the discovery and
+      replication interfaces of the local node.</dd>
+<dd class="dd ddexpand">You can choose the IP addresses that you assign to these interfaces,
+providing that the following criteria are met: <ul class="ul">
+<li class="li">The IP addresses that are assigned to the discovery interface on server A and server B are on
+        the same subnet (for example, subnet 1).</li>
+<li class="li">The IP addresses that are assigned to the replication interface on server A and server B are on
+        the same subnet (for example, subnet 2).</li>
+<li class="li">Subnet 1 and subnet 2 are not the same.</li>
+</ul></dd>
+<dd class="dd ddexpand">For example, you can configure the discovery and replication interfaces for server A and server
+      B in the following way:<dl class="dl">
+       
+        <dt class="dt dlterm">server A</dt>
+        <dd class="dd">Discovery interface: <span class="ph filepath">192.0.20.10/24</span></dd>
+        <dd class="dd ddexpand">Replication interface: <span class="ph filepath">192.0.30.11/24</span></dd>
+       
+       
+        <dt class="dt dlterm">server B</dt>
+        <dd class="dd">Discovery interface: <span class="ph filepath">192.0.20.20/24</span>
+        </dd>
+        <dd class="dd ddexpand">Replication interface: <span class="ph filepath">192.0.30.21/24</span></dd>
+       
+      </dl>where <span class="ph filepath">192.0.20</span> and <span class="ph filepath">192.0.30</span> are subnets.</dd>
+</dl><dl class="dl">
+
+<dt class="dt dlterm">Timeouts</dt>
+<dd class="dd">The discovery timeout is the amount of time, in seconds, within which a server that is started
+      in auto-detect mode must connect to the other server in the HA pair. The valid range is 10 -
+      2147483647. The default is 600. If the connection is not made within that time, the server
+      starts in maintenance mode. </dd>
+<dd class="dd ddexpand">The heartbeat timeout is the amount of time, in seconds, within which a server must determine
+      whether the other server in the HA pair fails. The valid range is 1 - 2147483647. The default
+      is 10. If the primary server does not receive a heartbeat from the standby server within this
+      time, it continues to work as the primary server but the data synchronization process is
+      stopped. If the standby server does not receive a heartbeat from the primary server within
+      this time , the standby server becomes the primary server. </dd>
+</dl><dl class="dl">
+<dt class="dt dlterm">Clock synchronization and <span class="keyword parmname">MaxMessageTimeToLive</span></dt>
+<dd class="dd">Consider the value of the <span class="keyword parmname">MaxMessageTimeToLive</span> parameter on your messaging
+      policies when you synchronize the clocks on the servers in the HA pair. This parameter
+      specifies the maximum time that a put or published message can exist for in <span class="ph">Eclipse Amlen</span>. The smaller the value of this parameter is,
+      the closer you need to synchronize the clocks on the HA pair. For example, if you set a
+       <span class="keyword parmname">MaxMessageTimeToLive</span> value of 3600, which equates to 1 hour, you can
+      synchronize the clocks on the HA pair to within 1 or 2 minutes of each other. If you set a
+       <span class="keyword parmname">MaxMessageTimeToLive</span> value of 1, which equates to 1 second, synchronize
+      the clocks on the HA pair to within 100 milliseconds. Use a network time protocol (NTP) server
+      to keep the clocks synchronized.</dd>
+</dl><p class="p">After the servers are configured, you must stop and restart the <span class="ph">Eclipse Amlen</span> server.</p></section>
+</div>
+
+<nav role="navigation" class="related-links"><ul class="ullinks"><li class="link ulchildlink"><strong><a href="../Administering/ad00909_.html">Configuring HA</a></strong><br> System administrators can configure systems to operate in high availability (HA) pairs.</li><li class="link ulchildlink"><strong><a href="../Administering/ad00416_.html">High availability scenarios</a></strong><br>The following scenarios assume that you are configuring your servers to run as an HA pair   automatically, by enabling <span class="ph uicontrol">High Availability</span> and by using the    <span class="ph uicontrol">High Availability Group</span> setting. </li></ul><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Administering/ad00200_.html" title="System administrators can administer the server by using the Amlen WebUI, or by using REST Administration APIs.">Server administration</a></div></div></nav></article></main></body></html>

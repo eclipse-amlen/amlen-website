@@ -1,0 +1,51 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can view throughput statistics for incoming and outgoing messages on remote and local servers in the cluster to understand message flow by using the Throughput chart that is provided in the Amlen WebUI."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Viewing message flow by using the Amlen WebUI</title></head><body id="ad00941_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a><ul><li><a href="../Administering/ad01003_.html">Configuring cluster membership in a high availability pair by using the Amlen WebUI</a><ul><li><a href="../Administering/ad00941_.html">Configuring cluster membership by using the Amlen WebUI  </a></li><li><a href="../Administering/ad01004_.html">Configuring cluster membership in a high availability pair by using the Amlen WebUI</a></li><li><a href="../Administering/ad00951.html">Removing an inactive cluster member by using the Amlen WebUI  </a></li><li class="active"><a href="../Administering/ad00952.html">Viewing message flow by using the Amlen WebUI  </a></li></ul></li><li><a href="../Administering/ad00944_.html">Configuring cluster membership by using REST Administration APIs</a></li><li><a href="../Administering/ad00943_.html">Using omping to test multicast connectivity in clusters</a></li></ul></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+    <h1 class="title topictitle1" id="ariaid-title1">Viewing message flow by using the <span class="ph">Amlen WebUI</span>
+    </h1>
+    
+    
+    
+    
+    
+    
+    <div class="body taskbody"><p class="shortdesc">System administrators can view throughput statistics for incoming and outgoing
+        messages on remote and local servers in the cluster to understand message flow by using the
+        Throughput chart that is provided in the <span class="ph">Amlen WebUI</span>. </p>
+        <section class="section context">
+            <p class="p">You can view statistics about message throughput between cluster members by using the
+                    <span class="ph">Amlen WebUI</span>, or by using <span class="ph">REST Administration APIs</span>. </p>
+        </section>
+        <section><ol class="ol steps"><li class="li step stepexpand">
+                <span class="ph cmd">Go to the <span class="ph uicontrol">Cluster Status</span> page in one of the following
+                    ways:</span>
+                <ol type="a" class="ol substeps">
+                    <li class="li substep">
+                        <span class="ph cmd">From the <span class="ph uicontrol">Home</span> tab, go to the <span class="keyword wintitle">Active
+                                Connections and Throughput</span>section to view the
+                                <span class="keyword wintitle">Throughput Chart</span>.</span>
+                    </li>
+                    <li class="li substep">
+                        <span class="ph cmd">From the <span class="ph menucascade"><span class="ph uicontrol">Cluster</span><abbr title="and then"> &gt; </abbr><span class="ph uicontrol">Status</span></span> menu, view the <span class="keyword wintitle">Throughput
+                            Chart</span>.</span>
+                    </li>
+                </ol>
+            </li><li class="li step stepexpand">
+                <span class="ph cmd">View the information that is displayed in the <span class="keyword wintitle">Throughput
+                        Chart</span>. The <span class="keyword wintitle">Throughput Chart</span> displays
+                    information about the rate of inbound and outbound messages per second between
+                    cluster members.</span>
+                <div class="itemgroup info"></div>
+            </li></ol></section>
+        <section class="section postreq">
+            <div class="p">Use the information to understand:<ul class="ul">
+                    <li class="li">If there are remote subscribers or publishers that this server is sending
+                        messages to or receiving messages from.</li>
+                    <li class="li">What the relative amount of traffic being send to (or received from) local
+                        and remote subscribers/publishers is.</li>
+                    <li class="li">If your cluster is balanced. </li>
+                </ul></div>
+        </section>
+    </div>
+    <nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Administering/ad01003_.html">Configuring cluster membership in a high availability pair by using the Amlen WebUI</a></div></div><div class="linklist relconcepts"><strong>Related concepts</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="ad00940_.html" title="You can configure Eclipse Amlen servers in clusters to increase the maximum messaging throughput or the maximum number of concurrent connections beyond the capacity of a single Eclipse Amlen server. All Eclipse Amlen servers in a cluster share a common topic tree.">Configuring the cluster membership of an Eclipse Amlen server</a></li></ul></div></nav>
+</article></main></body></html>

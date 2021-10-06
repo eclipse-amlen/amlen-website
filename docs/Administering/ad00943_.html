@@ -1,0 +1,89 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="Use the omping tool to test basic multicast connectivity between Eclipse Amlen servers in a cluster."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Using omping to test multicast connectivity in clusters</title></head><body id="ad00943_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a><ul><li><a href="../Administering/ad01003_.html">Configuring cluster membership in a high availability pair by using the Amlen WebUI</a></li><li><a href="../Administering/ad00944_.html">Configuring cluster membership by using REST Administration APIs</a></li><li class="active"><a href="../Administering/ad00943_.html">Using omping to test multicast connectivity in clusters</a></li></ul></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Using <code class="ph codeph">omping</code> to test multicast connectivity in clusters</h1>
+
+
+
+
+
+
+<div class="body taskbody"><p class="shortdesc">Use the <code class="ph codeph">omping</code> tool to test basic multicast connectivity between <span class="ph">Eclipse Amlen</span> servers in a cluster. </p>
+<section class="section prereq">Install the <code class="ph codeph">omping</code> tool on all the servers in the cluster. On each server, enter the following command:<pre class="pre codeblock"><code>yum install omping</code></pre></section>
+<section class="section context">
+<p class="p">The <code class="ph codeph">omping</code> tool is available in the <code class="ph codeph">omping</code> package that is provided with the base operating system. You can use it to test basic multicast connectivity between the <span class="ph">Eclipse Amlen</span> servers in a cluster. For more information about the <code class="ph codeph">omping</code> tool, read the <a class="xref" href="http://linux.die.net/man/8/omping" target="_blank" rel="external noopener">man page</a>.</p>
+</section>
+<section><div class="ol steps"><div class="li step p">
+<span class="ph cmd">Run the <code class="ph codeph">omping</code> tool on the servers between which you are testing multicast connectivity.</span>
+</div></div></section>
+<section class="example">The following example demonstrates the use of the <code class="ph codeph">omping</code> tool to test multicast connectivity between two servers, <code class="ph codeph">Server A</code> and <code class="ph codeph">Server B</code>, that are in a cluster and shows example output from the tool.<div class="p">Run the <code class="ph codeph">omping</code> tool on both servers:<ul class="ul">
+<li class="li">For example, on <code class="ph codeph">Server A</code>:<pre class="pre codeblock"><code>omping -m &lt;multicast or broadcast address&gt; -p &lt;cluster multicast discovery port&gt; &lt;IP of local cluster control interface&gt; &lt;cluster control IP address of Server B&gt;</code></pre></li>
+<li class="li">For example, on <code class="ph codeph">Server B</code>:<pre class="pre codeblock"><code>omping -m &lt;multicast or broadcast address&gt; -p &lt;cluster multicast discovery port&gt; &lt;IP of local cluster control interface&gt; &lt;cluster control IP address of Server A&gt;</code></pre></li>
+</ul></div><div class="p">The following example output from the tool shows that multicast connectivity exists between <code class="ph codeph">Server A</code> and <code class="ph codeph">Server B</code>. You can see that multicast packet loss is 0 per cent:<ul class="ul">
+<li class="li">Output on <code class="ph codeph">Server A</code>:<pre class="pre codeblock"><code>[root@servera ˜]$ omping -m 239.192.97.105 -p 9106 10.120.16.122 10.120.16.113
+10.120.16.113 : waiting for response msg
+10.120.16.113 : joined (S,G) = (*, 239.192.97.105), pinging
+10.120.16.113 :   unicast, seq=1, size=69 bytes, dist=0, time=0.075ms
+10.120.16.113 : multicast, seq=1, size=69 bytes, dist=0, time=0.087ms
+10.120.16.113 :   unicast, seq=2, size=69 bytes, dist=0, time=0.127ms
+10.120.16.113 : multicast, seq=2, size=69 bytes, dist=0, time=0.138ms
+10.120.16.113 :   unicast, seq=3, size=69 bytes, dist=0, time=0.117ms
+10.120.16.113 : multicast, seq=3, size=69 bytes, dist=0, time=0.123ms
+10.120.16.113 :   unicast, seq=4, size=69 bytes, dist=0, time=0.136ms
+10.120.16.113 : multicast, seq=4, size=69 bytes, dist=0, time=0.189ms
+ˆC
+10.120.16.113 :   unicast, xmt/rcv/%loss = 4/4/0%, min/avg/max/std-dev = 0.075/0.114/0.136/0.027
+10.120.16.113 : multicast, xmt/rcv/%loss = 4/4/0%, min/avg/max/std-dev = 0.087/0.134/0.189/0.042
+[root@servera˜]$</code></pre></li>
+<li class="li">Output on <code class="ph codeph">Server B</code>:<pre class="pre codeblock"><code>Server B[root@serverb ˜]$ omping -m 239.192.97.105 -p 9106 10.120.16.122 10.120.16.113
+10.120.16.122 : waiting for response msg
+10.120.16.122 : waiting for response msg
+10.120.16.122 : waiting for response msg
+10.120.16.122 : joined (S,G) = (*, 239.192.97.105), pinging
+10.120.16.122 :   unicast, seq=1, size=69 bytes, dist=0, time=0.082ms
+10.120.16.122 : multicast, seq=1, size=69 bytes, dist=0, time=0.092ms
+10.120.16.122 :   unicast, seq=2, size=69 bytes, dist=0, time=0.064ms
+10.120.16.122 : multicast, seq=2, size=69 bytes, dist=0, time=0.092ms
+10.120.16.122 :   unicast, seq=3, size=69 bytes, dist=0, time=0.112ms
+10.120.16.122 : multicast, seq=3, size=69 bytes, dist=0, time=0.143ms
+ˆC
+10.120.16.122 :   unicast, xmt/rcv/%loss = 3/3/0%, min/avg/max/std-dev = 0.064/0.086/0.112/0.024
+10.120.16.122 : multicast, xmt/rcv/%loss = 3/3/0%, min/avg/max/std-dev = 0.092/0.109/0.143/0.029
+[root@serverb˜]$</code></pre></li>
+</ul></div><div class="p">The following example output from the tool shows no multicast connectivity between <code class="ph codeph">Server A</code> and <code class="ph codeph">Server B</code>. You can see that multicast packet loss is 100 per cent:<ul class="ul">
+<li class="li">Output on <code class="ph codeph">Server A</code>:<pre class="pre codeblock"><code>[root@servera ˜]$ omping -m 239.192.97.105 -p 9106 10.120.16.122 10.142.70.133
+10.142.70.133 : waiting for response msg
+10.142.70.133 : joined (S,G) = (*, 239.192.97.105), pinging
+10.142.70.133 :   unicast, seq=1, size=69 bytes, dist=3, time=0.120ms
+10.142.70.133 :   unicast, seq=2, size=69 bytes, dist=3, time=0.189ms
+10.142.70.133 :   unicast, seq=3, size=69 bytes, dist=3, time=0.187ms
+10.142.70.133 :   unicast, seq=4, size=69 bytes, dist=3, time=0.170ms
+10.142.70.133 :   unicast, seq=5, size=69 bytes, dist=3, time=0.199ms
+10.142.70.133 :   unicast, seq=6, size=69 bytes, dist=3, time=0.183ms
+10.142.70.133 :   unicast, seq=7, size=69 bytes, dist=3, time=0.184ms
+10.142.70.133 :   unicast, seq=8, size=69 bytes, dist=3, time=0.158ms
+10.142.70.133 :   unicast, seq=9, size=69 bytes, dist=3, time=0.184ms
+ˆC
+10.142.70.133 :   unicast, xmt/rcv/%loss = 9/9/0%, min/avg/max/std-dev = 0.120/0.175/0.199/0.024
+10.142.70.133 : multicast, xmt/rcv/%loss = 9/0/100%, min/avg/max/std-dev = 0.000/0.000/0.000/0.000
+[root@servera˜]$</code></pre></li>
+<li class="li">Output on <code class="ph codeph">Server B</code>:<pre class="pre codeblock"><code>[root@serverb ˜]$ omping -m 239.192.97.105 -p 9106 10.142.70.133 10.120.16.122
+10.120.16.122 : waiting for response msg
+10.120.16.122 : waiting for response msg
+10.120.16.122 : waiting for response msg
+10.120.16.122 : joined (S,G) = (*, 239.192.97.105), pinging
+10.120.16.122 :   unicast, seq=1, size=69 bytes, dist=3, time=0.116ms
+10.120.16.122 :   unicast, seq=2, size=69 bytes, dist=3, time=0.132ms
+10.120.16.122 :   unicast, seq=3, size=69 bytes, dist=3, time=0.162ms
+10.120.16.122 :   unicast, seq=4, size=69 bytes, dist=3, time=0.133ms
+10.120.16.122 :   unicast, seq=5, size=69 bytes, dist=3, time=0.128ms
+10.120.16.122 :   unicast, seq=6, size=69 bytes, dist=3, time=0.133ms
+10.120.16.122 :   unicast, seq=7, size=69 bytes, dist=3, time=0.132ms
+10.120.16.122 :   unicast, seq=8, size=69 bytes, dist=3, time=0.134ms
+ˆC
+10.120.16.122 :   unicast, xmt/rcv/%loss = 8/8/0%, min/avg/max/std-dev = 0.116/0.134/0.162/0.013
+10.120.16.122 : multicast, xmt/rcv/%loss = 8/0/100%, min/avg/max/std-dev = 0.000/0.000/0.000/0.000
+[root@serverb˜]$</code></pre></li>
+</ul></div> </section>
+</div>
+</article></main></body></html>

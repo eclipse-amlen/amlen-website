@@ -1,0 +1,207 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="Lightweight Third Party Authentication (LTPA) is a single sign-on credential format."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Lightweight Third Party Authentication (LTPA)</title></head><body id="se00013_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a><ul><li><a href="../Security/se00010.html">Authentication</a><ul><li><a href="../Security/se00002_.html">Messaging users and groups</a></li><li class="active"><a href="../Security/se00013_.html">Lightweight Third Party Authentication (LTPA)</a></li><li><a href="../Security/se00008_.html">OAuth</a></li></ul></li><li><a href="../Security/se00011.html">Authorization</a></li><li><a href="../Security/se00005_.html">Transport Layer Security</a></li></ul></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Lightweight Third Party Authentication (LTPA)</h1>
+
+<div class="body conbody"><p class="shortdesc">Lightweight Third Party Authentication (LTPA) is a single
+sign-on credential format.</p>
+<p class="p">With LTPA, the user authenticates with the first server that is
+accessed, by using a user name and password. After authenticating,
+the user receives an LTPA token, which is only valid for one session.
+The token is used to identify the user on other servers within the
+same domain name system, where the servers are configured to use LTPA.
+Therefore, the user enters a user name and password only once, and
+the user directory is accessed only once to verify the identity of
+that user.</p>
+<p class="p">LTPA can be used with <span class="ph">WebSphere® Application
+Server</span> and <span class="ph">Worklight®</span>. The servers must
+all use the same LDAP server for user authentication.</p>
+<div class="p">The following diagram shows the flow of the LTPA token in a single sign-on environment:<figure class="fig fignone"><figcaption><span class="fig--title-label">Figure 1. </span>LTPA token flow in a single sign-on environment</figcaption>
+				
+				<p class="p"><img class="image" src="se00013a_v2.gif" alt="A flow showing the use of an LTPA token"></p>
+			</figure><ol class="ol">
+				<li class="li">The <span class="ph">Eclipse Amlen</span> client application is
+					hosted on <span class="ph">WebSphere Application
+Server</span> or <span class="ph">Worklight</span>. The MQTT application uses a
+					user name and password to authenticate with <span class="ph">WebSphere Application
+Server</span> or <span class="ph">Worklight</span>.</li>
+				<li class="li"><span class="ph">WebSphere Application
+Server</span> or <span class="ph">Worklight</span> validates the user name and
+					password against the LDAP server and authenticates the user.</li>
+				<li class="li">The <span class="ph">WebSphere Application
+Server</span> or <span class="ph">Worklight</span> returns an LTPA token to the
+					client application as a cookie.</li>
+				<li class="li">The client application retrieves the LTPA token from the cookie and uses the
+					token value as a password in the connection object of the MQTT client
+					configuration. The client application can forward the LTPA token to <span class="ph">Eclipse Amlen</span> server by using one of the
+					following options:<ul class="ul">
+						<li class="li">Setting the user name in the connection object to
+								<code class="ph codeph">IMA_LTPA_TOKEN</code> and the password to the LTPA Token
+							value that is returned by the <span class="ph">WebSphere Application
+Server</span> or <span class="ph">Worklight</span> server.</li>
+						<li class="li">Sending the LTPA token cookie.</li>
+					</ul></li>
+				<li class="li"><span class="ph">Eclipse Amlen</span> decrypts the LTPA token and
+					retrieves the user ID and token expiration time. <span class="ph">Eclipse Amlen</span> validates the user and
+					retrieves required information, such as group information, to check which
+					actions the user is authorized to perform.</li>
+				<li class="li"><span class="ph">Eclipse Amlen</span> authenticates and
+					authorizes the user.</li>
+			</ol></div>
+<div class="p">To configure <span class="ph">Eclipse Amlen</span> to
+use LTPA, you must complete the following steps:<ol class="ol">
+<li class="li">Configure LTPA on a supported server and export the LTPA key.<p class="p">For
+more information about configuring LTPA in <span class="ph">Worklight</span>, see <a class="xref" href="http://www-01.ibm.com/support/knowledgecenter/SSZH4A_5.0.5/com.ibm.worklight.help.doc/devref/r_ltpa_authenticator.html" target="_blank" rel="external noopener">LTPA authenticator</a> in the <span class="ph">Worklight</span> documentation.</p><p class="p">For
+more information about configuring LTPA in <span class="ph">WebSphere Application
+Server</span>, see <a class="xref" href="http://www-01.ibm.com/support/knowledgecenter/SSEQTP_8.5.5/com.ibm.websphere.base.iseries.doc/ae/tsec_ltpa_and_keys.html" target="_blank" rel="external noopener">Configuring LTPA and working with keys</a> in
+the <span class="ph">WebSphere Application
+Server</span> documentation.</p></li>
+<li class="li">Configure <span class="ph">Eclipse Amlen</span> for
+LTPA:<ol class="ol" type="a">
+<li class="li">Upload the LTPA key to <span class="ph">Eclipse Amlen</span>.</li>
+<li class="li">Create an LTPA profile that specifies the LTPA key and password.</li>
+<li class="li">Associate the LTPA profile with a security profile.</li>
+</ol><p class="p">For more information about how to configure <span class="ph">Eclipse Amlen</span> for LTPA, see <a class="xref" href="../Administering/ad00730_.html" title="You can configure Lightweight Third Party Authentication (LTPA) by using LTPA profiles. An LTPA profile specifies the key that is used for authentication across servers within the same domain name system. The LTPA profile must be associated with a security profile, and the security profile must be associated with an endpoint.">Configuring Lightweight Third Party Authentication</a>.</p></li>
+<li class="li"> Configure client applications by using one of the following two
+options:<ul class="ul">
+<li class="li">Create client applications that use user name and password authentication
+where the user name is <code class="ph codeph">IMA_LTPA_TOKEN</code>, and the password
+is the LTPA token.</li>
+<li class="li">Configure your client application to use the LTPA token cookie.
+For more information, see <a class="xref" href="se00013_.html#se00013___ConfiguringYourClientApplicationToU">Configuring your client application to
+use the LTPA token cookie</a>.</li>
+</ul></li>
+</ol></div>
+<section class="section"><h2 class="title sectiontitle">Creating <span class="ph">Worklight</span> custom login modules
+for user authentication</h2>You can use the following JavaScript™ code sample in a <span class="ph">Worklight</span> login module to
+retrieve the LTPA token:<pre class="pre codeblock"><code>function wlCommonInit() {
+	// Common initialization code goes here
+}
+// Function to retrieve secret key
+function getSecretData(){
+	var invocationData = {
+			adapter: "DummyAdapter",
+			procedure: "getSecretData",
+			parameters: []
+	};	
+	WL.Client.invokeProcedure(invocationData, {
+		onSuccess: getSecretData_Callback,
+	});
+}
+// Callback to get LTPA token and userid from response
+function getSecretData_Callback(response){
+	console.log("ltpaToken: " + response.invocationResult.LtpaToken );
+	ltpaToken = response.invocationResult.LtpaToken;
+}</code></pre></section>
+<section class="section"><h2 class="title sectiontitle">Creating <span class="ph">WebSphere Application
+Server</span> servlets for
+user authentication</h2>You can use the following Java™ code sample in a <span class="ph">WebSphere Application
+Server</span> liberty profile
+servlet to retrieve the LTPA token:<pre class="pre codeblock"><code>/* Required IBM WebSphere imports */
+import com.ibm.websphere.security.auth.WSSubject;
+import com.ibm.websphere.security.cred.WSCredential;
+import com.ibm.websphere.security.web.WebSecurityHelper;
+import com.ibm.ws.webservices.engine.encoding.Base64;
+	
+/*  Sample code to retrieve LTPA token on the IBM WebSphere Liberty Profile */
+/* @return an LTPA token */
+public  String getSecurityTokenLiberty() {
+	Cookie cookie = null;
+	String token = null;
+	try {
+		cookie = WebSecurityHelper.getSSOCookieFromSSOToken();
+		if (cookie != null) {
+			token = cookie.getValue();
+		}
+	} catch (Exception e) {
+		token = "no token found";
+		e.printStackTrace();
+	}
+	return token;
+}</code></pre>You can use the following Java code
+sample in a <span class="ph">WebSphere Application
+Server</span> servlet
+to retrieve the LTPA token:<pre class="pre codeblock"><code>/* Required IBM WebSphere imports */
+import com.ibm.websphere.security.auth.WSSubject;
+import com.ibm.websphere.security.cred.WSCredential;
+import com.ibm.websphere.security.web.WebSecurityHelper;
+import com.ibm.ws.webservices.engine.encoding.Base64;
+	
+/* Sample code to retrieve LTPA token on the IBM WebSphere Application Server */
+/* @return an LTPA token */
+public String getSecurityTokenWAS() {
+    byte[] token = null;
+    try {
+	// Get current security subject
+	Subject security_subject = WSSubject.getRunAsSubject();
+	if  (security_subject != null) {
+	    // Get all security credentials from the security subject
+	    Set security_credentials = security_subject.getPublicCredentials(WSCredential.class);
+	    // Get the first credential
+	    WSCredential security_credential = (WSCredential)security_credentials.iterator().next();
+	    String user = (String) security_credential.getSecurityName();
+	    if (user.equalsIgnoreCase("UNAUTHENTICATED")) {
+		return "UNAUTHENTICATED";
+	    }
+	    token = security_credential.getCredentialToken();
+		if (token == null) {
+			return "token is null";
+		}
+	               String ltpaToken = Base64.encode(token);
+	               return ltpaToken;
+	}
+    }
+    catch (Exception e){
+	e.printStackTrace();
+    }
+    return "token not found";
+}</code></pre></section>
+<section class="section" id="se00013___ConfiguringYourClientApplicationToU"><h2 class="title sectiontitle">Configuring
+your client application to use the LTPA token cookie</h2><p class="p">The
+LTPA token cookie domain must be in the same domain as the <span class="ph">Eclipse Amlen</span> server. When
+you use <span class="ph">WebSphere Application
+Server</span> or <span class="ph">Worklight</span> to generate the
+LTPA token cookie, the domain of the cookie is the same as the domain
+of the application server. If the domain of the application server
+is different to the domain of the <span class="ph">Eclipse Amlen</span> server, the LTPA
+token cookie cannot be sent to the <span class="ph">Eclipse Amlen</span> server. In this
+case, you must configure <span class="ph">WebSphere Application
+Server</span> or <span class="ph">Worklight</span> to generate the
+cookie with the same domain as the <span class="ph">Eclipse Amlen</span> server. </p><p class="p">You
+can set the LTPA Token cookie domain programmatically from the  JavaScript client application
+by using the following code sample:</p><pre class="pre codeblock"><code>function getCookie(c_name)
+{
+  var c_value = document.cookie;
+  var c_start = c_value.indexOf(" " + c_name + "=");
+  if (c_start == -1)
+  {
+     c_start = c_value.indexOf(c_name + "=");
+  }
+  if (c_start == -1)
+  {
+     c_value = null;
+  }
+  else
+  {
+     c_start = c_value.indexOf("=", c_start) + 1;
+     var c_end = c_value.indexOf(";", c_start);
+     if (c_end == -1)
+     {
+        c_end = c_value.length;
+     }
+     c_value = unescape(c_value.substring(c_start,c_end));
+  }
+  return c_value;
+}
+ 
+function onLoad() 
+{ 
+  /*Obtain the LTPA Token cookie which generated from middleware server. */ 
+  var ltpaToken=getCookie("LtpaToken2");
+
+  /*Set the LTPA token with different domain*/ 
+  document.cookie = "LtpaToken2=" + escape(ltpaToken) +'; domain=austin.ibm.com; path=/';
+}</code></pre></section>
+</div>
+
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Security/se00010.html" title="When a messaging client connects to Eclipse Amlen, you can choose whether you want to authenticate the messaging user ID and password of that client.">Authentication</a></div></div></nav></article></main></body></html>

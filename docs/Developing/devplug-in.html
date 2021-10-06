@@ -1,0 +1,200 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="You can use protocol plug-ins to add industry-specific messaging protocols to Eclipse Amlen in a controlled way that does not compromise the security of the server environment. The protocol plug-in can also support existing sensors that are not able to change to MQTT. You can write your own protocol plug-ins to use with Eclipse Amlen by using the Eclipse Amlen protocol plug-in SDK. The protocol plug-in facility is not available in high availability environments."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Developing a protocol plug-in</title></head><body id="devplug-in"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a><ul><li><a href="../Developing/devconcepts.html">Messaging concepts</a></li><li><a href="../Developing/devmsgtypes.html">Natively supported message types</a></li><li><a href="../Developing/devmsgsize.html">Message size</a></li><li><a href="../Developing/devclientids.html">Client IDs</a></li><li><a href="../Developing/devclientservercert.html">Server certificates</a></li><li><a href="../Developing/devretainmsg.html">Developing retained message applications</a></li><li><a href="../Developing/devexpiredmsg.html">Expired messages</a></li><li><a href="../Developing/devsharedsubscriptions.html">Shared subscriptions</a></li><li><a href="../Developing/devmqttapp.html">Developing MQTT applications</a></li><li><a href="../Developing/devjmsapp.html">Developing JMS applications</a></li><li class="active"><a href="../Developing/devplug-in.html">Developing a protocol plug-in</a><ul><li><a href="../Developing/devplug-indebug.html">Debug environments for the Eclipse Amlen protocol plug-in SDK</a></li></ul></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li></ul></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Developing a protocol plug-in</h1>
+
+<div class="body taskbody"><p class="shortdesc">You can use protocol plug-ins to add industry-specific messaging protocols to <span class="ph">Eclipse Amlen</span> in a controlled way that does not
+      compromise the security of the server environment. The protocol plug-in can also support
+      existing sensors that are not able to change to MQTT. You can write your own protocol plug-ins
+      to use with <span class="ph">Eclipse Amlen</span> by using the <span class="ph">Eclipse Amlen</span> protocol plug-in SDK. The protocol plug-in
+      facility is not available in high availability environments.</p>
+<section class="section prereq">
+<p class="p">Download and extract the contents of the SDK bundle. Then, follow the instructions in <span class="ph filepath">ImaTools/ImaPlugin/README.txt</span> to import the sample plug-in projects that are provided with the SDK bundle.</p>
+<div class="p">Download and install one of the following supported versions of Java™:<ul class="ul">
+<li class="li">IBM® SDK, Java Technology Edition, Version 7 (64-bit)</li>
+<li class="li">Oracle Java SE Development Kit, Version 7 (64-bit)</li>
+
+</ul></div>
+</section>
+<section class="section context"><p class="p">You can use the <span class="ph">Eclipse Amlen</span> protocol plug-in SDK to extend <span class="ph">Eclipse Amlen</span> protocol support beyond the protocols that are natively supported. Use the SDK to write Java plug-ins that you can then deploy in <span class="ph">Eclipse Amlen</span>.</p><div class="p">If you want to write your own protocol plug-in to use with <span class="ph">Eclipse Amlen</span>, you need to develop the following files:<ul class="ul">
+<li class="li">A plug-in configuration file that is written in JSON</li>
+<li class="li">A set of JAR files to implement the plug-in</li>
+</ul></div>All of these files must be at the root level of the .zip archive. </section>
+<section><ol class="ol steps"><li class="li step stepexpand">
+<span class="ph cmd"> Implement the <span class="keyword apiname">ImaPluginListener</span> and <span class="keyword apiname">ImaConnectionListener</span> interfaces and create one or more JAR files that contain the classes that you implemented.</span>
+<div class="itemgroup info">
+<p class="p"></p>
+<dl class="dl">
+
+<dt class="dt dlterm"><span class="keyword apiname">ImaPluginListener</span> interface.</dt>
+<dd class="dd">The <span class="keyword apiname">ImaPluginListener</span> interface provides callbacks that allow custom protocol implementations to be associated with an <code class="ph codeph">ImaPlugin</code> object that is provided by <span class="ph">Eclipse Amlen</span>. Refer to the Javadoc™ information that is provided with the SDK for complete details about the methods that need to be implemented for these interfaces.<p class="p"></p><ul class="ul">
+<li class="li">The <code class="ph codeph">initialize()</code> method is used to start the custom protocol implementation when <span class="ph">Eclipse Amlen</span> is started.</li>
+<li class="li">The <code class="ph codeph">terminate()</code> method is used to stop the custom protocol implementation when <span class="ph">Eclipse Amlen</span> shuts down.</li>
+<li class="li">The <code class="ph codeph">startMessaging()</code> method is used to run any protocol-specific tasks that are required after the <span class="ph">Eclipse Amlen</span> messaging engine is started.</li>
+<li class="li">The <code class="ph codeph">onProtocolCheck()</code> method is used to determine whether a connection belongs to the protocol. If a connection belongs to the protocol, the <span class="keyword apiname">ImaPluginListener</span> enables the protocol to instantiate an implementation of the <span class="keyword apiname">ImaConnectionListener</span> interface with the <code class="ph codeph">onConnection()</code> method that associates the newly accepted <code class="ph codeph">ImaConnection</code> object with the protocol.</li>
+<li class="li">The <code class="ph codeph">onConnection()</code> method is used when a new connection with a known protocol, such as WebSockets or HTTP, is found.</li>
+<li class="li">The <code class="ph codeph">onConfigUpdate()</code> method is used when the configuration of the plug-in is updated.</li>
+<li class="li">The <code class="ph codeph">onAuthenticate ()</code> method is not called.</li>
+</ul><p class="p"></p></dd>
+
+
+<dt class="dt dlterm"><span class="keyword apiname">ImaConnectionListener</span> interface.</dt>
+<dd class="dd">The <span class="keyword apiname">ImaConnectionListener</span> interface allows a connection to be associated with a custom protocol by using the <code class="ph codeph">ImaConnection</code> object that is received from <span class="ph">Eclipse Amlen</span>. The <span class="keyword apiname">ImaConnectionListener</span> interface provides callbacks for managing connections to the custom protocol after the protocol plug-in accepts a connection. <p class="p"></p><ul class="ul">
+<li class="li">The <code class="ph codeph">onConnected()</code> method is used to take appropriate actions when a connection is established.</li>
+<li class="li">The <code class="ph codeph">onClose()</code> method is used to take appropriate actions when a connection is closed.</li>
+<li class="li">The <code class="ph codeph">onData()</code> or <code class="ph codeph">onHttpData()</code> method is used to manage communication activities such as handling incoming data.</li>
+<li class="li">The <code class="ph codeph">onMessage()</code> method is used to handle messages that are received from <span class="ph">Eclipse Amlen</span>. </li>
+<li class="li">The <code class="ph codeph">onComplete()</code> method is used to acknowledge the completion of a publish or subscribe operation.</li>
+<li class="li">The <code class="ph codeph">onLivenessCheck()</code> method is used to check whether the connection is still active.</li>
+<li class="li">The <code class="ph codeph">onHttpData()</code> method is used when an HTTP header is received on the connection.</li>
+<li class="li">The <code class="ph codeph">onGetMessage()</code> method is used as a result of an <code class="ph codeph">ImaConnection.getRetainedMessage()</code> operation and returns the retained message for the specified topic if one exists. </li>
+</ul></dd>
+
+</dl>
+</div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Create a <span class="ph filepath">plugin.json</span> descriptor file for the new plug-in.</span>
+<div class="itemgroup info">
+<div class="p">The <span class="ph filepath">plugin.json</span> descriptor file provides information to <span class="ph">Eclipse Amlen</span> about the plug-in so that it can be started when
+<span class="ph">Eclipse Amlen</span> is started. While the descriptor supports
+several configuration properties, four property values must be specified for any protocol plug-in
+that you implement. These values are <span class="keyword parmname">Name</span>, <span class="keyword parmname">Protocol</span>,
+<span class="keyword parmname">Class</span>, and <span class="keyword parmname">Classpath</span>. <ul class="ul">
+<li class="li">The <span class="keyword parmname">Name</span> property specifies the plug-in name and must be unique. </li>
+<li class="li">The <span class="keyword parmname">Protocol</span> property specifies a protocol family. Each plug-in represents
+a protocol. However, multiple plug-ins can be associated with a single protocol family. Protocol
+families allow multiple protocols to share authorization rules that are based on endpoint
+configuration and on connection and messaging policies. For example, MQTT over TCP and MQTT over
+WebSockets protocols share the same authorization rules as MQTT.</li>
+<li class="li">The <span class="keyword parmname">Class</span> property must contain the name of the class that implements the
+<span class="keyword apiname">ImaPluginListener</span> interface. This class name must include the complete, dot
+separated path to the class.</li>
+<li class="li">The <span class="keyword parmname">Classpath</span> property must include the full list of JAR files that
+implement the protocol plug-in that is represented as a JSON array of strings. All JAR files that
+are used by the plug-in must appear in the <span class="keyword parmname">Classpath</span> property so that they can
+be loaded by <span class="ph">Eclipse Amlen</span>.</li>
+</ul>
+</div>
+<div class="p">The following table shows the complete list of properties that can be used in the descriptor
+file:
+<table class="table" id="devplug-in__datasimpletable_qgh_zf3_qfb"><caption><span class="table--title-label">Table 1. </span><span class="title">Properties of a plug-in configuration file</span></caption><colgroup><col><col><col><col></colgroup><thead class="thead">
+<tr class="row">
+<th class="entry" id="devplug-in__datasimpletable_qgh_zf3_qfb__entry__1">Name</th>
+<th class="entry" id="devplug-in__datasimpletable_qgh_zf3_qfb__entry__2">Type</th>
+<th class="entry" id="devplug-in__datasimpletable_qgh_zf3_qfb__entry__3">Default</th>
+<th class="entry" id="devplug-in__datasimpletable_qgh_zf3_qfb__entry__4">Description</th>
+</tr>
+</thead><tbody class="tbody">
+<tr class="row">
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__1">Class</td>
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__2">String</td>
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__3">required</td>
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__4">The name of the initial class to load for a plug-in. This class must be an instance of
+<span class="keyword parmname">ImaPluginListener</span>. This value must be a valid Java package name and class name, which is separated by dots. </td>
+</tr>
+<tr class="row">
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__1">Classpath</td>
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__2">String Array</td>
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__3">required </td>
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__4">A set of JAR files that contain the Java classes that
+are needed for the plug-in. The path must not be included, and the JAR files must be in the root
+directory of the .zip file that is used to define the plug-in. These JAR files are used only by this
+plug-in, and use a separate directory and class loader for each plug-in. The JAR files in the list
+must exist in the .zip file that is used for installation.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__1">InitialByte</td>
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__2">Array</td>
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__3">none (required for TCP connections)</td>
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__4">A set of initial bytes that can be specified as an array of strings of length 1 byte or as
+integers of the value 0-255. A single entry with the value <code class="ph codeph">ALL</code> indicates that any
+initial byte is selected. If this value is not specified or the array is empty, then TCP connections
+are not accepted.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__1">Name</td>
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__2">String</td>
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__3">required </td>
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__4">The name of the plug-in. This name must be unique among all installed plug-ins. The name is
+limited to 64 characters and must be a valid Java name. It can
+start with any alphabetic character, currency symbol, or underscore, and continue with any such
+character or a digit.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__1">Properties</td>
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__2">Object</td>
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__3">none </td>
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__4">A set of properties that are sent to the plug-in as configuration. The names and types of
+the properties are not known to the <span class="ph">Eclipse Amlen</span>
+server</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__1">Protocol</td>
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__2">String</td>
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__3">required</td>
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__4">The protocol family against which to authorize. Each plug-in represents a single protocol
+family, but the same protocol family can be used by several plug-ins. The plug-in can also use one
+of the system protocol families. All policy checking for protocol is done based on this protocol.
+The maximum length of the name is 32 characters.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__1">UseBrowse</td>
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__2">Boolean</td>
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__3">false</td>
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__4">The protocol uses queue browser function.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__1">UseQueue</td>
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__2">Boolean</td>
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__3">false</td>
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__4">The protocol uses queue send and receive.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__1">UseTopic</td>
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__2">Boolean</td>
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__3">true</td>
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__4">The protocol uses publish/subscribe topic support.</td>
+</tr>
+<tr class="row">
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__1">WebSocket</td>
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__2">String array</td>
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__3">none (required for WebSockets connections)</td>
+<td class="entry" headers="devplug-in__datasimpletable_qgh_zf3_qfb__entry__4">An array of WebSockets subprotocols supported by this plug-in. The subprotocols are checked
+in a case independent manner and must be unique among the installed plug-in set. If this property is
+missing or the array is empty, then no WebSockets protocol can connect to this plug-in. The maximum
+length of the name is 64 characters. The name must contain only ASCII-7 characters not including
+control characters (<code class="ph codeph">0x00</code> to <code class="ph codeph">0x1F</code> and <code class="ph codeph">x07F</code>),
+space, or the separator characters <code class="ph codeph">'()&lt;&gt;[]{},;:\/?="</code>. </td>
+</tr>
+</tbody></table></div>
+</div>
+</li><li class="li step stepexpand">
+<span class="ph cmd">Create a .zip archive that contains the JAR file or files and the <span class="ph filepath">plugin.json</span> descriptor file. </span>
+<div class="itemgroup info">
+<div class="note note note_note"><span class="note__title">Note:</span> 
+<p class="p">To deploy your protocol plug-in, you must create a .zip archive file that contains the JAR file (or files) from step 1 and the <span class="ph filepath">plugin.json</span> file from step 2. All of these files must appear at the root level of the .zip archive so that they can be loaded.</p>
+</div>
+</div>
+</li></ol></section>
+<section class="example"><div class="p">An example of a plug-in configuration file for JSON-based messaging. <pre class="pre codeblock"><code>/*
+ * Sample plug-in configuration file for JSON based messaging
+ */
+ {    
+    "Name":        "json_msg",
+    "Description": "A sample plug-in for JSON based messaging",
+    "Protocol":    "json_msg",
+    "Classpath":   [ "jsonprotocol.jar" ],
+    "Class":       "com.ibm.ima.samples.plugin.jsonmsg.JMPlugin",
+    "WebSocket":   [ "json-msg" ],
+    "InitialByte": [ "{" ],  /* The json_msg always starts with a JSON object */
+    "UseQueue":    false,    /* This plug-in does not implement queues */
+    "UseTopic":    true,     /* This plug-in implements topics */
+    "Properties":  {
+         "Debug": true    
+    }
+ }              </code></pre></div></section>
+<section class="section postreq">Apply your plug-in to <span class="ph">Eclipse Amlen</span>. For more
+         information about installing or updating a protocol plug-in, see <a class="xref" href="../Administering/dv00001.html">Creating and updating a
+            protocol plug-in</a>.</section>
+</div>
+<nav role="navigation" class="related-links"><ul class="ullinks"><li class="link ulchildlink"><strong><a href="../Developing/devplug-indebug.html">Debug environments for the Eclipse Amlen protocol plug-in SDK</a></strong><br>You can debug the protocol plug-in that you are developing in two ways. You can choose to run the protocol plug-in server in Eclipse, or you can run the plug-in server and the plug-in on your <span class="ph">Eclipse Amlen</span> server. </li></ul><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Developing/develop_guide.html" title="You can develop your own client applications to use with Eclipse Amlen.">Developing client applications</a></div></div></nav></article></main></body></html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can use standard system tools to restore the Amlen WebUI from a backup."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Restoring the Amlen WebUI from a backup</title></head><body id="ba00013_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a><ul><li><a href="../Backup/ba00001_.html">Creating a backup of the Eclipse Amlen messaging server</a></li><li><a href="../Backup/ba00002_.html">Restoring the Eclipse Amlen server from a backup in the same environment</a></li><li><a href="../Backup/ba00012_.html">Creating a backup of the Amlen WebUI</a></li><li class="active"><a href="../Backup/ba00013_.html">Restoring the Amlen WebUI from a backup</a></li><li><a href="../Backup/ba00004_.html">Backup and restore in a high availability environment</a></li></ul></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Restoring the <span class="ph">Amlen WebUI</span> from a backup</h1>
+
+
+
+
+
+
+<div class="body taskbody"><p class="shortdesc">System administrators can use standard system tools to restore the <span class="ph">Amlen WebUI</span> from a backup.</p>
+<section><ol class="ol steps"><li class="li step">
+<span class="ph cmd">Stop the <span class="ph">Amlen WebUI</span>:</span>
+<ul class="ul choices">
+<li class="li choice">If you are using the <span class="ph">Amlen WebUI</span> in a Docker environment, use the following command:<pre class="pre codeblock"><code>docker stop &lt;<var class="keyword varname">WebUI container name</var>&gt;</code></pre></li>
+<li class="li choice">If you are running the <span class="ph">Amlen WebUI</span> directly on
+            the host operating system (OS), use the following
+            command:<pre class="pre codeblock"><code>systemctl stop imawebui</code></pre></li>
+</ul>
+</li><li class="li step">
+<span class="ph cmd">Restore the <span class="ph">Amlen WebUI</span>:</span>
+<ul class="ul choices">
+<li class="li choice">If you are using the <span class="ph">Amlen WebUI</span> in a Docker environment, and you used the <span class="keyword cmdname">docker export</span> or <span class="keyword cmdname">docker save</span> command to create the backup:<ol class="ol" type="a">
+<li class="li">Load the backup into a new Docker image by using the following command:<pre class="pre codeblock"><code>docker load</code></pre></li>
+<li class="li">Remove the Docker container that holds the previous version of the <span class="ph">Amlen WebUI</span> by using the following command:<pre class="pre codeblock"><code>docker rm</code></pre></li>
+<li class="li">Remove the Docker image of the previous version of the <span class="ph">Amlen WebUI</span> by using the following command:<pre class="pre codeblock"><code>docker rmi</code></pre></li>
+</ol> </li>
+<li class="li choice">If you are running the <span class="ph">Amlen WebUI</span> directly on the host OS, use your standard system tools to restore the following files and directories:<ul class="ul">
+<li class="li"><span class="ph filepath">/opt/ibm/imawebui/openldap/config/users.ldif</span></li>
+<li class="li"><span class="ph filepath">/opt/ibm/imawebui/openldap/config </span></li>
+<li class="li"><span class="ph filepath">/var/messagesight/webui/openldap-data </span></li>
+<li class="li"><span class="ph filepath">/var/messagesight/webui/wlp/usr/servers/ISMWebUI/properties.xml</span></li>
+<li class="li"><span class="ph filepath">/var/messagesight/webui/wlp/usr/servers/ISMWebUI/resources/security</span></li>
+</ul></li>
+</ul>
+</li><li class="li step">
+<span class="ph cmd">Restart the <span class="ph">Amlen WebUI</span>: </span>
+<ul class="ul choices">
+<li class="li choice">If you are using the <span class="ph">Amlen WebUI</span> in a Docker environment, use the following command:<pre class="pre codeblock"><code>docker start &lt;<var class="keyword varname">WebUI container name</var>&gt;</code></pre></li>
+<li class="li choice">If you are running the <span class="ph">Amlen WebUI</span> directly on
+            the host OS, use the following
+            command:<pre class="pre codeblock"><code>systemctl start imawebui</code></pre></li>
+</ul>
+</li></ol></section>
+<section class="example">
+<p class="p">The following example shows restoring the <span class="ph">Amlen WebUI</span> when it is in a Docker environment:</p>
+<pre class="pre screen">[admin@localhost ~]$ sudo docker stop IMAWEBUI
+IMAWEBUI
+[admin@localhost ~]$ sudo docker rm IMAWEBUI
+IMAWEBUI
+[admin@localhost ~]$ sudo docker load &lt; imawebui-20151211.tar
+[admin@localhost ~]$ sudo docker run --cap-add SYS_ADMIN --net=host -P -it --name=IMAWEBUI --env-file=./imawebui-docker.env -m 4g -d imawebui:backup
+d960ef52c7b7254a43e8d5842ea94024207d8c88e20ecb2f97c06e9eeab50f18</pre>
+<p class="p">The following example shows restoring the <span class="ph">Amlen WebUI</span> when it is running directly on the host OS:</p>
+<pre class="pre screen">[admin@localhost ~]$ sudo systemctl stop imawebui
+Stopping server ISMWebUI.
+Server ISMWebUI stopped.
+[admin@localhost ~]$ sudo unzip imawebui-20151211.zip -d /
+Archive:  imawebui-20151211.zip
+[imawebui-20151211.zip] opt/ibm/imawebui/openldap/config/slapd.conf password:
+replace /opt/ibm/imawebui/openldap/config/slapd.conf? [y]es, [n]o, [A]ll, [N]one, [r]ename: A
+  inflating: /opt/ibm/imawebui/openldap/config/slapd.conf
+  inflating: /opt/ibm/imawebui/openldap/config/users.ldif
+   creating: /opt/ibm/imawebui/openldap-data/
+ extracting: /opt/ibm/imawebui/openldap-data/DB_CONFIG
+  inflating: /opt/ibm/imawebui/openldap-data/__db.001
+  inflating: /opt/ibm/imawebui/openldap-data/__db.002
+  inflating: /opt/ibm/imawebui/openldap-data/__db.003
+  inflating: /opt/ibm/imawebui/openldap-data/alock
+  inflating: /opt/ibm/imawebui/openldap-data/dn2id.bdb
+  inflating: /opt/ibm/imawebui/openldap-data/id2entry.bdb
+  inflating: /opt/ibm/imawebui/openldap-data/log.0000000001
+  inflating: /opt/ibm/wlp/usr/servers/ISMWebUI/properties.xml
+  inflating: /opt/ibm/wlp/usr/servers/ISMWebUI/resources/security/ltpa.keys
+  inflating: /opt/ibm/wlp/usr/servers/ISMWebUI/resources/security/key.jks
+[admin@localhost ~]$ sudo /opt/ibm/wlp/bin/server start ISMWebUI
+Starting server ISMWebUI.
+Server ISMWebUI started with process ID 9535.
+</pre>
+</section>
+</div>
+</article></main></body></html>

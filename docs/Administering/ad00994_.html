@@ -1,0 +1,168 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can view the status of the high availability (HA) service by using the Eclipse Amlen REST API GET method."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Viewing the status of the high availability service by using a REST Administration API</title></head><body id="ad00994_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a><ul><li><a href="../Administering/ad00210_.html">Network interface controllers</a></li><li><a href="../Administering/ad00380_.html">Configuring the server name</a></li><li><a href="../Administering/ad00290_.html">Configuring log files</a></li><li><a href="../Administering/ad00400_.html">Configuring your system for high availability</a><ul><li><a href="../Administering/ad00909_.html">Configuring HA </a><ul><li><a href="../Administering/ad01001_.html">Configuring high availability by using the Amlen WebUI</a></li><li><a href="../Administering/ad00993_.html">Configuring high availability by using REST Administration APIs</a><ul><li><a href="../Administering/ad00992_.html">Configuring Eclipse Amlen servers as an HA pair by using REST Administration APIs</a></li><li><a href="../Administering/ad00996_.html">Configuring high availability in an Eclipse Amlen cluster by using REST Administration APIs</a></li><li><a href="../Administering/ad00995_.html">Viewing high availability configuration details by using a REST Administration API</a></li><li class="active"><a href="../Administering/ad00994_.html">Viewing the status of the high availability service by using a REST Administration API</a></li></ul></li></ul></li><li><a href="../Administering/ad00416_.html">High availability scenarios</a></li></ul></li><li><a href="../Administering/ad00790_.html">Configuring licensed usage and accepting the license for Eclipse Amlen  </a></li><li><a href="../Administering/ad00280_.html">Starting, stopping, restarting and viewing the status of the Eclipse Amlen server</a></li></ul></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Viewing the status of the high availability service by using a <span class="ph">REST Administration API</span></h1>
+
+
+
+
+
+
+<div class="body taskbody"><p class="shortdesc">System administrators can view the status of the high availability (HA) service by using the <span class="ph">Eclipse Amlen</span> REST API GET method. </p>
+<section class="section context">
+<p class="p">You can view HA service status by using <span class="ph">REST Administration APIs</span>, or by using the <span class="ph">Amlen WebUI</span>. For more information about using the <span class="ph">Amlen WebUI</span> to view HA service status, see <a class="xref" href="ad00401_.html" title="In this scenario, a server that has HA disabled is now paired with another server to act as its backup. System administrators can configure a pair of servers for high availability (HA) by using the High Availability page in the Amlen WebUI.">Configuring Eclipse Amlen servers as an HA pair by using the Amlen WebUI</a>.</p>
+</section>
+<section><div class="ul steps-unordered"><div class="li step p">
+        <span class="ph cmd">To view the status of the HA service, use the <span class="ph">Eclipse Amlen</span> REST API GET method with the following
+            <span class="ph">Eclipse Amlen</span> service URI:</span>
+        <div class="itemgroup info">
+          <p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/service/status/HighAvailability</code></p>
+          <div class="note note note_note"><span class="note__title">Note:</span> The status of the HA service is also returned as part of the data that is returned
+            from the <span class="ph">Eclipse Amlen</span> REST API GET method with
+            the following URI:</div>
+          <p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/service/status</code></p>
+        </div>
+      </div></div></section>
+<section class="section result">The following HA status information is returned:<dl class="dl">
+
+<dt class="dt dlterm">Status</dt>
+<dd class="dd">Whether HA is running or not. Possible values, and their meanings, are:<dl class="dl">
+
+<dt class="dt dlterm">Active</dt>
+<dd class="dd">HA is enabled and is running.</dd>
+
+
+<dt class="dt dlterm">Inactive</dt>
+<dd class="dd">HA is not running. If HA is enabled, the HA service attempts to restart if the server is restarted.</dd>
+
+</dl></dd>
+
+
+<dt class="dt dlterm">Enabled</dt>
+<dd class="dd">Whether HA is enabled or not. Possible values, and their meanings, are:<dl class="dl">
+
+<dt class="dt dlterm">true</dt>
+<dd class="dd">HA is enabled.</dd>
+
+
+<dt class="dt dlterm">false</dt>
+<dd class="dd">HA is not enabled. The HA service does not attempt to restart if the server is restarted.</dd>
+
+</dl></dd>
+
+
+<dt class="dt dlterm">Group</dt>
+<dd class="dd">The name of the HA group to which the server belongs.</dd>
+
+
+<dt class="dt dlterm">NewRole</dt>
+<dd class="dd">The current role of the server in the HA pair. Possible values, and their meanings, are:<dl class="dl">
+
+<dt class="dt dlterm">PRIMARY</dt>
+<dd class="dd">The server is running as a primary node.</dd>
+
+
+<dt class="dt dlterm">STANDBY</dt>
+<dd class="dd">The server is running as the standby node.</dd>
+
+
+<dt class="dt dlterm">HADISABLED</dt>
+<dd class="dd">The server is disabled in the HA pair and is not restarted.</dd>
+
+
+<dt class="dt dlterm">UNSYNC</dt>
+<dd class="dd">The server is out of sync with the primary node. An attempt will be made to synchronize the server with the primary node.</dd>
+
+
+<dt class="dt dlterm">UNSYNC_ERROR</dt>
+<dd class="dd">The server has become unsynchronized due to an unrecoverable error.</dd>
+
+
+<dt class="dt dlterm">UNKNOWN</dt>
+<dd class="dd">If HA is enabled and the server is restarted, the initial role of the server is UNKNOWN until the role of the server is set during the synchronization process.</dd>
+
+</dl></dd>
+
+
+<dt class="dt dlterm">OldRole</dt>
+<dd class="dd">The previous role of the server in the HA pair. Possible values, and their meanings, are:<dl class="dl">
+
+<dt class="dt dlterm">PRIMARY</dt>
+<dd class="dd">The server is running as a primary node.</dd>
+
+
+<dt class="dt dlterm">STANDBY</dt>
+<dd class="dd">The server is running as the standby node.</dd>
+
+
+<dt class="dt dlterm">HADISABLED</dt>
+<dd class="dd">The server is disabled in the HA pair and is not restarted.</dd>
+
+
+<dt class="dt dlterm">UNSYNC</dt>
+<dd class="dd">The server is out of sync with the primary node. An attempt will be made to synchronize the server with the primary node.</dd>
+
+
+<dt class="dt dlterm">UNSYNC_ERROR</dt>
+<dd class="dd">The server has become unsynchronized due to an unrecoverable error.</dd>
+
+
+<dt class="dt dlterm">UNKNOWN</dt>
+<dd class="dd">If HA is enabled and the server is restarted, the initial role of the server is UNKNOWN until the role of the server is set during the synchronization process.</dd>
+
+</dl></dd>
+
+
+<dt class="dt dlterm">ActiveNodes</dt>
+<dd class="dd">The number of active nodes in the HA pair.</dd>
+
+
+<dt class="dt dlterm">SyncNodes</dt>
+<dd class="dd">The number of synchronized nodes in the HA pair.</dd>
+
+
+<dt class="dt dlterm">PrimaryLastTime</dt>
+<dd class="dd">The time when the server became the primary server in the HA pair. </dd>
+<dd class="dd ddexpand">This field is returned only on the primary server.</dd>
+
+
+<dt class="dt dlterm">PctSyncCompletion</dt>
+<dd class="dd">The progress, expressed as a percentage, that has been reached in the synchronization procedure on the primary node. </dd>
+<dd class="dd ddexpand">A value of -1 is presented if synchronization is not in process or if the server is not the primary server.</dd>
+
+
+<dt class="dt dlterm">ReasonCode </dt>
+<dd class="dd">The reason code if the server is in an error state.</dd>
+
+
+<dt class="dt dlterm">RemoteServerName</dt>
+<dd class="dd">The name of the other server in the HA pair.</dd>
+
+</dl><p class="p">If the status is <code class="ph codeph">Inactive</code> but HA is enabled, there might be a problem that is preventing HA from running. After you have resolved the problem, you can enable HA. For more information about enabling HA, see <a class="xref" href="ad00992_.html" title="In this scenario, an Eclipse Amlen server that has high availability (HA) disabled is now paired with another Eclipse Amlen server to act as its backup. System administrators can configure a pair of servers for high availability by using REST Administration APIs.">Configuring Eclipse Amlen servers as an HA pair by using REST Administration APIs</a>.</p></section>
+<section class="example">
+<p class="p">The following example demonstrates displaying the HA service by using cURL. </p>
+<pre class="pre codeblock"><code>curl -X GET http://127.0.0.1:9089/ima/v1/service/status/HighAvailability
+</code></pre>
+<p class="p">The following example shows an example response to the GET method:</p>
+<pre class="pre codeblock"><code>
+{
+  "Version":"v1",
+  "HighAvailability": {
+    "Status": "Active",
+    "Enabled": true,
+    "Group": "MyHAGroup",
+    "NewRole": "PRIMARY",
+    "OldRole": "PRIMARY",
+    "ActiveNodes": 2,
+    "SyncNodes": 2,
+    "PrimaryLastTime": "2016-04-21T19:30:05Z",
+    "PctSyncCompletion": -1,
+    "ReasonCode": 0,
+    "RemoteServerName": "ServerB.mycompany.com"
+  }
+}
+
+</code></pre>
+</section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Administering/ad00993_.html" title="System administrators can configure Eclipse Amlen servers for high availability by using REST Administration APIs.">Configuring high availability by using REST Administration APIs</a></div></div></nav></article></main></body></html>

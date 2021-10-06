@@ -1,0 +1,157 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="The JMSSample application demonstrates how to send messages to and receive messages from Eclipse Amlen topics and queues."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>The JMSSample application</title></head><body id="devjms_jmssample"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a><ul><li><a href="../Developing/devconcepts.html">Messaging concepts</a></li><li><a href="../Developing/devmsgtypes.html">Natively supported message types</a></li><li><a href="../Developing/devmsgsize.html">Message size</a></li><li><a href="../Developing/devclientids.html">Client IDs</a></li><li><a href="../Developing/devclientservercert.html">Server certificates</a></li><li><a href="../Developing/devretainmsg.html">Developing retained message applications</a></li><li><a href="../Developing/devexpiredmsg.html">Expired messages</a></li><li><a href="../Developing/devsharedsubscriptions.html">Shared subscriptions</a></li><li><a href="../Developing/devmqttapp.html">Developing MQTT applications</a></li><li><a href="../Developing/devjmsapp.html">Developing JMS applications</a><ul><li><a href="../Developing/devjms_working.html">Working with Eclipse Amlen JMS</a></li><li><a href="../Developing/devjms_sampleapplications.html">Sample applications</a><ul><li><a href="../Developing/devjms_jmssampleadmin.html">The JMSSampleAdmin application</a></li><li class="active"><a href="../Developing/devjms_jmssample.html">The JMSSample application</a></li><li><a href="../Developing/devjms_hasamples.html">The HATopicPublisher and HADurableSubscriber applications</a></li></ul></li><li><a href="../Developing/devjms_writingjmsapplications.html">Writing JMS Applications</a></li><li><a href="../Developing/javadoc/com/ibm/ima/jms/package-summary.html">JMS API reference</a></li></ul></li><li><a href="../Developing/devplug-in.html">Developing a protocol plug-in</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li></ul></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">The JMSSample application</h1>
+
+
+
+
+
+
+<div class="body refbody"><p class="shortdesc">The JMSSample application demonstrates how to send messages
+to and receive messages from <span class="ph">Eclipse Amlen</span> topics and queues.</p>
+<section class="section"><div class="p"> It is implemented in three classes:<ul class="ul">
+<li class="li"><span class="keyword apiname">com.ibm.ima.samples.jms.JMSSample</span></li>
+<li class="li"><span class="keyword apiname">com.ibm.ima.samples.jms.JMSSampleSend</span></li>
+<li class="li"><span class="keyword apiname">com.ibm.ima.samples.jms.JMSSampleReceive </span></li>
+</ul></div><p class="p">The JMSSample application can read administered objects
+from a JNDI repository or can configure them at run time. </p><p class="p">You
+can run the JMSSample application in one of two ways. You can either
+run the application by specifying the <span class="ph">Eclipse Amlen</span> server URI or
+by using a JNDI repository.</p><ul class="ul">
+<li class="li"><p class="p">To run the JMSSample application by specifying the <span class="ph">Eclipse Amlen</span> server URI, use
+the following command:</p><pre class="pre codeblock"><code>java com.ibm.ima.samples.jms.JMSSample -s <var class="keyword varname">URI</var> -a <var class="keyword varname">action</var> -t <var class="keyword varname">topic</var> | -q <var class="keyword varname">queue</var> </code></pre><p class="p">where:</p><dl class="dl">
+
+<dt class="dt dlterm">-s <var class="keyword varname">URI</var></dt>
+<dd class="dd">The URI address of the <span class="ph">Eclipse Amlen</span> server. This
+address is in the format of <code class="ph codeph">tcp://&lt;ipaddress&gt;:&lt;port&gt;</code></dd>
+
+<dt class="dt dlterm">-a <var class="keyword varname">action</var></dt>
+<dd class="dd">For this option, <var class="keyword varname">action</var> can be either <code class="ph codeph">publish</code> or <code class="ph codeph">subscribe</code>.
+The option of <code class="ph codeph">publish</code> enables messages to be sent
+to a JMS topic or queue. The option of <code class="ph codeph">subscribe</code> enables
+messages to be received from a JMS topic or queue.</dd>
+
+<dt class="dt dlterm">-t <var class="keyword varname">topic</var></dt>
+<dd class="dd">This option sets <var class="keyword varname">topic</var> to be the name of the
+topic destination.</dd>
+
+<dt class="dt dlterm">-q <var class="keyword varname">queue</var></dt>
+<dd class="dd">This option sets <var class="keyword varname">queue</var> to be the name of the
+queue destination.</dd>
+</dl></li>
+<li class="li"><p class="p">To run the JMSSample application by using a JNDI repository,
+use the following command. </p><pre class="pre codeblock"><code>java com.ibm.ima.samples.jms.JMSSample -jcf <var class="keyword varname">connection factory</var> -jx <var class="keyword varname">JNDI context factory</var> -jc <var class="keyword varname">JNDI provider</var> -a <var class="keyword varname">action</var> -t <var class="keyword varname">topic</var> | -q <var class="keyword varname">queue</var></code></pre><p class="p">where:</p><dl class="dl">
+
+<dt class="dt dlterm"><span class="keyword parmname">-jcf</span> <var class="keyword varname">connection factory</var></dt>
+<dd class="dd">This option sets <var class="keyword varname">connection factory</var> to be the
+name of a JNDI object that represents a connection factory administered
+object.</dd>
+
+<dt class="dt dlterm"><span class="keyword parmname">-jx</span> <var class="keyword varname">JNDI context factory</var></dt>
+<dd class="dd">This option sets <var class="keyword varname">JNDI context factory</var> to be
+the JNDI initial context factory. For example, <code class="ph codeph">com.sun.jndi.ldap.LdapCtxFactory</code> or <code class="ph codeph">com.sun.jndi.fscontext.RefFSContextFactory</code>.</dd>
+
+<dt class="dt dlterm"><span class="keyword parmname">-jc</span> <var class="keyword varname">JNDI provider</var> [<span class="keyword parmname">-jp</span> <var class="keyword varname">provider
+password</var>]</dt>
+<dd class="dd">This option sets <var class="keyword varname">JNDI provider</var> to be the JNDI
+provider URL. For example,  <span class="ph filepath">ldap://127.0.0.1/o=jndiTest</span> or <span class="ph filepath">file:///c:/test/MyJndi</span> and
+sets <var class="keyword varname">provider password</var> to be the JNDI provider
+password. </dd>
+
+<dt class="dt dlterm"><span class="keyword parmname">-a</span> <var class="keyword varname">action</var></dt>
+<dd class="dd">For this option, <var class="keyword varname">action</var> can be either <code class="ph codeph">publish</code> or <code class="ph codeph">subscribe</code>.
+The option of <code class="ph codeph">publish</code> enables messages to be sent
+to a JMS topic or queue. The option of <code class="ph codeph">subscribe</code> enables
+messages to be received from a JMS topic or queue.</dd>
+
+<dt class="dt dlterm"><span class="keyword parmname">-t</span> <var class="keyword varname">topic</var></dt>
+<dd class="dd">This option sets <var class="keyword varname">topic</var> to be the name of the
+JNDI object that represents the destination.</dd>
+
+<dt class="dt dlterm"><span class="keyword parmname">-q</span> <var class="keyword varname">queue</var></dt>
+<dd class="dd">This option sets <var class="keyword varname">queue</var> to be the name of the
+JNDI object that represents the destination.</dd>
+</dl></li>
+</ul><p class="p"></p><p class="p"></p><p class="p">The following command-line options are also
+available with either of these commands:</p><dl class="dl">
+<dt class="dt dlterm"><span class="keyword parmname">-ks</span> <var class="keyword varname">keystore</var> [<span class="keyword parmname">-kspw</span> <var class="keyword varname">keystore
+password</var>]</dt>
+<dd class="dd">where <var class="keyword varname">keystore</var> is the keystore repository of
+security certificates and <var class="keyword varname">keystore password</var> is
+the keystore password. This option is used for SSL encryption.</dd>
+
+<dt class="dt dlterm"><span class="keyword parmname">-ts</span> <var class="keyword varname">truststore</var> [<span class="keyword parmname">-tspw</span> <var class="keyword varname">truststore
+password</var>]</dt>
+<dd class="dd">where <var class="keyword varname">truststore</var> is the truststore repository
+and <var class="keyword varname">truststore password</var> is the truststore password.
+This option is used to establish trust relationships for SSL connections.</dd>
+
+<dt class="dt dlterm"><span class="keyword parmname">-jn</span> <var class="keyword varname">name prefix</var></dt>
+<dd class="dd">where <var class="keyword varname">name prefix</var> is a name prefix. This option
+can be used for creating and looking up JNDI objects.</dd>
+
+<dt class="dt dlterm"><span class="keyword parmname">-i</span> <var class="keyword varname">clientId</var></dt>
+<dd class="dd">where <var class="keyword varname">clientId</var> is the client identity. This
+option specifies the client ID that is associated with the connection
+to the <span class="ph">Eclipse Amlen</span> server.
+ If a client ID is not specified, then one is automatically generated
+by the JMS client API.</dd>
+
+<dt class="dt dlterm"><span class="keyword parmname">-m</span> <var class="keyword varname">message</var> </dt>
+<dd class="dd">where <var class="keyword varname">message</var> is a string that represents the
+message to be sent. The default is <code class="ph codeph">Sample Message</code>.</dd>
+
+<dt class="dt dlterm"><span class="keyword parmname">-n</span> <var class="keyword varname">count</var> </dt>
+<dd class="dd">where <var class="keyword varname">count</var> is the number of times the specified
+message is to be sent or received. The default number of messages
+that are sent or received is <code class="ph codeph">1</code>.</dd>
+
+<dt class="dt dlterm"><span class="keyword parmname">-o</span> <var class="keyword varname">logfile name</var> </dt>
+<dd class="dd">The log defaults to <code class="ph codeph">stdout</code>.</dd>
+
+<dt class="dt dlterm"><span class="keyword parmname">-u </span><var class="keyword varname">userId</var> <span class="keyword parmname">-p</span> <var class="keyword varname">password</var></dt>
+<dd class="dd">where <var class="keyword varname">userId</var> is the user name and <var class="keyword varname">password</var> is
+the user password. These options are used for authentication with <span class="ph">Eclipse Amlen</span></dd>
+<dd class="dd ddexpand">If <var class="keyword varname">userId</var> is specified without <var class="keyword varname">password</var> then
+the user is prompted for the password.</dd>
+
+<dt class="dt dlterm"><span class="keyword parmname">-w</span> <var class="keyword varname">rate</var></dt>
+<dd class="dd">where <var class="keyword varname">rate</var> is the rate at which messages are
+sent in units of messages/second.</dd>
+
+<dt class="dt dlterm"><span class="keyword parmname">-x</span> <var class="keyword varname">timeout</var></dt>
+<dd class="dd">where <var class="keyword varname">timeout</var> is the timeout in seconds for
+each synchronous call to receive a message.</dd>
+
+<dt class="dt dlterm"><span class="keyword parmname">-b</span></dt>
+<dd class="dd">This option enables a topic subscription to be made durable. Topic
+subscriptions are non-durable by default.</dd>
+
+<dt class="dt dlterm"><span class="keyword parmname">-d</span></dt>
+<dd class="dd">This option enables <span class="keyword parmname">DisableAck</span> to be set
+in a connection factory.</dd>
+
+<dt class="dt dlterm"><span class="keyword parmname">-e</span></dt>
+<dd class="dd">This option enables the deletion of a durable subscription at
+client disconnect. By default, durable subscriptions are preserved
+after disconnect.</dd>
+
+<dt class="dt dlterm"><span class="keyword parmname">-h</span></dt>
+<dd class="dd">This option enables output of the usage statement.</dd>
+
+<dt class="dt dlterm"><span class="keyword parmname">-r</span></dt>
+<dd class="dd">This option enables persistent delivery mode. The default delivery
+mode is non-persistent.</dd>
+
+<dt class="dt dlterm"><span class="keyword parmname">-v</span></dt>
+<dd class="dd">This option enables the provision of verbose output.</dd>
+</dl></section>
+<section class="section"><h2 class="title sectiontitle">Examples</h2><p class="p">The following example uses the
+JMSSample application with the <span class="ph">Eclipse Amlen</span> URI to send messages
+to a queue. </p><pre class="pre codeblock"><code>java com.ibm.ima.samples.jms.JMSSample -s tcp://10.10.1.2:16102 -a publish -q myQueue</code></pre><p class="p">The
+following example uses the JMSSample application with a JNDI repository
+to send messages to a topic. </p><pre class="pre codeblock"><code>java com.ibm.ima.samples.jms.JMSSample -jcf myConnFactory -a pubish -t myTopic 
+-jx com.sun.jndi.fscontext.RefFSContextFactory -jc file:///c:/test/MyJndi</code></pre></section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Developing/devjms_sampleapplications.html" title="There are four sample applications for JMS: JMSSampleAdmin, JMSSample, HATopicPublisher, and HADurableSubscriber. These sample applications are in the com.ibm.ima.samples.jms package.">Sample applications</a></div></div></nav></article></main></body></html>

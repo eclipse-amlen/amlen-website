@@ -1,0 +1,89 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="Configure a secure connection between Eclipse Amlen and the Eclipse Amlen RA running on WebSphere Application Server."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Configuring Transport Layer Security for Eclipse Amlen resource adapter by using customized security configuration options</title></head><body id="tlsusingnondefaultsettings"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a><ul><li><a href="../Administering/ad00102_.html">MQ Connectivity</a></li><li><a href="../Administering/workingwithjmsra.html">Eclipse Amlen resource adapter</a><ul><li><a href="../Administering/installingra.html">Installing Eclipse Amlen resource adapter on WebSphere Application Server</a></li><li><a href="../Administering/upgradingra.html">Updating the Eclipse Amlen resource adapter on WebSphere Application Server</a></li><li><a href="../Administering/configuringra.html">Configuring Eclipse Amlen resource adapter for WebSphere Application Server</a></li><li><a href="../Administering/tlssecurityforjmsra.html">Transport Layer Security for the Eclipse Amlen resource adapter</a><ul><li><a href="../Administering/tlsusingdefaultsettings.html">Configuring Transport Layer Security for Eclipse Amlen resource adapter by using default security configuration </a></li><li class="active"><a href="../Administering/tlsusingnondefaultsettings.html">Configuring Transport Layer Security for Eclipse Amlen resource adapter by using customized security configuration options </a></li><li><a href="../Administering/updatingthedefaulttruststorefortls.html">Updating the WebSphere Application Server default truststore for TLS connections with Eclipse Amlen</a></li><li><a href="../Administering/updatewaskeystore.html">Updating the WebSphere Application Server default keystore for client certificate authentication</a></li></ul></li><li><a href="../Administering/xaconsiderations.html">Working with XA transactions</a></li><li><a href="../Administering/adscenarios.html">Scenarios</a></li></ul></li><li><a href="../Administering/vm00001_.html">Using VMware vSphere to handle Eclipse Amlen failover</a></li></ul></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Configuring Transport Layer Security for <span class="ph">Eclipse Amlen</span> resource
+adapter by using customized security configuration options </h1>
+
+<div class="body taskbody"><p class="shortdesc">Configure a secure connection between <span class="ph">Eclipse Amlen</span> and
+the <span class="ph">Eclipse Amlen</span> RA
+running on <span class="ph">WebSphere® Application
+Server</span>.</p>
+<section class="section prereq"><p class="p">On <span class="ph">Eclipse Amlen</span>,
+ensure that you configure your security profile and policies on the
+endpoint that you are using to accept <span class="ph">WebSphere Application
+Server</span> connections.
+The security profile defines the Transport Layer Security (TLS) that
+is applied to an endpoint. Ensure that you know which port or ports
+on the <span class="ph">Eclipse Amlen</span> can
+be accessed from the <span class="ph">WebSphere Application
+Server</span>. </p><p class="p">If you want to use a non-default security configuration, ensure that this security configuration
+is created and configured. For more information about creating a security configuration for <span class="ph">WebSphere Application
+Server</span>, see <a class="xref" href="http://pic.dhe.ibm.com/infocenter/wasinfo/v8r5/index.jsp?topic=%2Fcom.ibm.websphere.base.doc%2Fae%2Ftsec_sslconfiguration.html" target="_blank" rel="external noopener">Creating a Secure Sockets Layer
+configuration</a>.</p><p class="p">If you want to use a non-default secure socket factory, you must ensure that the class that you
+use is accessible to the <span class="ph">Eclipse Amlen</span> RA. Depending
+upon the class location, you might need to add the class to the class path specified under <span class="ph menucascade"><span class="ph uicontrol">Resources</span><abbr title="and then"> &gt; </abbr><span class="ph uicontrol">Resource adapters</span><abbr title="and then"> &gt; </abbr><span class="ph uicontrol">IBM Watson IoT Platform - Message Gateway resource adapter</span></span>. </p></section>
+<section class="section context"><div class="p">In addition to the required setting of <code class="ph codeph">tcps</code> for <span class="keyword parmname">protocol</span>,
+the two following optional configuration settings that you can use
+to customize the security configuration for the <span class="ph">Eclipse Amlen</span> RA.
+You can use either or both of these security configuration settings.
+If <span class="keyword parmname">protocol</span> is not set to <code class="ph codeph">tcps</code>,
+then these optional settings are ignored. <dl class="dl">
+<dt class="dt dlterm">securityConfiguration</dt>
+<dd class="dd">This value is required if you are using a non-default security
+configuration.</dd>
+
+<dt class="dt dlterm">securitySocketFactory</dt>
+<dd class="dd">This value is required if you are using a non-default security
+socket factory class.</dd>
+</dl></div></section>
+<section><div class="li stepsection">To use secure connections in the <span class="ph">Eclipse Amlen</span> RA,
+complete the following steps in the <span class="ph">WebSphere Application
+Server</span> administrative
+console. </div><div class="ol steps"><div class="li step p"><span class="ph cmd">Choose to configure security for inbound connections, or
+outbound connections, or both.</span>
+<ul class="ul choices">
+<li class="li choice"><p class="p"> For inbound connections, set the value of <span class="keyword parmname">protocol</span> in
+the activation specification. The activation specification is associated
+with one or more message-driven beans (MDBs) and provides the configuration
+necessary for these MDBs to receive messages. </p><ol class="ol" type="a">
+<li class="li">Click <span class="ph menucascade"><span class="ph uicontrol">Resources</span><abbr title="and then"> &gt; </abbr><span class="ph uicontrol">Resource
+adapters</span><abbr title="and then"> &gt; </abbr><span class="ph uicontrol">J2C activation specifications</span></span> &gt; <var class="keyword varname">activation_specification_name</var>.</li>
+<li class="li">Click the <span class="ph uicontrol"> J2C activation specification custom properties</span> link.</li>
+<li class="li">Set the <span class="keyword parmname">protocol</span> configuration value to <code class="ph codeph">tcps</code>.</li>
+<li class="li">Set the <span class="keyword parmname">securitySocketFactory</span> configuration
+value. Set the <span class="keyword parmname">securitySocketFactory</span> configuration
+value only if you want to use a security socket factory other than
+the application server default factory.</li>
+<li class="li">Set the <span class="keyword parmname">securityConfiguration</span> configuration
+value. Set the <span class="keyword parmname">securityConfiguration</span> configuration
+value only if you want to use a security configuration other than
+the application server default configuration. <div class="note note note_note"><span class="note__title">Note:</span> When set, the <span class="keyword parmname">securityConfiguration</span> value
+is passed as a string argument to the security socket factory constructor.
+If the factory does not provide a constructor that takes a single
+string argument, then connection creation fails. </div></li>
+</ol></li>
+<li class="li choice"><p class="p">  For outbound connections, set the value of <span class="keyword parmname">protocol</span> in
+the appropriate connection factory configuration. The <span class="ph">WebSphere Application
+Server</span> uses connection
+factories to create connections to <span class="ph">Eclipse Amlen</span>. </p><ol class="ol" type="a">
+<li class="li">Click <span class="ph menucascade"><span class="ph uicontrol">Resources</span><abbr title="and then"> &gt; </abbr><span class="ph uicontrol">Resource
+adapters</span><abbr title="and then"> &gt; </abbr><span class="ph uicontrol">J2C connection factories</span></span> &gt; <var class="keyword varname">connection_factory_name</var>.</li>
+<li class="li">Click the <span class="ph uicontrol">Custom properties</span> link.</li>
+<li class="li">Set the <span class="keyword parmname">protocol</span> configuration value to <code class="ph codeph">tcps</code>.</li>
+<li class="li">Set the <span class="keyword parmname">securitySocketFactory</span> configuration
+value. Set the <span class="keyword parmname">securitySocketFactory</span> configuration
+value only if you want to use a security socket factory other than
+the application server default factory.</li>
+<li class="li">Set the <span class="keyword parmname">securityConfiguration</span> configuration
+value. Set the <span class="keyword parmname">securityConfiguration</span> configuration
+value only if you want to use a security configuration other than
+the application server default configuration. <div class="note note note_note"><span class="note__title">Note:</span> When set, the <span class="keyword parmname">securityConfiguration</span> value
+is passed as a string argument to the security socket factory constructor.
+If the factory does not provide a constructor that takes a single
+string argument, then connection creation fails. </div> </li>
+</ol></li>
+</ul>
+</div></div></section>
+</div>
+
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Administering/tlssecurityforjmsra.html" title="To connect to Eclipse Amlen endpoints that are configured to accept secure connections, you must configure the Eclipse Amlen resource adapter to use secure connections.">Transport Layer Security for the Eclipse Amlen resource adapter</a></div></div></nav></article></main></body></html>

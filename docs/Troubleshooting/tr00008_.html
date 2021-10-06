@@ -1,0 +1,55 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="There are several common reasons why an application might disconnect unexpectedly."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>The application disconnects</title></head><body id="tr00008_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a><ul><li><a href="../Troubleshooting/tr00000_.html">Log files</a></li><li><a href="../Troubleshooting/tr00006_.html">Maintenance mode</a></li><li><a href="../Troubleshooting/tr00001_.html">Common problems</a><ul><li><a href="../Troubleshooting/tr00002_.html">The application fails to connect</a></li><li class="active"><a href="../Troubleshooting/tr00008_.html">The application disconnects</a></li><li><a href="../Troubleshooting/tr00010_.html">The application fails to publish</a></li><li><a href="../Troubleshooting/tr00009_.html">The application fails to subscribe</a></li><li><a href="../Troubleshooting/tr00003_.html">Messages are not sent</a></li><li><a href="../Troubleshooting/tr00004_.html">Messages do not arrive</a></li><li><a href="../Troubleshooting/tr00005_.html">  MQ Connectivity problems</a></li><li><a href="../Troubleshooting/raisnotworking.html">Eclipse Amlen resource adapter is not working</a></li><li><a href="../Troubleshooting/tr00020_.html">LTPA validation fails</a></li><li><a href="../Troubleshooting/tr00012_.html">The Amlen WebUI is not working</a></li><li><a href="../Troubleshooting/tr00015_.html">High availability problems</a></li><li><a href="../Troubleshooting/tr00026_.html">Cluster problems</a></li><li><a href="../Troubleshooting/tr00021_.html">Dynamic policy update problems</a></li><li><a href="../Troubleshooting/tr00023_.html">SNMP problems</a></li><li><a href="../Troubleshooting/tr00024_.html">LDAP is not working</a></li><li><a href="../Troubleshooting/tr00031_.html">Problems during upgrade from IBM MessageSight version 1.2</a></li></ul></li><li><a href="../Troubleshooting/tr00030.html">Platform must-gather</a></li><li><a href="../Troubleshooting/admin_messagecatalog.html">Message catalog</a></li></ul></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">The application disconnects</h1>
+
+<div class="body conbody"><p class="shortdesc">There are several common reasons why an application might
+disconnect unexpectedly.</p>
+<section class="section"><h2 class="title sectiontitle">Does another application have the same client ID?</h2><p class="p">If
+more than one MQTT application uses the same client ID, the applications
+can disconnect unexpectedly. The first application connects successfully.
+When another application attempts to connect with the same client
+ID, the first application is disconnected, and the new application
+connects. If the applications contain logic to automatically reconnect,
+the two applications can repeatedly disconnect each other.</p><p class="p">Check
+the default log for messages that indicate that multiple applications
+are using the same ID. To resolve the problem, ensure that each application
+has a unique client ID.</p></section>
+<section class="section"><h2 class="title sectiontitle">Has the <span class="keyword parmname">KeepAlive</span> parameter on
+the MQTT <code class="ph codeph">ConnectionObject</code> expired?</h2><p class="p">If the <span class="keyword parmname">KeepAlive</span> parameter
+of the MQTT <code class="ph codeph">ConnectionObject</code> expires, the application
+disconnects. </p><p class="p">To resolve the problem, you can connect the application
+again, or adjust the <span class="keyword parmname">KeepAlive</span> parameter so that
+the application remains connected to <span class="ph">Eclipse Amlen</span> for longer.</p></section>
+<section class="section"><h2 class="title sectiontitle">Does the messaging policy allow an attempted action?</h2><p class="p">If
+the application disconnects after it attempts to publish, subscribe,
+send, receive, or browse, you might have a messaging policy that does
+not allow the action. In some cases, attempting the action can cause
+the application to disconnect.</p><p class="p">Check the logs for messages that
+indicate that the messaging policy does not allow the action. To resolve
+the problem, change the messaging policy to allow the action. Alternatively,
+connect the application to an endpoint with messaging policies that
+allow the action. </p></section>
+<section class="section"><h2 class="title sectiontitle">Has the messaging user group membership changed?</h2><p class="p">If
+you use <span class="ph">Eclipse Amlen</span> messaging
+users and groups in your connection or messaging policies, and you
+update the group membership of the application user, applications
+might disconnect and fail to reconnect.</p><p class="p">The user and group information
+is cached when the application connects. If an application is connected
+when the group membership of the application user is modified, the
+cache is used until the cache timeout is reached. When the timeout
+is reached, the new group membership information is used. If the connection
+policies and messaging policies do not allow the new group membership,
+the application disconnects and cannot reconnect.</p><p class="p">To resolve
+the problem, check the group membership of the user against the groups
+that are allowed in the connection and messaging policies. Add the
+user to the appropriate groups, or update the connection policies
+and messaging policies to allow the group to connect.</p></section>
+<section class="section"><h2 class="title sectiontitle">Are MQTT subscribers being disconnected?</h2><p class="p">The
+connection that is being used by an MQTT client can be taken over
+by another MQTT client that is using the same client ID. MQTT clients
+can be disconnected. </p><p class="p">To avoid this problem,
+you must ensure that all MQTT client IDs are unique. For more information, see <a class="xref" href="../Developing/sessiontakeoverinmqtt.html" title="When you develop MQTT subscriber applications for large-scale public deployments, there are some important factors to consider. The use of the same client ID by different clients can result in the unexpected closure of connections. You can prevent such connection disruptions by developing applications that ensure that client IDs are unique. You can then use connection policies to ensure that only these unique client IDs are allowed to connect. In large-scale subscription environments, it is also important to ensure that connections and their associated resources are used only for as long as they are needed.">MQTT considerations for large-scale public subscription deployments</a>.</p></section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Troubleshooting/tr00001_.html" title="There are a number of common problems that you might encounter. Your application might fail to connect. Your application might disconnect unexpectedly. Your messages might not be published, or your messages might not arrive. MQ Connectivity might not work.">Common problems</a></div></div><div class="linklist relconcepts"><strong>Related concepts</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="tr10000_.html" title="Look for a troubleshooting task to help you solve a problem when using Eclipse Amlen.">Troubleshooting</a></li><li class="linklist"><a class="link" href="tr00001_.html" title="There are a number of common problems that you might encounter. Your application might fail to connect. Your application might disconnect unexpectedly. Your messages might not be published, or your messages might not arrive. MQ Connectivity might not work.">Common problems</a></li><li class="linklist"><a class="link" href="tr00004_.html" title="There are several common reasons why messages might not arrive.">Messages do not arrive</a></li><li class="linklist"><a class="link" href="tr00003_.html" title="There are several common reasons why messages might not be sent.">Messages are not sent</a></li><li class="linklist"><a class="link" href="tr00002_.html" title="There are several common reasons why an application might fail to connect.">The application fails to connect</a></li><li class="linklist"><a class="link" href="tr00009_.html" title="There are several common reasons why an application might fail to subscribe to a topic.">The application fails to subscribe</a></li><li class="linklist"><a class="link" href="tr00010_.html" title="There are several common reasons why an application might fail to publish to a topic.">The application fails to publish</a></li><li class="linklist"><a class="link" href="tr00005_.html" title="There are several reasons why you might experience problems when you use MQ Connectivity.">MQ Connectivity problems</a></li></ul></div><div class="linklist relref"><strong>Related reference</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="admin_messagecatalog.html" title="You can use the messages in this catalog to help you solve problems with Eclipse Amlen.">Message catalog</a></li></ul></div></nav>
+</article></main></body></html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content=""><link rel="stylesheet" type="text/css" href="../../commonltr.css"><link rel="stylesheet" type="text/css" href="../../doc.css"><title>Create or update an endpoint</title></head><body id="pdf_REST_create_update_endpoint"><nav role="toc"><ul><li><a href="../../welcome.html">Welcome</a></li><li><a href="../../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../../Overview/ov00000_.html">Product overview</a></li><li><a href="../../Planning/pl00001_.html">Planning</a></li><li><a href="../../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../../Administering/ad00000_.html">Administering</a></li><li><a href="../../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../../Security/se00000_.html">Security</a></li><li><a href="../../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../../Reference/re00000_.html">Reference</a><ul><li><a href="../../Reference/intro.html">REST API Reference</a><ul><li><a href="../../Reference/cmd_delete_config.html">Delete configuration objects</a></li><li><a href="../../Reference/cmd_show_config.html">Show configuration details of nameable configuration objects</a></li><li><a href="../../Reference/cmd_show_config_fix.html">Show configuration details of fixed-name configuration objects</a></li><li><a href="../../Reference/cmd_REST_file_put.html">Copy a file from the local machine to Eclipse Amlen  </a></li><li><a href="../../Reference/AdminEndpointCmd/adminendpoint.html">Admin endpoint REST Administration APIs</a></li><li><a href="../../Reference/ApplianceCmd/appliancesettingcommands.html">Server REST Administration APIs</a></li><li><a href="../../Reference/ClusterCmd/clustercommands.html">Cluster REST Administration APIs</a></li><li><a href="../../Reference/SecurityCmd/securitycommands.html">Security REST Administration APIs</a></li><li><a href="../../Reference/MsgHubCmd/messagehubcommands.html">Message hub REST Administration APIs</a><ul><li><a href="../../Reference/MsgHubCmd/cmd_create_update_conpol.html">Create or update a connection policy</a></li><li class="active"><a href="../../Reference/MsgHubCmd/cmd_create_update_endpoint.html">Create or update an endpoint</a></li><li><a href="../../Reference/MsgHubCmd/cmd_create_update_msghub.html">Create or update a message hub</a></li><li><a href="../../Reference/MsgHubCmd/cmd_create_update_topicpol.html">Create or update a topic policy</a></li><li><a href="../../Reference/MsgHubCmd/cmd_create_update_subscriptionpol.html">Create or update a subscription policy</a></li><li><a href="../../Reference/MsgHubCmd/cmd_create_update_queuepol.html">Create or update a queue policy</a></li></ul></li><li><a href="../../Reference/QueueCmd/QueueCmd.html">Queue REST Administration APIs</a></li><li><a href="../../Reference/MQConnCmd/mqconnectivitycommands.html">MQ Connectivity  REST Administration APIs</a></li><li><a href="../../Reference/HACmd/HAcommands.html">High availability REST Administration APIs</a></li><li><a href="../../Reference/BackupCmd/backupandrestorecommands.html">Backup and restore commands</a></li><li><a href="../../Reference/MonitorCmd/monitoringandreportingcommands.html">REST Monitoring APIs</a></li><li><a href="../../Reference/XATranCmd/xatransactioncommands.html">XA transaction REST Administration APIs</a></li><li><a href="../../Reference/SNMPCmd/snmpcommands.html">SNMP REST Administration APIs</a></li><li><a href="../../Reference/ProtocolPluginCmd/ProtocolPluginCmd.html">Protocol plug-in REST Administration APIs</a></li><li><a href="../../Reference/SpecialCmd/spepcom.html">Special purpose REST Administration APIs</a></li></ul></li><li><a href="../../Reference/_Topics/sy10530_.html">Digital certificates</a></li><li><a href="../../Reference/_Topics/re00003_.html">Supported cipher lists</a></li><li><a href="../../Reference/_Topics/re00001_.html">Classless Inter-Domain Routing</a></li></ul></li><li><a href="../../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<h1 class="title topictitle1" id="ariaid-title1">Create or update an endpoint</h1>
+
+
+  
+
+
+
+<div class="body refbody"><p class="shortdesc"></p>
+<section class="section"><h2 class="title sectiontitle">Purpose</h2>Creates an endpoint. An endpoint allows a client to connect to <span class="ph">Eclipse Amlen</span>.</section>
+<section class="section"><h2 class="title sectiontitle">URI</h2>
+
+<p class="p">Use the <span class="ph">Eclipse Amlen</span> REST API POST method with the
+        following <span class="ph">Eclipse Amlen</span> configuration URI:</p>
+<p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/configuration/</code></p>
+</section>
+<section class="section"><h2 class="title sectiontitle">Object configuration data</h2><p class="p">Provide endpoint object configuration data in the payload of the POST method by using the following schema. <span class="keyword parmname">Content-type</span> is set to <kbd class="ph userinput">application/json</kbd>: </p><pre class="pre codeblock"><code>
+{    
+   "Endpoint": {
+     "&lt;NameOfEndpoint&gt;": {
+       "Description": "string",
+       "Port": integer,
+       "Interface": "string",
+       "Protocol": "string",
+       "ConnectionPolicies": "string",
+       "TopicPolicies": "string",
+       "QueuePolicies": "string",
+       "SubscriptionPolicies":  "string", 
+       "MaxMessageSize": "string",
+       "MessageHub": "string",
+       "SecurityProfile": "string",
+       "Enabled": true|false,
+       "MaxSendSize": integer,
+       "BatchMessages": true|false,
+       "EnableAbout": true|false
+     }
+   }
+}</code></pre>Where:<dl class="dl">
+      
+        <dt class="dt dlterm"><var class="keyword varname">NameOfEndpoint</var></dt>
+        <dd class="dd">Required.</dd>
+        <dd class="dd ddexpand">Specifies the name of the endpoint.</dd>
+        <dd class="dd ddexpand">The name must not have leading or trailing spaces and cannot contain control characters, commas, double quotation marks, backslashes, or equal signs. The first character must not be a number or any of the following special characters: <p class="p"><code class="ph codeph">! # $ % &amp; ' ( ) * + - . / : ; &lt; &gt; ? @</code></p> </dd>
+        <dd class="dd ddexpand">The maximum length of the name is 256 characters. </dd>
+        <dd class="dd ddexpand">After the endpoint is created, you cannot change this name.</dd>
+      
+      
+        <dt class="dt dlterm">Description</dt>
+        <dd class="dd">Optional.</dd>
+        <dd class="dd ddexpand">Specifies a description for the endpoint.</dd>
+        <dd class="dd ddexpand">If you do not want a description, omit <code class="ph codeph">"Description":"<em class="ph i">description</em>"</code>.</dd>
+      
+      
+        <dt class="dt dlterm">Port</dt>
+        <dd class="dd">Required if you are creating an endpoint.</dd>
+        <dd class="dd ddexpand">Specifies the port that clients connect to.</dd>
+        <dd class="dd ddexpand">The port number must be in the range 1 - 32767, 61001 - 65535.</dd>
+      
+      
+        <dt class="dt dlterm">Interface</dt>
+        <dd class="dd">Required if you are creating an endpoint.</dd>
+        <dd class="dd ddexpand">Specifies one, or all, of the available <span class="ph">Eclipse Amlen</span> IP addresses for the client to connect to.</dd>
+        <dd class="dd ddexpand">You can use the value <code class="ph codeph">all</code> to specify all available IP addresses.</dd>
+        <dd class="dd ddexpand">If you are using Amazon Elastic Cloud Compute (Amazon EC2), ensure that the address that
+            you specify for the endpoint is an Amazon EC2 private IP address that is associated with
+            an Amazon EC2 public elastic IP address. </dd>
+      
+      
+        <dt class="dt dlterm">Protocol</dt>
+        <dd class="dd">Required if you are creating an endpoint.</dd>
+        <dd class="dd ddexpand">Specifies the protocols that the clients can use to connect to the endpoint.</dd>
+        <dd class="dd ddexpand">You can choose from JMS and MQTT protocols. If there are any protocol plug-ins installed on the <span class="ph">Eclipse Amlen</span> server, you can specify these as well. </dd>
+        <dd class="dd ddexpand">To specify more than one value, separate each value with a comma.</dd>
+        <dd class="dd ddexpand">To select all protocols, specify All.</dd>
+      
+      
+        <dt class="dt dlterm">ConnectionPolicies</dt>
+        <dd class="dd">Required if you are creating an endpoint.</dd>
+        <dd class="dd ddexpand">Specifies the connection policies to apply to this endpoint. The policies must exist. These policies must be specified in a comma-separated list.</dd>
+        <dd class="dd ddexpand">When <span class="ph">Eclipse Amlen</span> checks whether a client is authorized to connect, each connection policy is checked in the order that the policies are specified on the endpoint. The policies are checked until either authorization is granted, or all connection policies on the endpoint are checked. Therefore, the order of the comma-separated list is important.</dd>
+      
+      </dl>You must specify at least one of the following 3 messaging policy types:<dl class="dl">
+      
+        <dt class="dt dlterm">TopicPolicies</dt>
+        <dd class="dd">Specifies the topic policies to apply to this endpoint. The policies must exist. These policies must be specified in a comma-separated list.</dd>
+        <dd class="dd ddexpand">When <span class="ph">Eclipse Amlen</span> checks whether a client is authorized to perform topic messaging actions, each topic policy is checked in the order that the policies are specified on the endpoint. The policies are checked until either authorization is granted, or all topic policies on the endpoint are checked. Therefore, the order of the comma-separated list is important.</dd>
+      
+      
+        <dt class="dt dlterm">SubscriptionPolicies</dt>
+        <dd class="dd">Specifies the subscription policies to apply to this endpoint. The policies must exist. These policies must be specified in a comma-separated list.</dd>
+        <dd class="dd ddexpand">When <span class="ph">Eclipse Amlen</span> checks whether a client is authorized to perform subscription messaging actions, each subscription policy is checked in the order that the policies are specified on the endpoint. The policies are checked until either authorization is granted, or all subscription policies on the endpoint are checked. Therefore, the order of the comma-separated list is important.</dd>
+      
+      
+        <dt class="dt dlterm">QueuePolicies</dt>
+        <dd class="dd">Specifies the queue policies to apply to this endpoint. The policies must exist. These policies must be specified in a comma-separated list.</dd>
+        <dd class="dd ddexpand">When <span class="ph">Eclipse Amlen</span> checks whether a client is authorized to perform queue messaging actions, each queue policy is checked in the order that the policies are specified on the endpoint. The policies are checked until either authorization is granted, or all queue policies on the endpoint are checked. Therefore, the order of the comma-separated list is important.</dd>
+      
+      </dl><dl class="dl">
+      
+        <dt class="dt dlterm">MaxMessageSize</dt>
+        <dd class="dd">Optional.</dd>
+        <dd class="dd ddexpand">Specifies the maximum size, in bytes, KB or MB, that a message can be when sent to <span class="ph">Eclipse Amlen</span> through this endpoint.</dd>
+        <dd class="dd ddexpand">The value must be in the range 1 KB - 262144 KB.</dd>
+        <dd class="dd ddexpand">The value can include a KB or MB suffix. If no suffix is used, the value is in bytes, in which case the range is 1024 - 268435456.</dd>
+        <dd class="dd ddexpand">The default value is 1024 KB.</dd>
+      
+      
+        <dt class="dt dlterm">MessageHub</dt>
+        <dd class="dd">Required if you are creating an endpoint.</dd>
+        <dd class="dd ddexpand">Specifies the message hub that the endpoint belongs to. The message hub must exist.</dd>
+      
+      
+        <dt class="dt dlterm">SecurityProfile</dt>
+        <dd class="dd">Optional.</dd>
+        <dd class="dd ddexpand">Specifies the security profile to be applied to the endpoint. The security profile must exist. </dd>
+        <dd class="dd ddexpand">If you do not want to specify a security profile, omit <code class="ph codeph">"SecurityProfile":"<var class="keyword varname">secProfile</var>"</code>.</dd>
+      
+      
+        <dt class="dt dlterm">Enabled: true|false</dt>
+        <dd class="dd">Required if you are creating an endpoint.</dd>
+        <dd class="dd ddexpand">Specifies whether the endpoint is enabled (true) or disabled (false).</dd>
+      
+      
+        <dt class="dt dlterm">MaxSendSize</dt>
+        <dd class="dd">Optional.</dd>
+        <dd class="dd ddexpand">Specifies the maximum size, in bytes, that part of a message can be when it is sent.</dd>
+        <dd class="dd ddexpand">The value must be in the range 128 - 65536.</dd>
+        <dd class="dd ddexpand">You might want to use this option in environments where resource-constrained devices are used; set a low value for <span class="keyword parmname">MaxSendSize</span>, for example 256 bytes, and disable the batching of messages by setting <span class="keyword parmname">BatchMessages</span> to false.</dd>
+        <dd class="dd ddexpand">The default value is 16384 bytes.</dd>
+      
+      
+        <dt class="dt dlterm">BatchMessages: true|false</dt>
+        <dd class="dd">Optional.</dd>
+        <dd class="dd ddexpand">Specifies whether messages can be sent in batches (true) or must be sent singly (false). If <span class="keyword parmname">BatchMessages</span> is false and the size of the message is less than the value specified for <span class="keyword parmname">MaxSendSize</span>, the message is sent singly. If the size of the message is greater than the value specified for <span class="keyword parmname">MaxSendSize</span>, the message is sent in multiple fragments; if <span class="keyword parmname">BatchMessages</span> is false, fragments of different messages cannot be sent in a single send operation.</dd>
+        <dd class="dd ddexpand">You might want to set <span class="keyword parmname">BatchMessages</span> to false in environments where resource-constrained devices are used to ensure that single messages are sent; ensure that you also set a low value for <span class="keyword parmname">MaxSendSize</span>, for example 256 bytes.</dd>
+        <dd class="dd ddexpand">The default value is true.</dd>
+      
+      
+        <dt class="dt dlterm">Enable About <span class="ph">Eclipse Amlen</span> panel</dt>
+        <dd class="dd">Optional.</dd>
+        <dd class="dd ddexpand">Specifies whether the About <span class="ph">Eclipse Amlen</span> panel for this endpoint can be reached.</dd>
+        <dd class="dd ddexpand">The default value is false which means that the panel for this endpoint cannot be reached. </dd>
+        <dd class="dd ddexpand">In production environments, it is best practice to specify a value of false.</dd>
+      
+      </dl></section>
+<section class="section"><h2 class="title sectiontitle">Usage Notes®</h2>
+
+<ul class="ul">
+        <li class="li">Capitalization and double quotation marks must be used as shown.</li>
+<li class="li">Each endpoint must have at least one connection policy, and at least one messaging policy.</li>
+</ul>
+</section>
+<section class="section"><h2 class="title sectiontitle">Related <span class="ph">REST Administration APIs</span></h2>
+
+<ul class="ul">
+        <li class="li"><a class="xref" href="cmd_create_update_msghub.html">Create or update a message hub</a></li>
+        <li class="li"><a class="xref" href="cmd_create_update_conpol.html">Create or update a connection policy</a></li>
+        <li class="li"><a class="xref" href="cmd_create_update_topicpol.html">Create or update a topic policy</a></li>
+        <li class="li"><a class="xref" href="cmd_create_update_subscriptionpol.html">Create or update a subscription policy</a></li>
+        <li class="li"><a class="xref" href="cmd_create_update_queuepol.html">Create or update a queue policy</a></li>
+        <li class="li"><a class="xref" href="../cmd_show_config.html">Show configuration details of nameable configuration objects</a></li>
+        <li class="li"><a class="xref" href="../cmd_delete_config.html">Delete configuration objects</a></li>
+</ul>
+</section>
+<section class="section"><h2 class="title sectiontitle">Example</h2>Creates an endpoint called "MyEndpoint" by using cURL:<pre class="pre codeblock"><code>
+curl -X POST  \
+   -H 'Content-Type: application/json'  \
+   -d  '{   
+            "Endpoint":  { 
+               "MyEndpoint": {
+                 "Port": 16102,            
+                 "Enabled": false,
+                 "Protocol": "All",            
+                 "Interface": "All",           
+                 "ConnectionPolicies": "MyConnectionPolicy",   
+                 "TopicPolicies": "MyTopicPolicy", 
+                 "MaxMessageSize": "4096KB",
+                 "MessageHub": "MyHub",            
+                 "Description": "Unsecured endpoint for demonstration use only."
+            }
+        }
+    }
+  '  \
+http://127.0.0.1:9089/ima/v1/configuration/</code></pre><div class="p">An example response to the POST method:<pre class="pre codeblock"><code>
+{        
+  "Version": "v1",
+  "Code": "CWLNA6011",
+  "Message": "The requested configuration change has completed successfully."
+}
+</code></pre></div></section>
+</div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../../Reference/MsgHubCmd/messagehubcommands.html" title="The message hub REST APIs allow you to configure message hubs, endpoints, connection policies, and messaging policies. You can create, update, view, and delete message hubs, endpoints, connection policies, and messaging policies.">Message hub REST Administration APIs</a></div></div></nav></article></main></body></html>

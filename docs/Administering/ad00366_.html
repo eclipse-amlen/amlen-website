@@ -1,0 +1,135 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="System administrators can view configuration details of configuration objects for which the name can be configured."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Viewing configuration details of objects that can be named by using REST Administration APIs</title></head><body id="ad00365_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a><ul><li><a href="../Administering/ad00390_.html">Configuring the administration endpoint</a></li><li><a href="../Administering/ad00200_.html">Server administration</a></li><li><a href="../Administering/ad00370_.html">Configuring LDAP for user authentication</a></li><li><a href="../Administering/ad00700_.html">Configuring security</a></li><li><a href="../Administering/dv00010.html">Configuring protocol plug-ins</a></li><li><a href="../Administering/ad00360_.html">Configuring message hubs</a></li><li><a href="../Administering/ad00350_.html">Configuring message queues</a></li><li><a href="../Administering/ad00940_.html">Configuring the cluster membership of an Eclipse Amlen server</a></li><li><a href="../Administering/ad00850_.html">Configuring disconnected client notifications</a></li><li><a href="../Administering/ad02940_.html">Configuring administrative subscriptions </a></li><li><a href="../Administering/ad00111.html">Deleting a ClientSet by using a REST Administration API</a></li><li><a href="../Administering/ad00510_.html">Configuring SNMP</a></li><li><a href="../Administering/ad01326_.html">Configuring certificate revocation lists</a></li><li><a href="../Administering/ad00460_.html">Viewing and deleting configuration objects by using REST Administration APIs</a><ul><li><a href="../Administering/ad00365_.html">Viewing configuration details of objects that cannot be named by using REST Administration APIs  </a></li><li class="active"><a href="../Administering/ad00366_.html">Viewing configuration details of objects that can be named by using REST Administration APIs</a></li><li><a href="../Administering/ad00326_.html">Deleting a configuration object by using REST Administration APIs</a></li></ul></li><li><a href="../Administering/ad00929.html">Managing multiple Eclipse Amlen servers from a single Amlen WebUI</a></li><li><a href="../Administering/ad00100_.html">Working with external resources</a></li><li><a href="../Administering/ad00920.html">HTTP status codes</a></li></ul></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+  <h1 class="title topictitle1" id="ariaid-title1">Viewing configuration details of objects that can be named by using <span class="ph">REST Administration APIs</span></h1>
+  
+  <div class="body taskbody"><p class="shortdesc">System administrators can view configuration details of configuration objects for which
+    the name can be configured. </p>
+    <section class="section context">
+      <p class="p"> You can use the <span class="ph">Eclipse Amlen</span> REST API GET method to view configuration details of a specified configuration object or all instances of a configuration object type. If the name of the configuration object is specified in the request, then the configuration details of that object are displayed. If the name of the configuration object is not specified in the request, then the response includes configuration details of all instances of that object type.</p>
+      <div class="p">You can view the configuration details of the following object types by using the <span class="ph">Eclipse Amlen</span> REST API GET method:<ul class="ul">
+        <li class="li">CertificateProfile</li>
+        <li class="li">ClientCertificate</li>
+        <li class="li">ClientSet</li>
+        <li class="li">ConfigurationPolicy</li>
+        <li class="li">ConnectionPolicy</li>
+        <li class="li">DestinationMappingRule</li>
+        <li class="li">EndPoint</li>
+        <li class="li">LTPAProfile</li>
+        <li class="li">MessageHub</li>
+        <li class="li">MQTTClient</li>
+        <li class="li">OAuthProfile</li>
+        <li class="li">Plugin</li>
+        <li class="li">Protocol</li>
+        <li class="li">Queue</li>
+        <li class="li">QueueManagerConnection</li>
+        <li class="li">QueuePolicy</li>
+        <li class="li">SecurityProfile</li>
+        <li class="li">SubscriptionPolicy</li>
+        <li class="li">TopicPolicy</li>
+        <li class="li">TrustedCertificate</li>
+        </ul></div>
+      <div class="note note note_note"><span class="note__title">Note:</span> If a value has not been specified for a filter property, you might see that filter
+        property returned with empty string values. The empty string value means that the particular
+        property is not used to filter messages.</div>
+    </section>
+    <section><div class="ol steps"><div class="li step p">
+        <span class="ph cmd">To view configuration details of a specified configuration object or all instances of a configuration object type, use the <span class="ph">Eclipse Amlen</span> REST API GET method with the following <span class="ph">Eclipse Amlen</span> URI: </span>
+        <div class="itemgroup info">
+          <p class="p"><code class="ph codeph">http://&lt;admin-endpoint-IP:Port&gt;/ima/v1/configuration/&lt;ObjectType&gt;/&lt;ObjectName&gt;</code></p>
+          <div class="p">where: <dl class="dl">
+            
+              <dt class="dt dlterm">ObjectType</dt>
+              <dd class="dd">Specifies the type of configuration object.</dd>
+              <dd class="dd ddexpand">A valid list of object types is displayed in the "About this task" section.</dd>
+            
+            
+              <dt class="dt dlterm">ObjectName</dt>
+              <dd class="dd">Optional.</dd>
+              <dd class="dd ddexpand">Specifies the name of the configuration object.</dd>
+              <dd class="dd ddexpand">If <span class="keyword parmname">ObjectName</span> is not specified, the configuration details of all instances of the object type are returned.</dd>
+            
+            </dl></div>
+        </div>
+      </div></div></section>
+    <section class="example">
+      <p class="p">The following example shows a GET method to view configuration details of all endpoint
+        objects by using cURL: </p>
+      <pre class="pre codeblock"><code>curl -X GET http://127.0.0.1:9089/ima/v1/configuration/Endpoint</code></pre>
+      <p class="p">The following example shows a successful response to the GET method to view configuration
+        details of all endpoint objects by using cURL: </p>
+      <pre class="pre codeblock"><code>{
+  "Version": "v1",
+  "Endpoint": {
+    "DemoEndpoint": {
+      "Port": 10002,
+      "Enabled": false,
+      "Protocol": "All",
+      "Interface": "All",
+      "InterfaceName": "All",
+      "ConnectionPolicies": "DemoConnectionPolicy",
+      "TopicPolicies": "DemoTopicPolicy",
+      "SubscriptionPolicies": "DemoSubscriptionPolicy",
+      "MaxMessageSize": "4096KB",
+      "MessageHub": "DemoHub",
+      "EnableAbout": true,
+      "Description": "Unsecured endpoint for demonstration use only. By default,
+ both JMS and MQTT protocols are accepted."
+    },
+    "DemoMqttEndpoint": {
+      "Port": 1883,
+      "Enabled": false,
+      "Protocol": "MQTT",
+      "Interface": "All",
+      "InterfaceName": "All",
+      "ConnectionPolicies": "DemoConnectionPolicy",
+      "TopicPolicies": "DemoTopicPolicy",
+      "MaxMessageSize": "4096KB",
+      "MessageHub": "DemoHub",
+      "EnableAbout": true,
+      "Description": "Unsecured endpoint for demonstration use with MQTT protoco
+l only. By default, it uses port 1003."
+    }
+  }
+}
+</code></pre>
+      <p class="p">The following example shows a GET method to view configuration details of an endpoint
+        called "MyEndpoint" by using cURL: </p>
+      <pre class="pre codeblock"><code>curl -X GET http://127.0.0.1:9089/ima/v1/configuration/Endpoint/MyEndpoint</code></pre>
+      <p class="p">The following example shows a successful example response to the GET method that was used
+        to view configuration details of an endpoint called "MyEndpoint" :</p>
+      <pre class="pre codeblock"><code>
+     {   
+       "Version": "v1",
+        "EndPoint": {
+          "MyEndpoint": {
+            "Port": 16102,
+            "Enabled": false,
+            "Protocol": "All",
+            "Interface": "All",
+            "ConnectionPolicies": "MyConnectionPolicy",
+            "TopicPolicies": "MyTopicPolicy",
+            "MaxMessageSize": "4096KB",
+            "MessageHub": "MyHub",
+            "Description": "Unsecured endpoint for demonstration use only."
+            "InterfaceName": "",
+            "SecurityProfile": "",
+            "MaxSendSize": 16384,
+            "BatchMessages": true
+          }
+        }
+      }</code></pre>
+      <p class="p">The following example shows an unsuccessful example response to the GET method that was
+        used to view configuration details of an endpoint called "MyEndpoint1" which does not exist
+        :</p>
+      <p class="lines"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;curl -X GET&nbsp;&nbsp;\<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -H&nbsp;&nbsp;'Content-Type: application/json'&nbsp;&nbsp;\<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; http://127.0.0.1:9089/ima/v1/configuration/Endpoint/MyEndpoint1<br></p>
+      <pre class="pre codeblock"><code>
+       {        
+         "Version": "v1",
+         "Code": "CWLNA0113",
+         "Message": "The requested item is not found."
+       }
+</code></pre>
+    </section>
+  </div>
+</article></main></body></html>
