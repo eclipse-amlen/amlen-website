@@ -19,7 +19,7 @@
   but supports JMS and custom protocols as well.</p>
 
   <p>It is based on an initial contribution of the IBM WIoTP Message Gateway broker that
-  is currently undergoing review at Eclipse so builds are not yet available but it
+  has just completed review at Eclipse so stable builds are not yet available but it
   is a mature, production-ready codebase used by a wide variety of companies and 
   organisations.</p>
   <!--
@@ -34,6 +34,7 @@
     <h2>Related Links</h2>
     <ul>
       <li> <a target="_self" href="https://www.youtube.com/watch?v=O-Cts-wP7rE">Intro to Amlen talk</a></li>
+      <li> <a target="_self" href="https://github.com/eclipse/amlen">GitHub Repo</a></li>
       <li> <a target="_self" href="https://www.ibm.com/docs/en/wip-mg/5.0.0.1?topic=watson-iot-platform-message-gateway"> Message Gateway Docs</a></li>
       <li> <a target="_self" href="https://ibm.biz/messagegatewayfixes"> Message Gateway Downloads</a></li>
       <li> <a target="_self" href="https://mqtt.org/">MQTT</a></li>
