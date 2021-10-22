@@ -20,6 +20,7 @@
   $Nav->addNavSeparator("Amlen",   "https://www.eclipse.org/amlen/");
   $Nav->addCustomNav("Forum", "https://www.eclipse.org/forums/index.php/f/572/", "_self", NULL);
   $Nav->addCustomNav("Slack (channel #amlen)", "https://join.slack.com/t/eclipse-iot-wg/shared_invite/zt-qo78fwls-Hre7lBgDLP_h9YB~noz4qg","_self", NULL);
+  $Nav->addCustomNav("Blog", "https://amlen.org/","_self", NULL);
   $Nav->addCustomNav("Documentation", "https://www.eclipse.org/amlen/docs/welcome.html","_self", NULL);
   
   #Original Examples

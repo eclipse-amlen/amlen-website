@@ -23,6 +23,10 @@
   is a mature, production-ready codebase used by a wide variety of companies and 
   organisations that will soon be an important tool for organisations with IoT
   deployments.</p>
+  
+  <p>The first trial build is available with a lot of caveats. For more details read
+  our <a href="https://amlen.org/index.php/2021/10/22/hello-world/">Hello World</a> 
+  blog post on our community blog</p> 
   <!--
   <p><a href="solstice-starterkit.zip" class="btn btn-warning">Download Starterkit</a></p>
   -->
@@ -36,7 +40,9 @@
     <ul>
       <li> <a target="_self" href="https://www.youtube.com/watch?v=O-Cts-wP7rE">Intro to Amlen talk</a></li>
       <li> <a target="_self" href="https://github.com/eclipse/amlen">GitHub Repo</a></li>
+      <li> <a target="_self" href="https://amlen.org">Amlen Blog</a></li>
       <li> <a target="_self" href="https://www.eclipse.org/amlen/docs/welcome.html"> Amlen Docs</a></li>
+      <li> <a target="_self" href="https://download.eclipse.org/amlen/"> Amlen Downloads</a></li>
       <li> <a target="_self" href="https://ibm.biz/messagegatewayfixes"> Message Gateway Downloads</a></li>
       <li> <a target="_self" href="https://mqtt.org/">MQTT</a></li>
       <li> <a target="_self" href="https://eclipse.org/paho">Paho MQTT Clients</a></li>
