@@ -25,8 +25,8 @@
   deployments.</p>
   
   <p>The first trial build is available with a lot of caveats. For more details read
-  our <a href="https://amlen.org/index.php/2021/10/22/hello-world/">Hello World</a> 
-  blog post on our community blog</p> 
+  our <a href="https://amlen.org/index.php/2021/10/22/hello-world/">Hello World blog post</a>
+  on our <a href="https://amlen.org/">community blog</a>.</p> 
   <!--
   <p><a href="solstice-starterkit.zip" class="btn btn-warning">Download Starterkit</a></p>
   -->
