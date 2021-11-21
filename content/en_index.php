@@ -12,21 +12,20 @@
 ?>
 
 <!-- Main content area -->
-<div id="midcolumn">
+<div id="midcolumn" style="font-size: 150%;">
   <h1><?php print $pageTitle;?></h1>
+  <p>
+    <img src="img/frontpage_82conns_shrunk.png" alt="screenshot of Amlen WebUI" width="800" height="385" />
+  </p>
   <p>Amlen is a scalable, secure, easy to use message broker that can be used 
   for IoT, web and mobile use-cases. It primarily supports the MQTT protocol (v5 and v3.x)
   but supports JMS and custom protocols as well.</p>
 
-  <p>It is based on an initial contribution of the IBM WIoTP Message Gateway broker that
-  has just completed review at Eclipse so stable builds are not yet available but it
-  is a mature, production-ready codebase used by a wide variety of companies and 
-  organisations that will soon be an important tool for organisations with IoT
-  deployments.</p>
+  <p>It is based on an initial contribution of the IBM WIoTP Message Gateway broker so it is 
+  a mature, production-ready codebase used by a wide variety of companies and 
+  organisations despite the young age of the project.</p>
   
-  <p>The first trial build is available with a lot of caveats. For more details read
-  our <a href="https://amlen.org/index.php/2021/10/22/hello-world/">Hello World blog post</a>
-  on our <a href="https://amlen.org/">community blog</a>.</p> 
+  <p><a href="https://amlen.org/index.php/2021/11/19/getting-ready-for-the-limelight/">Find out more and try it out</a>.</p> 
   <!--
   <p><a href="solstice-starterkit.zip" class="btn btn-warning">Download Starterkit</a></p>
   -->
@@ -38,12 +37,11 @@
   <div class="sideitem">
     <h2>Related Links</h2>
     <ul>
-      <li> <a target="_self" href="https://www.youtube.com/watch?v=O-Cts-wP7rE">Intro to Amlen talk</a></li>
+    <li> <a target="_self" href="https://amlen.org">Amlen Blog</a></li>
       <li> <a target="_self" href="https://github.com/eclipse/amlen">GitHub Repo</a></li>
-      <li> <a target="_self" href="https://amlen.org">Amlen Blog</a></li>
       <li> <a target="_self" href="https://www.eclipse.org/amlen/docs/welcome.html"> Amlen Docs</a></li>
       <li> <a target="_self" href="https://download.eclipse.org/amlen/"> Amlen Downloads</a></li>
-      <li> <a target="_self" href="https://ibm.biz/messagegatewayfixes"> Message Gateway Downloads</a></li>
+      <li> <a target="_self" href="https://www.youtube.com/watch?v=O-Cts-wP7rE">Intro to Amlen talk</a></li>
       <li> <a target="_self" href="https://mqtt.org/">MQTT</a></li>
       <li> <a target="_self" href="https://eclipse.org/paho">Paho MQTT Clients</a></li>
       <li> <a target="_self" href="https://eclipse.org/mosquitto">Mosquitto Lightweight MQTT Broker</a></li>
