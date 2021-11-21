@@ -14,18 +14,19 @@
 <!-- Main content area -->
 <div id="midcolumn" style="font-size: 150%;">
   <h1><?php print $pageTitle;?></h1>
-  <p>
-    <img src="img/frontpage_82conns_shrunk.png" alt="screenshot of Amlen WebUI" width="800" height="385" />
-  </p>
   <p>Amlen is a scalable, secure, easy to use message broker that can be used 
   for IoT, web and mobile use-cases. It primarily supports the MQTT protocol (v5 and v3.x)
   but supports JMS and custom protocols as well.</p>
 
-  <p>It is based on an initial contribution of the IBM WIoTP Message Gateway broker so it is 
+  <p>Amlen is based on an initial contribution of the IBM WIoTP Message Gateway broker so it is 
   a mature, production-ready codebase used by a wide variety of companies and 
   organisations despite the young age of the project.</p>
   
   <p><a href="https://amlen.org/index.php/2021/11/19/getting-ready-for-the-limelight/">Find out more and try it out</a>.</p> 
+
+  <p>
+    <img src="img/frontpage_82conns_shrunk.png" alt="screenshot of Amlen WebUI" width="800" height="385" />
+  </p>
   <!--
   <p><a href="solstice-starterkit.zip" class="btn btn-warning">Download Starterkit</a></p>
   -->
