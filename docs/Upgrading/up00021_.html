@@ -1,10 +1,10 @@
 <!DOCTYPE html
   SYSTEM "about:legacy-compat">
-<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2021"><meta name="generator" content="DITA-OT"><meta name="description" content="If you are a IBM Watson IoT Platform Message Gateway customer who is upgrading to Eclipse Amlen version 0.1, you will find that normal product operation is almost entirely unchanged by the renaming of the product. Migration requires some simple steps outlined here."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Upgrading from IBM Watson IoT Platform Message Gateway to Eclipse Amlen</title></head><body id="up00021_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a><ul><li><a href="../Upgrading/up00014_.html">Upgrading and rolling back the software level of Eclipse Amlen</a></li><li class="active"><a href="../Upgrading/up00021_.html">Upgrading from IBM Watson IoT Platform Message Gateway to Eclipse Amlen</a><ul><li><a href="../Upgrading/up00022_.html">TLS in IBM Watson IoT Platform Message Gateway and Eclipse Amlen</a></li></ul></li><li><a href="../Upgrading/up00020_.html">Upgrading from IBM IoT MessageSight v2 (or above) to Eclipse Amlen</a></li><li><a href="../Upgrading/up00015_.html">Upgrading from IBM IoT MessageSight version 1.2</a></li></ul></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2022"><meta name="generator" content="DITA-OT"><meta name="description" content="If you are a IBM Watson IoT Platform Message Gateway customer who is upgrading to Eclipse Amlen version 1.0, you will find that normal product operation is almost entirely unchanged by the renaming of the product. Migration requires some simple steps outlined here."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Upgrading from IBM Watson IoT Platform Message Gateway to Eclipse Amlen</title></head><body id="up00021_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../Overview/ov00000_.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a><ul><li><a href="../Upgrading/up00014_.html">Upgrading and rolling back the software level of Eclipse Amlen</a></li><li class="active"><a href="../Upgrading/up00021_.html">Upgrading from IBM Watson IoT Platform Message Gateway to Eclipse Amlen</a><ul><li><a href="../Upgrading/up00022_.html">TLS in IBM Watson IoT Platform Message Gateway and Eclipse Amlen</a></li></ul></li><li><a href="../Upgrading/up00020_.html">Upgrading from IBM IoT MessageSight v2 (or above) to Eclipse Amlen</a></li><li><a href="../Upgrading/up00015_.html">Upgrading from IBM IoT MessageSight version 1.2</a></li></ul></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
 <h1 class="title topictitle1" id="ariaid-title1">Upgrading from <span class="ph">IBM Watson IoT Platform Message Gateway</span> to <span class="ph">Eclipse Amlen</span></h1>
 
 <div class="body conbody"><p class="shortdesc">If you are a <span class="ph">IBM® Watson IoT Platform Message Gateway</span> customer
-who is upgrading to <span class="ph">Eclipse Amlen</span> version <span class="ph">0.1</span>, you will find that normal product
+who is upgrading to <span class="ph">Eclipse Amlen</span> version <span class="ph">1.0</span>, you will find that normal product
 operation is almost entirely unchanged by the renaming of the product. Migration requires some
 simple steps outlined here.
 </p>
@@ -15,6 +15,7 @@ simple steps outlined here.
         <ol class="ol">
             <li class="li">Packages have been renamed and made more granular</li>
             <li class="li">Directories have different locations</li>
+            <li class="li">An important marker file has changed location</li>
             <li class="li">TLS keys used for validating peers in HA pairs and clusters have changed</li>
         </ol>
         <p class="p">In the following sections we'll look at each change then the actions required during migration</p>
@@ -80,6 +81,18 @@ simple steps outlined here.
                 </tr>
             </tbody></table>
     </section>
+    <section class="section"><h2 class="title sectiontitle">Change of location of marker file</h2>
+        
+        <p class="p">There is a file (with path: <span class="ph filepath">/var/lib/amlen-server/data/config/store.init</span>) that indicates
+        to Amlen that the persistent data store has been correctly initialised and is valid.</p>
+        
+        <p class="p">Message Gateway used to use a different path under its install directory which will be removed as part of the 
+        uninstall of Message Gateway. Therefore <span class="ph filepath">/var/lib/amlen-server/data/config/store.init</span> needs to 
+        be manually created as part of the migration process if persistent data (e.g. subscriptions and buffered
+        messages) are to be migrated. An empty file is all that is needed in order to cause the Message Gateway 
+        persistent data to be preserved e.g.:</p>
+        <pre class="pre codeblock"><code>touch /var/lib/amlen-server/data/config/store.init</code></pre>
+    </section>
     <section class="section"><h2 class="title sectiontitle">TLS keys for peers in HA Pairs and Clusters</h2>
         
         <p class="p">Both <span class="ph">Eclipse Amlen</span> and 
@@ -99,6 +112,8 @@ simple steps outlined here.
         <p class="p">A suggested procedure to migrate from <span class="ph">IBM Watson IoT Platform Message Gateway</span> to 
         <span class="ph">Eclipse Amlen</span> is:</p>
         <ol class="ol">
+            <li class="li">Update server to be migrated (and any servers in the same HA pair or cluster) to the latest ifix for Message Gateway available at 
+                  <a class="xref" href="https://ibm.biz/messagegatewayfixes" target="_blank" rel="external noopener">https://ibm.biz/messagegatewayfixes</a>    </li>
             <li class="li">If using HA or Clustering - stop the links requiring TLS certificates (see <a class="xref" href="up00022_.html">TLS in <span class="ph">IBM Watson IoT Platform Message Gateway</span> and <span class="ph">Eclipse Amlen</span></a>)</li>
             <li class="li">On each server in turn (starting with standbys):
                   <ol class="ol" type="a">
@@ -106,8 +121,14 @@ simple steps outlined here.
                     <pre class="pre codeblock"><code>sudo systemctl stop imaserver</code></pre>
                     </li>
                     <li class="li">Uninstall <span class="ph">IBM Watson IoT Platform Message Gateway</span></li>
-                    <li class="li">Move the data directory:
-                    <pre class="pre codeblock"><code>mv /var/messagesight /var/lib/amlen-server</code></pre>
+                    <li class="li">Move the data directory (but have a link from the old location to the new
+                    as default Message Gateway configs reference paths under the old directory):
+                    <pre class="pre codeblock"><code>mv /var/messagesight /var/lib/amlen-server
+ln -s /var/lib/amlen-server /var/messagesight</code></pre>
+                    </li>
+                    <li class="li">Create the marker file that indicates Message Gateway persistent data should
+                    be used with Amlen:
+                    <pre class="pre codeblock"><code>touch /var/lib/amlen-server/data/config/store.init</code></pre>
                     </li>
                     <li class="li">Install <span class="ph">Eclipse Amlen</span></li>
                     <li class="li">Start the server:
