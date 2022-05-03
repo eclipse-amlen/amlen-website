@@ -14,11 +14,11 @@
 <!-- Main content area -->
 <div id="midcolumn" style="font-size: 150%;">
   <h1><?php print $pageTitle;?></h1>
-  <p>Amlen is a scalable, secure, easy to use message broker that can be used 
+  <p>Eclipse Amlen&trade; is a scalable, secure, easy to use message broker that can be used 
   for IoT, web and mobile use-cases. It primarily supports the MQTT protocol (v5 and v3.x)
   but supports JMS and custom protocols as well.</p>
 
-  <p>Amlen is based on an initial contribution of the IBM WIoTP Message Gateway broker so it is 
+  <p>Eclipse Amlen&trade; is based on an initial contribution of the IBM WIoTP Message Gateway broker so it is 
   a mature, production-ready codebase used by a wide variety of companies and 
   organisations despite the young age of the project.</p>
   
