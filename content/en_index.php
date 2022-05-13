@@ -27,6 +27,9 @@
   <p>
     <img src="img/frontpage_82conns_shrunk.png" alt="screenshot of Amlen WebUI" width="800" height="385" />
   </p>
+  <p>
+    <img src="https://projects.eclipse.org/sites/all/modules/custom/pmi/project_state/images/incubating.png" width="400" height="525" alt="Logo for Eclipse Incubating projects" />
+  </p>
   <!--
   <p><a href="solstice-starterkit.zip" class="btn btn-warning">Download Starterkit</a></p>
   -->
@@ -48,9 +51,6 @@
       <li> <a target="_self" href="https://eclipse.org/mosquitto">Mosquitto Lightweight MQTT Broker</a></li>
       <!-- <li><a target="_self" href="/eclipse.org-common/themes/solstice/docs/">Documentation</a></li> -->
     </ul>
-  </div>
-  <div class="sideitem">
-  <img src="https://projects.eclipse.org/sites/all/modules/custom/pmi/project_state/images/incubating.png" width="150" height="197" alt="Logo for Eclipse Incubating projects" />
   </div>
 </div>
 <!-- ./end  #rightcolumn -->
