@@ -28,7 +28,9 @@
     <img src="img/frontpage_82conns_shrunk.png" alt="screenshot of Amlen WebUI" width="800" height="385" />
   </p>
   <p>
-    <img src="https://projects.eclipse.org/sites/all/modules/custom/pmi/project_state/images/incubating.png" width="400" height="525" alt="Logo for Eclipse Incubating projects" />
+    <center>
+    <img src="https://projects.eclipse.org/sites/all/modules/custom/pmi/project_state/images/incubating.png" width="200" height="262" alt="Logo for Eclipse Incubating projects" />
+    </center>
   </p>
   <!--
   <p><a href="solstice-starterkit.zip" class="btn btn-warning">Download Starterkit</a></p>
