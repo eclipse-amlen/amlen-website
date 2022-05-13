@@ -49,5 +49,8 @@
       <!-- <li><a target="_self" href="/eclipse.org-common/themes/solstice/docs/">Documentation</a></li> -->
     </ul>
   </div>
+  <div class="sideitem">
+  <img src="https://projects.eclipse.org/sites/all/modules/custom/pmi/project_state/images/incubating.png" width="150" height="197" alt="Logo for Eclipse Incubating projects" />
+  </div>
 </div>
 <!-- ./end  #rightcolumn -->

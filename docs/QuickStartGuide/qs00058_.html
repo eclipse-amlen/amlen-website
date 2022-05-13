@@ -18,6 +18,14 @@
 <pre class="pre codeblock"><code>echo "/tmp/cores/bt.%e" &gt; /proc/sys/kernel/core_pattern</code></pre>
 </div>
 </li><li class="li step stepexpand">
+                <span class="ph cmd">Ensure the system has access to the prequisite software. On RHEL7/CentOS7/Fedora no
+                action in required but on RHEL8 (and compatible distributions like AlmaLinux 8 
+                and CentOS 8 Stream) the package openldap-servers is not available by default so
+                It is necessary to enable the <a class="xref" href="https://access.redhat.com/articles/4348511" target="_blank" rel="external noopener">CodeReady Builder stream for RHEL</a>
+                (<a class="xref" href="https://serverfault.com/questions/997896/how-to-enable-powertools-repository-in-centos-8" target="_blank" rel="external noopener">PowerTools</a> for CentOS/AlmaLinux) 
+                or alternatively enable the <a class="xref" href="https://repo.symas.com/sofl/rhel8/" target="_blank" rel="external noopener">symas</a> repository 
+                (all of which contain openldap-servers).</span>
+            </li><li class="li step stepexpand">
                 <span class="ph cmd"> Ensure that the current working directory is the sub-directory which contains
                     the RPM file that you unpacked when you prepared the .tz file.</span>
             </li><li class="li step stepexpand">
