@@ -20,9 +20,9 @@
 
   <p>Eclipse Amlen&trade; is based on an initial contribution of the IBM WIoTP Message Gateway broker so it is 
   a mature, production-ready codebase used by a wide variety of companies and 
-  organisations despite the young age of the project.</p>
+  organisations.</p>
   
-  <p><a href="https://amlen.org/index.php/2022/04/22/download-1-0rc1-now-1-0-soon/">Find out more and try it out</a>.</p> 
+  <p><a href="https://amlen.org/index.php/2022/05/24/amlen-v1-0-now-available-get-it-whilst-its-awesome/">Find out more and try it out</a>.</p> 
 
   <p>
     <img src="img/frontpage_82conns_shrunk.png" alt="screenshot of Amlen WebUI" width="800" height="385" />
