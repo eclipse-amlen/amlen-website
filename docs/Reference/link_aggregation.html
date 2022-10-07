@@ -1,0 +1,33 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2022"><meta name="generator" content="DITA-OT"><meta name="description" content="Link aggregation is the concept of combining multiple network interface cards (cables or ports) into a single, logical network interface. Common synonyms for link aggregation include link bundling, NIC teaming, and NIC bonding."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Link aggregation</title></head><body id="link_aggregation"><nav role="toc"><ul></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+ <h1 class="title topictitle1" id="ariaid-title1">Link aggregation </h1>
+ 
+ 
+ <div class="body conbody"><p class="shortdesc">Link aggregation is the concept of combining multiple network interface cards (cables or
+  ports) into a single, logical network interface. Common synonyms for link aggregation include link
+  bundling, NIC teaming, and NIC bonding.  </p>
+  <section class="section">
+   <div class="p"> Link aggregation is used for the following reasons:<ul class="ul">
+     <li class="li">Increasing bandwidth - the link speed of the aggregate is greater than the link speed of
+      any of the component network interfaces.</li>
+     <li class="li">High availability - the server maintains network availability even if a link fails.</li>
+    </ul>
+   </div>
+   <p class="p">In an HA pair, there can only be one primary node that provides messaging operations. If the
+    member acting as a primary detects that the other server is acting as a primary, it results in a
+    split brain condition. </p>
+   <p class="p">For more information about split brain, see <a class="xref" href="../Troubleshooting/tr00015_.html" title="In an HA pair, there can only be one primary node providing messaging operations. If the member acting as a primary detects that the other server is acting as a primary, it results in a split brain condition.">High availability problems</a>.</p>
+   <p class="p">To minimize the risk of  HA split-brain, you can use redundant network paths between members
+    of an HA pair. If you use this configuration and a network element in the path (for example, a
+    NIC, switch, or router) fails, you still have an operational network path between the members of
+    the HA pair. </p>
+  <p class="p">The system administration can configure either two independent network interfaces, or can     configure a single bonded network interface on the host where <span class="ph">Eclipse Amlen</span> is deployed.     The NICs can then be connected to redundant network switches for high availability. </p>
+   <p class="p">If you choose to use two independent network interfaces that do not belong to any bonded interface, the system administrator must assign the HA discovery interface and HA replication interface to the IP address of the two independent network interfaces. </p>
+   <p class="p">If you choose to use a single bonded interface, the administrator must assign the HA discovery
+    and HA replication interface to the IP address of the bonded network interface and must also
+    enable the <span class="keyword parmname">HA.AllowSingleNIC</span> configuration parameter in the <span class="ph">Eclipse Amlen</span> static configuration file. 
+    see <a class="xref" href="static_configuration.html" title="The static configuration file allows manual configuration of the server. The configuration is loaded when the server starts, any modification to the configuration requires the server to be stopped and restarted. Settings for High Availability (HA) should be set the same on both servers in the pair.">Eclipse Amlen static configuration</a> for more details on <span class="keyword parmname">HA.AllowSingleNIC</span></p>
+  </section>
+ </div>
+</article></main></body></html>

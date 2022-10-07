@@ -1,0 +1,48 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2022"><meta name="generator" content="DITA-OT"><meta name="description" content="The static configuration file allows manual configuration of the server. The configuration is loaded when the server starts, any modification to the configuration requires the server to be stopped and restarted. Settings for High Availability (HA) should be set the same on both servers in the pair."><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>Eclipse Amlen static configuration</title></head><body id="static_configuration"><nav role="toc"><ul></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+    <h1 class="title topictitle1" id="ariaid-title1"><span class="ph">Eclipse Amlen</span> static configuration</h1>
+    
+    <div class="body conbody"><p class="shortdesc">
+    The static configuration file allows manual configuration of the server. The 
+    configuration is loaded when the server starts, any modification to the configuration 
+    requires the server to be stopped and restarted. Settings for High Availability (HA) 
+    should be set the same on both servers in the pair. 
+    </p>
+        <section class="section"><h2 class="title sectiontitle">SNMPPort</h2>
+        <p class="p"> 
+          The SNMP port can only be configured manually by commenting out the 
+          <span class="keyword option">SNMPPort</span> directive in <span class="ph filepath">server.cfg </span> 
+          and setting it to the port number that you want to use. The
+          default value for the subagent port is <kbd class="ph userinput">705</kbd>.
+        </p>
+        </section>
+        <section class="section"><h2 class="title sectiontitle">HA.AllowSingleNIC</h2>
+        <p class="p">
+          When configuring High Availability, a redundant network connection is required. 
+          This is typically done by specifying the Discovery interface and Replication 
+          interface to use different subnets. If using an aggregated link redundancy is 
+          handled at the Operating System level and it will appear as a single Network 
+          Interface Card. 
+        </p><p class="p">
+          Setting <span class="keyword option">HA.AllowSingleNIC</span> to 1 removes policing and allows the
+          Discovery Interface and Replication Interface to be on the same subnet.
+        </p>
+        </section>
+        <section class="section"><h2 class="title sectiontitle">HA.SplitBrainPolicy</h2>
+        <p class="p">
+          If a High Availabilitiy pair encounters a Split Brain situation (see 
+          <a class="xref" href="../Troubleshooting/tr00015_.html" title="In an HA pair, there can only be one primary node providing messaging operations. If the member acting as a primary detects that the other server is acting as a primary, it results in a split brain condition.">High availability problems</a>) manual intervention from an 
+          Administrator is required to choose the appropriate Primary server.
+        </p><p class="p">
+          To allow the pair to choose a primary server itself set the 
+          HA.SplitBrainPolicy to 1. Under this policy the server with the largest number
+          of active connections will become the primary server. In the event of a tie the
+          server with the highest session count will become the primary server. If there 
+          is still a tie then neither server will become the primary and manual intervention
+          is required.
+        </p>
+        </section>
+    </div>
+    <nav role="navigation" class="related-links"><div class="linklist relconcepts"><strong>Related concepts</strong><br><ul class="linklist"><li class="linklist"><a class="link" href="../Administering/ad00510_.html" title="System administrators can configure Eclipse Amlen to use the Simple Network Management Protocol (SNMP) by using the Amlen WebUI, or by using REST Administration APIs.">Configuring SNMP</a></li><li class="linklist"><a class="link" href="link_aggregation.html" title="Link aggregation is the concept of combining multiple network interface cards (cables or ports) into a single, logical network interface. Common synonyms for link aggregation include link bundling, NIC teaming, and NIC bonding.">Link aggregation</a></li><li class="linklist"><a class="link" href="../Overview/ov40000.html" title="Eclipse Amlen might experience outages both planned and unplanned. High availability (HA) pertains to the ability of messaging services to withstand outages and continue providing processing capability.">High availability</a></li></ul></div></nav>
+</article></main></body></html>

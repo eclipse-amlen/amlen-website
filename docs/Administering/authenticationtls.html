@@ -1,0 +1,87 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2022"><meta name="generator" content="DITA-OT"><link rel="stylesheet" type="text/css" href="../commonltr.css"><link rel="stylesheet" type="text/css" href="../doc.css"><title>TLS Authentication Methods</title></head><body id="up00022_"><nav role="toc"><ul><li><a href="../welcome.html">Welcome</a></li><li><a href="../eclipse_amlen.html">Eclipse Amlen</a><ul><li><a href="../Overview/ov00000_.html">Product overview</a></li><li><a href="../Planning/pl00001_.html">Planning</a></li><li><a href="../QuickStartGuide/qsg10000.html">Installing Eclipse Amlen  </a></li><li><a href="../Upgrading/up00001_.html">Upgrading</a><ul><li><a href="../Upgrading/up00014_.html">Upgrading and rolling back the software level of Eclipse Amlen</a></li><li><a href="../Upgrading/up00021_.html">Upgrading from IBM Watson IoT Platform Message Gateway to Eclipse Amlen</a><ul><li><a href="../Upgrading/up00022_.html">TLS in IBM Watson IoT Platform Message Gateway and Eclipse Amlen</a><ul><li><a href="../Administering/hatls.html">High Availability Pairing: User Provided TLS Credentials</a></li><li><a href="../Administering/clusteringtls.html">Clustering: User Provided TLS Credentials</a></li><li class="active"><a href="../Administering/authenticationtls.html">TLS Authentication Methods</a></li></ul></li></ul></li><li><a href="../Upgrading/up00020_.html">Upgrading from IBM IoT MessageSight v2 (or above) to Eclipse Amlen</a></li><li><a href="../Upgrading/up00015_.html">Upgrading from IBM IoT MessageSight version 1.2</a></li></ul></li><li><a href="../Scenarios/sc00000_.html">End-to-end scenarios</a></li><li><a href="../Administering/ad00000_.html">Administering</a></li><li><a href="../AdministeringWebUI/ad00002_.html">Administering the Web UI</a></li><li><a href="../Bridge/br00010.html">Configuring the Bridge</a></li><li><a href="../Security/se00000_.html">Security</a></li><li><a href="../Monitoring/admin00008_.html">Monitoring and reporting</a></li><li><a href="../Backup/ba00000_.html">Backup and restore</a></li><li><a href="../Troubleshooting/tr10000_.html">Troubleshooting</a></li><li><a href="../Developing/develop_guide.html">Developing client applications</a></li><li><a href="../Reference/re00000_.html">Reference</a></li><li><a href="../glossary/glossary.html">Glossary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1">
+    <h1 class="title topictitle1" id="ariaid-title1">TLS Authentication Methods</h1>
+    <div class="body">
+    <section class="section"><h2 class="title sectiontitle">Authentication Methods</h2>
+        
+        <p class="p">As well as simple key certificate pairs being used which requires the same key and certificate to be placed
+        on all the instances in the HA pair or cluster. Certificate Authorities can also be used. When enabled the product
+        uses peer-to-peer secure connections.</p>
+        <p class="p"><strong class="ph b">Without Certificate Authorities</strong></p>
+        <p class="p">When not using Certificate Authorities each instance in the system require the same key and certificate to be set.
+        An example to create the key and self-signed certificate using openssl is:</p>
+        <pre class="pre codeblock"><code>
+        openssl genrsa -out ha_keydata 3072
+        openssl req -new -x509 -key HA_key.pem -out HA_cert.pem -days 360
+        </code></pre>
+        <p class="p">This will produce the key and certificate in the correct pem format. In this specific example the key will be between the lines:</p>
+        <pre class="pre codeblock"><code>-----BEGIN RSA PRIVATE KEY-----</code></pre>
+        <p class="p">And:</p>
+        <pre class="pre codeblock"><code>-----END RSA PRIVATE KEY-----</code></pre>
+        <p class="p">The certificate will be between:</p>
+        <pre class="pre codeblock"><code>-----BEGIN CERTIFICATE-----</code></pre>
+        And:
+        <pre class="pre codeblock"><code>-----END CERTIFICATE-----</code></pre>
+        <p class="p">If the key or certificate file does not contain a BEGIN and END, then it may have been created in the wrong format.</p>
+        <p class="p">Once the key and certificate have been created, they can be copied into the correct location of each instance.</p>
+        <p class="p"><strong class="ph b">With Certificate Authorities</strong></p>
+        <p class="p">When using Certificate Authorities each instance requires a key and certificate to be set in the same way as without 
+        Certificate Authorities. However, as long as the credentials are created from an authorized system they do not have to
+        be the same on each instance. To set the authorities the root and any intermediate certificates need to be provided.</p>
+        <p class="p">An example to create a root certificate, an intermediate certificate, and two leaf certificates is:</p>
+        <pre class="pre codeblock"><code>
+        openssl genrsa -out root.key 2048
+        openssl req -new -key root.key -out root.csr -config root_req.config
+        openssl ca -in root.csr -out root.pem -config root.config -selfsign -extfile ca.ext -days 1095
+        openssl genrsa -out intermediate.key 2048
+        openssl req -new -key intermediate.key -out intermediate.csr -config intermediate_req.config
+        openssl ca -in intermediate.csr -out intermediate.pem -config root.config -extfile ca.ext -days 730
+        openssl genrsa -out leaf.key 2048
+        openssl req -new -key leaf.key -out leaf.csr -config leaf_req.config
+        openssl ca -in leaf.csr -out leaf.pem -config intermediate.config -days 365 -batch
+        openssl genrsa -out leaf2.key 2048
+        openssl req -new -key leaf2.key -out leaf2.csr -config leaf_req.config
+        openssl ca -in leaf2.csr -out leaf2.pem -config intermediate.config -days 365 -batch
+        </code></pre>
+        <p class="p">The files produced by this sequence that are required for authentication are:</p>
+        <dl class="dl">
+        <dt class="dt dlterm">root.pem</dt><dd class="dd">the root certificate</dd>
+        <dt class="dt dlterm">Intermediate.pem</dt><dd class="dd">the intermediate certificate</dd>
+        <dt class="dt dlterm">leaf.key</dt><dd class="dd">the key that will be used on the first instance</dd>
+        <dt class="dt dlterm">leaf.pem</dt><dd class="dd">the certificate that will be used on the first instance</dd>
+        <dt class="dt dlterm">leaf2.key</dt><dd class="dd">the key that will be used on the second instance</dd>
+        <dt class="dt dlterm">leaf2.pem</dt><dd class="dd">the certificate that will be used on the second instance</dd>
+        </dl>
+        <p class="p">(All files will be in pem format)</p>
+        <p class="p">For High Availability Pairing The leaf files need to be placed in the keystore of the
+        corresponding instance and renamed to HA_key.pem and HA_cert.pem. For Clustering the leaf files need to be placed in the 
+        keystore of the corresponding instance and renamed to Cluster_key.pem and Cluster_cert.pem. To provide the 
+        Certificate Authorities a CAFile must be constructed from the root certificate and intermediate certificate and 
+        placed in the truststore in a file called HA_cafile.pem or Cluster_cafile.pem this can be done via:</p>
+        <pre class="pre codeblock"><code>
+        cat root.pem &gt; HA_cafile.pem
+        cat intermediate.pem &gt;&gt; HA_cafile.pem
+        </code></pre>
+        <p class="p">When an instance’s certificate expires a new key and certificate can be created (using the intermediate credentials) 
+        and uploaded to the instance and once that instance has been restarted the instance will be authenticated without 
+        having to change the other instances.</p>
+        
+        <p class="p">If using High Availability Pairing and Clustering then it is possible to use file links to have the same credentials
+        used for both systems eg:</p>
+        <pre class="pre codeblock"><code>
+        ln /var/messagesight/data/certificates/keystore/HA_cert.pem     /var/messagesight/data/certificates/keystore/Cluster_cert.pem
+        ln /var/messagesight/data/certificates/keystore/HA_key.pem      /var/messagesight/data/certificates/keystore/Cluster_key.pem
+        ln /var/messagesight/data/certificates/truststore/HA_cafile.pem /var/messagesight/data/certificates/truststore/Cluster_cert.pem
+        </code></pre>
+        <p class="p"><strong class="ph b">Certification Revocation List</strong></p>
+        <p class="p">If a certificate has become compromised prior to its expiration date then it can be added to a Certification 
+        Revocation List (CRL). The product supports a single consolidated CRL file in pem format for each connection.</p>
+        
+        <p class="p">The CRL file for High Availability pairing must be:</p>
+        <span class="ph filepath">{truststore-directory}/HA_crl/crl.pem</span>
+        <p class="p">The CRL file for Clustering must be:</p>
+        <span class="ph filepath">{truststore-directory}/Cluster_crl/crl.pem</span>
+    </section>
+    </div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../Upgrading/up00022_.html" title="When upgrading from IBM Watson IoT Platform Message Gateway to Eclipse Amlen with either High Availability Pairing or Clustering, steps must be taken to allow the servers to connect via TLS.">TLS in IBM Watson IoT Platform Message Gateway and Eclipse Amlen</a></div></div></nav></article></main></body></html>
